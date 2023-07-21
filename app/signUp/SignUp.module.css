@@ -18,20 +18,8 @@
     text-align: start;
     margin-bottom: 5px;
 }
-.links {
-    display: flex;
-    flex-direction: row; 
-    justify-content: center;
-    margin: 10px 0;
-}
-.links img:first-child{
-    margin-right: 40px;
-}
-.signUpTitle {
-    color: white;
-    font-size: 20px;
-    margin-top: 10px;
-}
+
+
 .signUpButton {
     background-color: #397DF6;
     width: 330px;

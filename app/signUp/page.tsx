@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import style from './SignUp.module.css';
+import { Text } from '@/components/text/Text';
+import { Links } from '@/components/links/Links';
 const SignUp = () => {
     return (
         <div className={style.signUpModal}>
-            <h1 className={style.signUpTitle}>Sign Up</h1>
-            <div className={style.links}>
-                <img src="/assets/google.png" alt="Sign up with google" width={36} height={36} />
-                <img src="/assets/gitHub.png" alt="Sign up with gitHub" width={36} height={36} />
-            </div>
+            <Text text="Sign Up" size="20" weight="700" />
+            <Links />
             <form className={style.signUpForm} action="">
                 <div className={style.labelInputBlock}>
                     <label htmlFor="">Username</label>
@@ -44,9 +43,9 @@ const SignUp = () => {
                 </div>
                 <button className={style.signUpButton}>Sign Up</button>
             </form>
-            <h3 className={style.signUpQuestion}>Do you have an account?</h3>
+            <Text text="Do you have an account?" size="16" weight="400" />
             <Link href={'/signIn'}>
-                <h3 style={{ color: '#397DF6' }}>Sign In</h3>
+                <Text text="Sign in" color="#397DF6" size="16" weight="400" />
             </Link>
         </div>
     );
