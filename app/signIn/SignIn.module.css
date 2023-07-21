@@ -1,0 +1,64 @@
+.signInModal {
+    width: 378px;
+    height: 516px;
+    background-color: #171717;
+    border: 1px solid #333333;
+    margin-top: 20px;
+}
+.labelInputBlock{
+    display: flex;
+    flex-direction: column;
+    padding:  0 20px 20px 20px;
+}
+.labelInputBlock > label {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #8D9094;
+    text-align: start;
+    margin-bottom: 5px;
+}
+.links {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    margin: 10px 0;
+}
+.links img:first-child{
+    margin-right: 40px;
+}
+.signInTitle {
+    color: white;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.signInButton {
+    background-color: #397DF6;
+    width: 330px;
+    height: 36px;
+    color: white;
+}
+.signInModal h3 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: white;
+    margin: 15px;
+}
+.signInForgotPasswordText{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: end;
+    margin-right: 5px;
+}
+
+.congratulationsText, .congratulationsDescription {
+    color: white;
+}
+.congratulationsButton {
+    width: 182px;
+    height: 36px;
+    color: white;
+    background-color: #397DF6;
+}
