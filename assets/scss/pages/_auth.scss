@@ -1,0 +1,39 @@
+.auth {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover
+}
+body.support_avif .auth {
+    background-image: url('../../img/auth-bg.avif');
+}
+body.support_webp .auth {
+    background-image: url('../../img/auth-bg.webp');
+}
+
+body .auth{
+    background-image: url('../../img/auth-bg.png');
+}
+
+
+.auth__container-fluid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 416px;
+    min-height: 100vh;
+}
+
+.auth__block {
+    background: rgba(25, 25, 25, .15);
+    padding: 40px;
+    border-radius: 32px;
+    border: 1px solid #8682a3
+}
+.auth__subtitle{
+    color:#ccc;
+    margin-bottom: 16px;
+}
+

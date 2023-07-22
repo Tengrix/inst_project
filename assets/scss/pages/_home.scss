@@ -1,0 +1,44 @@
+.home {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover
+}
+
+body.support_avif .home {
+    background-image: url('../../img/auth-bg.avif');
+}
+
+body.support_webp .home {
+    background-image: url('../../img/auth-bg.webp');
+}
+
+body .home {
+    background-image: url('../../img/auth-bg.png');
+}
+
+
+.home__container-fluid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.home__menu {
+    display: flex;
+    gap:32px
+}
+
+.home__link {
+    color:#fff;
+    font-size: 1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    transition: .3s;
+    &:hover {
+        color: #3797EF;
+    }
+}

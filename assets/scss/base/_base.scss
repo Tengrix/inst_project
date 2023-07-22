@@ -1,0 +1,39 @@
+@use "abstracts" as *;
+
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: 100%;
+    min-height: 100vh;
+    color: $color-primary;
+    font: $font;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+a {
+    color: $color-link;
+    text-decoration: none
+}
+
+ul,
+ol,
+li {
+    list-style: none
+}
+
+img {
+    vertical-align: top
+}
+
+.title{
+    @include title;
+}
+
+[class*="__container"] {
+    width: 100%;
+    margin: 0 auto;
+    padding-right: 16px;
+    padding-left: 16px
+}

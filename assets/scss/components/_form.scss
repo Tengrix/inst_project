@@ -1,0 +1,42 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__label{
+        color: #ccc;
+        text-align: left;
+        line-height: 1
+    }
+
+    &__input {
+        color: #ccc;
+        background: transparent;
+        border: 1px solid #8682a3;
+        padding: 8px 16px;
+        border-radius: 8px;
+        line-height: 1.8
+    }
+
+    &__btn {
+        color: #fff;
+        padding: 16px;
+        margin: 16px 0;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 32px;
+        background: linear-gradient(90deg, #9C3FE4 0%, #C65647 100%);
+        transition: .3s;
+            
+        &:hover {
+            cursor: pointer;
+            opacity: .65
+        }
+    }
+
+    &__text_help {
+        color: #ccc;
+        text-align: left;
+        font-size:80%
+    }
+}
