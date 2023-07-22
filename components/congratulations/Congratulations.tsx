@@ -1,16 +1,26 @@
-import style from './Congratulations.module.css';
-export const Congratulations = () => {
+'use client';
+import { Text } from '../text/Text';
+
+type CongratulationsPropsType = {
+    setFirstConfirm: (isFirst: boolean) => void;
+};
+
+export const Congratulations = (props: CongratulationsPropsType) => {
+    const { setFirstConfirm } = props;
+
     return (
-        <div className={style.congratlationsBlock}>
-            <h1 className={style.congratulationsText} style={{ marginTop: '30px' }}>
-                Congratulation
-            </h1>
-            <p className={style.congratulationsDescription} style={{ marginTop: '30px' }}>
-                Your email has been confirmed
-            </p>
+        <div>
+            <Text text={'Congratulations'} size={'20'} weight={'700'} />
+            <Text text={'Your email has been confirmed'} />
             <button
-                className={style.congratulationsButton}
-                style={{ marginTop: '80px' }} /* onClick={changeFirstClientStatus} */
+                style={{
+                    marginTop: '80px',
+                    width: '182px',
+                    height: '36px',
+                    backgroundColor: '#397DF6',
+                    color: 'white',
+                }}
+                onClick={() => setFirstConfirm(true)}
             >
                 Sign In
             </button>

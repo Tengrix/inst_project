@@ -27,33 +27,12 @@
 .links img:first-child{
     margin-right: 40px;
 }
-.signInTitle {
-    color: white;
-    font-size: 20px;
-    margin-top: 10px;
-}
 .signInButton {
     background-color: #397DF6;
     width: 330px;
     height: 36px;
     color: white;
 }
-.signInModal h3 {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    color: white;
-    margin: 15px;
-}
-.signInForgotPasswordText{
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: end;
-    margin-right: 5px;
-}
-
-
 .congratulationsButton {
     width: 182px;
     height: 36px;

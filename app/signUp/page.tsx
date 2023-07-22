@@ -43,9 +43,9 @@ const SignUp = () => {
                 </div>
                 <button className={style.signUpButton}>Sign Up</button>
             </form>
-            <Text text="Do you have an account?" size="16" weight="400" />
+            <Text text="Do you have an account?" />
             <Link href={'/signIn'}>
-                <Text text="Sign in" color="#397DF6" size="16" weight="400" />
+                <Text text="Sign in" color="#397DF6" />
             </Link>
         </div>
     );

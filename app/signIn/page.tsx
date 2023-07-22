@@ -1,27 +1,17 @@
+'use client';
+
 import Link from 'next/link';
 import style from './SignIn.module.css';
 import { Text } from '@/components/text/Text';
 import { Links } from '@/components/links/Links';
+import { Congratulations } from '@/components/congratulations/Congratulations';
+import { useState } from 'react';
 
 const SignIn = () => {
-    const confirm = true;
+    const [firstConfirm, setFirstConfirm] = useState<boolean>(false);
 
-    if (!confirm) {
-        return (
-            <div className={style.congratlationsBlock}>
-                <Text size="20" text="Congratulation" />
-                <Text text="Your email has been confirmed" size="16" weight="400" />
-                <button className={style.congratulationsButton} style={{ marginTop: '80px' }}>
-                    Sign In
-                </button>
-                <img
-                    src={'/assets/congratulations.png'}
-                    width={432}
-                    height={300}
-                    style={{ marginTop: '80px' }}
-                />
-            </div>
-        );
+    if (!firstConfirm) {
+        return <Congratulations setFirstConfirm={setFirstConfirm} />;
     }
 
     return (
@@ -54,7 +44,7 @@ const SignIn = () => {
 
             <Text text={`Don't have an account?`} size="16" weight="400" />
             <Link href={'/'}>
-                <h3 style={{ color: '#397DF6' }}>Sign Up</h3>
+                <Text text="Sign Up" color="#397DF6" />
             </Link>
         </div>
     );
