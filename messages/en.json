@@ -1,0 +1,41 @@
+{
+  "pages": {
+    "auth": {
+      "sign_in": {
+        "title": "Sign In Page | Inctagram",
+        "meta_description": "Sign In Page - welcome back we missed you",
+        "h1": "Welcome Back!",
+        "welcome_message": "We missed you"
+      },
+      "sign_up": {
+        "title": "Sign Up Page | Inctagram",
+        "meta_description": "Sign Up Page - Free Forever. No Credit Card Needed",
+        "h1": "Get Started Free",
+        "welcome_message": "Free Forever. No Credit Card Needed"
+      },
+      "password_reset": {
+        "title": "Reset Password | Inctagram",
+        "meta_description": "Reset Password Page - Get in touch",
+        "h1": "Trouble signing in?",
+        "welcome_message": "Get in touch"
+      }
+    }
+  },
+  "forms":{
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "password_confirmation": "Password Confirmation",
+    "password_recovery_message": "Enter your email address and we will send you further instructions",
+    "forgot_password": "Forgot Password?",
+    "dont_have": "Don't have an account?",
+    "do_have": "Do you have an account?"
+  },
+  "commons": {
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "send_sign_in": "Send Link",
+    "forgot_password": "Forgot Password",
+    "reset_password": "Reset Password"
+  }
+}
