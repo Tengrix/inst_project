@@ -32,6 +32,8 @@
     "do_have": "Do you have an account?"
   },
   "commons": {
+    "en": "English",
+    "ru": "Russian",
     "sign_in": "Sign In",
     "sign_up": "Sign Up",
     "send_sign_in": "Send Link",
