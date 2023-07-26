@@ -7,3 +7,4 @@ export const inctagramInstance = axios.create({
     baseURL,
     withCredentials:true
 })
+

@@ -15,6 +15,9 @@ const Header = () => (
         <Link href={'/forgotPassword'}>
             <h2>Forgot Password</h2>
         </Link>
+        <Link href={'/signUp/emailConfirmed'}>
+            <h2>Email confirmation</h2>
+        </Link>
     </div>
 )
 

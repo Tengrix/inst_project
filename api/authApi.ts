@@ -7,6 +7,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl: baseURL,
+        credentials:'include'
     }),
     endpoints: (build) => {
         return {
@@ -23,15 +24,26 @@ export const authApi = createApi({
                         method:'POST',
                         url: '/auth/registration',
                         body:{
-                            login: data.name,
+                            login: data.userName,
                             password: data.password,
                             email: data.email
                         }
                     }
                 }
-            })
+            }),
+            resendEmailConfirmation:build.mutation<any, { email:string }>({
+                query: (data) => {
+                    return {
+                        method:'POST',
+                        url: '/auth/registration-email-resending',
+                        body:{
+                            email:data.email
+                        }
+                    }
+                }
+            }),
         }
     }
 })
 
-export const {useCheckAppQuery,useSignUpMutation} = authApi
+export const {useCheckAppQuery,useSignUpMutation,useResendEmailConfirmationMutation} = authApi
