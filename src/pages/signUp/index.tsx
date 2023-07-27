@@ -47,6 +47,7 @@ const SignUp = () => {
                 <h2>
                     Sign Up
                 </h2>
+                <p>11111111111111111111111111111111111</p>
                 <form className={classes.inputForm} onSubmit={onSubmit}>
                     name
                     <input {...register("userName")} />

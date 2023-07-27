@@ -1,0 +1,35 @@
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.05rem 2.25rem 1.2rem;
+  text-align: center;
+
+  .email {
+    margin-top: 1.7rem;
+    text-align: left;
+  }
+
+  .password {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .confirmPassword {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .registerBtn {
+    margin-top: 3.75rem;
+  }
+
+  .subtitle {
+    margin-top: 1.25rem;
+    color: var(--color-light-900);
+  }
+
+  .link {
+    color: var(--color-accent-500);
+    text-decoration: underline;
+  }
+}
