@@ -6,8 +6,7 @@ import {useForm} from "react-hook-form";
 import {useSignUpMutation} from "api/authApi";
 import {signUpSchema} from "utils/yupResolvers/yupResolver";
 import EmailSentModal from "components/Modal/EmailSentModal";
-import {useEffect, useState} from "react";
-import {authAPI, inctagramInstance} from "api/instances";
+import {useState} from "react";
 
 export type SignUpFormData = {
     userName: string
@@ -22,7 +21,15 @@ const SignUp = () => {
 
     const [signUp] = useSignUpMutation()
 
-    const {register, handleSubmit, formState: {errors}} = useForm<SignUpFormData>({resolver: yupResolver(signUpSchema)})
+    const {register, handleSubmit, formState: {errors}} =
+        useForm<SignUpFormData>({
+            resolver: yupResolver(signUpSchema),
+            defaultValues: {
+                email:"qweqew@qweqew.com",
+                password:"qweqew",
+                passwordConfirmation:"qweqew",
+                userName:"UserName111"
+            }})
 
     const onSubmit = handleSubmit(data => {
         console.log(data)

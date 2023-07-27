@@ -1,24 +1,17 @@
+import {NextPageWithLayout} from "pages/_app";
 import {getLayout} from "components/Layout/BaseLayout/BaseLayout";
-import {useResendEmailConfirmationMutation} from "api/authApi";
+import Link from "next/link";
 
 
-const EmailVerificationLinkExpired = () => {
-    const [resendEmailConfirmation] = useResendEmailConfirmationMutation()
+const EmailConfirmed = () => (
+    <div>
+        <h2>Congratulations</h2>
+        <div> Your email has been confirmed</div>
+        <Link href={'/signIn'}>
+            <button> Sign In</button>
+        </Link>
+    </div>
+)
 
-    const resendHandler = () => {
-        resendEmailConfirmation({email: 'email'})
-    }
-
-    return (
-        <div>
-            <h2>Email verification link expired</h2>
-            <div> Looks like the verification link has expired. Not to worry, we can send the link again</div>
-            <button onClick={resendHandler}>
-                Resend verification link
-            </button>
-        </div>
-    );
-}
-
-EmailVerificationLinkExpired.getLayout = getLayout
-export default EmailVerificationLinkExpired;
+EmailConfirmed.getLayout = getLayout
+export default EmailConfirmed;

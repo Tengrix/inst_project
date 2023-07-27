@@ -1,13 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import * as process from "process";
-import {baseURL, inctagramInstance} from "api/instances";
+import {baseURL} from "api/instances";
 import {SignUpFormData} from "pages/signUp";
 
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl: baseURL,
-        credentials:'include'
+        credentials: 'include'
     }),
     endpoints: (build) => {
         return {
@@ -21,9 +20,9 @@ export const authApi = createApi({
             signUp: build.mutation<any, SignUpFormData>({
                 query: (data) => {
                     return {
-                        method:'POST',
+                        method: 'POST',
                         url: '/auth/registration',
-                        body:{
+                        body: {
                             login: data.userName,
                             password: data.password,
                             email: data.email
@@ -31,13 +30,13 @@ export const authApi = createApi({
                     }
                 }
             }),
-            resendEmailConfirmation:build.mutation<any, { email:string }>({
+            resendEmailConfirmation: build.mutation<any, { email: string }>({
                 query: (data) => {
                     return {
-                        method:'POST',
+                        method: 'POST',
                         url: '/auth/registration-email-resending',
-                        body:{
-                            email:data.email
+                        body: {
+                            email: data.email
                         }
                     }
                 }
@@ -46,4 +45,4 @@ export const authApi = createApi({
     }
 })
 
-export const {useCheckAppQuery,useSignUpMutation,useResendEmailConfirmationMutation} = authApi
+export const {useCheckAppQuery, useSignUpMutation, useResendEmailConfirmationMutation} = authApi
