@@ -1,11 +1,11 @@
-import {getLayout} from "components/Layout/BaseLayout/BaseLayout";
-import classes from "pages/signUp/SignUp.module.css";
+import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
+import classes from "@/pages/signUp/SignUp.module.css";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Link from "next/link";
 import {useForm} from "react-hook-form";
 import {useSignUpMutation} from "api/authApi";
-import {signUpSchema} from "utils/yupResolvers/yupResolver";
-import EmailSentModal from "components/Modal/EmailSentModal";
+import {signUpSchema} from "src/shared/utils/yupResolvers/yupResolver";
+import EmailSentModal from "src/styles/styledComponents/Modal/EmailSentModal";
 import {useState} from "react";
 
 export type SignUpFormData = {

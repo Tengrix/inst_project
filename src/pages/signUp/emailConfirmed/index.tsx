@@ -1,5 +1,5 @@
-import {NextPageWithLayout} from "pages/_app";
-import {getLayout} from "components/Layout/BaseLayout/BaseLayout";
+import {NextPageWithLayout} from "@/pages/_app";
+import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 import Link from "next/link";
 
 

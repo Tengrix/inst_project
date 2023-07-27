@@ -1,4 +1,4 @@
-import BasicModal from "components/Modal/BasicModal";
+import BasicModal from "@/styles/styledComponents/Modal/BasicModal";
 
 type Props = {
     handleClose: () => void;

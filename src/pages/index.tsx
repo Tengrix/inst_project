@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import {NextPageWithLayout} from "pages/_app";
-import {getLayout} from "components/Layout/BaseLayout/BaseLayout";
+import {NextPageWithLayout} from "@/pages/_app";
+import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 
 
 const Home:NextPageWithLayout = () => (

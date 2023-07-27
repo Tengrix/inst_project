@@ -1,6 +1,6 @@
-import {NextPageWithLayout} from "pages/_app";
-import {getLayout} from "components/Layout/BaseLayout/BaseLayout";
-import classes from "pages/signIn/SignIn.module.css"
+import {NextPageWithLayout} from "@/pages/_app";
+import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
+import classes from "@/pages/signIn/SignIn.module.css"
 import Link from "next/link";
 import {useForm} from "react-hook-form";
 

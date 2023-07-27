@@ -1,5 +1,5 @@
 import Link from "next/link";
-import classes from "components/Header/Header.module.css"
+import classes from "@/components/Header/Header.module.css"
 
 const Header = () => (
     <div className={classes.header}>
