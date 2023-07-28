@@ -1,6 +1,5 @@
-import {NextPageWithLayout} from "@/pages/_app";
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
-import classes from "@/pages/signIn/SignIn.module.css"
+import classes from "@/pages/sign-in/SignIn.module.css"
 import Link from "next/link";
 import {useForm} from "react-hook-form";
 
@@ -47,8 +46,8 @@ const SignIn = () => {
                         Sign In
                     </button>
                 </form>
-                Don't have an account?
-                <Link href={'/signUp'}>
+                Don&amp;apos;t have an account?
+                <Link href={'/sign-up'}>
                     Sign up
                 </Link>
             </div>
