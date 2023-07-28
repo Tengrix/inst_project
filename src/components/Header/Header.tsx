@@ -6,19 +6,19 @@ const Header = () => (
         <Link href={'/'}>
             <h2>Home</h2>
         </Link>
-        <Link href={'/signIn'}>
+        <Link href={'/sign-in'}>
             <h2>Sign In</h2>
         </Link>
-        <Link href={'/signUp'}>
+        <Link href={'/sign-up'}>
             <h2>Sign Up</h2>
         </Link>
-        <Link href={'/forgotPassword'}>
+        <Link href={'/forgot-password'}>
             <h2>Forgot Password</h2>
         </Link>
-        <Link href={'/signUp/emailConfirmed'}>
+        <Link href={'/sign-up/email-confirmed'}>
             <h2>Email confirmation</h2>
         </Link>
-        <Link href={'/signUp/emailVerificationLinkExpired'}>
+        <Link href={'/sign-up/email-verification-link-expired'}>
             <h2>Email Verification Link Expired</h2>
         </Link>
     </div>

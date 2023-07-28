@@ -1,5 +1,5 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
-import classes from "@/pages/signUp/SignUp.module.css";
+import classes from "@/pages/sign-up/SignUp.module.css";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Link from "next/link";
 import {useForm} from "react-hook-form";
@@ -61,7 +61,7 @@ const SignUp = () => {
                     </button>
                 </form>
                 Do you have an account?
-                <Link href={'/signIn'}>
+                <Link href={'/sign-in'}>
                     Sign in
                 </Link>
             </div>
