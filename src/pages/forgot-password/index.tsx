@@ -1,4 +1,3 @@
-import {NextPageWithLayout} from "@/pages/_app";
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 
 

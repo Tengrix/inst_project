@@ -1,5 +1,5 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
-import s from "@/pages/signUp/SignUp.module.scss";
+import classes from "@/pages/sign-up/SignUp.module.css";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Link from "next/link";
 import {useForm} from "react-hook-form";
@@ -42,23 +42,6 @@ const onSubmitHandler=(data:RegisterFormType)=>console.log(data)
         setShowForgotModal(true)
         signUp(data)
     })
-    // const [signUp] = useSignUpMutation()
-
-    // const {register, handleSubmit, formState: {errors}} =
-    //     useForm<SignUpFormData>({
-    //         resolver: yupResolver(signUpSchema),
-    //         defaultValues: {
-    //             email:"qweqew@qweqew.com",
-    //             password:"qweqew",
-    //             passwordConfirmation:"qweqew",
-    //             userName:"UserName111"
-    //         }})
-    //
-    // const onSubmit = handleSubmit(data => {
-    //     console.log(data)
-    //     // signUp(data)
-    //     // setShowForgotModal(true)
-    // })
 
 
     return (
@@ -89,43 +72,14 @@ const onSubmitHandler=(data:RegisterFormType)=>console.log(data)
                         Sign Up
                     </Button>
                 </form>
-                <Typography variant={'body2'} className={s.subtitle}>
-                    Do you have an account?
-                </Typography>
-                <Button as={'a'} variant={'link'} className={s.link} href={'/signIn'}>
-                    Sign In
-                </Button>
-            </Card>
+                Do you have an account?
+                <Link href={'/sign-in'}>
+                    Sign in
+                </Link>
+            </div>
+
             <EmailSentModal handleClose={() => setShowForgotModal(false)} show={showForgotModal}/>
         </div>
-
-        // <div className={classes.container}>
-        //
-        //     <div className={classes.signUpForm}>
-        //         <h2>
-        //             Sign Up
-        //         </h2>
-        //         <form className={classes.inputForm} onSubmit={onSubmit}>
-        //             name
-        //             <input {...register("userName")} />
-        //             email
-        //             <input {...register("email")}/>
-        //             password
-        //             <input {...register("password")}/>
-        //             confirm password
-        //             <input {...register("passwordConfirmation")}/>
-        //             <button type="submit">
-        //                 Sign Up
-        //             </button>
-        //         </form>
-        //         Do you have an account?
-        //         <Link href={'/signIn'}>
-        //             Sign in
-        //         </Link>
-        //     </div>
-        //
-        //     <EmailSentModal handleClose={() => setShowForgotModal(false)} show={showForgotModal}/>
-        // </div>
     );
 }
 
