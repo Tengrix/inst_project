@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {baseURL} from "api/instances";
-import {SignUpFormData} from "src/pages/signUp";
+import {RegisterFormType} from "src/pages/signUp";
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -17,7 +17,7 @@ export const authApi = createApi({
                     }
                 }
             }),
-            signUp: build.mutation<any, SignUpFormData>({
+            signUp: build.mutation<any, RegisterFormType>({
                 query: (data) => {
                     return {
                         method: 'POST',
