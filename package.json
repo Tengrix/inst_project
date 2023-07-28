@@ -26,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
     "react-redux": "^8.1.1",
+    "sass": "^1.64.1",
     "storybook": "^7.1.1",
     "styled-components": "^6.0.5",
     "tailwindcss": "3.3.3",
