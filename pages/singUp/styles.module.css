@@ -1,0 +1,50 @@
+.registration-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Высота во всю высоту экрана */
+    background-color: #f5f5f5;
+  }
+  
+  .registration-title {
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .registration-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .registration-label {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .registration-input {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .registration-button, .registration-back-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0070f3;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .registration-button:hover, .registration-back-button:hover {
+    background-color: #0051bb;
+  }
+  
+  .registration-center {
+    margin-top: 20px;
+  }
+  
