@@ -1,0 +1,158 @@
+@import '/src/styles/variables/mixins';
+
+.search-input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+//input {
+//  all: unset;
+//}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.iconStart {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  color: var(--color-dark-100);
+
+  &:has(~ .input:focus) {
+    color: var(--color-light-100);
+  }
+
+  // TODO remember this selector
+}
+
+.iconEnd {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  width: 20px;
+  height: 20px;
+}
+
+.input {
+  cursor: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 6px 40px 6px 12px;
+
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  border-radius: 2px;
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-dark-500);
+
+  transition: 0.3s;
+
+  &::placeholder {
+    color: var(--color-dark-100);
+  }
+
+  &:disabled {
+    color: var(--color-dark-300);
+  }
+
+  // TODO: focus visible border info700 var
+
+  &:focus,
+  &:active:enabled {
+    box-shadow: 0 0 0 1px var(--color-light-100);
+
+    &::placeholder {
+      color: var(--color-dark-100);
+    }
+  }
+
+  &:hover:not(&:disabled) {
+    background-color: var(--color-dark-700);
+  }
+
+  &.error {
+    color: var(--color-danger-300);
+    box-shadow: 0 0 0 1px var(--color-danger-300);
+
+    &::placeholder {
+      color: var(--color-danger-300);
+    }
+  }
+
+  &[data-icon*='start'] {
+    padding-left: 36px;
+  }
+
+  &[data-icon*='end'] {
+    padding-right: 36px;
+  }
+}
+
+.iconButton {
+  all: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  right: 10px;
+
+  display: flex;
+
+  border-radius: 100%;
+
+  transition: 0.4s;
+
+  &:hover {
+    background-color: grey;
+  }
+
+  &.disabled {
+    cursor: unset;
+    color: var(--color-dark-300);
+  }
+}
+
+//input:-webkit-autofill,
+//input:-webkit-autofill:hover,
+//input:-webkit-autofill:focus,
+//textarea:-webkit-autofill,
+//textarea:-webkit-autofill:hover,
+//textarea:-webkit-autofill:focus,
+//select:-webkit-autofill,
+//select:-webkit-autofill:hover,
+//select:-webkit-autofill:focus {
+//  background: linear-gradient(
+//    top,
+//    rgb(255 255 255 / 0%) 0%,
+//    rgb(0 174 255 / 4%) 50%,
+//    rgb(255 255 255 / 0%) 51%,
+//    rgb(0 174 255 / 3%) 100%
+//  );
+//  transition: background-color 5000s ease-in-out 0s;
+
+  //-webkit-text-fill-color: #dfdfdf;
+//}

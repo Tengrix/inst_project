@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+/*.signUpForm {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    width: 500px;*/
+/*    height: 624px;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #ccc;*/
+/*    background-color: #fff;*/
+/*}*/
+
+/*.inputForm {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*}*/
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.05rem 2.25rem 1.2rem;
+  text-align: center;
+
+  .iconContainer {
+    padding: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 13px;
+    margin-bottom: 22px;
+  }
+
+  .email {
+    margin-top: 1.7rem;
+    text-align: left;
+  }
+
+  .password {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .confirmPassword {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .registerBtn {
+    margin-top: 3.75rem;
+  }
+
+  .subtitle {
+    margin-top: 1.25rem;
+    color: var(--color-light-900);
+  }
+
+  .link {
+    color: var(--color-primary-500);
+    text-decoration: underline;
+  }
+}
