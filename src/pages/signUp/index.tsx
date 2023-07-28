@@ -9,22 +9,39 @@ import EmailSentModal from "src/styles/styledComponents/Modal/EmailSentModal";
 import {useState} from "react";
 import {Card} from "@/shared/ui/card";
 import {Typography} from "@/shared/ui/typography";
-import {TextField} from "@/shared/ui/text-field";
 import {Button} from "@/shared/ui/button";
 import {Github} from "../../../public/icon/github-logo";
 import {Google} from "../../../public/icon/google-logo";
+import {registerSchema} from "@/shared/utils/schemas/register-schema";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {ControlledTextField} from "@/shared/ui/controlled";
+import {log} from "next/dist/server/typescript/utils";
 
-export type SignUpFormData = {
-    userName: string
-    email: string
-    password: string
-    passwordConfirmation: string
+// export type SignUpFormData = {
+//     userName: string
+//     email: string
+//     password: string
+//     passwordConfirmation: string
+// };
 
-};
+export type RegisterFormType = z.infer<typeof registerSchema>
+type RegisterFormPropsType = {
+    linkPath: string
+    onSubmitHandler: (data: RegisterFormType) => void
+}
 
 const SignUp = () => {
-    // const [showForgotModal, setShowForgotModal] = useState(false)
-    //
+       const [showForgotModal, setShowForgotModal] = useState(false)
+    const [signUp] = useSignUpMutation()
+const onSubmitHandler=(data:RegisterFormType)=>console.log(data)
+    const {control, handleSubmit} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
+    const onSubmit = handleSubmit(data => {
+        console.log(data)
+        onSubmitHandler(data)
+        setShowForgotModal(true)
+        signUp(data)
+    })
     // const [signUp] = useSignUpMutation()
 
     // const {register, handleSubmit, formState: {errors}} =
@@ -60,13 +77,14 @@ const SignUp = () => {
 
                 </div>
 
-                <form>
-                    <TextField label={'Username'} value={"Epam"} className={s.email}/>
-                    <TextField label={'Email'} value={'Epam@epam.com'} className={s.email}/>
-                    <TextField label={'Password'} value={'12345566777'} className={s.password} type={'password'}
-                               />
-                    <TextField label={'Confirm password'} value={'12345566777'} className={s.confirmPassword}  type={'password'}
-                               />
+                <form onSubmit={onSubmit}>
+                    <ControlledTextField control={control} name={'userName'} label={'Username'} className={s.email}/>
+                    <ControlledTextField control={control} name={'email'} label={'Email'} className={s.email}/>
+                    <ControlledTextField control={control} name={'password'} label={'Password'} className={s.password} type={'password'}
+                    />
+                    <ControlledTextField control={control} name={'confirmPassword'} label={'Confirm password'} className={s.confirmPassword}
+                               type={'password'}
+                    />
                     <Button type={'submit'} fullWidth className={s.registerBtn}>
                         Sign Up
                     </Button>
@@ -74,10 +92,11 @@ const SignUp = () => {
                 <Typography variant={'body2'} className={s.subtitle}>
                     Do you have an account?
                 </Typography>
-                <Button as={'a'} variant={'link'} className={s.link}>
+                <Button as={'a'} variant={'link'} className={s.link} href={'/signIn'}>
                     Sign In
                 </Button>
             </Card>
+            <EmailSentModal handleClose={() => setShowForgotModal(false)} show={showForgotModal}/>
         </div>
 
         // <div className={classes.container}>

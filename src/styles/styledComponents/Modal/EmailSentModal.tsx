@@ -10,7 +10,7 @@ const EmailSentModal = (props:Props) => {
 
     return (
         <BasicModal handleClose={() => props.handleClose()} show={props.show}>
-            <div>
+            <div style={{color: 'black'}}>
                 Email sent X
                 We have sent a link to confirm your email to epam@epam.com
             </div>
