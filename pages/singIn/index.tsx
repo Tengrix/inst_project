@@ -1,36 +1,3 @@
-// import { useRouter } from 'next/router';
-// import React from 'react'
-
-// export default function SingIn() {
-
-
-//     const router = useRouter();
-
-//   const goToSingUp = () => {
-//     router.push('/singUp');
-//   };
-
-
-//   return (
-//     <div>
-//          Sing In 
-
-//     <h1>
-//       <center>
-//         <br />
-//         <button onClick={goToSingUp }> GO Back to singUp </button>
-//       </center>
-//     </h1>
-    
-//     </div>
-
-    
-//   )
-// }
-
-
-
-
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useLoginMutation } from '../../api/apiSlice';
