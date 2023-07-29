@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
 import { TextArea } from '@/shared/ui/text-area';
+import { Captcha } from '@/shared/captcha/Captcha';
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {
@@ -55,6 +56,7 @@ const ForgotPassword = () => {
           <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
             Back to Sign In
           </Button>
+          <Captcha />
           {/* TODO */}
           {/* library : react-google-recaptcha-v3 //////// https://javascript.plainenglish.io/how-to-implement-google-recaptcha-v3-in-next-js-b1436e68c70a */}
         </Card>
