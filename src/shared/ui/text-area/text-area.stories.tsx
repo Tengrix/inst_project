@@ -23,6 +23,11 @@ export const Invalid: Story = {
     value: 'Please, fix style .error in typography.module.scss, ',
   },
 };
+export const Focus: Story = {
+  args: {
+    autofocus: true,
+  },
+};
 
 export const Disabled: Story = {
   args: {

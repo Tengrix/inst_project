@@ -33,7 +33,7 @@
 
   border-radius: 2px;
   outline: none;
-  box-shadow: 0 0 0 1px var(--color-dark-500);
+  box-shadow: 0 0 0 1px var(--color-light-100);
 
   transition: 0.3s;
 
@@ -43,17 +43,19 @@
 
   &:disabled {
     color: var(--color-dark-300);
+    box-shadow: 0 0 0 1px var(--color-dark-100);
   }
 
 
   &:focus,
   &:active:enabled {
-    box-shadow: 0 0 0 1px var(--color-light-100);
+    box-shadow: 0 0 0 1px var(--color-primary-700);
 
     &::placeholder {
       color: var(--color-dark-100);
     }
   }
+  
 
   &:hover:not(&:disabled) {
     background-color: var(--color-dark-700);
