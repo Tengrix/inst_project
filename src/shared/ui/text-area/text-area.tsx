@@ -50,7 +50,7 @@ export const TextArea: FC<TextAreaProps> = ({
         <Typography variant={'body2'} color={'inherit'} className={s.errorLabelText}>
           {label}
         </Typography>
-        <div className={s.inputContainer}>
+        <div className={s.textAreaContainer}>
           <textarea
             value={value}
             disabled={disabled}
