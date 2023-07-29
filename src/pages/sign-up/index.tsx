@@ -6,22 +6,16 @@ import {useState} from "react";
 import {Card} from "@/shared/ui/card";
 import {Typography} from "@/shared/ui/typography";
 import {Button} from "@/shared/ui/button";
-import {Github} from "../../../public/icon/github-logo";
-import {Google} from "../../../public/icon/google-logo";
+import {Github} from "public/icon/github-logo";
+import {Google} from "public/icon/google-logo";
 import {registerSchema} from "@/shared/utils/schemas/register-schema";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledTextField} from "@/shared/ui/controlled";
 import s from "./SignUp.module.scss"
 
-// export type SignUpFormData = {
-//     userName: string
-//     email: string
-//     password: string
-//     passwordConfirmation: string
-// };
-
 export type RegisterFormType = z.infer<typeof registerSchema>
+
 type RegisterFormPropsType = {
     linkPath: string
     onSubmitHandler: (data: RegisterFormType) => void

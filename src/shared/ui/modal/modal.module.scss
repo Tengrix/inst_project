@@ -1,0 +1,112 @@
+/* reset */
+button,
+fieldset,
+input {
+  all: unset;
+}
+
+.DialogOverlay {
+  //background-color: var(--accent-color-100);
+  position: fixed;
+  inset: 0;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent {
+  display: flex;
+  flex-direction: column;
+  border: var(--color-dark-100) 1px solid;
+  border-radius: 2px;
+  background-color: var(--color-dark-300);
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 378px;
+  min-height: 228px;
+  max-width: 450px;
+  max-height: 85vh;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent:focus {
+  outline: none;
+}
+
+.DialogTitle {
+  margin: 0;
+  font: var(--font-h1)
+}
+
+.DialogDescription {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font: var(--font-regular-400);
+  padding: 12px 24px;
+  height: 100%;
+}
+
+.Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  height: 35px;
+}
+
+.closeBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background-color: var(--color-dark-300);
+  box-shadow: none;
+}
+.okBtn {
+
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
+.border {
+  border: var(--color-dark-100) 1px solid;
+}
+
+
+.IconButton:hover {
+  background-color: var(--violet-4);
+}
+
+.IconButton:focus {
+  box-shadow: 0 0 0 2px var(--violet-7);
+}
+
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

@@ -13,6 +13,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
     "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@storybook/react": "^7.1.1",
