@@ -13,6 +13,10 @@ import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
 import { TextArea } from '@/shared/ui/text-area';
 import { Captcha } from '@/shared/captcha/Captcha';
+import { useRouter } from 'next/router';
+import { en } from 'locales/en';
+import { ru } from 'locales/ru';
+import { useTranslation } from './hooks/useTranslation';
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {
@@ -27,18 +31,15 @@ const ForgotPassword = () => {
   const { control, handleSubmit } = useForm<RegisterFormType>({
     resolver: zodResolver(registerSchema),
   });
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    /* onSubmitHandler(data);
-    setShowForgotModal(true);
-    signUp(data); */
-  });
+  const onSubmit = handleSubmit((data) => {});
+
+  const { t } = useTranslation();
 
   return (
     <>
       <div className={s.container}>
         <Card className={s.card}>
-          <Typography variant={'large'}>Forgot Password</Typography>
+          <Typography variant={'large'}>{t.auth.forgotPasswordPage.title}</Typography>
           <form onSubmit={onSubmit}>
             <ControlledTextField
               control={control}
@@ -47,20 +48,18 @@ const ForgotPassword = () => {
               className={s.email}
             />
             <Typography variant={'body2'} className={s.subtitle}>
-              Enter your email address and we will send you further instructions
+              {t.auth.forgotPasswordPage.enterYourEmailText}
             </Typography>
             <Button type={'submit'} fullWidth className={s.registerBtn}>
-              Send Link
+              {t.auth.form.button.sendLink}
             </Button>
           </form>
           <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
-            Back to Sign In
+            {t.auth.form.button.backToSignIn}
           </Button>
           <Captcha />
           {/* TODO */}
-          {/* library : react-google-recaptcha-v3 //////// https://javascript.plainenglish.io/how-to-implement-google-recaptcha-v3-in-next-js-b1436e68c70a */}
         </Card>
-        {/* <EmailSentModal handleClose={() => setShowForgotModal(false)} show={showForgotModal} /> */}
       </div>
     </>
   );
