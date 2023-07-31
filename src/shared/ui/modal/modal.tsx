@@ -2,7 +2,7 @@ import {ComponentPropsWithoutRef, ReactNode} from 'react'
 import {Button} from "@/shared/ui/button";
 import * as Dialog from '@radix-ui/react-dialog';
 import s from './modal.module.scss';
-import SvgComponent from "@/shared/ui/modal/cross";
+import Cross from "@/assets/svg/cross";
 
 type ModalPropsType = {
     modalTrigger: ReactNode,
@@ -11,10 +11,7 @@ type ModalPropsType = {
     className?: string
 } & ComponentPropsWithoutRef<'div'>
 
-export const Modal = ({children, className, title, modalTrigger}: ModalPropsType) => {
-    // const classNames = {
-    //     root: clsx(s.card, className),
-    // }
+export const Modal = ({children, title, modalTrigger}: ModalPropsType) => {
 
     return (
         <Dialog.Root>
@@ -27,7 +24,7 @@ export const Modal = ({children, className, title, modalTrigger}: ModalPropsType
                     <div className={s.modalHeader}>
                         <Dialog.Title className={s.DialogTitle}>{title}</Dialog.Title>
                         <Dialog.Close asChild>
-                            <Button className={s.closeBtn}><SvgComponent/></Button>
+                            <Button className={s.closeBtn}><Cross/></Button>
                         </Dialog.Close>
                     </div>
                     <hr className={s.border}/>

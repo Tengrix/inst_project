@@ -1,5 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react'
 import {Modal} from "@/shared/ui/modal/modal";
+import {Button} from "@/shared/ui/button";
 
 
 const meta = {
@@ -15,7 +16,7 @@ type Story = StoryObj<typeof meta>
 export const ModalExample: Story = {
   args: {
     title: "Modal title",
-    modalTrigger: (<button>Trigger button</button>) ,
+    modalTrigger: (<Button>Trigger button</Button>) ,
     children: (<div>This is modal window content</div>)
   },
 }
