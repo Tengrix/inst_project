@@ -1,0 +1,9 @@
+.links {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    margin: 10px 0;
+}
+.links img:first-child{
+    margin-right: 40px;
+}
