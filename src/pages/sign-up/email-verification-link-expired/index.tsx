@@ -1,5 +1,5 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
-import {useResendEmailConfirmationMutation} from "api/authApi";
+import {useResendEmailConfirmationMutation} from "src/api/authApi";
 import {useState} from "react";
 
 
