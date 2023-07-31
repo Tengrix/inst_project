@@ -6,7 +6,6 @@ export const LangSwitcher = () => {
   const { locale, push, pathname, query, asPath, locales } = useRouter();
 
   const changeLangHandler = (item: string) => {
-    //const locale = event.currentTarget.value;
     push({ pathname, query }, asPath, { locale: item });
   };
 
