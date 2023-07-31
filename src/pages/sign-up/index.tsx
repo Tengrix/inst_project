@@ -1,6 +1,6 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 import {useForm} from "react-hook-form";
-import {useSignUpMutation} from "api/authApi";
+import {useSignUpMutation} from "src/api/authApi";
 import EmailSentModal from "src/styles/styledComponents/Modal/EmailSentModal";
 import {useState} from "react";
 import {Card} from "@/shared/ui/card";
@@ -77,7 +77,7 @@ const SignUp = () => {
                     Sign In
                 </Button>
             </Card>
-            <EmailSentModal handleClose={() => setShowForgotModal(false)} show={showForgotModal}/>
+            {/*<EmailSentModal handleClose={() => setShowForgotModal(false)} show={showForgotModal}/>*/}
         </div>
     );
 }

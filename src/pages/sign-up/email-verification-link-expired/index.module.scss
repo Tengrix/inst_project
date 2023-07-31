@@ -1,0 +1,21 @@
+.container > *{
+  margin-top: 40px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.body{
+  width: 300px;
+}
+.container Button{
+  display: flex;
+  width: 250px;
+  justify-content: center;
+}
+.container img{
+  margin-top: 100px;
+  width: 600px;
+  height: 400px;
+}

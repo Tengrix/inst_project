@@ -9,12 +9,10 @@ export const Layout: NextPage<PropsWithChildren> = (props) => {
 
     return (
         <div>
-            <Provider store={store}>
-                <Header/>
-                <div>
-                    {children}
-                </div>
-            </Provider>
+            <Header/>
+            <div>
+                {children}
+            </div>
         </div>
     )
 }
