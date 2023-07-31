@@ -1,7 +1,7 @@
 import {ComponentPropsWithoutRef, ReactNode} from 'react'
 import {Button} from "@/shared/ui/button";
 import * as Dialog from '@radix-ui/react-dialog';
-import s from './modal.module.scss';
+import s from 'src/shared/ui/modal/Modal.module.scss';
 import Cross from "@/assets/svg/cross";
 
 type ModalPropsType = {

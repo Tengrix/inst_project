@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react'
-import {Modal} from "@/shared/ui/modal/modal";
+import {Modal} from "@/shared/ui/modal/Modal";
 import {Button} from "@/shared/ui/button";
 
 
