@@ -41,8 +41,19 @@ export const authApi = createApi({
                     }
                 }
             }),
+            forgotPassword:build.mutation<any,{email:string}>({
+                query:(data)=>{
+                    return {
+                        method:'POST',
+                        url:'/auth/password-recovery',
+                        body:{
+                            email:data.email
+                        }
+                    }
+                }
+            })
         }
     }
 })
 
-export const {useCheckAppQuery, useSignUpMutation, useResendEmailConfirmationMutation} = authApi
+export const {useCheckAppQuery, useSignUpMutation, useResendEmailConfirmationMutation, useForgotPasswordMutation} = authApi

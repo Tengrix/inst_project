@@ -2,15 +2,22 @@ import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import s from './Captcha.module.scss';
 
-export const Captcha = () => {
+type CaptchaPropsType = {
+  changeCaptchaValue: (captchIsDone: boolean) => void;
+};
+
+export const Captcha = ({ changeCaptchaValue }: CaptchaPropsType) => {
   const [captchIsDone, setCaptchaIsDone] = useState(false);
-  const key = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+  const key = process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY as string;
+
   const onChange = () => {
     setCaptchaIsDone(true);
+    changeCaptchaValue(captchIsDone);
   };
+
   return (
     <div className={s.captcha}>
-      <ReCAPTCHA sitekey={key} onChange={onChange} />
+      <ReCAPTCHA theme={'dark'} sitekey={key} onChange={onChange} />
     </div>
   );
 };
