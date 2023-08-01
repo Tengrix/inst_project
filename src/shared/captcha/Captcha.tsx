@@ -10,7 +10,7 @@ export const Captcha = () => {
   };
   return (
     <div className={s.captcha}>
-      <ReCAPTCHA sitekey={key} onChange={onChange} />
+      <ReCAPTCHA  sitekey={key} onChange={onChange} />
     </div>
   );
 };

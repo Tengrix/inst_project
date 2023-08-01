@@ -1,22 +1,16 @@
-import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import { useForm } from 'react-hook-form';
-import { useSignUpMutation } from 'api/authApi';
-import EmailSentModal from 'src/styles/styledComponents/Modal/EmailSentModal';
-import { useState } from 'react';
-import { Card } from '@/shared/ui/card';
-import { Typography } from '@/shared/ui/typography';
-import { Button } from '@/shared/ui/button';
-import { registerSchema } from '@/shared/utils/schemas/register-schema';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ControlledTextField } from '@/shared/ui/controlled';
+import {getLayout} from 'src/components/Layout/BaseLayout/BaseLayout';
+import {useForm} from 'react-hook-form';
+import {Card} from '@/shared/ui/card';
+import {Typography} from '@/shared/ui/typography';
+import {Button} from '@/shared/ui/button';
+import {registerSchema} from '@/shared/utils/schemas/register-schema';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {ControlledTextField} from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
-import { TextArea } from '@/shared/ui/text-area';
-import { Captcha } from '@/shared/captcha/Captcha';
-import { useRouter } from 'next/router';
-import { en } from 'locales/en';
-import { ru } from 'locales/ru';
-import { useTranslation } from './hooks/useTranslation';
+import {Captcha} from '@/shared/captcha/Captcha';
+import {useTranslation} from './hooks/useTranslation';
+import {useSignUpMutation} from "@/api/authApi";
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {
@@ -25,13 +19,18 @@ type RegisterFormPropsType = {
 };
 
 const ForgotPassword = () => {
-  /*   const [showForgotModal, setShowForgotModal] = useState(false);
+
   const [signUp] = useSignUpMutation();
-  const onSubmitHandler = (data: RegisterFormType) => console.log(data); */
+
   const { control, handleSubmit } = useForm<RegisterFormType>({
     resolver: zodResolver(registerSchema),
-  });
-  const onSubmit = handleSubmit((data) => {});
+  })
+
+  const onSubmit = handleSubmit((data) => {
+
+
+  })
+
 
   const { t } = useTranslation();
 
