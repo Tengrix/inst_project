@@ -10,7 +10,7 @@ import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
 import { Captcha } from '@/shared/captcha/Captcha';
 import { useTranslation } from './hooks/useTranslation';
-import { useForgotPasswordMutation } from '@/api/authApi';
+import { usePasswordRecoveryMutation} from '@/api/authApi';
 import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
 import { useState } from 'react';
 
@@ -21,7 +21,7 @@ type ForgotPasswordFormPropsType = {
 };
 
 const ForgotPassword = () => {
-  const [forgotPassword] = useForgotPasswordMutation();
+  const [forgotPassword] = usePasswordRecoveryMutation();
   const onSubmitHandler = (data: ForgotPasswordFormType) => console.log(data);
 
   const { control, handleSubmit } = useForm<ForgotPasswordFormType>({

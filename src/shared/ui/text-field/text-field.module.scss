@@ -52,6 +52,8 @@
 }
 
 .input {
+  all: unset;
+
   cursor: auto;
 
   display: inline-flex;
@@ -67,7 +69,8 @@
 
   border-radius: 2px;
   outline: none;
-  box-shadow: 0 0 0 1px var(--color-dark-500);
+  //box-shadow: 0 0 0 1px var(--color-dark-500);
+  border: 1px solid var(--color-dark-100);
 
   transition: 0.3s;
 

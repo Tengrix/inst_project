@@ -21,7 +21,7 @@ type SelectPropsType = {
 const Select = ({selectLabel, placeHolder, items, onValueChange, disabled = false}: SelectPropsType) => {
 
         const renderingItems = items.map(item => (
-            <SelectComponent.Item className={s.SelectItem} value={item.title.toLowerCase()}>
+            <SelectComponent.Item key={item.title.toLowerCase()} className={s.SelectItem} value={item.title}>
                 {item.icon && <SelectComponent.Icon className={s.SelectIcon}>
                     {item.icon}
                 </SelectComponent.Icon>}
