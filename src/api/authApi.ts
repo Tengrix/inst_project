@@ -18,7 +18,9 @@ export const authApi = createApi({
                 }
             }),
             getMe: builder.query({
-                query: () => '/auth/refresh-token'
+                query: () => ({
+                    url:'/auth/refresh-token'
+                })
             }),
             signUp: builder.mutation<void, RegisterParamsType>({
                 query: (data) => {
