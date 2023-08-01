@@ -13,8 +13,7 @@ export const LangSwitcher = () => {
       'english': 'en'
   }
   const changeLangHandler = (item: string) => {
-    //const locale = event.currentTarget.value;
-    push({ pathname, query }, asPath, { locale: languages[item]});
+    push({ pathname, query }, asPath, { locale: item });
   };
 
   return (
