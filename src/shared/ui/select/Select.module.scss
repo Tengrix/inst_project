@@ -9,7 +9,7 @@
 }
 
 .label {
-  font: var(--font-medium-400);
+  font: var(--font-regular-14);
   color: var(--color-light-900);
 }
 
@@ -21,7 +21,7 @@
   border: var(--color-dark-100) 1px solid;
   border-radius: 2px;
   padding: 0 15px;
-  font: var(--font-regular-400);
+  font: var(--font-regular-16);
   height: 36px;
   width: 210px;
   gap: 5px;
@@ -65,7 +65,7 @@
 }
 
 .SelectItem {
-  font: var(--font-regular-400);
+  font: var(--font-regular-16);
   border-radius: 2px;
   display: flex;
   align-items: center;
