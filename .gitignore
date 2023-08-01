@@ -5,8 +5,8 @@
 /.pnp
 .pnp.js
 .idea
-package-lock.json
-
+.storybook
+.stories
 # testing
 /coverage
 
