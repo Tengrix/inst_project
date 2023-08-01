@@ -5,8 +5,6 @@
 /.pnp
 .pnp.js
 .idea
-.storybook
-.stories
 # testing
 /coverage
 
