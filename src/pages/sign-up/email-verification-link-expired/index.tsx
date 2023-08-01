@@ -1,5 +1,5 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
-import React, {useState} from "react";
+import React from "react";
 import {useResendEmailConfirmationMutation} from "@/api/authApi";
 import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
