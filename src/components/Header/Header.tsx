@@ -6,7 +6,7 @@ const Header = () => (
   <div className={classes.header}>
     <div className={classes.container}>
       <h2>Inctagram</h2>
-
+<h2>HELLO FROM MIKHAIL </h2>
       <Link href={'/sign-in'}>
         <h2>Sign In</h2>
       </Link>
@@ -16,7 +16,7 @@ const Header = () => (
       </Link>
 
       <Link href={'/forgot-password'}>
-        <h2>Forgot Password</h2>
+        <h2>Forgot Password </h2>
       </Link>
 
       <Link href={'/forgot-password/link-has-been-sent'}>
