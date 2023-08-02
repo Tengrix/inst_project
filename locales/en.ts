@@ -1,4 +1,4 @@
-import { LocaleType } from "./ru";
+/* import { LocaleType } from "./ru";
 
 export const en : LocaleType = {
     auth:{
@@ -74,4 +74,6 @@ export const en : LocaleType = {
         },
     }
     }, 
-}
+} */
+
+//deprecated
