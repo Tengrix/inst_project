@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const Header: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -62,7 +62,7 @@ const Header: React.FC = () => {
         <button className={styles.languageButton} onClick={() => setShowLanguages(!showLanguages)}>
           <img src={getCurrentFlag()} alt="Current Language" className={styles.languageFlag}/>
           <span>{getCurrentLanguage()}</span>
-          <FontAwesomeIcon icon={faChevronDown} className={`${showLanguages ? styles.arrowUp : styles.arrowDown}`} />
+          <div className={`${styles.arrow} ${showLanguages ? styles.arrowUp : ''}`} />
         </button>
       </div>
     </header>
