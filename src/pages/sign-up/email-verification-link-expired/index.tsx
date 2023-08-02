@@ -3,8 +3,7 @@ import React from "react";
 import {useResendEmailConfirmationMutation} from "@/api/authApi";
 import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
-import img from '@/../public/sign_up/expiredLink.png'
-import CustomTabs from "@/shared/ui/tabs/Tabs";
+import img from 'public/assets/expiredLink.png'
 import Image from "next/image";
 
 const EmailVerificationLinkExpired = () => {
@@ -23,7 +22,7 @@ const EmailVerificationLinkExpired = () => {
                     Resend verification link
                 </Button>
             </div>
-            <Image src={img.src} alt=""/>
+            <Image src={img.src} alt="" width={473} height={352}/>
         </div>
     );
 }

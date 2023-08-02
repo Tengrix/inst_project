@@ -7,10 +7,6 @@ const Header = () => (
     <div className={classes.container}>
       <h2>Inctagram</h2>
 
-      <Link href={'/'}>
-        <h2>Home</h2>
-      </Link>
-
       <Link href={'/sign-in'}>
         <h2>Sign In</h2>
       </Link>
