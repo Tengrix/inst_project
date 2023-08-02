@@ -4,6 +4,7 @@ import {useResendEmailConfirmationMutation} from "@/api/authApi";
 import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
 import img from '@/../public/sign_up/expiredLink.png'
+import CustomTabs from "@/shared/ui/tabs/Tabs";
 
 const EmailVerificationLinkExpired = () => {
     const [resendEmailConfirmation] = useResendEmailConfirmationMutation()
