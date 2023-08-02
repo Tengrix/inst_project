@@ -1,50 +1,88 @@
 .registration-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;  /* Высота во всю высоту экрана */
-    background-color: #f5f5f5;
-  }
-  
-  .registration-title {
-    color: #333;
-    margin-bottom: 30px;
-  }
-  
-  .registration-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-  }
-  
-  .registration-label {
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
-  .registration-input {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .registration-button, .registration-back-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #0070f3;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .registration-button:hover, .registration-back-button:hover {
-    background-color: #0051bb;
-  }
-  
-  .registration-center {
-    margin-top: 20px;
-  }
-  
+  max-width: 378px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #302c2c;
+  border-radius: 1px;
+  height: 630px;
+  background-color: #171717;
+}
+
+.registration-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  justify-content: space-between;
+}
+
+.registration-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; 
+}
+
+.registration-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+
+.registration-input, .registration-input-error {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #302c2c;
+  border-radius: 2px;
+  background-color: #171717; 
+}
+
+.registration-input-error {
+  border-color: red; 
+  border-radius: 5px;
+}
+
+
+.registration-error {
+  color: red;
+  font-size: 10px;
+  margin-bottom: -5px; 
+  height: 15px; 
+}
+
+.registration-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+.registration-button:hover {
+  background-color: #0056b3;
+}
+
+.registration-center {
+  text-align: center;
+}
+
+.registration-back-button {
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.registration-back-button:hover {
+  background-color: #ccc;
+}

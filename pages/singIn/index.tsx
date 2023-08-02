@@ -2,27 +2,28 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useLoginMutation } from '../../api/apiSlice';
 import styles from './singIn.module.css';
-
+import { useTranslation } from 'react-i18next';
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState(''); 
   const [password, setPassword] = useState('');
-  const [login, { isLoading }] = useLoginMutation();
+  const [loginMutation, { isLoading }] = useLoginMutation();
   const router = useRouter();
+  const { t } = useTranslation();
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLogin(event.target.value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handleLogin = async (event: React.FormEvent) => {
+  const handleLoginSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const credentials = { email, password };
+    const credentials = { login, password };
     try {
-      await login(credentials).unwrap();
+      await loginMutation(credentials).unwrap();
       router.push('/');
     } catch (error: any) {
       if ('message' in error) {
@@ -39,18 +40,32 @@ export default function SignIn() {
   };
 
   return (
-    <div className="sign-in-container">
-      <h1 className="sign-in-header">Sign In</h1>
+    <div className={styles.signInContainer}>
+      <h1 className={styles.signInHeader}>{t('signIn')}</h1>
 
-      <form className="sign-in-form" onSubmit={handleLogin}>
-        <input className="sign-in-input" type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-        <input className="sign-in-input" type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        <button className="sign-in-button" type="submit" disabled={isLoading}>
-          Login
+      <form className={styles.signInForm} onSubmit={handleLoginSubmit}>
+        <input 
+          className={styles.signInInput} 
+          type="text" 
+          placeholder={t('username')} 
+          value={login} 
+          onChange={handleLoginChange} 
+        />
+
+        <input 
+          className={styles.signInInput} 
+          type="password" 
+          placeholder={t('password')} 
+          value={password} 
+          onChange={handlePasswordChange} 
+        />
+
+        <button className={styles.signInButton} type="submit" disabled={isLoading}>
+          {t('login')}
         </button>
       </form>
 
-      <button className="sign-in-to-sign-up-button" onClick={goToSignUp}>Go back to signUp</button>
+      <button className={styles.signInToSignUpButton} onClick={goToSignUp}>{t('goBackToSignUp')}</button>
     </div>
   );
 }

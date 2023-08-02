@@ -1,0 +1,14 @@
+{
+  "signUp": "Sign Up",
+  "Username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "registrationFailed": "Registration failed, please try again.",
+  "registrationSuccessful": "Registration successful! Please confirm your registration",
+  "goBackToSignIn": "Go Back to Sign In",
+  "Password Confirmation": "Password Confirmation",
+  
+  "signIn": "Sign In"
+}
+
+

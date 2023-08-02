@@ -1,18 +1,20 @@
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
-import { FC } from 'react'; // Импортируем тип FC (Functional Component) из библиотеки React
-
-import {store} from '../redux/store'; // Путь к вашему Redux store
+import { I18nextProvider } from 'react-i18next';
+import { store } from '../redux/store';
 import '../styles/globals.css';
+import Header from '@/component/Header/Header';
+import i18n from '../component/Header/Locales/i18n';
 
-const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <Header />
+        <Component {...pageProps} />
+      </Provider>
+    </I18nextProvider>
   );
 }
 
 export default MyApp;
-
-
