@@ -3,9 +3,6 @@ import React, {ReactElement, ReactNode} from 'react';
 import {NextPage} from 'next';
 import '@/styles/variables/index.scss';
 import {NextIntlClientProvider} from 'next-intl';
-import type {AppProps} from 'next/app'
-import React, {ReactElement, ReactNode} from "react";
-import {NextPage} from "next";
 import '@/styles/variables/index.scss'
 import {Provider} from "react-redux";
 import {store} from "@/store";
