@@ -3,6 +3,7 @@ import Link from "next/link";
 import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
 import img from '../../../../public/sign_up/emailConfirmation.png'
+import Image from "next/image";
 
 const EmailConfirmed = () => (
     <div className={s.container}>
@@ -13,7 +14,7 @@ const EmailConfirmed = () => (
                 Sign in
             </Button>
         </Link>
-        <img src={img.src} alt=''/>
+        <Image src={img.src} alt=''/>
     </div>
 )
 

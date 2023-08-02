@@ -5,6 +5,7 @@ import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
 import img from '@/../public/sign_up/expiredLink.png'
 import CustomTabs from "@/shared/ui/tabs/Tabs";
+import Image from "next/image";
 
 const EmailVerificationLinkExpired = () => {
     const [resendEmailConfirmation] = useResendEmailConfirmationMutation()
@@ -22,7 +23,7 @@ const EmailVerificationLinkExpired = () => {
                     Resend verification link
                 </Button>
             </div>
-            <img src={img.src} alt=""/>
+            <Image src={img.src} alt=""/>
         </div>
     );
 }

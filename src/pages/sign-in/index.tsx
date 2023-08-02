@@ -9,7 +9,7 @@ import {Button} from "@/shared/ui/button";
 import {Github} from "public/icon/github-logo";
 import {Google} from "public/icon/google-logo";
 import {ControlledTextField} from "@/shared/ui/controlled";
-import {loginSchema} from "@/shared/utils/schemas/login-schema";
+import {loginSchema} from "@/shared/utils/schemas/loginSchema";
 import {useLoginMutation} from "@/api/authApi";
 
 
