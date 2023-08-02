@@ -1,27 +1,28 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
-import {useResendEmailConfirmationMutation} from "src/api/authApi";
-import {useState} from "react";
-
+import React from "react";
+import {useResendEmailConfirmationMutation} from "@/api/authApi";
+import s from './index.module.scss'
+import {Button} from "@/shared/ui/button";
+import img from '@/../public/sign_up/expiredLink.png'
+import CustomTabs from "@/shared/ui/tabs/Tabs";
 
 const EmailVerificationLinkExpired = () => {
     const [resendEmailConfirmation] = useResendEmailConfirmationMutation()
-    const [email,setEmail] = useState('')
 
     const resendHandler = () => {
-        resendEmailConfirmation({email: email})
+        // resendEmailConfirmation({email: email})
     }
 
     return (
-        <div>
+        <div className={s.container}>
             <h2>Email verification link expired</h2>
-            <div> Looks like the verification link has expired. Not to worry, we can send the link again</div>
-            <input
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}
-                type="text"/>
-            <button onClick={resendHandler}>
-                Resend verification link
-            </button>
+            <div className={s.body}> Looks like the verification link has expired. Not to worry, we can send the link again</div>
+            <div>
+                <Button variant='primary' onClick={resendHandler}>
+                    Resend verification link
+                </Button>
+            </div>
+            <img src={img.src} alt=""/>
         </div>
     );
 }

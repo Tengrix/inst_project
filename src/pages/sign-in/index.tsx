@@ -9,44 +9,27 @@ import {Button} from "@/shared/ui/button";
 import {Github} from "public/icon/github-logo";
 import {Google} from "public/icon/google-logo";
 import {ControlledTextField} from "@/shared/ui/controlled";
+import {loginSchema} from "@/shared/utils/schemas/login-schema";
+import {useLoginMutation} from "@/api/authApi";
 
 
-export type RegisterFormType = z.infer<typeof registerSchema>
+export type LoginFormType = z.infer<typeof loginSchema>
 
-//
-// export const getStaticProps = async () => {
-//     return {
-//         props: {
-//         }
-//     }
-// }
-//
-// type PropsType = {
-//     data: void
-// }
 
-export type SignInFormData = {
-    email: string
-    password: string
-
-};
-
-type RegisterFormPropsType = {
+type LoginFormPropsType = {
     linkPath: string
-    onSubmitHandler: (data: RegisterFormType) => void
+    onSubmitHandler: (data: LoginFormType) => void
 }
 
 const SignIn = () => {
 
+    const [signIn] = useLoginMutation()
 
-
-    const onSubmitHandler = (data: RegisterFormType) => console.log(data)
-    const {control, handleSubmit} = useForm<RegisterFormType>()
+    const onSubmitHandler = (data: LoginFormType) => console.log(data)
+    const {control, handleSubmit} = useForm<LoginFormType>()
     const onSubmit = handleSubmit(data => {
-        console.log(data)
         onSubmitHandler(data)
-        //setShowForgotModal(true)
-        //signUp(data)
+        signIn({password: data.password, login: data.userName})
     })
 
     return (
@@ -67,8 +50,8 @@ const SignIn = () => {
                     </div>
                 </div>
                 <form className={classes.form} onSubmit={onSubmit}>
-                    <ControlledTextField control={control} name={'email'} label={'Email'} />
-                    <ControlledTextField control={control} name={'password'} label={'Password'} type={'password'} />
+                    <ControlledTextField control={control} name={'userName'} label={'Username'}/>
+                    <ControlledTextField control={control} name={'password'} label={'Password'} type={'password'}/>
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         Forgot Password?
                     </Link>

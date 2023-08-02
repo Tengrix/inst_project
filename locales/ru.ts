@@ -1,4 +1,4 @@
-export const ru = {
+/* export const ru = {
     auth:{
         signInPage:{
             title:'Войти',
@@ -73,4 +73,7 @@ export const ru = {
     }
     },  
   }
-export type LocaleType = typeof ru  
+export type LocaleType = typeof ru   */
+
+
+//deprecated
