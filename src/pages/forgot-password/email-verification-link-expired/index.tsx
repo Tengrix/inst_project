@@ -5,6 +5,7 @@ import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
 import img from '@/../public/sign_up/expiredLink.png'
 import {Modal} from "@/shared/ui/modal/Modal";
+import Image from "next/image";
 
 const EmailVerificationLinkExpired = () => {
     const [forgotPassword] = usePasswordRecoveryMutation();
@@ -29,7 +30,7 @@ const EmailVerificationLinkExpired = () => {
                     We have sent a link to confirm your email to EMAIL
                 </Modal>
             </div>
-            <img src={img.src} alt=""/>
+            <Image src={img.src} alt=""/>
         </div>
     );
 }
