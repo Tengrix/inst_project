@@ -1,47 +1,45 @@
-import Link from 'next/link';
-import classes from '@/components/Header/Header.module.css';
-import { LangSwitcher } from '../langSwitcher/LangSwitcher';
+import { useState } from 'react';
+import styles from './styles.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
-const Header = () => (
-  <div className={classes.header}>
-    <div className={classes.container}>
-      <h2>Inctagram</h2>
-<h2>HELLO FROM MIKHAIL </h2>
-      <Link href={'/sign-in'}>
-        <h2>Sign In</h2>
-      </Link>
+const Header: React.FC = () => {
+  const [showLanguages, setShowLanguages] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState({lang: 'English', flag: '/assets/eng.png'});
 
-      <Link href={'/sign-up'}>
-        <h2>Sign Up</h2>
-      </Link>
+  const selectLanguage = (lang: string, flag: string) => {
+    setCurrentLanguage({lang, flag});
+    setShowLanguages(false);
+  }
 
-      <Link href={'/forgot-password'}>
-        <h2>Forgot Password </h2>
-      </Link>
-
-      <Link href={'/forgot-password/link-has-been-sent'}>
-        <h2>Forgot Password/Link sent</h2>
-      </Link>
-
-      <Link href={'/forgot-password/email-verification-link-expired'}>
-        <h2>Forgot Password/Link expired</h2>
-      </Link>
-
-      <Link href={'/forgot-password/create-new-password'}>
-        <h2>Create new password</h2>
-      </Link>
-
-      <Link href={'/sign-up/email-confirmed'}>
-        <h2>Email confirmation</h2>
-      </Link>
-
-      <Link href={'/sign-up/email-verification-link-expired'}>
-        <h2>Email Verification Link Expired</h2>
-      </Link>
-
-      <LangSwitcher />
-    </div>
-  </div>
-);
+  return (
+    <header className={styles.header}>
+      <div className={styles.text}>
+        <h1>Inctagram</h1>
+      </div>
+      <div className={styles.languageSelector}>
+        <div className={styles.notificationIcon}>
+          <FontAwesomeIcon icon={faBell} />
+        </div>
+        <ul className={`${styles.languageList} ${showLanguages ? styles.active : ''}`}>
+          <li className={styles.languageItem} onClick={() => selectLanguage('English', '/assets/eng.png')}>
+            <img src="/assets/eng.png" alt="English" className={styles.languageFlag}/> 
+            English
+          </li>
+          <li className={styles.languageItem} onClick={() => selectLanguage('Русский', '/assets/ru.png')}>
+            <img src="/assets/ru.png" alt="Russian" className={styles.languageFlag}/> 
+            Русский
+          </li>
+        </ul>
+        <button className={styles.languageButton} onClick={() => setShowLanguages(!showLanguages)}>
+          <img src={currentLanguage.flag} alt="Current Language" className={styles.languageFlag}/>
+          <span>{currentLanguage.lang}</span>
+          <div className={`${showLanguages ? styles.arrowUp : styles.arrowDown}`}></div>
+        </button>
+      </div>
+    </header>
+  );
+};
 
 export default Header;
+
