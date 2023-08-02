@@ -19,9 +19,12 @@ export const LangSwitcher = () => {
     };
 
     const items = Object.keys(languages).map(lang => ({title: lang, icon: ''}))
+    const curItem = items.filter(item=>languages[item.title]===locale)[0]
+
 
     return (
         <Select
+            defaultValue={curItem}
             items={items}
             onValueChange={changeLangHandler}
         />

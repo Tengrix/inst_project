@@ -14,12 +14,13 @@ type SelectPropsType = {
     selectLabel?: string
     placeHolder?: string
     items: ItemType[]
+    defaultValue?: ItemType
     onValueChange: (item: string) => void
     disabled?: boolean
 }
 
-const Select = ({selectLabel, placeHolder, items, onValueChange, disabled = false}: SelectPropsType) => {
-
+const Select = ({selectLabel, placeHolder, items, onValueChange, disabled = false, defaultValue}: SelectPropsType) => {
+        console.log(defaultValue)
         const renderingItems = items.map(item => (
             <SelectComponent.Item key={item.title.toLowerCase()} className={s.SelectItem} value={item.title}>
                 {item.icon && <SelectComponent.Icon className={s.SelectIcon}>
@@ -38,7 +39,7 @@ const Select = ({selectLabel, placeHolder, items, onValueChange, disabled = fals
                     <Label className={s.label} htmlFor={selectLabel.toLowerCase()}>
                         {selectLabel}
                     </Label>}
-                <SelectComponent.Root disabled={disabled} onValueChange={(e) => onValueChange(e)}>
+                <SelectComponent.Root  disabled={disabled} onValueChange={(e) => onValueChange(e)}>
                     <SelectComponent.Trigger id={selectLabel ? selectLabel.toLowerCase() : ''} className={s.SelectTrigger}>
                         <SelectComponent.Value placeholder={placeHolder ? placeHolder : items[0].title}/>
                         <SelectComponent.Icon className={s.SelectIcon}>
