@@ -1,13 +1,18 @@
 import {z} from 'zod'
 
-export const loginSchema = z
+export const createNewPasswordSchema = z
     .object({
-        userName: z.string().trim().min(6, 'Username must be at least 6 characters long').max(30, 'Username can\'t be longer than 30 characters'),
         password: z
             .string()
             .trim()
             .nonempty('Enter password')
-            .min(8, 'Password must be at least 8 characters'),
+            .min(6, 'Password must be at least 6 characters')
+            .max(20,'Password can not be longer than 20 characters'),
+        confirmPassword: z.string().trim(),
+    })
+    .refine(data => data.password === data.confirmPassword, {
+        message: "Passwords don't match",
+        path: ['confirmPassword'],
     })
 
 // refine(async (username) => {

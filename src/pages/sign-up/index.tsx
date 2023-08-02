@@ -7,7 +7,7 @@ import {Typography} from "@/shared/ui/typography";
 import {Button} from "@/shared/ui/button";
 import {Github} from "public/icon/github-logo";
 import {Google} from "public/icon/google-logo";
-import {registerSchema} from "@/shared/utils/schemas/register-schema";
+import {registerSchema} from "@/shared/utils/schemas/registerSchema";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledTextField} from "@/shared/ui/controlled";
@@ -21,14 +21,11 @@ type RegisterFormPropsType = {
 }
 
 const SignUp = () => {
-    const [showForgotModal, setShowForgotModal] = useState(false)
     const [signUp] = useSignUpMutation()
     const onSubmitHandler = (data: RegisterFormType) => console.log(data)
     const {control, handleSubmit} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
     const onSubmit = handleSubmit(data => {
-        console.log(data)
         onSubmitHandler(data)
-        setShowForgotModal(true)
         signUp(data)
     })
 

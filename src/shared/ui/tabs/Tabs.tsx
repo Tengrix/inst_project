@@ -14,12 +14,12 @@ const CustomTabs = ({tabs}: TabsPropsType) => {
     return (
         <Tabs.Root className={s.TabsRoot} defaultValue="tab1">
             <Tabs.List className={s.TabsList}>
-                {tabs.map(el => <Tabs.Trigger className={s.TabsTrigger} value={el.title}>
+                {tabs.map(el => <Tabs.Trigger key={el.title} className={s.TabsTrigger} value={el.title}>
                     {el.title}
                 </Tabs.Trigger>)}
             </Tabs.List>
             {tabs.map(el =>
-                <Tabs.Content className={s.TabsContent} value={el.title}>
+                <Tabs.Content key={el.title} className={s.TabsContent} value={el.title}>
                     <fieldset className={s.Fieldset}>
                         {el.children}
                     </fieldset>
