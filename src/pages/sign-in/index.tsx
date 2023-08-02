@@ -4,12 +4,14 @@ import { Button } from "@/shared/ui/button";
 import { ControlledTextField } from "@/shared/ui/controlled";
 import { Typography } from "@/shared/ui/typography";
 import { loginSchema } from "@/shared/utils/schemas/login-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from 'next-intl';
 import Link from "next/link";
+import { GetStaticPropsContext } from "next/types";
 import { Github } from "public/icon/github-logo";
 import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import { useTranslations } from 'next-intl';
 import { z } from "zod";
 
 
@@ -31,10 +33,10 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 const SignIn = () => {
     const [signIn] = useLoginMutation();
     const t = useTranslations('auth');
-    const onSubmitHandler = (data: LoginFormType) => console.log(data);
-    const {control, handleSubmit} = useForm<LoginFormType>();
+    //const onSubmitHandler = (data: LoginFormType) => console.log(data);
+    const {control, handleSubmit} = useForm<LoginFormType>({resolver: zodResolver(loginSchema)});
     const onSubmit = handleSubmit(data => {
-        onSubmitHandler(data);
+        //onSubmitHandler(data);
         signIn({password: data.password, login: data.userName});
     })
 
@@ -54,13 +56,13 @@ const SignIn = () => {
                 </div>
             </div>
             <form className={classes.form} onSubmit={onSubmit}>
-                <ControlledTextField control={control} name={'email'} label={'Email'} />
+                <ControlledTextField control={control} name={'userName'} label={'Username'} />
                 <ControlledTextField control={control} name={'password'} label={'Password'} type={'password'} />
                 <Link href={'/forgot-password'} className={classes.form__forgot}>
                     {t('signInPage.forgotPassword')}?
                 </Link>
-                <Button type={'submit'} fullWidth>
-                    {t('form.button.signInButton')}
+                <Button type={'submit'} className={classes.form__btn} fullWidth>
+                    {t('button.signInButton')}
                 </Button>
             </form>
             <div className={classes.footer}>
