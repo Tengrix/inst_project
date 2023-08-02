@@ -22,7 +22,7 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
         <Provider store={store}>
             <NextIntlClientProvider messages={pageProps.messages}>
                 <Component {...pageProps} />
-            </NextIntlClientProvider>,
+            </NextIntlClientProvider>
         </Provider>
     );
 }
