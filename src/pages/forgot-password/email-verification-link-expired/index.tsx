@@ -3,7 +3,7 @@ import React from "react";
 import {usePasswordRecoveryMutation} from "@/api/authApi";
 import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
-import img from '@/../public/sign_up/expiredLink.png'
+import img from 'public/assets/expiredLink.png'
 import {Modal} from "@/shared/ui/modal/Modal";
 import Image from "next/image";
 
@@ -30,7 +30,7 @@ const EmailVerificationLinkExpired = () => {
                     We have sent a link to confirm your email to EMAIL
                 </Modal>
             </div>
-            <Image src={img.src} alt=""/>
+            <Image src={img.src} alt="" width={473} height={352}/>
         </div>
     );
 }

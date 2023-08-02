@@ -19,7 +19,7 @@ const CustomTabs = ({tabs}: TabsPropsType) => {
                 </Tabs.Trigger>)}
             </Tabs.List>
             {tabs.map(el =>
-                <Tabs.Content className={s.TabsContent} value={el.title}>
+                <Tabs.Content key={el.title} className={s.TabsContent} value={el.title}>
                     <fieldset className={s.Fieldset}>
                         {el.children}
                     </fieldset>
