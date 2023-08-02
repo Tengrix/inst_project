@@ -37,7 +37,6 @@
   justify-content: space-between;
 }
 
-
 .languageButton img {
   margin-left: -7px; 
 }
@@ -74,7 +73,7 @@
 }
 
 .languageList.active {
-  display: block;
+  display: block;  
 }
 
 .languageItem {
@@ -87,4 +86,16 @@
 
 .notificationIcon {
   margin-right: 100px;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #ffffff;
+}
+
+.arrow-up {
+  transform: rotate(180deg);
 }
