@@ -1,14 +1,13 @@
 import {z} from 'zod'
 
-export const registerSchema = z
+export const createNewPasswordSchema = z
     .object({
-        userName: z.string().trim().min(6, 'Username must be at least 6 characters long').max(30, 'Username can\'t be longer than 30 characters'),
-        email: z.string().trim().nonempty('Enter email').email('Invalid email address'),
         password: z
             .string()
             .trim()
             .nonempty('Enter password')
-            .min(8, 'Password must be at least 8 characters'),
+            .min(6, 'Password must be at least 6 characters')
+            .max(20,'Password can not be longer than 20 characters'),
         confirmPassword: z.string().trim(),
     })
     .refine(data => data.password === data.confirmPassword, {
