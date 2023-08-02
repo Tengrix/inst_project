@@ -1,0 +1,26 @@
+@mixin flex-block(
+  $display: flex,
+  $flex-direction: column,
+  $justify-content: center,
+  $align-items: center,
+  $gap: 0 px
+) {
+  display: $display;
+  flex-direction: $flex-direction;
+  gap: $gap;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}
+
+@mixin typography(
+  $fs: var(--font-size-m),
+  $lh: var(--line-height-m),
+  $fw: var(--font-weight-regular)
+) {
+  margin: 0;
+  padding: 0;
+
+  font-size: $fs;
+  font-weight: $fw;
+  line-height: $lh;
+}
