@@ -10,9 +10,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPasswordLinkHasBeenSent.module.css';
-import { useForgotPasswordMutation, useSignUpMutation } from '@/api/authApi';
 import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
+import { usePasswordRecoveryMutation } from '@/api/authApi';
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {
@@ -28,14 +28,14 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 }
 
 const ForgotPasswordLinkHasBeenSent = () => {
-  const [forgotPassword] = useForgotPasswordMutation();
+  const [passwordRecovery] = usePasswordRecoveryMutation();
   const onSubmitHandler = (data: RegisterFormType) => console.log(data);
   const { control, handleSubmit } = useForm<RegisterFormType>({
     resolver: zodResolver(registerSchema),
   });
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    forgotPassword(data);
+    passwordRecovery(data);
   });
   const t = useTranslations('auth');
 
