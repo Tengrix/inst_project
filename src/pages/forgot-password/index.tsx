@@ -8,11 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
 import { Captcha } from '@/shared/captcha/Captcha';
-import { usePasswordRecoveryMutation} from '@/api/authApi';
+import { usePasswordRecoveryMutation } from '@/api/authApi';
 import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
+import { TextArea } from '@/shared/ui/text-area';
 
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
 type ForgotPasswordFormPropsType = {
@@ -63,7 +64,7 @@ const ForgotPassword = () => {
               type={'submit'}
               fullWidth
               className={s.registerBtn}
-              disabled={buttonSendLinkDisabled}
+              //disabled={buttonSendLinkDisabled}
             >
               {t('button.sendLink')}
             </Button>
