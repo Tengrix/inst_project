@@ -7,7 +7,8 @@ export const loginSchema = z
             .string()
             .trim()
             .nonempty('Enter password')
-            .min(8, 'Password must be at least 8 characters'),
+            .min(6, 'Password must be at least 6 characters')
+            .max(20,'Password can not be longer than 20 characters'),
     })
 
 // refine(async (username) => {
