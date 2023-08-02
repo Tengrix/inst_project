@@ -3,7 +3,7 @@ import classes from "@/pages/sign-in/SignIn.module.scss";
 import { Button } from "@/shared/ui/button";
 import { ControlledTextField } from "@/shared/ui/controlled";
 import { Typography } from "@/shared/ui/typography";
-import { loginSchema } from "@/shared/utils/schemas/login-schema";
+import { loginSchema } from "@/shared/utils/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from 'next-intl';
 import Link from "next/link";
