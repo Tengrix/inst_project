@@ -77,7 +77,6 @@ const ForgotPassword = () => {
             {t('button.backToSignIn')}
           </Button>
           <Captcha changeCaptchaValue={changeCaptchaValue} />
-          <TextArea />
         </Card>
       </div>
     </>
