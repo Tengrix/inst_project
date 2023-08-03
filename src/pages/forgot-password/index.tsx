@@ -10,10 +10,11 @@ import s from './ForgotPassword.module.css';
 import { Captcha } from '@/shared/captcha/Captcha';
 import { usePasswordRecoveryMutation } from '@/api/authApi';
 import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
 import { TextArea } from '@/shared/ui/text-area';
+import {useRouter} from "next/router";
 
 
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
