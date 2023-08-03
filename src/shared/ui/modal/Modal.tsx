@@ -19,9 +19,11 @@ export const Modal = ({ onClose,open,children, title, modalTrigger}: ModalPropsT
     }
     return (
         <Dialog.Root open={open} onOpenChange={onCloseHandler}>
+            {modalTrigger&&(
             <Dialog.Trigger asChild>
                 {modalTrigger}
             </Dialog.Trigger>
+        )}
             {open && (
                 <Dialog.Portal>
                     <Dialog.Overlay className={s.DialogOverlay}/>
