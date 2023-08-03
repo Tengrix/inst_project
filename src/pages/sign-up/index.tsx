@@ -12,27 +12,36 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledTextField} from "@/shared/ui/controlled";
 import s from "./SignUp.module.scss"
+import {EmailSentModal} from "@/pages/sign-up/email-sent-modal/email-sent-modal";
 
 export type RegisterFormType = z.infer<typeof registerSchema>
 
-type RegisterFormPropsType = {
-    linkPath: string
-    onSubmitHandler: (data: RegisterFormType) => void
-}
+// type RegisterFormPropsType = {
+//     linkPath: string
+//     onSubmitHandler: (data: RegisterFormType) => void
+// }
 
 const SignUp = () => {
-    const [signUp] = useSignUpMutation()
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [email, setEmail] = useState<string>('')
+    const [signUp,{isLoading}] = useSignUpMutation()
     const onSubmitHandler = (data: RegisterFormType) => console.log(data)
     const {control, handleSubmit} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
     const onSubmit = handleSubmit(data => {
+        console.log(data)
         onSubmitHandler(data)
-        signUp(data)
+
+        signUp(data).unwrap()
+            .then(()=>{
+                setIsModalOpen(true)
+            })
+        setEmail(data.email)
     })
 
-
+    if (isLoading) return <h2>...Loading</h2>
     return (
         <div className={s.container}>
-            <Card className={s.card}>
+            {!isModalOpen &&  <Card className={s.card}>
                 <Typography variant={"large"}>
                     Sign Up
                 </Typography>
@@ -66,7 +75,8 @@ const SignUp = () => {
                 <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
                     Sign In
                 </Button>
-            </Card>
+            </Card>}
+            <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} setOn={setIsModalOpen}/>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, { ReactNode, KeyboardEvent, FC, ComponentProps, useState } from 'react'
+import React, {ReactNode, KeyboardEvent, FC, useState, ComponentPropsWithoutRef} from 'react'
 
 import * as Label from '@radix-ui/react-label'
 import clsx from 'clsx'
@@ -19,7 +19,7 @@ export type TextFieldProps = {
   onEnter?: (e: KeyboardEvent<HTMLInputElement>) => void
   onClearValue?: () => void
   className?: string
-} & ComponentProps<'input'>
+} & ComponentPropsWithoutRef<'input'>
 
 export const TextField: FC<TextFieldProps> = ({
   disabled,
@@ -35,6 +35,7 @@ export const TextField: FC<TextFieldProps> = ({
   className,
   ...rest
 }) => {
+  const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const showError = errorMessage && errorMessage.length > 0
 
@@ -47,6 +48,11 @@ export const TextField: FC<TextFieldProps> = ({
     }
     onKeyDown?.(e)
   }
+  const handleDoubleClick = () => {
+    if (inputRef) {
+      inputRef.select()
+    }
+  };
   const classNames = {
     root: clsx(s.root, className),
     input: clsx(s.input, showError && s.error),
@@ -72,12 +78,14 @@ export const TextField: FC<TextFieldProps> = ({
         <div className={s.inputContainer}>
           {iconStart && <span className={s.iconStart}>{iconStart}</span>}
           <input
+              ref={(ref) => setInputRef(ref)}
             value={value}
             disabled={disabled}
             data-icon={dataIcon}
             className={classNames.input}
             type={showPassword ? 'text' : type}
             onKeyDown={handleKeyDown}
+            onDoubleClick={handleDoubleClick}
             {...rest}
           />
 

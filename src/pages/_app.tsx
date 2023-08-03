@@ -1,11 +1,20 @@
-import type {AppProps} from 'next/app';
-import React, {ReactElement, ReactNode} from 'react';
-import {NextPage} from 'next';
+import { store } from "@/store";
 import '@/styles/variables/index.scss';
-import {NextIntlClientProvider} from 'next-intl';
-import '@/styles/variables/index.scss'
-import {Provider} from "react-redux";
-import {store} from "@/store";
+import { NextPage } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
+import type { AppProps } from 'next/app';
+import { Inter } from 'next/font/google';
+import Head from "next/head";
+import { ReactElement, ReactNode } from 'react';
+import { Provider } from "react-redux";
+
+
+const inter = Inter({
+    display: 'swap',
+    style: ['normal'],
+    subsets: ['latin', 'cyrillic'],
+    weight: ['400', '500', '600', '700']
+})
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -17,10 +26,18 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({Component, pageProps}: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page);
+    const { title, metaDescription, messages } = pageProps;
 
     return getLayout(
         <Provider store={store}>
-            <NextIntlClientProvider messages={pageProps.messages}>
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={metaDescription} />
+            </Head>
+            <NextIntlClientProvider messages={messages}>
+                <style jsx global>
+                    {`:root {--font-family-main: ${inter.style.fontFamily}, sans-serif}`}
+                </style>
                 <Component {...pageProps} />
             </NextIntlClientProvider>
         </Provider>
