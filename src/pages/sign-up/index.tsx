@@ -23,6 +23,7 @@ export type RegisterFormType = z.infer<typeof registerSchema>
 
 const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [email, setEmail] = useState<string>('')
     const [signUp,{isLoading}] = useSignUpMutation()
     const onSubmitHandler = (data: RegisterFormType) => console.log(data)
     const {control, handleSubmit} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
@@ -34,6 +35,7 @@ const SignUp = () => {
             .then(()=>{
                 setIsModalOpen(true)
             })
+        setEmail(data.email)
     })
 
     if (isLoading) return <h2>...Loading</h2>
@@ -74,7 +76,7 @@ const SignUp = () => {
                     Sign In
                 </Button>
             </Card>}
-            <EmailSentModal isOpen={isModalOpen} title={'Email sent'} setOn={setIsModalOpen}/>
+            <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} setOn={setIsModalOpen}/>
         </div>
     );
 }
