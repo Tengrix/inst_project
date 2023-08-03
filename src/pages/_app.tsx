@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
+import Head from "next/head";
 import { ReactElement, ReactNode } from 'react';
 import { Provider } from "react-redux";
 
@@ -25,13 +26,18 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({Component, pageProps}: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page);
+    const { title, metaDescription, messages } = pageProps;
 
     return getLayout(
         <Provider store={store}>
-            <NextIntlClientProvider messages={pageProps.messages}>
-                <style jsx global>{`
-                    :root {--font-family-main: ${inter.style.fontFamily}, sans-serif}
-                `}</style>
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={metaDescription} />
+            </Head>
+            <NextIntlClientProvider messages={messages}>
+                <style jsx global>
+                    {`:root {--font-family-main: ${inter.style.fontFamily}, sans-serif}`}
+                </style>
                 <Component {...pageProps} />
             </NextIntlClientProvider>
         </Provider>
