@@ -1,65 +1,70 @@
-.signInForm {
-    max-width: 380px;
-    padding: 24px;
-    border: 1px solid var(--color-dark-300);
-    background-color: var(--color-dark-500);
-    border-radius: 2px;
-    font: var(--font-regular-14);
-    margin: 36px auto;
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 36px auto; // TODO: set 36px after header add margin or padding bottom
+    min-height: calc(100vh - 133px); // 100vh - header.height - 72px(margin.top + margin.bottom)
 
-    .header{
-        text-align: center;
-        &__title {
-            margin-bottom: 13px;
+    .signInForm {
+        flex: 1;
+        max-width: 380px;
+        padding: 24px;
+        font: var(--font-regular-14);
+
+        .header{
+            text-align: center;
+            &__title {
+                margin-bottom: 13px;
+            }
+            &__icons {
+                margin-bottom: 24px;
+                display: inline-flex;
+                gap: 36px
+            }
         }
-        &__icons {
-            margin-bottom: 24px;
-            display: inline-flex;
-            gap: 36px
-        }
-    }
-
-    .form {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        margin-bottom: 18px;
-
-        &__forgot {
-            color: var(--color-light-900);
-            align-self: flex-end;
-            margin-top: 20px;
-            padding-right: 4px;
-        }
-
-        &__btn {
-            font: var(--font-h3)
-        }
-    }
-
-    .footer {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        font: var(--font-regular-16);
-        align-items: center;
-
-        .link {
-            font: var(--font-h3);
-            color: var(--color-primary-500)
-        }
-    }
-
-    @media (max-width: 479.98px) {
-        background: transparent;
-        margin: 17px auto;
-        padding: 15px;
-        border: none;
 
         .form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 18px;
+
             &__forgot {
-                margin-top: -18px;
-                margin-bottom: 40px;
+                color: var(--color-light-900);
+                align-self: flex-end;
+                margin-top: 20px;
+                padding-right: 4px;
+            }
+
+            &__btn {
+                font: var(--font-h3)
+            }
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font: var(--font-regular-16);
+            align-items: center;
+
+            .link {
+                font: var(--font-h3);
+                color: var(--color-primary-500)
+            }
+        }
+
+        @media (max-width: 479.98px) {
+            background: transparent;
+            margin: 17px auto;
+            padding: 15px;
+            border: none;
+
+            .form {
+                &__forgot {
+                    margin-top: -18px;
+                    margin-bottom: 40px;
+                }
             }
         }
     }

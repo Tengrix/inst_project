@@ -1,6 +1,7 @@
 import { useLoginMutation } from "@/api/authApi";
 import classes from "@/pages/sign-in/SignIn.module.scss";
 import { Button } from "@/shared/ui/button";
+import { Card } from "@/shared/ui/card";
 import { ControlledTextField } from "@/shared/ui/controlled";
 import { Typography } from "@/shared/ui/typography";
 import { loginSchema } from "@/shared/utils/schemas/loginSchema";
@@ -46,38 +47,40 @@ const SignIn = () => {
     })
 
     return (
-        <div className={classes.signInForm}>
-            <div className={classes.header}>
-                <Typography variant="h1" as="h1" className={classes.header__title}>
-                    {t('signInPage.h1')}
-                </Typography>
-                <div className={classes.header__icons}>
-                    <Button as={'a'} variant={'link'}>
-                        <Google width={36} height={36} />
-                    </Button>
-                    <Button as={'a'} variant={'link'}>
-                        <Github width={36} height={36} />
-                    </Button>
+        <div className={classes.container}>
+            <Card className={classes.signInForm}>
+                <div className={classes.header}>
+                    <Typography variant="h1" as="h1" className={classes.header__title}>
+                        {t('signInPage.h1')}
+                    </Typography>
+                    <div className={classes.header__icons}>
+                        <Button as={'a'} variant={'link'}>
+                            <Google width={36} height={36} />
+                        </Button>
+                        <Button as={'a'} variant={'link'}>
+                            <Github width={36} height={36} />
+                        </Button>
+                    </div>
                 </div>
-            </div>
-            <form className={classes.form} onSubmit={onSubmit}>
-                <ControlledTextField control={control} name={'userName'} label={'Username'} />
-                <ControlledTextField control={control} name={'password'} label={'Password'} type={'password'} />
-                <Link href={'/forgot-password'} className={classes.form__forgot}>
-                    {t('signInPage.forgotPassword')}?
-                </Link>
-                <Button type={'submit'} className={classes.form__btn} fullWidth>
-                    {t('button.signInButton')}
-                </Button>
-            </form>
-            <div className={classes.footer}>
-                <Typography>
-                    {t('signInPage.question')}
-                </Typography>
-                <Link href={'/sign-up'} className={classes.link}>
-                    {t('signUpPage.title')}
-                </Link>
-            </div>
+                <form className={classes.form} onSubmit={onSubmit}>
+                    <ControlledTextField control={control} name={'userName'} label={'Username'} />
+                    <ControlledTextField control={control} name={'password'} label={'Password'} type={'password'} />
+                    <Link href={'/forgot-password'} className={classes.form__forgot}>
+                        {t('signInPage.forgotPassword')}?
+                    </Link>
+                    <Button type={'submit'} className={classes.form__btn} fullWidth>
+                        {t('button.signInButton')}
+                    </Button>
+                </form>
+                <div className={classes.footer}>
+                    <Typography>
+                        {t('signInPage.question')}
+                    </Typography>
+                    <Link href={'/sign-up'} className={classes.link}>
+                        {t('signUpPage.h1')}
+                    </Link>
+                </div>
+            </Card>
         </div>
     )
 }
