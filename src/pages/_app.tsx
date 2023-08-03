@@ -1,11 +1,11 @@
-import type {AppProps} from 'next/app';
-import React, {ReactElement, ReactNode} from 'react';
-import {NextPage} from 'next';
+import { store } from "@/store";
 import '@/styles/variables/index.scss';
-import {NextIntlClientProvider} from 'next-intl';
-import '@/styles/variables/index.scss'
-import {Provider} from "react-redux";
-import {store} from "@/store";
+import { NextPage } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
+import type { AppProps } from 'next/app';
+import { ReactElement, ReactNode } from 'react';
+import { Provider } from "react-redux";
+
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
     getLayout?: (page: ReactElement) => ReactNode;
