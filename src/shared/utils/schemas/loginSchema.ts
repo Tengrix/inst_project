@@ -2,7 +2,13 @@ import {z} from 'zod'
 
 export const loginSchema = z
     .object({
-        userName: z.string().trim().min(6, 'Username must be at least 6 characters long').max(30, 'Username can\'t be longer than 30 characters'),
+        userName: z
+            .string()
+            .trim()
+            .min(6, 'Username must be at least 6 characters long')
+            .max(30, 'Username can\'t be longer than 30 characters')
+            // Username should contain only letters, numbers, underscores
+            .refine(username => /^[\w\d-]+$/.test(username), 'Invalid username'),
         password: z
             .string()
             .trim()
