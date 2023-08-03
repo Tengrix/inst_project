@@ -31,9 +31,6 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
             <NextIntlClientProvider messages={pageProps.messages}>
                 <style jsx global>{`
                     :root {--font-family-main: ${inter.style.fontFamily}, sans-serif}
-                    body {
-                        font-family: var(--font-family-main)
-                    }
                 `}</style>
                 <Component {...pageProps} />
             </NextIntlClientProvider>
