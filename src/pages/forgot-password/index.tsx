@@ -1,11 +1,11 @@
-import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import { useForm } from 'react-hook-form';
-import { Card } from '@/shared/ui/card';
-import { Typography } from '@/shared/ui/typography';
-import { Button } from '@/shared/ui/button';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ControlledTextField } from '@/shared/ui/controlled';
+import {getLayout} from 'src/components/Layout/BaseLayout/BaseLayout';
+import {useForm} from 'react-hook-form';
+import {Card} from '@/shared/ui/card';
+import {Typography} from '@/shared/ui/typography';
+import {Button} from '@/shared/ui/button';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {ControlledTextField} from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
 import { Captcha } from '@/shared/captcha/Captcha';
 import { usePasswordRecoveryMutation } from '@/api/authApi';
@@ -15,35 +15,42 @@ import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
 import { TextArea } from '@/shared/ui/text-area';
 
+
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
-type ForgotPasswordFormPropsType = {
-  linkPath: string;
-  onSubmitHandler: (data: ForgotPasswordFormType) => void;
-};
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: (await import(`../../../messages/${locale}/auth.json`)).default,
-    },
-  };
+
+
+export async function getStaticProps({locale}: GetStaticPropsContext) {
+    return {
+        props: {
+            messages: (await import(`../../../messages/${locale}/auth.json`)).default,
+        },
+    };
 }
 
 const ForgotPassword = () => {
-  const [forgotPassword] = usePasswordRecoveryMutation();
+    const {push,pathname} = useRouter()
+    const [forgotPassword, {status}] = usePasswordRecoveryMutation();
+    const [email, setEmail] = useState('')
 
-  const { control, handleSubmit } = useForm<ForgotPasswordFormType>({
-    resolver: zodResolver(forgotPasswordSchema),
-  });
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    forgotPassword(data);
-  });
-  const t = useTranslations('auth');
 
-  const [buttonSendLinkDisabled, setIsButtonSendLinkDisabled] = useState(true);
-  const changeCaptchaValue = (captchIsDone: boolean) => {
-    setIsButtonSendLinkDisabled(captchIsDone);
-  };
+
+    const t = useTranslations('auth');
+
+    const {control, handleSubmit} = useForm<ForgotPasswordFormType>({
+        resolver: zodResolver(forgotPasswordSchema),
+    });
+    const onSubmit = handleSubmit((data) => {
+        forgotPassword(data);
+        setEmail(data.email)
+    });
+
+    const [buttonSendLinkDisabled, setIsButtonSendLinkDisabled] = useState(true);
+    const changeCaptchaValue = (captchIsDone: boolean) => {
+        setIsButtonSendLinkDisabled(captchIsDone);
+    };
+    useEffect(()=> {
+        status==='fulfilled'&&push(pathname+'/link-has-been-sent')
+    },[status])
 
   return (
     <>
@@ -77,6 +84,7 @@ const ForgotPassword = () => {
       </div>
     </>
   );
+
 };
 
 ForgotPassword.getLayout = getLayout;
