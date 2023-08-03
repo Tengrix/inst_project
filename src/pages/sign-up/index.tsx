@@ -13,6 +13,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledTextField} from "@/shared/ui/controlled";
 import s from "./SignUp.module.scss"
 import {EmailSentModal} from "@/pages/sign-up/email-sent-modal/email-sent-modal";
+import {GetStaticPropsContext} from "next/types";
+import {useTranslations} from "next-intl";
 
 export type RegisterFormType = z.infer<typeof registerSchema>
 
@@ -20,19 +22,28 @@ export type RegisterFormType = z.infer<typeof registerSchema>
 //     linkPath: string
 //     onSubmitHandler: (data: RegisterFormType) => void
 // }
+export async function getStaticProps({locale}: GetStaticPropsContext) {
+    return {
+        props: {
+            messages: (await import(`../../../messages/${locale}/auth.json`)).default,
+        },
+    };
+}
 
 const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const t = useTranslations('auth');
     const [email, setEmail] = useState<string>('')
-    const [signUp,{isLoading}] = useSignUpMutation()
-    const onSubmitHandler = (data: RegisterFormType) => console.log(data)
+    const [signUp, {isLoading}] = useSignUpMutation()
+    // const onSubmitHandler = (data: RegisterFormType) => console.log(data)
+
     const {control, handleSubmit} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
     const onSubmit = handleSubmit(data => {
         console.log(data)
-        onSubmitHandler(data)
+        // onSubmitHandler(data)
 
         signUp(data).unwrap()
-            .then(()=>{
+            .then(() => {
                 setIsModalOpen(true)
             })
         setEmail(data.email)
@@ -41,9 +52,9 @@ const SignUp = () => {
     if (isLoading) return <h2>...Loading</h2>
     return (
         <div className={s.container}>
-            {!isModalOpen &&  <Card className={s.card}>
-                <Typography variant={"large"}>
-                    Sign Up
+            {!isModalOpen && <Card className={s.card}>
+                <Typography variant={"h1"}>
+                    {t('signUpPage.title')}
                 </Typography>
                 <div className={s.iconContainer}>
                     <Button as={'a'} variant={'link'} className={s.link}>
@@ -66,14 +77,14 @@ const SignUp = () => {
                                          type={'password'}
                     />
                     <Button type={'submit'} fullWidth className={s.registerBtn}>
-                        Sign Up
+                        {t('button.signUpButton')}
                     </Button>
                 </form>
                 <Typography variant={'body2'} className={s.subtitle}>
                     Do you have an account?
                 </Typography>
                 <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
-                    Sign In
+                    {t('signInPage.title')}
                 </Button>
             </Card>}
             <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} setOn={setIsModalOpen}/>
