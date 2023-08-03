@@ -5,7 +5,7 @@ import { ControlledTextField } from "@/shared/ui/controlled";
 import { Typography } from "@/shared/ui/typography";
 import { loginSchema } from "@/shared/utils/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from 'next-intl';
+import { createTranslator, useTranslations } from 'next-intl';
 import Link from "next/link";
 import { GetStaticPropsContext } from "next/types";
 import { Github } from "public/icon/github-logo";
@@ -23,35 +23,40 @@ type LoginFormPropsType = {
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: (await import(`../../../messages/${locale}/auth.json`)).default,
-    },
-  };
+    const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+    const t = createTranslator({ locale, messages });
+
+    return {
+        props: {
+            messages: messages,
+            title: t('auth.signInPage.title'),
+            metaDescription: t('auth.signInPage.meta_description')
+        },
+    };
 }
 
 const SignIn = () => {
     const [signIn] = useLoginMutation();
     const t = useTranslations('auth');
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
-    const {control, handleSubmit} = useForm<LoginFormType>({resolver: zodResolver(loginSchema)});
+    const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
         //onSubmitHandler(data);
-        signIn({password: data.password, login: data.userName});
+        signIn({ password: data.password, login: data.userName });
     })
 
     return (
         <div className={classes.signInForm}>
             <div className={classes.header}>
                 <Typography variant="h1" as="h1" className={classes.header__title}>
-                    {t('signInPage.title')}
+                    {t('signInPage.h1')}
                 </Typography>
                 <div className={classes.header__icons}>
                     <Button as={'a'} variant={'link'}>
-                        <Google width={36} height={36}/>
+                        <Google width={36} height={36} />
                     </Button>
                     <Button as={'a'} variant={'link'}>
-                        <Github width={36} height={36}/>
+                        <Github width={36} height={36} />
                     </Button>
                 </div>
             </div>
