@@ -1,4 +1,4 @@
-import React, { ReactNode, KeyboardEvent, FC, ComponentProps, useState } from 'react'
+import React, {ReactNode, KeyboardEvent, FC, useState, ComponentPropsWithoutRef} from 'react'
 
 import * as Label from '@radix-ui/react-label'
 import clsx from 'clsx'
@@ -19,7 +19,7 @@ export type TextFieldProps = {
   onEnter?: (e: KeyboardEvent<HTMLInputElement>) => void
   onClearValue?: () => void
   className?: string
-} & ComponentProps<'input'>
+} & ComponentPropsWithoutRef<'input'>
 
 export const TextField: FC<TextFieldProps> = ({
   disabled,
