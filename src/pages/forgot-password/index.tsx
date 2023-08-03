@@ -16,6 +16,7 @@ import { GetStaticPropsContext } from 'next';
 import { TextArea } from '@/shared/ui/text-area';
 import { useRouter } from 'next/router';
 
+
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
