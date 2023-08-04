@@ -25,6 +25,7 @@ type LoginFormPropsType = {
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+
     const t = createTranslator({ locale: locale as string, messages });
 
     return {
