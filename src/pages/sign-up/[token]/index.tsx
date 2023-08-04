@@ -1,18 +1,16 @@
 import {useRouter} from "next/router";
 import jwtDecode from "jwt-decode";
 import {useSignUpConfirmationMutation} from "@/api/authApi";
-import {query} from "express";
+import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
 
 type TokenType = {
     email: string
     iat: number,
     eat: number
 }
-const TokenValidationWrapper = () => {
+const EmailLinkValidationWrapper = () => {
     const router = useRouter()
     const [confirmEmail] = useSignUpConfirmationMutation()
-    //Set this token here http://localhost:3000/sign-up/testToken
-    // const testToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9_eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJsdWNreTEwMjkxOTk0QGdtYWlsLmNvbSIsImlhdCI6MTY5MTA1MzY2MywiZWF0IjoxNjkxMDU3MjYzfQ_DTjRErovOQLRlDqKfiEWiwl60Q8OfF81biHmoUglc9I'
 
     const unparsedToken = router.query.token as string
     if (!unparsedToken) {
@@ -46,4 +44,5 @@ const TokenValidationWrapper = () => {
     );
 };
 
-export default TokenValidationWrapper;
+EmailLinkValidationWrapper.getLayout = getLayout
+export default EmailLinkValidationWrapper;

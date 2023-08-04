@@ -1,6 +1,7 @@
 import 'react-dates/initialize';
 
 import DatePicker from "@/shared/ui/datePicker/DatePicker";
+import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
 
 
 const Profile = () => {
@@ -12,4 +13,5 @@ const Profile = () => {
     );
 };
 
+Profile.getLayout = getLayout
 export default Profile;

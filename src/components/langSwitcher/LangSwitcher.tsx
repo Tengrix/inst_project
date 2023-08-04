@@ -11,7 +11,7 @@ const languages: LanguageType = {
     'English': 'en'
 }
 
-export const LangSwitcher = () => {
+const LangSwitcher = () => {
     const {locale, push, pathname, query, asPath, locales} = useRouter();
 
     const changeLangHandler = (item: string) => {
@@ -30,3 +30,4 @@ export const LangSwitcher = () => {
         />
     );
 };
+export default LangSwitcher;
