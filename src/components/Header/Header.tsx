@@ -16,12 +16,13 @@ const Header = (props: HeaderProps) => {
   } = props;
 
   return (
+
     <div className={styles.header}>
         <div className={styles.text}>
             <h1 className={styles.inctagramTitle}> {title} </h1>
         </div>
         <div className={styles.languageSelector}>
-            {children && children}
+            {children}
             <div className={styles.notificationIcon}>
                 {icon}
             </div>
