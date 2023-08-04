@@ -1,0 +1,36 @@
+   .header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 60px;
+    /* background-color: #000000; */
+    background-color:#0D0D0D;
+    border-bottom: 1px solid #645f5f;
+  }
+  
+  .text, .languageSelector, .notificationIcon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text {
+    justify-content: flex-start;
+    flex-grow: 1;
+    font-size: 24px;
+    padding-left: 50px;
+  }
+  
+
+  
+  .languageSelector {
+    justify-content: flex-end;
+    padding-right: 70px; 
+  }
+
+  
+  
+  .notificationIcon {
+    position: absolute;
+    right: 350px;
+  }  
