@@ -36,7 +36,7 @@ const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const t = useTranslations('auth');
     const [email, setEmail] = useState<string>('')
-    const [signUp, {isLoading}] = useSignUpMutation()
+    // const [signUp, {isLoading}] = useSignUpMutation()
     // const onSubmitHandler = (data: RegisterFormType) => console.log(data)
 
     const {control, handleSubmit, watch} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
@@ -50,19 +50,19 @@ const SignUp = () => {
     const onSubmit = handleSubmit(data => {
         console.log(data)
         // onSubmitHandler(data)
-        signUp(data).unwrap()
-            .then(() => {
-                setIsModalOpen(true)
-            })
+        // signUp(data)
+        //     .unwrap()
+        //     .then(() => {
+        //         setIsModalOpen(true)
+        //     })
         setEmail(data.email)
     })
-const TermsOfService=<Link href={'/sign-up/terms-of-service'}>Terms of Service</Link>
-    if (isLoading) return <h2>...Loading</h2>
+        // if (isLoading) return <h2>...Loading</h2>
     return (
         <div className={s.container}>
             {!isModalOpen && <Card className={s.card}>
                 <Typography variant={"h1"}>
-                    {t('signUpPage.title')}
+                    {t('signUpPage.h1')}
                 </Typography>
                 <div className={s.iconContainer}>
                     <Button as={'a'} variant={'link'} className={s.link}>
@@ -84,9 +84,13 @@ const TermsOfService=<Link href={'/sign-up/terms-of-service'}>Terms of Service</
                                          className={s.confirmPassword}
                                          type={'password'}
                     />
-                    <ControlledCheckbox name={'serviceAndPrivacy'} control={control}
-                                        label={`I agree to the ${TermsOfService} and Privacy Policy`}
-                                        className={s.privacyBlock}/>
+                    <div className={s.privacyBlock}>
+                        <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``}
+                        />
+                        <Typography variant={'body2'} >I agree to the <Link href={'/sign-up/terms-of-service'}>Terms of
+                            Service</Link> and Privacy Policy</Typography>
+                    </div>
+
                     <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
                         {t('button.signUpButton')}
                     </Button>

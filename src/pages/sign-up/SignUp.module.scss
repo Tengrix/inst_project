@@ -1,8 +1,9 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
+  margin-top: 24px;
 }
 
 
@@ -52,7 +53,9 @@
   }
 
   .privacyBlock {
+    display: flex;
     margin-top: 1.38rem;
+
   }
 
   .registerBtn {
@@ -67,5 +70,8 @@
   .link {
     color: var(--color-primary-500);
     text-decoration: underline;
+  }
+  .sizeText {
+    font-size: 12px;
   }
 }
