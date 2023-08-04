@@ -9,7 +9,7 @@
     border-bottom: 1px solid #645f5f;
   }
   
-  .text, .notificationIcon {
+  .text, .languageSelector, .notificationIcon {
     display: flex;
     align-items: center;
   }
@@ -21,10 +21,16 @@
     padding-left: 50px;
   }
   
+
+  
+  .languageSelector {
+    justify-content: flex-end;
+    padding-right: 70px; 
+  }
+
+  
+  
   .notificationIcon {
     position: absolute;
     right: 350px;
-  }
-
-
-  
+  }  

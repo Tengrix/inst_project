@@ -1,4 +1,4 @@
-import React, { ReactNode, ElementType, ComponentPropsWithoutRef } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './styles.module.css';
 import { LangSwitcher } from '../langSwitcher/LangSwitcher';
 
@@ -16,7 +16,7 @@ const Header = (props: HeaderProps) => {
   } = props;
 
   return (
-    <header className={styles.header}}>
+    <header className={styles.header}>
       <div className={styles.text}>
         <h1 className={styles.inctagramTitle}> {title} </h1>
       </div>
@@ -24,8 +24,8 @@ const Header = (props: HeaderProps) => {
         <div className={styles.notificationIcon}>
           {icon}
         </div>
-        {children&&children}
-        <LanguageSwitcher />
+        {children}
+        <LangSwitcher />
       </div>
     </header>
   );
