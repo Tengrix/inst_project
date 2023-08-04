@@ -36,7 +36,7 @@ const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const t = useTranslations('auth');
     const [email, setEmail] = useState<string>('')
-    // const [signUp, {isLoading}] = useSignUpMutation()
+    const [signUp, {isLoading}] = useSignUpMutation()
     // const onSubmitHandler = (data: RegisterFormType) => console.log(data)
 
     const {control, handleSubmit, watch} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
@@ -50,11 +50,11 @@ const SignUp = () => {
     const onSubmit = handleSubmit(data => {
         console.log(data)
         // onSubmitHandler(data)
-        // signUp(data)
-        //     .unwrap()
-        //     .then(() => {
-        //         setIsModalOpen(true)
-        //     })
+        signUp(data)
+            .unwrap()
+            .then(() => {
+                setIsModalOpen(true)
+            })
         setEmail(data.email)
     })
         // if (isLoading) return <h2>...Loading</h2>
@@ -87,19 +87,21 @@ const SignUp = () => {
                     <div className={s.privacyBlock}>
                         <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``}
                         />
-                        <Typography variant={'body2'} >I agree to the <Link href={'/sign-up/terms-of-service'}>Terms of
-                            Service</Link> and Privacy Policy</Typography>
+                        <Typography variant={'small'} >I agree to the
+                            <Link href={'/sign-up/terms-of-service'}>Terms of
+                            Service </Link> and
+                            <Link href={'\'/sign-up/terms-of-service\''}> Privacy Policy</Link> </Typography>
                     </div>
 
                     <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
                         {t('button.signUpButton')}
                     </Button>
                 </form>
-                <Typography variant={'body2'} className={s.subtitle}>
+                <Typography variant={'regular14'} className={s.subtitle}>
                     {t('signUpPage.question')}
                 </Typography>
                 <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
-                    {t('signInPage.title')}
+                    {t('signInPage.h1')}
                 </Button>
             </Card>}
             <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} setOn={setIsModalOpen}/>

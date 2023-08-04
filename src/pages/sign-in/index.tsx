@@ -38,13 +38,13 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    // const [signIn] = useLoginMutation();
+    const [signIn] = useLoginMutation();
     const t = useTranslations('auth');
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
         //onSubmitHandler(data);
-        // signIn({ password: data.password, login: data.userName });
+        signIn({ password: data.password, login: data.userName });
     })
 
     return (

@@ -1,8 +1,10 @@
-import s from "@/pages/sign-up/SignUp.module.scss";
+import s from "@/pages/sign-up/terms-of-service/terms-of-service.module.scss";
 import {Button} from "@/shared/ui/button";
 import {Typography} from "@/shared/ui/typography";
+import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
+import SignIn from "@/pages/sign-in";
 
-export const TermsOfService = () => {
+const TermsOfService = () => {
     return (
         <div>
             <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>Back to sign in</Button>
@@ -24,3 +26,5 @@ export const TermsOfService = () => {
         </div>
     );
 };
+TermsOfService.getLayout = getLayout
+export default TermsOfService;
