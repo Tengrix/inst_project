@@ -2,7 +2,6 @@ import type {AppProps} from 'next/app';
 import React, {ReactElement, ReactNode} from 'react';
 import {NextPage} from 'next';
 import '@/shared/ui/datePicker/datepicker.css';
-// import 'react-dates/lib/css/_datepicker.css';
 import '@/styles/variables/index.scss';
 import {NextIntlClientProvider} from 'next-intl';
 import '@/styles/variables/index.scss'
