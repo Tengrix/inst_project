@@ -23,7 +23,7 @@ type LoginFormPropsType = {
     onSubmitHandler: (data: LoginFormType) => void
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
     const t = createTranslator({ locale, messages });
 

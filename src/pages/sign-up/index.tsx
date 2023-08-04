@@ -1,7 +1,7 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 import {useForm} from "react-hook-form";
 import {useSignUpMutation} from "src/api/authApi";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Card} from "@/shared/ui/card";
 import {Typography} from "@/shared/ui/typography";
 import {Button} from "@/shared/ui/button";
@@ -10,7 +10,7 @@ import {Google} from "public/icon/google-logo";
 import {registerSchema} from "@/shared/utils/schemas/registerSchema";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {ControlledTextField} from "@/shared/ui/controlled";
+import {ControlledCheckbox, ControlledTextField} from "@/shared/ui/controlled";
 import s from "./SignUp.module.scss"
 import {EmailSentModal} from "@/pages/sign-up/email-sent-modal/email-sent-modal";
 import {GetStaticPropsContext} from "next/types";
@@ -22,6 +22,7 @@ export type RegisterFormType = z.infer<typeof registerSchema>
 //     linkPath: string
 //     onSubmitHandler: (data: RegisterFormType) => void
 // }
+
 export async function getStaticProps({locale}: GetStaticPropsContext) {
     return {
         props: {
@@ -37,11 +38,17 @@ const SignUp = () => {
     const [signUp, {isLoading}] = useSignUpMutation()
     // const onSubmitHandler = (data: RegisterFormType) => console.log(data)
 
-    const {control, handleSubmit} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
+    const {control, handleSubmit, watch} = useForm<RegisterFormType>({resolver: zodResolver(registerSchema)})
+    const watchFields = watch(['userName', 'email', 'password', 'confirmPassword', 'serviceAndPrivacy']);
+    const [isFormValid, setIsFormValid] = useState<boolean>(false)
+
+    useEffect(() => {
+        setIsFormValid(Boolean(watchFields[0] && watchFields[1] && watchFields[2] && watchFields[3] && watchFields[4]));
+    }, [watchFields]);
+
     const onSubmit = handleSubmit(data => {
         console.log(data)
         // onSubmitHandler(data)
-
         signUp(data).unwrap()
             .then(() => {
                 setIsModalOpen(true)
@@ -76,12 +83,15 @@ const SignUp = () => {
                                          className={s.confirmPassword}
                                          type={'password'}
                     />
-                    <Button type={'submit'} fullWidth className={s.registerBtn}>
+                    <ControlledCheckbox name={'serviceAndPrivacy'} control={control}
+                                        label={'I agree to the Terms of Service and Privacy Policy'}
+                                        className={s.privacyBlock}/>
+                    <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
                         {t('button.signUpButton')}
                     </Button>
                 </form>
                 <Typography variant={'body2'} className={s.subtitle}>
-                    Do you have an account?
+                    {t('signUpPage.question')}
                 </Typography>
                 <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
                     {t('signInPage.title')}
