@@ -1,0 +1,11 @@
+.root {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+
+  .container {
+    display: flex;
+    gap: 12px;
+    list-style-type: none;
+  }
+}
