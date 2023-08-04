@@ -5,6 +5,7 @@ import {TextField, TextFieldProps} from "@/shared/ui/text-field";
 export type ControlledTextFieldProps<TFieldValues extends FieldValues> = {
   name: FieldPath<TFieldValues>
   control: Control<TFieldValues>
+  translation?: (error: string) => string
 } & Omit<TextFieldProps, 'onChange' | 'value' | 'id'>
 
 export const ControlledTextField = <TFieldValues  extends FieldValues>(props: ControlledTextFieldProps<TFieldValues>) => {
@@ -16,5 +17,8 @@ export const ControlledTextField = <TFieldValues  extends FieldValues>(props: Co
     control: props.control,
   })
 
-  return <TextField {...props} {...field} errorMessage={error?.message}/>
+  const { translation } = props;
+  const errorMessage = translation && error?.message ? translation(error.message) : error?.message;
+
+  return <TextField {...props} {...field} errorMessage={errorMessage}/>
 }

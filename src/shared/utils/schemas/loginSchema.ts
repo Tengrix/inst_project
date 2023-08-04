@@ -3,18 +3,17 @@ import {z} from 'zod'
 export const loginSchema = z
     .object({
         userName: z
-            .string()
+            .string({required_error: 'error.userNameIsRequiredError'})
             .trim()
-            .min(6, 'Username must be at least 6 characters long')
-            .max(30, 'Username can\'t be longer than 30 characters')
-            // Username should contain only letters, numbers, underscores
-            .refine(username => /^[\w\d-]+$/.test(username), 'Invalid username'),
+            .min(6, 'error.userNameMin')
+            .max(30, 'error.userNameMax')
+            // Username should contain only letters, numbers, underscores, and dash
+            .refine(username => /^[\w\d-]+$/.test(username), 'error.invalidUsername'),
         password: z
-            .string()
+            .string({required_error: 'error.passwordIsRequiredError'})
             .trim()
-            .nonempty('Enter password')
-            .min(6, 'Password must be at least 6 characters')
-            .max(20,'Password can not be longer than 20 characters'),
+            .min(6, 'error.passwordMin')
+            .max(20, 'error.passwordMax'),
     })
 
 // refine(async (username) => {
