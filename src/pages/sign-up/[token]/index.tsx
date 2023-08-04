@@ -1,5 +1,7 @@
 import {useRouter} from "next/router";
 import jwtDecode from "jwt-decode";
+import {useSignUpConfirmationMutation} from "@/api/authApi";
+import {query} from "express";
 
 type TokenType = {
     email: string
@@ -8,6 +10,7 @@ type TokenType = {
 }
 const TokenValidationWrapper = () => {
     const router = useRouter()
+    const [confirmEmail] = useSignUpConfirmationMutation()
     //Set this token here http://localhost:3000/sign-up/testToken
     // const testToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9_eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJsdWNreTEwMjkxOTk0QGdtYWlsLmNvbSIsImlhdCI6MTY5MTA1MzY2MywiZWF0IjoxNjkxMDU3MjYzfQ_DTjRErovOQLRlDqKfiEWiwl60Q8OfF81biHmoUglc9I'
 
@@ -19,12 +22,14 @@ const TokenValidationWrapper = () => {
     const token = unparsedToken.split('_').join('.')
     const decode: TokenType = jwtDecode(token)
     const currentUnixTime = Date.now()
-    const validation = currentUnixTime>decode.eat
+    const validation = false
+    // const validation = currentUnixTime > decode.eat
 
     if (validation) {
+        confirmEmail({code: 'code from token'})
         router.push('/sign-up/email-confirmed')
     } else {
-        router.push('/sign-up/email-verification-link-expired')
+        router.push({pathname: '/sign-up/email-verification-link-expired', query: {email: decode.email}})
     }
 
 
