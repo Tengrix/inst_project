@@ -9,18 +9,20 @@ const meta = {
   argTypes: {
     variant: {
       options: [
-        'large',
-        'h1',
-        'h2',
-        'h3',
-        'body1',
-        'body2',
-        'subtitle1',
-        'subtitle2',
-        'caption',
-        'overline',
-        'link1',
-        'link2',
+           'large',
+           'h1',
+           'h2',
+           'h3',
+           'bold16',
+           'regular16',
+           'bold14',
+           'medium14',
+           'regular14',
+           'bold-small',
+           'small',
+           'link-small',
+           'regular-link',
+           'error',
       ],
     },
   },
@@ -57,51 +59,51 @@ export const H3: Story = {
 
 export const Body1: Story = {
   args: {
-    variant: 'body1',
-    children: 'body1 text example',
+    variant: 'bold16',
+    children: 'bold16 text example',
   },
 }
 export const Body2: Story = {
   args: {
-    variant: 'body2',
-    children: 'body2 text example',
+    variant: 'regular16',
+    children: 'regular16 text example',
   },
 }
 export const Subtitle1: Story = {
   args: {
-    variant: 'subtitle1',
-    children: 'subtitle1 text example',
+    variant: 'bold14',
+    children: 'bold14 text example',
   },
 }
 export const Subtitle2: Story = {
   args: {
-    variant: 'subtitle2',
-    children: 'subtitle2 text example',
+    variant: 'medium14',
+    children: 'medium14 text example',
   },
 }
 export const Caption: Story = {
   args: {
-    variant: 'caption',
-    children: 'caption text example',
+    variant: 'regular14',
+    children: 'regular14 text example',
   },
 }
 export const Overline: Story = {
   args: {
-    variant: 'overline',
-    children: 'overline text example',
+    variant: 'bold-small',
+    children: 'bold-small text example',
   },
 }
 export const Link1: Story = {
   args: {
-    variant: 'link1',
-    children: 'link1 text example',
+    variant: 'link-small',
+    children: 'link-small text example',
     color: 'link',
   },
 }
 export const Link2: Story = {
   args: {
-    variant: 'link2',
-    children: 'link2 text example',
+    variant: 'regular-link',
+    children: 'regular-link text example',
     color: 'link',
   },
 }
