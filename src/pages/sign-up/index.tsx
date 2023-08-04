@@ -15,6 +15,7 @@ import s from "./SignUp.module.scss"
 import {EmailSentModal} from "@/pages/sign-up/email-sent-modal/email-sent-modal";
 import {GetStaticPropsContext} from "next/types";
 import {useTranslations} from "next-intl";
+import Link from "next/link";
 
 export type RegisterFormType = z.infer<typeof registerSchema>
 
@@ -55,7 +56,7 @@ const SignUp = () => {
             })
         setEmail(data.email)
     })
-
+const TermsOfService=<Link href={'/sign-up/terms-of-service'}>Terms of Service</Link>
     if (isLoading) return <h2>...Loading</h2>
     return (
         <div className={s.container}>
@@ -84,7 +85,7 @@ const SignUp = () => {
                                          type={'password'}
                     />
                     <ControlledCheckbox name={'serviceAndPrivacy'} control={control}
-                                        label={'I agree to the Terms of Service and Privacy Policy'}
+                                        label={`I agree to the ${TermsOfService} and Privacy Policy`}
                                         className={s.privacyBlock}/>
                     <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
                         {t('button.signUpButton')}
