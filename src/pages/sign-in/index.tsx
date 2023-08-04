@@ -25,7 +25,8 @@ type LoginFormPropsType = {
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
-    const t = createTranslator({ locale, messages });
+
+    const t = createTranslator({ locale: locale as string, messages });
 
     return {
         props: {
@@ -63,8 +64,8 @@ const SignIn = () => {
                     </div>
                 </div>
                 <form className={classes.form} onSubmit={onSubmit}>
-                    <ControlledTextField control={control} name={'userName'} label={'Username'} />
-                    <ControlledTextField control={control} name={'password'} label={'Password'} type={'password'} />
+                    <ControlledTextField control={control} translation={t} name={'userName'} label={'Username'} />
+                    <ControlledTextField control={control} translation={t} name={'password'} label={'Password'} type={'password'} />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>

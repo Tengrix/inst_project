@@ -1,5 +1,6 @@
 import { store } from "@/store";
 import '@/styles/variables/index.scss';
+import '@/shared/ui/datePicker/datepicker.css';
 import { NextPage } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';

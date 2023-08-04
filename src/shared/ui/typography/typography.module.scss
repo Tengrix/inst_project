@@ -7,64 +7,55 @@
 
 // variants ========================================================================
 .large {
-  @include typography(
-    $fs: var(--font-size-xxl),
-    $lh: var(--line-height-l),
-    $fw: var(--font-weight-bold)
-  );
+  font:var(--font-large)
 }
 
 .h1 {
- /* @include typography(
-    $fs: var(--font-size-xl),
-    $lh: var(--line-height-l),
-    $fw: var(--font-weight-bold)
-  );*/
   font: var(--font-h1);
 }
 
 .h2 {
-  @include typography($fs: var(--font-size-l), $fw: var(--font-weight-bold));
+  font: var(--font-h2);
 }
 
 .h3 {
-  @include typography($fs: var(--font-size-m), $fw: var(--font-weight-bold));
+  font: var(--font-h3);
 }
 
-.body2 {
-  @include typography($fs: var(--font-size-s));
+.bold16 {
+  font: var(--font-bold-16);
 }
 
-.subtitle1 {
-  @include typography($fw: var(--font-weight-bold));
+.regular16 {
+  font: var(--font-regular-16);
 }
 
-.subtitle2 {
-  @include typography($fs: var(--font-size-s), $fw: var(--font-weight-bold));
+.bold14 {
+  font: var(--font-bold-14);
 }
 
-.caption {
-  @include typography($fs: var(--font-size-xs), $lh: var(--line-height-s));
+.medium14 {
+  font: var(--font-medium-14);
 }
 
-.overline {
-  @include typography(
-    $fs: var(--font-size-xs),
-    $lh: var(--line-height-s),
-    $fw: var(--font-weight-bold)
-  );
+.regular14 {
+  font: var(--font-regular-14);
 }
 
-.link1 {
-  @include typography($fs: var(--font-size-s));
-
-  text-decoration-line: underline;
+.bold-small {
+  font: var(--font-bold-small);
 }
 
-.link2 {
-  @include typography($fs: var(--font-size-xs), $lh: var(--line-height-s));
+.small {
+  font: var(--font-small);
+}
 
-  text-decoration-line: underline;
+.link-small {
+  font: var(--font-small-link);
+}
+
+.regular-link {
+  font: var(--font-regular-link);
 }
 
 .error {
