@@ -1,0 +1,64 @@
+   .header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 60px;
+    /* background-color: #000000; */
+    background-color:#0D0D0D;
+    border-bottom: 1px solid #645f5f;
+  }
+  
+  .text, .languageSelector, .notificationIcon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text {
+    justify-content: flex-start;
+    flex-grow: 1;
+    font-size: 24px;
+    padding-left: 50px;
+  }
+  
+  .languageButton {
+    padding: 8px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #000000;
+    border: 2px solid #645f5f;
+    border-radius: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .languageSelector {
+    justify-content: flex-end;
+    padding-right: 70px; 
+  }
+
+  
+  
+  .notificationIcon {
+    position: absolute;
+    right: 350px;
+  }
+  
+  .arrowDown {
+    width: 0;
+    height: 0;
+    margin-left: 10px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #ffffff;
+  }
+  
+  .arrowUp {
+    width: 0;
+    height: 0;
+    margin-left: 10px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #ffffff;
+  }
+  
