@@ -3,6 +3,7 @@ import { Modal } from '@/shared/ui/modal/Modal';
 import { Typography } from '@/shared/ui/typography';
 import classes from './AddPost.module.scss';
 import { ImagePlaceholder, LoremIpsumPlaceholder } from '@/shared/ui/placeholder/placeholder';
+import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 
 export const AddPost = () => {
   return (
@@ -10,11 +11,10 @@ export const AddPost = () => {
       <Typography as="h1" variant="h1">
         Add Post
       </Typography>
-
-      <Modal open title="Add Photo" onClose={() => {}}>
         <ImagePlaceholder />
+        <ImageUploader />
         <LoremIpsumPlaceholder />
-      </Modal>
+      {/*<Modal open title="Add Photo" onClose={() => {}}/>*/}
     </div>
   );
 };
