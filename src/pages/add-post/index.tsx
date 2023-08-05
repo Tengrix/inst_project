@@ -20,7 +20,9 @@ export const AddPost = () => {
       <Typography as="h1" variant="h1">
         Add Post
       </Typography>
-      <ImagePlaceholder src={image} />
+          <div className={classes.placeholder}>
+              {!image ? <ImagePlaceholder /> : <img src={image} />}
+          </div>
       <ImageUploader label="Select from Computer" onImageChangeHandler={onImageChangeHandler} />
       <LoremIpsumPlaceholder />
       {/*<Modal open title="Add Photo" onClose={() => {}}/>*/}
