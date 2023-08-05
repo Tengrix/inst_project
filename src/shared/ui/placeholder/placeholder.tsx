@@ -2,11 +2,12 @@ import Image from 'next/image';
 import s from './placeholder.module.scss';
 import placeholderIcon from 'public/icon/placeholderIcon.svg';
 import { Typography } from '../typography';
+import { useEffect, useState } from 'react';
 
 type ImagePlaceholderType = {
   width?: number;
   height?: number;
-  src?: string;
+  src?: Blob | string;
   alt?: string;
   variant?: 'rounded' | 'default';
 };
@@ -18,9 +19,24 @@ export const ImagePlaceholder = ({
   height = 48,
   src = placeholderIcon,
 }: ImagePlaceholderType) => {
+  const SRC = src === '' ? placeholderIcon : src;
+  const [bWidth, setWidth] = useState(width);
+  const [bHeight, setHeight] = useState(height);
+
+  useEffect(() => {
+    if (src !== '') {
+      setWidth(200);
+      setHeight(200);
+    }
+  }, [src]);
+
   return (
     <div className={`${variant && s[variant]} ${s.container}`}>
-      <Image src={src} width={width} height={height} alt={alt} />
+      {src instanceof Blob ? (
+        <img src={SRC} width={bWidth} height={bHeight} alt={alt} />
+      ) : (
+        <Image src={SRC} width={bWidth} height={bHeight} alt={alt} />
+      )}
     </div>
   );
 };

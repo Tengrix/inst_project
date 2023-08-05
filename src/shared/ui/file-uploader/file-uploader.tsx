@@ -16,22 +16,16 @@ const FileUploader = ({ className, ...rest }: FileUploaderPropsType) => {
 
 type ImageUploaderPropsType = {
   label: string;
+  onImageChangeHandler?: (event: any) => void;
 };
 
-export const ImageUploader = ({ label, ...rest }: ImageUploaderPropsType) => {
-  const [image, setImage] = useState<any>();
-
-  const onImageChangeHandler = (event: any) => {
-    if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
-    }
-  };
+export const ImageUploader = ({ label, onImageChangeHandler, ...rest }: ImageUploaderPropsType) => {
   return (
     <div className={classes.imageUploader}>
       <Button fullWidth>
         <FileUploader label={label} onChange={onImageChangeHandler} {...rest} />
       </Button>
-      {<img src={image} alt="test" width={100} height={100} />}
+      {/* {<img src={image} alt="test" width={100} height={100} />} */}
     </div>
   );
 };
