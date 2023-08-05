@@ -10,6 +10,12 @@
     
     .placeholder {
         max-width: 228px;
-        max-height: 228px;
+        height: 228px;
+        background: transparent;
+        background-color: var(--color-dark-500);
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
