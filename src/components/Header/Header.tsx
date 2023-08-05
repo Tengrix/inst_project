@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import styles from './styles.module.css';
 import LangSwitcher from "@/components/langSwitcher/LangSwitcher";
+import Image from "next/image";
 
 export type HeaderProps = {
   title?: string,
@@ -12,7 +13,7 @@ const Header = (props: HeaderProps) => {
   const {
     title='Inctagram',
     children,
-    icon = <img src={"/assets/notification.png"} alt="notification" />,
+    icon = <Image src={"/assets/notification.png"} alt="notification" width={18} height={20}/>,
   } = props;
 
   return (
