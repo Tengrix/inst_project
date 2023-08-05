@@ -1,0 +1,10 @@
+.imageUploader {
+    text-align: center;
+    & input {
+        display: none;
+    }
+    & label p {
+        font: var(--font-h3);
+        color: var(--color-light-100)
+    }
+}
