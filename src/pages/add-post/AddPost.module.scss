@@ -18,4 +18,38 @@
         align-items: center;
         justify-content: center;
     }
+
+    .images{
+        display: inline-flex;
+        width: 100%;
+        gap:6px;
+        border-radius: 2px;
+        padding: 8px;
+        overflow-y: hidden;
+        overflow-x: auto;
+        text-align: center;
+        background-color: rgba(var(--color-dark-500), .8);
+
+        &__image{
+            flex:0 124px;
+            height: 82px;
+            position: relative;
+
+            img {
+                max-width: 124px;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            &__close {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                padding: 0 6px;
+                border-radius: 2px;
+                background-color: rgba(var(--color-dark-500), .8);
+                color: var(--color-light-100);
+            }
+        }
+    }
 }
