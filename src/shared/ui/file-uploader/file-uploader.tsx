@@ -58,7 +58,6 @@ export const ImageGalleryUploader = ({
 
   return (
     <div className={classes.galleryContainer}>
-      <div className={classes.galleryImages}>
         {images.length > 0 && (
           <ul className={classes.images}>
             {images.map(({ src }) => (
@@ -75,12 +74,9 @@ export const ImageGalleryUploader = ({
             ))}
           </ul>
         )}
-      </div>
-      <div>
-        <Button fullWidth variant="secondary">
+        <Button className={classes.btn} variant='outlined'>
           <FileUploader label={'+'} {...rest} onChange={addImageToGallery} />
         </Button>
-      </div>
     </div>
   );
 };
