@@ -8,3 +8,16 @@
         color: var(--color-light-100)
     }
 }
+
+.galleryContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    & input{
+        display: none;
+    }
+    .galleryImages ul{
+        display: inline-flex;
+    }
+}
