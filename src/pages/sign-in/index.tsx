@@ -14,6 +14,7 @@ import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import { z } from "zod";
+import Spinner from "@/assets/icons/Spinner";
 
 
 export type LoginFormType = z.infer<typeof loginSchema>
@@ -38,12 +39,10 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    const [signIn] = useLoginMutation();
+    const [signIn, {error,isLoading}] = useLoginMutation();
     const t = useTranslations('auth');
-    //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
-        //onSubmitHandler(data);
         signIn({ password: data.password, login: data.userName });
     })
 
@@ -69,9 +68,13 @@ const SignIn = () => {
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>
-                    <Button type={'submit'} className={classes.form__btn} fullWidth>
+                    <Button type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
                         {t('button.signInButton')}
+                        {isLoading && <Spinner/>}
                     </Button>
+                    <div className={classes.form__error}>
+                        {error && 'data' in error && error.data.errorsMessages}
+                    </div>
                 </form>
                 <div className={classes.footer}>
                     <Typography>
