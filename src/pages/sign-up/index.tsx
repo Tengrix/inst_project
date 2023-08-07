@@ -80,7 +80,7 @@ const SignUp = () => {
                         {t('button.signUpButton')}
                     </Button>
                 </form>
-                <Typography variant={'body2'} className={s.subtitle}>
+                <Typography variant={'regular16'} className={s.subtitle}>
                     Do you have an account?
                 </Typography>
                 <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>

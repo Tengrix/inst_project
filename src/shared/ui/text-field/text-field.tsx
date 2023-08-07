@@ -72,7 +72,7 @@ export const TextField: FC<TextFieldProps> = ({
   return (
     <div className={classNames.root}>
       <Label.Root>
-        <Typography variant={'body2'} color={'inherit'}>
+        <Typography variant={'regular14'} color={'inherit'}>
           {label}
         </Typography>
         <div className={s.inputContainer}>

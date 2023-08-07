@@ -23,7 +23,7 @@ export const PageButton = ({ onClick, disabled, selected, page }: PageButtonProp
 
   return (
     <button onClick={onClick} disabled={selected || disabled} className={classNames.button}>
-      <Typography className={classNames.typography} variant={'body2'}>
+      <Typography className={classNames.typography} variant={'regular14'}>
         {page}
       </Typography>
     </button>
