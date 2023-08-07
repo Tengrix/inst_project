@@ -11,9 +11,7 @@ import { Button } from '@/shared/ui/button';
 import { useAppSelector } from '@/store';
 import { ImageManager } from '@/components/ImageManager/ImageManager';
 
-import placeholderIcon from 'public/icon/placeholderIcon.svg';
-
-import ScaleIcon from 'public/icon/scale';
+import ScaleIcon from 'public/icon/scale-icon';
 import PlaceholderImageIcon from 'public/icon/placeholder-image-icon';
 import ResizeIcon from 'public/icon/resize-icon';
 
