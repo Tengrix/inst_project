@@ -56,7 +56,11 @@
   .privacyBlock {
     display: flex;
     margin-top: 1.38rem;
-
+    .privacyText {
+      padding-left:8px;
+      display: flex;
+      align-items: center;
+  }
   }
 
   .registerBtn {

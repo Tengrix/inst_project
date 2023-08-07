@@ -87,10 +87,10 @@ const SignUp = () => {
                     <div className={s.privacyBlock}>
                         <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``}
                         />
-                        <Typography variant={'small'} >I agree to the
-                            <Link href={'/sign-up/terms-of-service'}>Terms of
-                            Service </Link> and
-                            <Link href={'\'/sign-up/terms-of-service\''}> Privacy Policy</Link> </Typography>
+                        <Typography variant={'small'} className={s.privacyText}>I agree to the&nbsp;
+                            <Link href={'/sign-up/terms-of-service'} className={s.link}> Terms of
+                            Service </Link>&nbsp;and
+                            <Link href={'\'/sign-up/terms-of-service\''} className={s.link}>&nbsp;Privacy Policy</Link> </Typography>
                     </div>
 
                     <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
