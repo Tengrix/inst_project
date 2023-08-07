@@ -39,7 +39,8 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
 
 const SignIn = () => {
     const [signIn] = useLoginMutation();
-    const t = useTranslations('auth');
+    const translationPath = 'auth';
+    const t = useTranslations(translationPath);
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
@@ -64,8 +65,8 @@ const SignIn = () => {
                     </div>
                 </div>
                 <form className={classes.form} onSubmit={onSubmit}>
-                    <ControlledTextField control={control} translation={t} name={'userName'} label={'Username'} />
-                    <ControlledTextField control={control} translation={t} name={'password'} label={'Password'} type={'password'} />
+                    <ControlledTextField control={control} translation={translationPath} name={'userName'} label={'Username'} />
+                    <ControlledTextField control={control} translation={translationPath} name={'password'} label={'Password'} type={'password'} />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>
