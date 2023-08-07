@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import s from './ImageManager.module.scss';
 import Image from 'next/image';
 import { imageManager } from '@/shared/lib/imageStore';
+import { ReactComponentElement, ReactNode } from 'react';
 
 type ImageManagerPropsType = {
   icons: Array<IconType>;
@@ -10,6 +11,7 @@ type ImageManagerPropsType = {
 type IconType = {
   iconTitle: string;
   src: string;
+  icon: ReactNode
 };
 
 export const ImageManager = ({ icons, callback }: ImageManagerPropsType) => {
@@ -18,14 +20,8 @@ export const ImageManager = ({ icons, callback }: ImageManagerPropsType) => {
     <>
       <div className={s.currentImageManager}>
         {icons.map((icon) => (
-          <div className={s.imageManagerButton}>
-            <Image
-              src={icon.src}
-              width={24}
-              height={24}
-              alt={icon.iconTitle}
-              onClick={() => dispatch(imageManager({ value: icon.iconTitle }))}
-            />
+          <div key={icon.iconTitle} className={s.imageManagerButton} onClick={() => dispatch(imageManager({ value: icon.iconTitle }))}>
+            {icon.icon}
           </div>
         ))}
       </div>

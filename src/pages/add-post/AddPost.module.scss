@@ -1,5 +1,3 @@
-$mask:00000035;
-
 .container {
     display: flex;
     flex-direction: column;
@@ -7,7 +5,6 @@ $mask:00000035;
     align-items: center;
     justify-content: center;
     max-width: 500px;
-    padding: 0 15px;
     margin: 0 auto;
     
     .placeholder {
@@ -49,7 +46,7 @@ $mask:00000035;
                 right: -10px;
                 padding: 0 6px;
                 border-radius: 2px;
-                background-color: rgba(var(--color-dark-500), .8);
+                background-color:hsla(var(--color-dark-500), 20%);
                 color: var(--color-light-100);
             }
         }
@@ -60,17 +57,30 @@ $mask:00000035;
     background-color: aquamarine;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
+    padding: 12px;
     align-items: center;
     width: 492px;
     height: 502px;
 }
 .imageGalleryUploader{
     position: absolute;
-    bottom: 50px;
-    right: 30px;
-    background-color:cl(var(--color-dark-500), 0.5);
-    z-index: 10;
-    border-radius: 2px;
+    bottom: 56px;
+    right: 12px;
     padding: 10px;
+    max-width: 430px;
+    z-index: 100;
+
+    &::before{
+        content: '';
+        border-radius: 2px;
+        position: absolute;
+        top:0;
+        left:0;
+        opacity:.8;
+        background-color: var(--color-dark-500);
+        width:100%;
+        height: 100%;
+        z-index: -1;
+    }
 }

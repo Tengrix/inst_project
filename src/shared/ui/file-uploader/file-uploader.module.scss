@@ -11,7 +11,6 @@
 
 .galleryContainer{
     display: flex;
-    margin-top: 60px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -21,6 +20,7 @@
     & .btn{
         padding: 0;
         border: none;
+        background: transparent;
     }
     & label p{
         font: var(--font-h1);

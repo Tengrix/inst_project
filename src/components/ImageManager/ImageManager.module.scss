@@ -1,10 +1,7 @@
 .currentImageManager {
-    position: absolute;
-    background-color: aqua;
     align-items:flex-end;
-    width: 469px;
+    width: 100%;
     height: 36px;
-    margin-bottom: 12px;
     align-items: center;
     display: flex;
     gap: 10px;
@@ -23,8 +20,13 @@
     justify-content: center;
     align-items: center;
 
-    &:hover img {
-        filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%);
+    & svg {
+        fill: var(--color-light-100);
+        transition: fill .3s ease;
+    }
+
+    &:hover svg {
+        fill: var(--color-primary-500);
     }
 }
 .imageManagerButton:last-child {
