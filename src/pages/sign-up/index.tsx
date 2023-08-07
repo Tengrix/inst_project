@@ -90,7 +90,7 @@ const SignUp = () => {
                         <Typography variant={'small'} className={s.privacyText}>I agree to the&nbsp;
                             <Link href={'/sign-up/terms-of-service'} className={s.link}> Terms of
                             Service </Link>&nbsp;and
-                            <Link href={'\'/sign-up/terms-of-service\''} className={s.link}>&nbsp;Privacy Policy</Link> </Typography>
+                            <Link href={'/sign-up/privacy-policy'} className={s.link}>&nbsp;Privacy Policy</Link> </Typography>
                     </div>
 
                     <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
