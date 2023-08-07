@@ -15,6 +15,7 @@ export type CheckboxPropsType = {
   required?: boolean
   label?: string
   id?: string
+  className?: string
 }
 
 export const Checkbox: FC<CheckboxPropsType> = ({
