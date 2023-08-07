@@ -11,6 +11,7 @@ export const registerSchema = z
             .min(6, 'Password must be at least 6 characters')
             .max(20,'Password can not be longer than 20 characters'),
         confirmPassword: z.string().trim(),
+        serviceAndPrivacy: z.boolean().optional(),
     })
     .refine(data => data.password === data.confirmPassword, {
         message: "Passwords don't match",
