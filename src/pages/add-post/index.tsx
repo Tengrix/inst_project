@@ -26,9 +26,9 @@ export const AddPost = () => {
   const images = useAppSelector((state) => state.images.images);
 
   const icons = [
-    { iconTitle: 'resize', icon: <ResizeIcon /> },
-    { iconTitle: 'scale', icon: <ScaleIcon /> },
-    { iconTitle: 'gallery', icon: <PlaceholderImageIcon /> },
+    { iconTitle: 'resize', className: 'icon_expand' },
+    { iconTitle: 'scale', className: 'icon_maximizeOutline' },
+    { iconTitle: 'gallery', className: 'icon_imageOutline' },
   ];
 
   const onImageChangeHandler = (event: any) => {
