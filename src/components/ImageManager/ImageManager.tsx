@@ -10,8 +10,7 @@ type ImageManagerPropsType = {
 };
 type IconType = {
   iconTitle: string;
-  src: string;
-  icon: ReactNode
+  icon: ReactNode;
 };
 
 export const ImageManager = ({ icons, callback }: ImageManagerPropsType) => {
@@ -20,7 +19,11 @@ export const ImageManager = ({ icons, callback }: ImageManagerPropsType) => {
     <>
       <div className={s.currentImageManager}>
         {icons.map((icon) => (
-          <div key={icon.iconTitle} className={s.imageManagerButton} onClick={() => dispatch(imageManager({ value: icon.iconTitle }))}>
+          <div
+            key={icon.iconTitle}
+            className={s.imageManagerButton}
+            onClick={() => dispatch(imageManager({ value: icon.iconTitle }))}
+          >
             {icon.icon}
           </div>
         ))}

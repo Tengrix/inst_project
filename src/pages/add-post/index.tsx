@@ -12,9 +12,10 @@ import { useAppSelector } from '@/store';
 import { ImageManager } from '@/components/ImageManager/ImageManager';
 
 import placeholderIcon from 'public/icon/placeholderIcon.svg';
-import searchIcon from 'public/icon/searchIcon.svg';
-import scaleIcon from 'public/icon/scaleIcon.svg';
+
 import ScaleIcon from 'public/icon/scale';
+import PlaceholderImageIcon from 'public/icon/placeholder-image-icon';
+import ResizeIcon from 'public/icon/resize-icon';
 
 export const AddPost = () => {
   const [image, setImage] = useState<string>('');
@@ -27,9 +28,9 @@ export const AddPost = () => {
   const images = useAppSelector((state) => state.images.images);
 
   const icons = [
-    { iconTitle: 'scale', src: 'public/icon/scaleIcon.svg', icon: <ScaleIcon /> },
-    { iconTitle: 'search', src: searchIcon, icon: <ScaleIcon /> },
-    { iconTitle: 'gallery', src: placeholderIcon, icon: <ScaleIcon /> },
+    { iconTitle: 'resize', icon: <ResizeIcon /> },
+    { iconTitle: 'scale', icon: <ScaleIcon /> },
+    { iconTitle: 'gallery', icon: <PlaceholderImageIcon /> },
   ];
 
   const onImageChangeHandler = (event: any) => {
