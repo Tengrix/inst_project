@@ -3,7 +3,6 @@ import s from './placeholder.module.scss';
 import placeholderIcon from 'public/icon/placeholderIcon.svg';
 import { Typography } from '../typography';
 
-
 type ImagePlaceholderType = {
   width?: number;
   height?: number;
@@ -19,14 +18,12 @@ export const ImagePlaceholder = ({
   height = 48,
   src = placeholderIcon,
 }: ImagePlaceholderType) => {
-
   return (
     <div className={`${variant && s[variant]} ${s.container}`}>
-        <Image src={src} width={width} height={height} alt={alt} />
+      <Image src={src} width={10} height={10} alt={alt} />
     </div>
   );
 };
-
 
 export const LoremIpsumPlaceholder = ({ repeat = 1 }) => {
   const lorem = `Lorem, ipsum dolor sit amet consectetur adipisicing elit.

@@ -1,3 +1,5 @@
+$mask:00000035;
+
 .container {
     display: flex;
     flex-direction: column;
@@ -52,4 +54,23 @@
             }
         }
     }
+}
+.currentImageField {
+    position: relative;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 492px;
+    height: 502px;
+}
+.imageGalleryUploader{
+    position: absolute;
+    bottom: 50px;
+    right: 30px;
+    background-color:cl(var(--color-dark-500), 0.5);
+    z-index: 10;
+    border-radius: 2px;
+    padding: 10px;
 }

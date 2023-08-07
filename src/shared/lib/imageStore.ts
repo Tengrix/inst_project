@@ -4,6 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export type ImageStoreStateType = {
   images: Array<ImageType>
   error: string
+
+  isShowGallery: boolean
 }
 
 export type ImageType = {
@@ -15,7 +17,8 @@ export type ImageType = {
 
 const initialState: ImageStoreStateType = {
   images: [],
-  error: ''
+  error: '',
+  isShowGallery: false
 }
 
 export const imageSlice = createSlice({
@@ -36,11 +39,17 @@ export const imageSlice = createSlice({
     removeImage: (state, action: PayloadAction<{ src: string }>) => {
         const filteredImages = state.images.filter(({src}) => src != action.payload.src);
         state.images = filteredImages;
+    },
+
+    imageManager: (state,action:PayloadAction<{value:string}>)=>{
+        if(action.payload.value === 'gallery'){
+            state.isShowGallery = !state.isShowGallery
+        }
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addImage, removeImage } = imageSlice.actions
+export const { addImage, removeImage, imageManager } = imageSlice.actions
 
 export default imageSlice.reducer

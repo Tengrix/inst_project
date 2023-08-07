@@ -6,15 +6,30 @@ import { ImagePlaceholder, LoremIpsumPlaceholder } from '@/shared/ui/placeholder
 import { ImageGalleryUploader, ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useState } from 'react';
 import { addImage, removeImage } from '@/shared/lib/imageStore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@/shared/ui/button';
 import { useAppSelector } from '@/store';
+import { ImageManager } from '@/components/ImageManager/ImageManager';
+
+import placeholderIcon from 'public/icon/placeholderIcon.svg';
+import searchIcon from 'public/icon/searchIcon.svg';
+import scaleIcon from 'public/icon/scaleIcon.svg';
 
 export const AddPost = () => {
   const [image, setImage] = useState<string>('');
+  //const [isShowGallery, seIsShowGallery] = useState(false);
+
+  const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
+
   const dispatch = useDispatch();
   const error = useAppSelector<string>((state) => state.images.error);
   const images = useAppSelector((state) => state.images.images);
+
+  const icons = [
+    { iconTitle: 'scale', src: scaleIcon },
+    { iconTitle: 'search', src: searchIcon },
+    { iconTitle: 'gallery', src: placeholderIcon },
+  ];
 
   const onImageChangeHandler = (event: any) => {
     if (event.target.files && event.target.files[0]) {
@@ -58,8 +73,15 @@ export const AddPost = () => {
         </ul>
       )}
       <LoremIpsumPlaceholder /> */}
+      <div className={classes.currentImageField}>
+        {isShowGallery && (
+          <div className={classes.imageGalleryUploader}>
+            <ImageGalleryUploader label="gallery" onImageChangeHandler={onImageChangeHandler} />
+          </div>
+        )}
+        <ImageManager icons={icons} />
+      </div>
 
-      <ImageGalleryUploader label="gallery" onImageChangeHandler={onImageChangeHandler} />
       {/* <Modal open title="Add Photo" onClose={() => {}} /> */}
     </div>
   );
