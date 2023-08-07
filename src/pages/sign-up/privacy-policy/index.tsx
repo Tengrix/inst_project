@@ -14,7 +14,7 @@ const TermsOfService = () => {
             </div>
 
             <Typography variant={"h1"} className={s.title}>
-                Terms of Service
+                Privacy Policy
             </Typography>
             <Typography variant={"regular14"} className={s.content}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
