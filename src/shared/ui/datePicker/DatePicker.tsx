@@ -6,17 +6,19 @@ import {Typography} from "@/shared/ui/typography";
 
 type PropsType = {
     label: string
+    callback: (date: string) => void
 }
 
-const DatePicker = ({label}: PropsType) => {
-    const [date, setDate] = useState<moment.Moment | null>(null);
-    const [focused, setFocused] = useState<boolean>(false);
+const DatePicker = ({label, callback}: PropsType) => {
+    const [date, setDate] = useState<moment.Moment | null>(null)
+    const [focused, setFocused] = useState<boolean>(false)
 
     const currentDay = moment()
 
     const handleDateChange = (newDate: Moment | null) => {
         setDate(newDate);
-    };
+        newDate && callback(newDate.format('DD.MM.YYYY'))
+    }
 
     return (
         <div>
