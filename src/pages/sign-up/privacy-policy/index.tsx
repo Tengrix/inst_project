@@ -2,12 +2,12 @@ import s from "@/pages/sign-up/terms-of-service/terms-of-service.module.scss";
 import {Button} from "@/shared/ui/button";
 import {Typography} from "@/shared/ui/typography";
 import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
-import SignIn from "@/pages/sign-in";
-import BackArrowLeft from "@/assets/icons/back-arrow-left";
+
 
 const TermsOfService = () => {
     return (
         <div className={s.container}>
+            {/*<Link className={s.link} href={'/sign-in'}>Back to sign in</Link>*/}
             <div className={s.backLink}>
                 <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
                     Back to sign in</Button>

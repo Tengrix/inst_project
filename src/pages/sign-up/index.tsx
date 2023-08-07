@@ -57,7 +57,7 @@ const SignUp = () => {
             })
         setEmail(data.email)
     })
-        // if (isLoading) return <h2>...Loading</h2>
+        if (isLoading) return <h2>...Loading</h2>
     return (
         <div className={s.container}>
             {!isModalOpen && <Card className={s.card}>

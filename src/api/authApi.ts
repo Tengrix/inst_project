@@ -67,6 +67,8 @@ export const authApi = createApi({
                     body: data
                 })
             }),
+
+
             login: builder.mutation<void, { login: string, password: string }>({
                 query: (data) => ({
                     url: `/auth/login`,
