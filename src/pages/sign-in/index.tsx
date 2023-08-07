@@ -39,7 +39,7 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    const [signIn] = useLoginMutation();
+    const [signIn, {error,isLoading}] = useLoginMutation();
     const translationPath = 'auth';
     const t = useTranslations(translationPath);
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);

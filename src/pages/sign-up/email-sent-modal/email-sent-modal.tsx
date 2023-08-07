@@ -15,7 +15,7 @@ export const EmailSentModal = ({isOpen, setOn, title, email}: EmailSentModalType
     }
     return (
         <Modal title={title} open={isOpen} onClose={handler}>
-            <Typography variant={'body2'}>
+            <Typography variant={'regular16'}>
                 We have sent a link to confirm your email to {email ? email : 'your email'}
             </Typography>
         </Modal>

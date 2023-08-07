@@ -62,7 +62,7 @@ const ForgotPassword = () => {
               label={t('form.email')}
               className={s.email}
             />
-            <Typography variant={'body2'} className={s.subtitle}>
+            <Typography variant={'regular14'} className={s.subtitle}>
               {t('forgotPasswordPage.enterYourEmailText')}
             </Typography>
             <Button
