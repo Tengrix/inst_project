@@ -14,6 +14,7 @@ import { ImageManager } from '@/components/ImageManager/ImageManager';
 import ScaleIcon from 'public/icon/scale-icon';
 import PlaceholderImageIcon from 'public/icon/placeholder-image-icon';
 import ResizeIcon from 'public/icon/resize-icon';
+import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 
 export const AddPost = () => {
   const [image, setImage] = useState<string>('');
@@ -21,15 +22,9 @@ export const AddPost = () => {
 
   const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
 
+  const images = useAppSelector((state) => state.images.images);
   const dispatch = useDispatch();
   const error = useAppSelector<string>((state) => state.images.error);
-  const images = useAppSelector((state) => state.images.images);
-
-  const icons = [
-    { iconTitle: 'resize', className: 'icon_expand' },
-    { iconTitle: 'scale', className: 'icon_maximizeOutline' },
-    { iconTitle: 'gallery', className: 'icon_imageOutline' },
-  ];
 
   const onImageChangeHandler = (event: any) => {
     if (event.target.files && event.target.files[0]) {
@@ -48,7 +43,7 @@ export const AddPost = () => {
 
   return (
     <div className={classes.container}>
-      {/* <Typography as="h1" variant="h1">
+      <Typography as="h1" variant="h1">
         Add Post
       </Typography>
       <div className={classes.placeholder}>
@@ -72,15 +67,9 @@ export const AddPost = () => {
           ))}
         </ul>
       )}
-      <LoremIpsumPlaceholder /> */}
-      <div className={classes.currentImageField}>
-        {isShowGallery && (
-          <div className={classes.imageGalleryUploader}>
-            <ImageGalleryUploader label="gallery" onImageChangeHandler={onImageChangeHandler} />
-          </div>
-        )}
-        <ImageManager icons={icons} />
-      </div>
+      <LoremIpsumPlaceholder />
+
+      <ImageEditor />
 
       {/* <Modal open title="Add Photo" onClose={() => {}} /> */}
     </div>
