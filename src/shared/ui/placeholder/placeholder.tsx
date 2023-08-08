@@ -20,7 +20,7 @@ export const ImagePlaceholder = ({
 }: ImagePlaceholderType) => {
   return (
     <div className={`${variant && s[variant]} ${s.container}`}>
-      <Image src={src} width={10} height={10} alt={alt} />
+      <Image src={src} width={48} height={48} alt={alt} />
     </div>
   );
 };
