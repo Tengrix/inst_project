@@ -69,7 +69,7 @@ export const AddPost = () => {
       )}
       <LoremIpsumPlaceholder />
 
-      <ImageEditor />
+      <ImageEditor image={image} />
 
       {/* <Modal open title="Add Photo" onClose={() => {}} /> */}
     </div>

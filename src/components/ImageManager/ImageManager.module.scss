@@ -6,7 +6,11 @@
     display: flex;
     gap: 10px;
     //left: 30px;
-    bottom: 0px;
+    padding:  0 24px;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    position: absolute;
     //justify-content: space-between;
 }
 .imageManagerButton {

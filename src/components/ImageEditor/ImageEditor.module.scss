@@ -24,9 +24,10 @@
     background-color: aquamarine;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     padding: 12px;
-    align-items: center;
-    width: 492px;
-    height: 502px;
+    align-items: flex-end;
+
+    & img {
+        align-self: center;
+    }
 }

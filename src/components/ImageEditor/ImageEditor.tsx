@@ -6,7 +6,7 @@ import { addImage } from '@/shared/lib/imageStore';
 import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
 
-export const ImageEditor = () => {
+export const ImageEditor = ({image}) => {
   const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
   const dispatch = useDispatch();
   const icons = [
@@ -25,6 +25,7 @@ export const ImageEditor = () => {
 
   return (
     <div className={classes.currentImageField}>
+      {image && <img src={image} alt=""/>}
       {isShowGallery && (
         <div className={classes.imageGalleryUploader}>
           <ImageGalleryUploader label="gallery" onImageChangeHandler={onImageChangeHandler} />
