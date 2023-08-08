@@ -3,7 +3,7 @@ import { Button } from '../button';
 import { TextField } from '../text-field/text-field';
 import classes from './file-uploader.module.scss';
 import Image from 'next/image';
-import { addImage, removeImage } from '@/shared/lib/imageStore';
+import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/store';
 
@@ -33,11 +33,10 @@ export const ImageUploader = ({ label, onImageChangeHandler, ...rest }: ImageUpl
   );
 };
 
-////////////////////////////////////////////////
-
 export const ImageGalleryUploader = ({
   label,
   onImageChangeHandler,
+
   ...rest
 }: ImageUploaderPropsType) => {
   const dispatch = useDispatch();
@@ -48,6 +47,7 @@ export const ImageGalleryUploader = ({
       const { name, size, type } = event.target.files[0];
       const src = URL.createObjectURL(event.target.files[0]);
       dispatch(addImage({ name, size, type, src }));
+      dispatch(currentImage({ src }));
     }
   };
   const removeImageFromGallery = (event: any) => {
@@ -58,25 +58,32 @@ export const ImageGalleryUploader = ({
 
   return (
     <div className={classes.galleryContainer}>
-        {images.length > 0 && (
-          <ul className={classes.images}>
-            {images.map(({ src }) => (
-              <li key={src} className={classes.images__image}>
-                <img key={src} src={src} alt="" />
-                <Button
-                  className={classes.images__image__close}
-                  onClick={removeImageFromGallery}
-                  value={src}
-                >
-                  X
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
-        <Button className={classes.btn} variant='outlined'>
-          <FileUploader label={'+'} {...rest} onChange={addImageToGallery} />
-        </Button>
+      {images.length > 0 && (
+        <ul className={classes.images}>
+          {images.map(({ src }) => (
+            <li key={src} className={classes.images__image}>
+              <img
+                key={src}
+                src={src}
+                alt=""
+                onClick={() => {
+                  dispatch(currentImage({ src }));
+                }}
+              />
+              <Button
+                className={classes.images__image__close}
+                onClick={removeImageFromGallery}
+                value={src}
+              >
+                X
+              </Button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Button className={classes.btn} variant="outlined">
+        <FileUploader label={'+'} {...rest} onChange={addImageToGallery} />
+      </Button>
     </div>
   );
 };

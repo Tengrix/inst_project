@@ -5,7 +5,7 @@ import classes from './AddPost.module.scss';
 import { ImagePlaceholder, LoremIpsumPlaceholder } from '@/shared/ui/placeholder/placeholder';
 import { ImageGalleryUploader, ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useState } from 'react';
-import { addImage, removeImage } from '@/shared/lib/imageStore';
+import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@/shared/ui/button';
 import { useAppSelector } from '@/store';
@@ -32,6 +32,7 @@ export const AddPost = () => {
       const src = URL.createObjectURL(event.target.files[0]);
       setImage(src);
       dispatch(addImage({ name, size, type, src }));
+      dispatch(currentImage({ src }));
     }
   };
 
