@@ -1,0 +1,32 @@
+.imageGalleryUploader{
+    position: absolute;
+    bottom: 56px;
+    right: 12px;
+    padding: 10px;
+    max-width: 430px;
+    z-index: 100;
+
+    &::before{
+        content: '';
+        border-radius: 2px;
+        position: absolute;
+        top:0;
+        left:0;
+        opacity:.8;
+        background-color: var(--color-dark-500);
+        width:100%;
+        height: 100%;
+        z-index: -1;
+    }
+}
+.currentImageField {
+    position: relative;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 12px;
+    align-items: center;
+    width: 492px;
+    height: 502px;
+}
