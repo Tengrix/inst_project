@@ -1,0 +1,29 @@
+
+.container {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 71px;
+  width: 958px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.content {
+  text-align: center;
+}
+
+.backLink {
+  //display: flex;
+  //flex-direction: row;
+}
+.link {
+  position: absolute;
+  top: -70px;
+  left:-100px
+}
