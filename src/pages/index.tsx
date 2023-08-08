@@ -15,9 +15,8 @@ import {useRouter} from "next/router";
 const Home: NextPageWithLayout = () => {
 
     return (
-        <div>
-            <Image src="/next.svg" alt="Next.js Logo" width={180} height={37} priority/>
-        </div>
+        <>
+        </>
     )
 };
 Home.getLayout = getLayout;

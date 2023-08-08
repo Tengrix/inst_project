@@ -6,7 +6,7 @@
     height: 10px;
     /* background-color: #000000; */
     background-color:#0D0D0D;
-    border-bottom: 1px solid #645f5f;
+    border-bottom: 1px solid var(--color-dark-100);
   }
 
   .text, .languageSelector, .notificationIcon {
