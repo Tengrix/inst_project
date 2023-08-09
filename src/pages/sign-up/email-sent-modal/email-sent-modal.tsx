@@ -11,7 +11,7 @@ export const EmailSentModal = ({isOpen, setOn, title, email}: EmailSentModalType
     if (!isOpen) return null
 
     return (
-        <Modal title={title} open={isOpen} onChangeHandler={setOn}>
+        <Modal title={title} open={isOpen} modalHandler={setOn}>
             <Typography variant={'regular16'}>
                 We have sent a link to confirm your email to {email ? email : 'your email'}
             </Typography>
