@@ -53,7 +53,7 @@ export const authApi = createApi({
                     }
                 }
             }),
-            passwordRecovery: builder.mutation<void, { email: string }>({
+            passwordRecovery: builder.mutation<void, { email: string,recaptchaValue:string }>({
                 query: (data) => ({
                     url: '/auth/password-recovery',
                     method: 'POST',

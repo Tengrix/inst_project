@@ -31,6 +31,7 @@ const ForgotPassword = () => {
   const { push, pathname } = useRouter();
   const [forgotPassword, { status }] = usePasswordRecoveryMutation();
   const [email, setEmail] = useState('');
+  const [captcha,setCaptcha] = useState<string>('')
 
   const t = useTranslations('auth');
 
@@ -38,7 +39,7 @@ const ForgotPassword = () => {
     resolver: zodResolver(forgotPasswordSchema),
   });
   const onSubmit = handleSubmit((data) => {
-    forgotPassword(data);
+    forgotPassword({email:data.email,recaptchaValue:captcha});
     setEmail(data.email);
   });
 
@@ -77,7 +78,7 @@ const ForgotPassword = () => {
           <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
             {t('button.backToSignIn')}
           </Button>
-          <Captcha changeCaptchaValue={changeCaptchaValue} />
+          <Captcha changeCaptchaValue={changeCaptchaValue} setCaptchaValue={setCaptcha} />
         </Card>
       </div>
     </>

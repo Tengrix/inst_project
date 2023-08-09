@@ -3,6 +3,7 @@ import React, {ReactNode, useState} from "react";
 import {Button} from "@/shared/ui/button";
 import s from '@/pages/post/createPostModal/CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
+import ConfirmCloseModal from "@/shared/ui/modal/ConfirmCloseModal";
 
 type StepType = 'Cropping' | 'Filters' | 'Publication'
 
@@ -16,14 +17,14 @@ const CreatePostModal = (props: Props) => {
 
     const [editModal, setEditModal] = useState(false)
 
-    const [closeConfirmModal, setCloseConfirmModal] = useState(false)
+    const [confirmCloseModal, setConfirmCloseModal] = useState(false)
 
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping')
 
     const nextBtnHandler = () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters')
         else if (currentStep === 'Filters') setCurrentStep('Publication')
-        else if(currentStep==='Publication') {
+        else if (currentStep === 'Publication') {
             //publish request
             setEditModal(false)
             props.modalHandler(false)
@@ -33,13 +34,12 @@ const CreatePostModal = (props: Props) => {
     const prevBtnHandler = () => {
         if (currentStep === 'Filters') setCurrentStep('Cropping')
         else if (currentStep === 'Publication') setCurrentStep('Filters')
-        else if(currentStep==='Cropping') setCloseConfirmModal(true)
+        else if (currentStep === 'Cropping') setConfirmCloseModal(true)
     }
 
 
-
     const nextButton = <Button className={s.btn} variant={"outlined"} onClick={nextBtnHandler}>
-        {currentStep==='Publication'?'Publish':'Next'}
+        {currentStep === 'Publication' ? 'Publish' : 'Next'}
     </Button>
 
     const previousButton = <Button className={s.btn} variant={"outlined"} onClick={prevBtnHandler}>
@@ -47,24 +47,28 @@ const CreatePostModal = (props: Props) => {
     </Button>
 
 
-
     const discardHandler = () => {
-        setCloseConfirmModal(false)
+        setConfirmCloseModal(false)
         setEditModal(false)
         setCurrentStep('Cropping')
     }
     const saveDraftHandler = () => {
-        setCloseConfirmModal(false)
+        setConfirmCloseModal(false)
         setEditModal(false)
         setCurrentStep('Cropping')
     }
     const onPointerOutsideClickHandler = () => {
-        setCloseConfirmModal(true)
+        setConfirmCloseModal(true)
     }
 
 
     return (
-        <Modal title='Add photo' open={props.open} modalHandler={props.modalHandler} modalTrigger={<Button>Create Post</Button>}>
+        <Modal
+            title='Add photo'
+            open={props.open}
+            modalHandler={props.modalHandler}
+            modalTrigger={<Button>Create Post</Button>}
+        >
             <Modal
                 title={currentStep}
                 open={editModal}
@@ -82,24 +86,21 @@ const CreatePostModal = (props: Props) => {
 
             >
                 {props.children}
-                <Modal
-                    title={"Close"}
-                    open={closeConfirmModal}
-                    modalHandler={setCloseConfirmModal}
+                <ConfirmCloseModal
+                    open={confirmCloseModal}
+                    modalHandler={setConfirmCloseModal}
                     customButtonsBlock={
                         <>
                             <Button onClick={discardHandler}> Discard </Button>
                             <Button onClick={saveDraftHandler}> Save draft </Button>
-                        </>
-
-                    }
+                        </>}
                 >
                     <Typography variant={"regular16"} as={'div'} style={{maxWidth: '333px'}}>
                         Do you really want to close the creation of a publication?
                         <br/>
                         If you close everything will be deleted
                     </Typography>
-                </Modal>
+                </ConfirmCloseModal>
             </Modal>
         </Modal>
     );

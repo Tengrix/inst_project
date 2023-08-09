@@ -75,7 +75,7 @@ const SignIn = () => {
                         {isLoading && <Spinner/>}
                     </Button>
                     <div className={classes.form__error}>
-                        {error && 'data' in error && error.data.errorsMessages}
+                        {/*{error && 'data' in error && error.data.errorsMessages}*/}
                     </div>
                 </form>
                 <div className={classes.footer}>
