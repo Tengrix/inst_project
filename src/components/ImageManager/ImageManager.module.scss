@@ -19,12 +19,19 @@
     border-radius: 2px;
     background: transparent;
     background-color: var(--color-dark-500);
-    opacity: .8;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: color .3s ease;
     font-size: 24px;
+    z-index: 100;
+
+    &::after{
+        content: '';
+        position: absolute;
+        opacity:.8;
+        z-index: -1;
+    }
 
     &:hover  {
         color: var(--color-primary-500);
@@ -32,5 +39,5 @@
     }
 }
 .imageManagerButton:last-child {
-margin-left: auto;    
+    margin-left: auto
 }

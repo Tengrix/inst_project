@@ -38,16 +38,26 @@ export const imageSlice = createSlice({
     },
 
     removeImage: (state, action: PayloadAction<{ src: string }>) => {
-        const filteredImages = state.images.filter(({src}) => src != action.payload.src);
+        const filteredImages = state.images.filter(({src}, i) => {
+          if (action.payload.src === state.currentImage) {
+            if (i - 1 >= 0) {
+              state.currentImage = state.images[i - 1].src;
+            } else if (i + 1 < state.images.length) {
+              state.currentImage = state.images[i + 1].src;
+            }
+          }
+          return src != action.payload.src
+        });
         state.images = filteredImages;
     },
 
-    imageManager: (state,action:PayloadAction<{value:string}>)=>{
+    imageManager: (state, action:PayloadAction<{value:string}>)=>{
         if(action.payload.value === 'gallery'){
             state.isShowGallery = !state.isShowGallery
         }
     },
-    currentImage:(state,action:PayloadAction<{src:string}>)=>{
+
+    currentImage:(state, action:PayloadAction<{src:string}>)=>{
         state.currentImage = action.payload.src
     }
   },

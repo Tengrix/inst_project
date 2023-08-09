@@ -5,15 +5,17 @@ import { ImageManager } from '../ImageManager/ImageManager';
 import { addImage } from '@/shared/lib/imageStore';
 import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
+import { ImageSlider } from '../ImageSlider/ImageSlider';
 
 type ImageEditorPropsType = {
   image: string;
 };
 
-export const ImageEditor = ({ image }: ImageEditorPropsType) => {
+export const ImageEditor = ({ image, }: ImageEditorPropsType) => {
   const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
   const dispatch = useDispatch();
   const currentImage = useAppSelector((state) => state.images.currentImage);
+  const images = useAppSelector((state) => state.images.images);
 
   const icons = [
     { iconTitle: 'resize', className: 'icon_expand' },
@@ -32,7 +34,8 @@ export const ImageEditor = ({ image }: ImageEditorPropsType) => {
 
   return (
     <div className={classes.currentImageField}>
-      {currentImage && <img src={currentImage} alt="" />}
+      <ImageSlider currentImage={currentImage} images={images}/>
+      {/*{currentImage && <img src={currentImage} alt="" />}*/}
       {isShowGallery && (
         <div className={classes.imageGalleryUploader}>
           <ImageGalleryUploader label="gallery" onImageChangeHandler={onImageChangeHandler} />
