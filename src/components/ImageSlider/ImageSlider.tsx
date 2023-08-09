@@ -39,7 +39,7 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
                 onClick={() => {
                   dispatch(currentImage({ src }));
                 }}
-              ></button>
+              ></button>{' '}
             </li>
           ))}
         </ul>
