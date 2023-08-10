@@ -39,7 +39,6 @@ const SignIn = () => {
     const translationPath = 'auth';
     const router = useRouter()
     const t = useTranslations(translationPath);
-    const router = useRouter()
 
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
