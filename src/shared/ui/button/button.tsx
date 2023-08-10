@@ -1,12 +1,14 @@
-import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
+import React, { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 import s from './button.module.scss'
+import Spinner from "@/shared/ui/spinner/Spinner";
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   variant?: 'primary' | 'secondary' | 'outlined' | 'link'
   fullWidth?: boolean
   className?: string
+  isLoading?:boolean
   children: ReactNode
 } & ComponentPropsWithoutRef<T>
 
@@ -20,6 +22,7 @@ export const Button = <T extends ElementType = 'button'>(
     fullWidth,
     className,
     children,
+    isLoading,
     as: Component = 'button',
     ...rest
   } = props
@@ -27,6 +30,7 @@ export const Button = <T extends ElementType = 'button'>(
   return (
     <Component className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`} {...rest}>
       {children}
+      {isLoading && <Spinner/>}
     </Component>
   )
 }
