@@ -1,10 +1,10 @@
-import { useLoginMutation } from "@/api/authApi";
+import {CustomerError, useLoginMutation} from "@/api/authApi";
 import classes from "@/pages/sign-in/SignIn.module.scss";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { ControlledTextField } from "@/shared/ui/controlled";
 import { Typography } from "@/shared/ui/typography";
-import { loginSchema } from "@/shared/utils/schemas/loginSchema";
+import {LoginFormType, loginSchema} from "@/shared/utils/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createTranslator, useTranslations } from 'next-intl';
 import Link from "next/link";
@@ -13,16 +13,9 @@ import { Github } from "public/icon/github-logo";
 import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import { z } from "zod";
 import Spinner from "@/assets/icons/Spinner";
+import {useRouter} from "next/router";
 
-
-export type LoginFormType = z.infer<typeof loginSchema>
-
-type LoginFormPropsType = {
-    linkPath: string
-    onSubmitHandler: (data: LoginFormType) => void
-}
 
 export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
@@ -38,14 +31,19 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
     };
 }
 
+const translationPath = 'auth';
+
 const SignIn = () => {
-    const [signIn, {error,isLoading}] = useLoginMutation();
-    const translationPath = 'auth';
+    const [signIn, {error,isLoading,isError}] = useLoginMutation();
     const t = useTranslations(translationPath);
+    const router = useRouter()
+
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
-        signIn({ password: data.password, login: data.userName });
+        signIn({ password: data.password, login: data.userName })
+            .unwrap()
+            .then(() => router.push('/profile'))
     })
 
     return (
@@ -75,7 +73,7 @@ const SignIn = () => {
                         {isLoading && <Spinner/>}
                     </Button>
                     <div className={classes.form__error}>
-                        {/*{error && 'data' in error && error.data.errorsMessages}*/}
+                        {isError && (error as CustomerError ).data.errorsMessages}
                     </div>
                 </form>
                 <div className={classes.footer}>
