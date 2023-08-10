@@ -14,7 +14,7 @@ import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import { z } from "zod";
-import Spinner from "@/assets/icons/Spinner";
+import {useRouter} from "next/router";
 
 
 export type LoginFormType = z.infer<typeof loginSchema>
@@ -39,14 +39,19 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    const [signIn, {error,isLoading}] = useLoginMutation();
+    const [signIn, {error,isLoading, data}] = useLoginMutation();
     const translationPath = 'auth';
+    const router = useRouter()
     const t = useTranslations(translationPath);
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
         signIn({ password: data.password, login: data.userName });
     })
+
+    if(data && data.message==='Success'){
+        router.push('/profile')
+    }
 
     return (
         <div className={classes.container}>
@@ -70,9 +75,8 @@ const SignIn = () => {
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>
-                    <Button type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
+                    <Button isLoading={isLoading} type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
                         {t('button.signInButton')}
-                        {isLoading && <Spinner/>}
                     </Button>
                     <div className={classes.form__error}>
                         {error && 'data' in error && error.data.errorsMessages}
