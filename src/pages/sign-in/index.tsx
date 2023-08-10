@@ -14,6 +14,7 @@ import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import Spinner from "@/assets/icons/Spinner";
+import { z } from "zod";
 import {useRouter} from "next/router";
 
 
@@ -34,7 +35,9 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
 const translationPath = 'auth';
 
 const SignIn = () => {
-    const [signIn, {error,isLoading,isError}] = useLoginMutation();
+    const [signIn, {error,isLoading, data, isError}] = useLoginMutation();
+    const translationPath = 'auth';
+    const router = useRouter()
     const t = useTranslations(translationPath);
     const router = useRouter()
 
@@ -45,6 +48,10 @@ const SignIn = () => {
             .unwrap()
             .then(() => router.push('/profile'))
     })
+
+    if(data && data.message==='Success'){
+        router.push('/profile')
+    }
 
     return (
         <div className={classes.container}>
@@ -68,9 +75,8 @@ const SignIn = () => {
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>
-                    <Button type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
+                    <Button isLoading={isLoading} type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
                         {t('button.signInButton')}
-                        {isLoading && <Spinner/>}
                     </Button>
                     <div className={classes.form__error}>
                         {isError && (error as CustomerError ).data.errorsMessages}
