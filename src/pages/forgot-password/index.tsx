@@ -31,6 +31,7 @@ const ForgotPassword = () => {
   const { push, pathname } = useRouter();
   const [forgotPassword, { status }] = usePasswordRecoveryMutation();
   const [email, setEmail] = useState('');
+  const [captcha,setCaptcha] = useState<string|null>(null)
 
   const t = useTranslations('auth');
 
@@ -38,14 +39,11 @@ const ForgotPassword = () => {
     resolver: zodResolver(forgotPasswordSchema),
   });
   const onSubmit = handleSubmit((data) => {
-    forgotPassword(data);
+    forgotPassword({email:data.email,recaptchaValue:captcha as string});
     setEmail(data.email);
   });
 
-  const [buttonSendLinkDisabled, setIsButtonSendLinkDisabled] = useState(true);
-  const changeCaptchaValue = (captchIsDone: boolean) => {
-    setIsButtonSendLinkDisabled(captchIsDone);
-  };
+
   useEffect(() => {
     status === 'fulfilled' && push(pathname + '/link-has-been-sent');
   }, [status]);
@@ -69,7 +67,7 @@ const ForgotPassword = () => {
               type={'submit'}
               fullWidth
               className={s.registerBtn}
-              //disabled={buttonSendLinkDisabled}
+              disabled={!captcha}
             >
               {t('button.sendLink')}
             </Button>
@@ -77,7 +75,7 @@ const ForgotPassword = () => {
           <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
             {t('button.backToSignIn')}
           </Button>
-          <Captcha changeCaptchaValue={changeCaptchaValue} />
+          <Captcha setCaptchaValue={setCaptcha} />
         </Card>
       </div>
     </>

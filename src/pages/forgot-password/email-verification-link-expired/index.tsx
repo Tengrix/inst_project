@@ -11,7 +11,7 @@ const EmailVerificationLinkExpired = () => {
     const [forgotPassword] = usePasswordRecoveryMutation();
 
     const resendHandler = () => {
-        forgotPassword({email: ''})
+        // forgotPassword({email: ''})
     }
 
     return (

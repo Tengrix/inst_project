@@ -33,7 +33,7 @@ export async function getStaticProps({locale}: GetStaticPropsContext) {
 }
 
 const SignUp = () => {
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const t = useTranslations('auth');
     const [email, setEmail] = useState<string>('')
     const [signUp, {isLoading}] = useSignUpMutation()
@@ -104,7 +104,7 @@ const SignUp = () => {
                     {t('signInPage.h1')}
                 </Button>
             </Card>}
-            <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} setOn={setIsModalOpen}/>
+            <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} modalHandler={setIsModalOpen}/>
         </div>
     );
 }

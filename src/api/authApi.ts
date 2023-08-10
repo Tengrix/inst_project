@@ -54,7 +54,7 @@ export const authApi = createApi({
                     }
                 }
             }),
-            passwordRecovery: builder.mutation<void, { email: string }>({
+            passwordRecovery: builder.mutation<void, { email: string,recaptchaValue:string }>({
                 query: (data) => ({
                     url: '/auth/password-recovery',
                     method: 'POST',
@@ -115,3 +115,10 @@ export type RegisterParamsType = {
     password: string
 }
 
+export type ErrorDataType = {
+    errorsMessages:string
+}
+export type CustomerError = {
+    data:ErrorDataType,
+    status:number
+}
