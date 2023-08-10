@@ -104,3 +104,11 @@ export type RegisterParamsType = {
     email: string
     password: string
 }
+
+export type ErrorDataType = {
+    errorsMessages:string
+}
+export type CustomerError = {
+    data:ErrorDataType,
+    status:number
+}
