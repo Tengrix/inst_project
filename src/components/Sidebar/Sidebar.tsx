@@ -11,6 +11,9 @@ import {
     ExitIcon
 } from '@radix-ui/react-icons'
 import Link from "next/link";
+import {useLogoutMutation} from "@/api/authApi";
+import {Button} from "@/shared/ui/button";
+import {useRouter} from "next/router";
 
 const routes = [
     {title: 'Home', icon: <HomeIcon height={60} width={24}/>, route: '/home'},
@@ -20,6 +23,21 @@ const routes = [
     {title: 'Search', icon: <MagnifyingGlassIcon height={60} width={24}/>, route: '/search'}
 ]
 const Sidebar = () => {
+    const [logout, {isLoading}] = useLogoutMutation()
+    const router = useRouter()
+
+    const logoutHandler = async () => {
+        try{
+            await logout({}).unwrap()
+        }catch (error){
+            console.log(error)
+        }finally {
+            if(!isLoading){
+                await router.push('/sign-in')
+            }
+        }
+    }
+
     return (
         <div className={s.container}>
             <div className={s.sidebarRoutes}>
@@ -43,7 +61,9 @@ const Sidebar = () => {
                     <div className={s.footer}>
                         <Link className={s.route} href={'/sign-in'}>
                             <ExitIcon height={60} width={24}/>
-                            <span>Log out</span>
+                            <Button isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
+                                Log out
+                            </Button>
                         </Link>
                     </div>
                 </div>
