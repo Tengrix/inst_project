@@ -44,9 +44,19 @@ export const ImageGalleryUploader = ({
 
   const addImageToGallery = (event: any) => {
     if (event.target.files && event.target.files[0]) {
+      console.log(event.target.files[0]);
       const { name, size, type } = event.target.files[0];
       const src = URL.createObjectURL(event.target.files[0]);
-      dispatch(addImage({ name, size, type, src }));
+      const image = {
+        name,
+        size,
+        type,
+        src,
+        get hash() {
+          return this.src.replace(/^.*\//, '')
+        }
+      };
+      dispatch(addImage({ ...image }));
       dispatch(currentImage({ src }));
     }
   };
@@ -60,11 +70,12 @@ export const ImageGalleryUploader = ({
     <div className={classes.galleryContainer}>
       {images.length > 0 && (
         <ul className={classes.images}>
-          {images.map(({ src }) => (
+          {images.map(({ src, hash }) => (
             <li key={src} className={classes.images__image}>
               <img
                 key={src}
                 src={src}
+                id={hash}
                 alt=""
                 onClick={() => {
                   dispatch(currentImage({ src }));

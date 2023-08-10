@@ -11,6 +11,7 @@ export type ImageType = {
     src: string
     type: string
     name: string
+    hash: string
     size: number
 }
 

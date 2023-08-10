@@ -3,24 +3,20 @@ import { Modal } from '@/shared/ui/modal/Modal';
 import { Typography } from '@/shared/ui/typography';
 import classes from './AddPost.module.scss';
 import { ImagePlaceholder, LoremIpsumPlaceholder } from '@/shared/ui/placeholder/placeholder';
-import { ImageGalleryUploader, ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
+import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useState } from 'react';
 import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@/shared/ui/button';
 import { useAppSelector } from '@/store';
-import { ImageManager } from '@/components/ImageManager/ImageManager';
 
-import ScaleIcon from 'public/icon/scale-icon';
-import PlaceholderImageIcon from 'public/icon/placeholder-image-icon';
-import ResizeIcon from 'public/icon/resize-icon';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 
 export const AddPost = () => {
   const [image, setImage] = useState<string>('');
   //const [isShowGallery, seIsShowGallery] = useState(false);
 
-  const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
+  //const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
 
   const images = useAppSelector((state) => state.images.images);
   const dispatch = useDispatch();
@@ -31,7 +27,16 @@ export const AddPost = () => {
       const { name, size, type } = event.target.files[0];
       const src = URL.createObjectURL(event.target.files[0]);
       setImage(src);
-      dispatch(addImage({ name, size, type, src }));
+      const image = {
+        name,
+        size,
+        type,
+        src,
+        get hash() {
+          return this.src.replace(/^.*\//, '')
+        }
+      };
+      dispatch(addImage({ ...image }));
       dispatch(currentImage({ src }));
     }
   };
