@@ -1,0 +1,124 @@
+.form {
+  position: relative;
+  margin-top: 30px;
+  position: absolute;
+  top: 50%;
+  left: 65%;
+  transform: translate(-50%, -50%);
+  width: 494px;
+}
+
+.imageUpload {
+  position: absolute; 
+  top: 20px;
+  left: -220px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #141313;
+  width: 150px;
+  cursor: pointer;
+}
+
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bf1d1d;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 1px; 
+    margin-bottom: 10px; 
+    border-color: #4b4747;
+    border-width: 1px;
+    border-radius: 1px;
+    background-color: #0D0D0D;
+}
+
+.addPhotoText {
+  position: absolute; /* Изменено на абсолютное позиционирование */
+  top: 210px; /* Выставлены значения для top и left */
+  left: -220px;
+  color: #1d3dbf;
+  width: 150px;
+  height: 27px;
+  border: 1px solid #1d3dbf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.textarea {
+    height: 70px;
+    resize: both;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #3b3838;
+    border-radius: 1px;
+    box-sizing: border-box;
+    margin-top: 10px; 
+    background-color: #121111; 
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+
+.inputDate{
+  border: 1px solid #4b4747;
+  background-color: #0D0D0D;
+
+  width: 200px;
+  padding: 10px;
+  margin-top: 1px; 
+  margin-bottom: 7px; 
+  margin-left: 0px;
+}
+
+.dateText{
+  width: 150px; 
+  color: #4b4747;
+ 
+}
+
+.inputText {
+  color: #4b4747 
+}
+
+.line {
+  height: 1px; 
+  background-color: #494545; 
+  margin-left: -231px;
+  margin-top: 10px;
+  width: 726px;
+}
+
+.button {
+  /* color: #0c0c0c; */
+  background-color: #0056b3;
+  /* border: none; */
+  border-radius: 2px;
+  /* cursor: pointer; */
+  width: 150px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 345px;
+}
+
+
+.placeholderImage {
+  width: 100px; /* Установите нужную ширину */
+  height: 100px; /* Установите нужную высоту */
+  margin-left: 24px;
+  margin-top: 24px;
+}
+
+
+.profilePreview {
+  width: 120px; /* Установите нужную ширину */
+  height: 120px; /* Установите нужную высоту */
+  margin-left: 16px;
+  margin-top: 16px;
+  border-radius: 60px;
+}
