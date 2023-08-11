@@ -37,7 +37,7 @@ const SignUp = () => {
                                          className={s.confirmPassword}
                                          type={'password'}
                     />
-                    <Typography variant={'body2'} className={s.subtitle}>
+                    <Typography variant={'regular14'} className={s.subtitle}>
                         Your password must be between 6 and 20 characters
                     </Typography>
                     <Button type={'submit'} fullWidth className={s.btn}>

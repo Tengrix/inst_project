@@ -16,6 +16,9 @@ export const loginSchema = z
             .max(20, 'error.passwordMax'),
     })
 
+export type LoginFormType = z.infer<typeof loginSchema>
+
+
 // refine(async (username) => {
 //             // Проверяем, есть ли пользователь с таким именем
 //             const existingUser = await getUserByUsername(username);

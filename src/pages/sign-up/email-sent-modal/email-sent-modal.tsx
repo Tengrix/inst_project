@@ -3,19 +3,15 @@ import {Typography} from "@/shared/ui/typography";
 
 type EmailSentModalType = {
     isOpen: boolean
-    setOn: (value: boolean) => void
+    modalHandler: (isOpen: boolean) => void
     title: string
     email: string
 }
-export const EmailSentModal = ({isOpen, setOn, title, email}: EmailSentModalType) => {
-    if (!isOpen) return null
-    const handler = () => {
-        setOn(false)
-        // router.push('/sign-in')
-    }
+export const EmailSentModal = ({isOpen, modalHandler, title, email}: EmailSentModalType) => {
+
     return (
-        <Modal title={title} open={isOpen} onClose={handler}>
-            <Typography variant={'body2'}>
+        <Modal title={title} open={isOpen} modalHandler={modalHandler}>
+            <Typography variant={'regular16'}>
                 We have sent a link to confirm your email to {email ? email : 'your email'}
             </Typography>
         </Modal>

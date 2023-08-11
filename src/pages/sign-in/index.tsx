@@ -1,10 +1,10 @@
-import { useLoginMutation } from "@/api/authApi";
+import {CustomerError, useLoginMutation} from "@/api/authApi";
 import classes from "@/pages/sign-in/SignIn.module.scss";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { ControlledTextField } from "@/shared/ui/controlled";
 import { Typography } from "@/shared/ui/typography";
-import { loginSchema } from "@/shared/utils/schemas/loginSchema";
+import {LoginFormType, loginSchema} from "@/shared/utils/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createTranslator, useTranslations } from 'next-intl';
 import Link from "next/link";
@@ -13,17 +13,12 @@ import { Github } from "public/icon/github-logo";
 import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
+import Spinner from "@/assets/icons/Spinner";
 import { z } from "zod";
+import {useRouter} from "next/router";
 
 
-export type LoginFormType = z.infer<typeof loginSchema>
-
-type LoginFormPropsType = {
-    linkPath: string
-    onSubmitHandler: (data: LoginFormType) => void
-}
-
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
 
     const t = createTranslator({ locale: locale as string, messages });
@@ -37,15 +32,25 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     };
 }
 
+const translationPath = 'auth';
+
 const SignIn = () => {
-    const [signIn] = useLoginMutation();
-    const t = useTranslations('auth');
+    const [signIn, {error,isLoading, data, isError}] = useLoginMutation();
+    const translationPath = 'auth';
+    const router = useRouter()
+    const t = useTranslations(translationPath);
+
     //const onSubmitHandler = (data: LoginFormType) => console.log(data);
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
-        //onSubmitHandler(data);
-        signIn({ password: data.password, login: data.userName });
+        signIn({ password: data.password, login: data.userName })
+            .unwrap()
+            .then(() => router.push('/profile'))
     })
+
+    if(data && data.message==='Success'){
+        router.push('/profile')
+    }
 
     return (
         <div className={classes.container}>
@@ -64,14 +69,17 @@ const SignIn = () => {
                     </div>
                 </div>
                 <form className={classes.form} onSubmit={onSubmit}>
-                    <ControlledTextField control={control} translation={t} name={'userName'} label={'Username'} />
-                    <ControlledTextField control={control} translation={t} name={'password'} label={'Password'} type={'password'} />
+                    <ControlledTextField control={control} translation={translationPath} name={'userName'} label={'Username'} />
+                    <ControlledTextField control={control} translation={translationPath} name={'password'} label={'Password'} type={'password'} />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>
-                    <Button type={'submit'} className={classes.form__btn} fullWidth>
+                    <Button isLoading={isLoading} type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
                         {t('button.signInButton')}
                     </Button>
+                    <div className={classes.form__error}>
+                        {isError && (error as CustomerError ).data.errorsMessages}
+                    </div>
                 </form>
                 <div className={classes.footer}>
                     <Typography>

@@ -39,6 +39,10 @@
             &__btn {
                 font: var(--font-h3)
             }
+            &__error{
+                align-self: center;
+                color: red;
+            }
         }
 
         .footer {
