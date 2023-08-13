@@ -50,19 +50,70 @@
             position: relative;
 
             img {
+                width: 124px;
                 max-width: 124px;
                 height: 100%;
                 object-fit: contain;
             }
 
-            &__close {
+            &_close {
                 position: absolute;
-                top: -10px;
-                right: -10px;
-                padding: 0 6px;
+                top: -5px;
+                right: -5px;
+                padding: 3px;
+                border: none;
                 border-radius: 2px;
-                background-color: rgba(var(--color-dark-500), .8);
+                background-color: transparent;
                 color: var(--color-light-100);
+                z-index: 100;
+                transition: all .3s;
+
+                &:hover {
+                    color: var(--color-primary-500);
+                }
+
+                &:hover .icon__close::before, 
+                &:hover .icon__close::after {
+                    background-color: var(--color-primary-500);
+                }
+
+                &::before{
+                    content: '';
+                        background-color: var(--color-dark-500);
+                    opacity: .6;
+                    border-radius: 2px;
+                    z-index: -1;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                }
+
+             & .icon__close {
+                position: relative;
+                width: 10px;
+                height: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                    &:before, &:after {
+                        height: 8px;
+                        width: 1px;
+                        content: '';
+                        position: absolute;
+                        background-color: #fff;
+                        transition: background-color .3s;
+                        }
+                        &:before {
+                        transform: rotate(45deg);
+                        }
+                        &:after {
+                        transform: rotate(-45deg);
+                        }
+
+                }
             }
         }
     }

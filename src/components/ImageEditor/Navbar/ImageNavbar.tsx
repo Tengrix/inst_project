@@ -1,11 +1,12 @@
 import { ReactNode, useState } from 'react';
 import { ImageGallery } from '../NavbarItems/Gallery/ImageGallery';
-import { ImageResize } from '../NavbarItems/Resize/ImageResize';
+import { ImageCrop } from '../NavbarItems/Crop/ImageCrop';
 import { ImageScale } from '../NavbarItems/Scale/ImageScale';
 import s from './ImageNavbar.module.scss';
 
 type ImageNavbarPropsType = {
   callback?: () => void;
+  image: string;
 };
 type IconType = {
   iconTitle: string;
@@ -13,31 +14,32 @@ type IconType = {
   children: ReactNode;
 };
 
-export const ImageNavbar = ({ callback }: ImageNavbarPropsType) => {
+export const ImageNavbar = ({ image, callback }: ImageNavbarPropsType) => {
   const [items, setItems] = useState([
     { iconTitle: 'resize',
       className: 'icon_expand',
-      children: <ImageResize />
+      children: (image: string) => <ImageCrop image={image} />
       //isShow: false 
     },
     {
       iconTitle: 'scale',
       className: 'icon_maximizeOutline',
-      children: <ImageScale />
+      children: (image: string) => <ImageScale image={image} />
       //isShow: false,
     },
     {
       iconTitle: 'gallery',
       className: 'icon_imageOutline',
-      children: <ImageGallery />
+      children: (image: string) => <ImageGallery image={image} />
       //isShow: false,
     },
   ]);
 
   const [isShow, setShow] = useState(false);
   const [comp, setComp] = useState();
+  const [iTitle, setTitle] = useState();
 
-  const showItem = (component: any) => {
+  const showItem = (component: any, iconTitle: any) => {
     /*const newItems = items.map((item) => {
       return item.iconTitle === value
         ? { ...item, isShow: !item.isShow }
@@ -45,8 +47,10 @@ export const ImageNavbar = ({ callback }: ImageNavbarPropsType) => {
     });
     setItems(newItems);
     */
-    setShow(!isShow);
-    setComp(component);
+
+    iconTitle === iTitle ? setShow(!isShow) : setShow(true);
+    setTitle(iconTitle);
+    setComp(component(image));
   };
 
   return (
@@ -56,7 +60,7 @@ export const ImageNavbar = ({ callback }: ImageNavbarPropsType) => {
             <button
               key={item.iconTitle}
               className={s.imageManagerButton + ' ' + item.className}
-              onClick={() => showItem(item.children)}
+              onClick={(e: any) => showItem(item.children, e.target.value)}
               value={item.iconTitle}
             ></button>
         ))}

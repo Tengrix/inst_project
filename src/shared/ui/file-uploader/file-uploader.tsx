@@ -4,8 +4,7 @@ import { TextField } from '../text-field/text-field';
 import classes from './file-uploader.module.scss';
 import Image from 'next/image';
 import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 export type FileUploaderPropsType = {
   className?: string;
@@ -36,33 +35,38 @@ export const ImageUploader = ({ label, onImageChangeHandler, ...rest }: ImageUpl
 export const ImageGalleryUploader = ({
   label,
   onImageChangeHandler,
-
   ...rest
 }: ImageUploaderPropsType) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const images = useAppSelector((state) => state.images.images);
 
   const addImageToGallery = (event: any) => {
     if (event.target.files && event.target.files[0]) {
       console.log(event.target.files[0]);
-      const { name, size, type } = event.target.files[0];
-      const src = URL.createObjectURL(event.target.files[0]);
+      const blob = event.target.files[0];
+      const { name, size, type } = blob;
+      const src = URL.createObjectURL(blob);
+      const filters = {}
+      const originalSRC= src;
       const image = {
         name,
         size,
         type,
         src,
+        originalSRC,
+        filters,
         get hash() {
-          return this.src.replace(/^.*\//, '')
+          return this.originalSRC.replace(/^.*\//, '')
         }
       };
       dispatch(addImage({ ...image }));
-      dispatch(currentImage({ src }));
+      dispatch(currentImage(originalSRC));
     }
   };
-  const removeImageFromGallery = (event: any) => {
-    if (event.target.value) {
-      dispatch(removeImage({ src: event.target.value }));
+  const removeImageFromGallery = (e: any) => {
+    if (e.currentTarget.value) {
+      console.log("CLIKC<+++")
+      dispatch(removeImage({ src: e.currentTarget.value }));
     }
   };
 
@@ -70,23 +74,22 @@ export const ImageGalleryUploader = ({
     <div className={classes.galleryContainer}>
       {images.length > 0 && (
         <ul className={classes.images}>
-          {images.map(({ src, hash }) => (
+          {images.map(({ originalSRC, src, hash }) => (
             <li key={src} className={classes.images__image}>
               <img
-                key={src}
                 src={src}
                 id={hash}
                 alt=""
                 onClick={() => {
-                  dispatch(currentImage({ src }));
+                  dispatch(currentImage(originalSRC));
                 }}
               />
               <Button
-                className={classes.images__image__close}
+                className={classes.images__image_close}
                 onClick={removeImageFromGallery}
-                value={src}
+                value={originalSRC}
               >
-                X
+                <span className={classes.icon__close}></span>
               </Button>
             </li>
           ))}

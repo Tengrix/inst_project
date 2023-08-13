@@ -2,28 +2,43 @@ import { ImageType, currentImage } from '@/shared/lib/imageStore';
 import s from './ImagesSlider.module.scss';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { MouseEvent } from 'react';
+
 
 type ImageSliderPropsType = {
   currImage: string;
   images: Array<ImageType>;
 };
 
-export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
+export const ImageSlider = ({currImage, images}) => {
   //const getHash = (src: string) => (src.match(/(?=\/([a-z-0-9]+)$)/) || [])[1] ?? src;
-  const getHash = (src: string) => src.replace(/^.*\//, '');
-  const dispatch = useDispatch();
+  //const getHash = (src: string) => src.replace(/^.*\//, '');
+  //const images = useAppSelector(state => state.images.images);
+  //const currentImage = useAppSelector(state => state.images.currentImagex);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    document.getElementById(getHash(currImage))?.scrollIntoView();
+    document.getElementById(currImage.hash)?.scrollIntoView();
   }, [currImage]);
+
+
+  const bulletHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.value) {
+      //const hash = images[imageIndex].hash;
+      //const [i, hash] = e.currentTarget.value;
+      dispatch(currentImage(e.currentTarget.value));
+      //document.getElementById(e.currentTarget.value)?.scrollIntoView();
+    }
+  }
+
 
   return (
     <div className={s.slider}>
       {images.length > 0 && (
         <ul className={s.slider__list}>
-          {images.map(({ src }) => (
-            <li id={getHash(src)} key={src} className={s.slider__item}>
+          {images.map(({ src, hash }) => (
+            <li id={hash} key={src} className={s.slider__item}>
               <img className={s.slider__image} src={src} alt="" />
             </li>
           ))}
@@ -32,14 +47,13 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
 
       {images.length > 1 && (
         <ul className={s.bullets}>
-          {images.map(({ src }) => (
-            <li key={getHash(src)} className={s.bullets__item}>
+          {images.map(({ originalSRC, hash, src }) => (
+            <li key={src} className={s.bullets__item}>
               <button
-                value={getHash(src)}
-                onClick={() => {
-                  dispatch(currentImage({ src }));
-                }}
-              ></button>{' '}
+                className={s.btn + ' ' + (originalSRC === currImage.src ? s.btn_active : '') }
+                value={originalSRC}
+                onClick={bulletHandler}
+              ></button>
             </li>
           ))}
         </ul>

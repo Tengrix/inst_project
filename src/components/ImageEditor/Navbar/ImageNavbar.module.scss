@@ -17,8 +17,6 @@
     width: 36px;
     height: 100%;
     border-radius: 2px;
-    background: transparent;
-    background-color: var(--color-dark-500);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,6 +27,10 @@
     &::after{
         content: '';
         position: absolute;
+        background-color: var(--color-dark-500);
+        width: 36px;
+        height: 100%;
+        border-radius: 2px;
         opacity:.8;
         z-index: -1;
     }

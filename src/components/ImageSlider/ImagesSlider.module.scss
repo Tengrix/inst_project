@@ -1,8 +1,8 @@
 .slider {
     &__list {
         display: flex;
-        aspect-ratio: 16/9;
         overflow: hidden;
+        align-items: center;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
     }
@@ -33,12 +33,16 @@
         &__item {
 
 
-            & button{
+            & .btn{
                 display: inline-block;
                 border-radius: 50%;
                 width: 8px;
                 height: 8px;
                 background-color: var(--color-light-100);
+
+                &_active{
+                    background-color: var(--color-primary-500);
+                }
             }
         }
     }

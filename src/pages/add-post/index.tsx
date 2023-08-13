@@ -13,7 +13,7 @@ import { useAppSelector } from '@/store';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 
 export const AddPost = () => {
-  const [image, setImage] = useState<string>('');
+  const [image, setImageIndex] = useState<string>('');
   //const [isShowGallery, seIsShowGallery] = useState(false);
 
   //const isShowGallery = useAppSelector((state) => state.images.isShowGallery);
@@ -24,20 +24,25 @@ export const AddPost = () => {
 
   const onImageChangeHandler = (event: any) => {
     if (event.target.files && event.target.files[0]) {
-      const { name, size, type } = event.target.files[0];
+      const blob = event.target.files[0];
+      const { name, size, type } = blob;
       const src = URL.createObjectURL(event.target.files[0]);
-      setImage(src);
+      const filters = {}
       const image = {
         name,
         size,
         type,
         src,
+        originalSRC: src,
+        filters,
         get hash() {
-          return this.src.replace(/^.*\//, '')
+          return this.originalSRC.replace(/^.*\//, '')
         }
       };
+
+      
       dispatch(addImage({ ...image }));
-      dispatch(currentImage({ src }));
+      dispatch(currentImage(src));
     }
   };
 
@@ -75,7 +80,8 @@ export const AddPost = () => {
       )}
       <LoremIpsumPlaceholder />
 
-      <ImageEditor image={image} />
+      <ImageEditor image={''} />
+
 
       {/* <Modal open title="Add Photo" onClose={() => {}} /> */}
     </div>
