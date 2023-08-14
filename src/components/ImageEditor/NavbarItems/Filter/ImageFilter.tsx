@@ -29,7 +29,7 @@ export const ImageFilter = ({ image }) => {
     <div className={s.container}>
       <ul className={s.filters}>
         {filters.map((filter) => (
-          <li className={s.filter}>
+          <li className={s.filter} key={filter.className}>
             <img
               className={s[`${filter.className}`]}
               src={image.src}
