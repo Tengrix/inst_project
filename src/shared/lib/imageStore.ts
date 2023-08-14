@@ -48,6 +48,8 @@ export const createNewImageBlob = createAsyncThunk(
     const imageAspectRatio = width / height;
     const aspectRatio = +filters.crop;
 
+    const effects = filters.color
+
     if (aspectRatio) {
       // if it's bigger than our target aspect ratio
       if (imageAspectRatio > aspectRatio) {
@@ -56,6 +58,8 @@ export const createNewImageBlob = createAsyncThunk(
         outputHeight = width / aspectRatio;
     }
     }
+    
+
 
     // calculate the position to draw the image at
     //const outputX = (outputWidth - width) * 0.5;
@@ -71,8 +75,13 @@ export const createNewImageBlob = createAsyncThunk(
     //ctx.filter = 'invert(1)';
     //ctx.filter = "grayscale(100%)";
     //console.log(width, height, outputWidth, outputHeight)
-    ctx.drawImage(bitmap, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
 
+   if(effects){
+    ctx.filter=effects
+   }
+
+    ctx.drawImage(bitmap, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
+   
     const newBlob = await new Promise(resolve => canvas.toBlob(resolve, type, 1));
 
     const newSRC = URL.createObjectURL(newBlob);
