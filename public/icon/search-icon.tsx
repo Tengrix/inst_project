@@ -1,4 +1,4 @@
-import { SVGProps, memo } from 'react'
+import { SVGProps, memo } from 'react';
 
 const SearchIconSVG = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}>
@@ -14,7 +14,7 @@ const SearchIconSVG = (props: SVGProps<SVGSVGElement>) => (
       </clipPath>
     </defs>
   </svg>
-)
-const SearchIcon = memo(SearchIconSVG)
+);
+const SearchIcon = memo(SearchIconSVG);
 
-export default SearchIcon
+export default SearchIcon;
