@@ -98,6 +98,7 @@ export const authApi = createApi({
 
 export const {useCheckAppQuery, useSignUpMutation, useResendEmailConfirmationMutation,useGetMeQuery,useLoginMutation,useSignUpConfirmationMutation,useResetPasswordMutation,usePasswordRecoveryMutation,useLogoutMutation} = authApi
 
+
 //types
 export type RegisterParamsType = {
     userName: string
