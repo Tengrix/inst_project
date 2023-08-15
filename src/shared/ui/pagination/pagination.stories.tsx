@@ -1,5 +1,5 @@
 import {Meta, StoryObj} from '@storybook/react'
-import {Pagination, PaginationProps} from "@/shared/ui/pagination/pagination";
+import {Pagination} from "@/shared/ui/pagination/pagination";
 import {useState} from "react";
 
 
@@ -27,7 +27,8 @@ type Story = StoryObj<typeof meta>
 //     return <Pagination {...args} totalCount={20} page={page} onChange={setPage} />
 //   },
 // }
-export const WithSelect = (args:PaginationProps) => {
+export const WithSelect: Story = {
+    render: args => {
         const [page, setPage] = useState(1)
         const [perPage, setPerPage] = useState(10)
 
@@ -42,4 +43,5 @@ export const WithSelect = (args:PaginationProps) => {
                 perPageOptions={[10, 20]}
             />
         )
+    },
 }
