@@ -28,6 +28,7 @@ export const ImageUploader = ({ label, onImageChangeHandler, ...rest }: ImageUpl
         <FileUploader label={label} onChange={onImageChangeHandler} {...rest} />
       </Button>
       {/* {<img src={image} alt="test" width={100} height={100} />} */}
+      {/* check */}
     </div>
   );
 };
