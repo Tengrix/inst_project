@@ -41,37 +41,44 @@ const FormPage = () => {
     formData.append('lastName', lastname);
     if (image) formData.append('file', image);
 
- 
+
     setErrorMessage('Functionality not implemented yet.');
   };
 
   return (
     <div className={styles.form}>
     <div className={styles.addPhotoText}>Add photo</div>
-    <label className={styles.inputText}>
-      User name
-      <input className={styles.input} value={name} onChange={e => setName(e.target.value)} placeholder="Name" />
-    </label>
-    <label className={styles.inputText}>
-      First name
-      <input className={styles.input} type="text" value={firstname} onChange={e => setFirstname(e.target.value)} placeholder="First name" />
-    </label>
-    <label className={styles.inputText}>
-      Last Name
-      <input className={styles.input} value={lastname} onChange={e => setLastname(e.target.value)} placeholder="Last Name" />
-    </label>
-    <div className={styles.dateText}>
-      Date of birthday
-      <input className={styles.inputDate} type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Address" />
-    </div>
-    <label className={styles.inputText}>
-      City
-      <input className={styles.input} type="text" value={city} onChange={e => setCity(e.target.value)} placeholder="City" />
-    </label>
-    <label className={styles.inputText}>
-      About me
-      <textarea className={styles.textarea} value={aboutme} onChange={e => setAboutme(e.target.value)} placeholder="Description" />
-    </label>
+
+        <label className={styles.inputText}>
+                 User name
+           <input className={styles.input} value={name} onChange={e => setName(e.target.value)} placeholder="Name" />
+        </label>
+
+        <label className={styles.inputText}>
+                First name
+            <input className={styles.input} type="text" value={firstname} onChange={e => setFirstname(e.target.value)} placeholder="First name" />
+        </label>
+
+        <label className={styles.inputText}>
+                 Last Name
+             <input className={styles.input} value={lastname} onChange={e => setLastname(e.target.value)} placeholder="Last Name" />
+        </label>
+
+        <div className={styles.dateText}>
+                Date of birthday
+              <input className={styles.inputDate} type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Address" />
+        </div>
+        
+        <label className={styles.inputText}>
+                 City
+              <input className={styles.input} type="text" value={city} onChange={e => setCity(e.target.value)} placeholder="City" />
+        </label>
+
+        <label className={styles.inputText}>
+                 About me
+              <textarea className={styles.textarea} value={aboutme} onChange={e => setAboutme(e.target.value)} placeholder="Description" />
+        </label>
+
     <div className={styles.imageUpload} onClick={openModal}>
       {imagePreview ? (
         <img src={imagePreview} alt="Profile" className={styles.profilePreview} />
@@ -87,13 +94,12 @@ const FormPage = () => {
     )}
 
     <div className={styles.lineAndButtonContainer}>
-      <div className={styles.line}></div>
-      <button className={styles.button} onClick={handleSubmit}>
 
-        {/* {isLoading ? 'Submitting...' : 'Submit'} */}
-
-      </button>
-    </div>
+          <div className={styles.line}></div>
+              <button className={styles.button} onClick={handleSubmit}>
+                submit
+              </button>
+          </div>
 
     {errorMessage && <div className={styles.error}>{errorMessage}</div>}
 

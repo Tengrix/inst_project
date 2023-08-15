@@ -1,12 +1,11 @@
 import {Control, FieldPath, FieldValues, useController} from 'react-hook-form'
 import {TextField, TextFieldProps} from "@/shared/ui/text-field";
-import { useTranslations } from 'next-intl';
 
 
 export type ControlledTextFieldProps<TFieldValues extends FieldValues> = {
   name: FieldPath<TFieldValues>
   control: Control<TFieldValues>
-  translation?: string
+  translation?: (error: string) => string
 } & Omit<TextFieldProps, 'onChange' | 'value' | 'id'>
 
 export const ControlledTextField = <TFieldValues  extends FieldValues>(props: ControlledTextFieldProps<TFieldValues>) => {
@@ -19,8 +18,7 @@ export const ControlledTextField = <TFieldValues  extends FieldValues>(props: Co
   })
 
   const { translation } = props;
-  const t = useTranslations(translation);
-  const errorMessage = translation && error?.message ? t(error.message) : error?.message;
+  const errorMessage = translation && error?.message ? translation(error.message) : error?.message;
 
   return <TextField {...props} {...field} errorMessage={errorMessage}/>
 }

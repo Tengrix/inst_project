@@ -3,8 +3,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  //margin-top: 24px;
-
 }
 
 
@@ -53,18 +51,8 @@
     text-align: left;
   }
 
-  .privacyBlock {
-    display: flex;
-    margin-top: 1.38rem;
-    .privacyText {
-      padding-left:8px;
-      display: flex;
-      align-items: center;
-  }
-  }
-
   .registerBtn {
-    margin-top: 1.38rem;
+    margin-top: 3.75rem;
   }
 
   .subtitle {
@@ -75,8 +63,5 @@
   .link {
     color: var(--color-primary-500);
     text-decoration: underline;
-  }
-  .sizeText {
-    font-size: 12px;
   }
 }

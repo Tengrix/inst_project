@@ -1,8 +1,6 @@
 import React, {ReactNode} from 'react';
 import styles from './styles.module.css';
 import LangSwitcher from "@/components/langSwitcher/LangSwitcher";
-import Image from "next/image";
-import { BellIcon } from '@radix-ui/react-icons'
 
 export type HeaderProps = {
   title?: string,
@@ -14,7 +12,7 @@ const Header = (props: HeaderProps) => {
   const {
     title='Inctagram',
     children,
-    icon = <BellIcon height={24} width={24}/>,
+    icon = <img src={"/assets/notification.png"} alt="notification" />,
   } = props;
 
   return (
