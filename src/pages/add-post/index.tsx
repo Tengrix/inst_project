@@ -4,15 +4,17 @@ import { Typography } from '@/shared/ui/typography';
 import classes from './AddPost.module.scss';
 import { ImagePlaceholder, LoremIpsumPlaceholder } from '@/shared/ui/placeholder/placeholder';
 import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@/shared/ui/button';
 import { useAppSelector } from '@/store';
 
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
+import CreatePostModal from "@/pages/post/createPostModal/CreatePostModal";
 
 export const AddPost = () => {
+  const [createPostModal, setCreatePostModal] = useState(false)
   const [image, setImageIndex] = useState<string>('');
   //const [isShowGallery, seIsShowGallery] = useState(false);
 
@@ -82,7 +84,9 @@ export const AddPost = () => {
 
       <ImageEditor image={''} />
 
-
+      <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
+        Image
+      </CreatePostModal>
       {/* <Modal open title="Add Photo" onClose={() => {}} /> */}
     </div>
   );

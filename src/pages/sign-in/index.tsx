@@ -13,8 +13,6 @@ import { Github } from "public/icon/github-logo";
 import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import Spinner from "@/assets/icons/Spinner";
-import { z } from "zod";
 import {useRouter} from "next/router";
 
 
@@ -31,8 +29,6 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
         },
     };
 }
-
-const translationPath = 'auth';
 
 const SignIn = () => {
     const [signIn, {error,isLoading, data, isError}] = useLoginMutation();
