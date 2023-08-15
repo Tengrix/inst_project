@@ -8,12 +8,12 @@
 .TabsList {
     flex-shrink: 0;
     display: flex;
-    border-bottom: 1px solid var(--color-primary-100);
+    border-bottom: 2px solid var(--color-primary-100);
 }
 
 .TabsTrigger {
     font-family: inherit;
-    background-color: white;
+    background-color: var(--color-dark-700);
     padding: 0 20px;
     height: 45px;
     flex: 1;
@@ -22,7 +22,7 @@
     justify-content: center;
     font-size: 15px;
     line-height: 1;
-    color: var(--color-primary-100);
+    color: var(--color-primary-500);
     user-select: none;
 }
 .TabsTrigger:first-child {
@@ -32,26 +32,34 @@
     border-top-right-radius: 6px;
 }
 .TabsTrigger:hover {
-    color: var(--color-primary-100);
+    background-color: var(--color-primary-900);
 }
 .TabsTrigger[data-state='active'] {
-    color: var(--color-primary-100);
-    box-shadow: inset 0 -1px 0 0 currentColor, 0 1px 0 0 currentColor;
+    background-color: var(--color-primary-900);
+    color: var(--color-primary-500);
 }
 .TabsTrigger:focus {
     position: relative;
-    box-shadow: 0 0 0 2px black;
+    background-color: var(--color-dark-700);
+    border:1px solid var(--color-primary-500);
+}
+
+.TabsTrigger:disabled {
+    color: var(--color-primary-900);
 }
 
 .TabsContent {
     flex-grow: 1;
     padding: 20px;
-    background-color: white;
+    background-color: var(--color-dark-700);
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     outline: none;
 }
 .TabsContent:focus {
+    box-shadow: 0 0 0 2px black;
+}
+.TabsContent:disabled {
     box-shadow: 0 0 0 2px black;
 }
 

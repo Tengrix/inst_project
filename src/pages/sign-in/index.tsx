@@ -13,7 +13,11 @@ import { Github } from "public/icon/github-logo";
 import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
+<<<<<<< HEAD
 import { z } from "zod";
+=======
+import {useRouter} from "next/router";
+>>>>>>> 702c14cb3e5690cca4c01331b8554f0b7c20e419
 
 
 export type LoginFormType = z.infer<typeof loginSchema>

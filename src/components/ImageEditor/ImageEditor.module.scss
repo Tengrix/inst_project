@@ -1,0 +1,30 @@
+
+.currentImageField {
+    position: relative;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    align-items: flex-end;
+
+    & img {
+        width: 460px;
+        height: 460px;
+        object-fit: contain;
+    }
+}
+
+.container {
+    display: flex;
+    gap: 16px;
+    max-width: 900px;
+
+    & .slider,
+    & .filters{
+        flex: 1 50%;
+    }
+
+    & .slider{
+        position: relative;
+    }
+}

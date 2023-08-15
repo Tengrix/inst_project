@@ -1,4 +1,12 @@
 @forward 'colors';
 @forward 'typography';
 @forward 'boilerplate';
+<<<<<<< HEAD
 @forward 'mixins';
+=======
+@forward 'mixins';
+@forward 'fonts';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+>>>>>>> 702c14cb3e5690cca4c01331b8554f0b7c20e419
