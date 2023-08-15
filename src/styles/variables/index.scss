@@ -3,3 +3,6 @@
 @forward 'boilerplate';
 @forward 'mixins';
 @forward 'fonts';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

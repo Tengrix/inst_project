@@ -1,18 +1,15 @@
-import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import s from './Captcha.module.scss';
 
 type CaptchaPropsType = {
-  changeCaptchaValue: (captchIsDone: boolean) => void;
+  setCaptchaValue: (value:string)=>void
 };
 
-export const Captcha = ({ changeCaptchaValue }: CaptchaPropsType) => {
-  const [captchIsDone, setCaptchaIsDone] = useState(false);
+export const Captcha = ({ setCaptchaValue }: CaptchaPropsType) => {
   const key = process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY as string;
 
-  const onChange = () => {
-    setCaptchaIsDone(true);
-    changeCaptchaValue(captchIsDone);
+  const onChange = (value:string|null) => {
+    value&&setCaptchaValue(value)
   };
 
   return (

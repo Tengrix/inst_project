@@ -6,7 +6,7 @@ import clsx from 'clsx'
 
 
 import s from './checkbox.module.scss'
-import {CheckIcon} from "../../../../public/icon/check-icon";
+import {CheckIcon} from "public/icon/check-icon";
 
 export type CheckboxPropsType = {
   checked: boolean | string
@@ -15,6 +15,7 @@ export type CheckboxPropsType = {
   required?: boolean
   label?: string
   id?: string
+  className?: string
 }
 
 export const Checkbox: FC<CheckboxPropsType> = ({
@@ -33,23 +34,25 @@ export const Checkbox: FC<CheckboxPropsType> = ({
   }
 
   return (
-    <LabelRadix.Root className={classNames.label}>
-      <div className={classNames.buttonWrapper}>
-        <CheckboxRadix.Root
-          className={classNames.root}
-          checked={Boolean(checked)}
-          onCheckedChange={onChange}
-          disabled={disabled}
-          required={required}
-        >
-          {checked && (
-            <CheckboxRadix.Indicator className={classNames.indicator}>
-              <CheckIcon color={disabled ? 'var(--color-light-700' : 'black'} />
-            </CheckboxRadix.Indicator>
-          )}
-        </CheckboxRadix.Root>
-      </div>
-      {label}
-    </LabelRadix.Root>
+      <>
+        <LabelRadix.Root className={classNames.label}>
+        {label}
+      </LabelRadix.Root>
+        <div className={classNames.buttonWrapper}>
+          <CheckboxRadix.Root
+              className={classNames.root}
+              checked={Boolean(checked)}
+              onCheckedChange={onChange}
+              disabled={disabled}
+              required={required}
+          >
+            {checked && (
+                <CheckboxRadix.Indicator className={classNames.indicator}>
+                  <CheckIcon color={disabled ? 'var(--color-light-700' : 'black'}/>
+                </CheckboxRadix.Indicator>
+            )}
+          </CheckboxRadix.Root>
+        </div>
+      </>
   )
 }

@@ -51,10 +51,10 @@ const LinkHasBeenSent = () => {
                         className={s.email}
                     />
                 </form>
-                <Typography variant={'body2'} className={s.subtitle}>
+                <Typography variant={'regular14'} className={s.subtitle}>
                     {t('forgotPasswordPage.enterYourEmailText')}
                 </Typography>
-                <Typography variant={'body2'} className={s.description}>
+                <Typography variant={'regular14'} className={s.description}>
                     {t('forgotPasswordPage.linkHasBeenSentText')}
                 </Typography>
                 <Button type={'submit'} fullWidth className={s.registerBtn}>
