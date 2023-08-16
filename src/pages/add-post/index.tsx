@@ -1,16 +1,13 @@
-import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
-import { Modal } from '@/shared/ui/modal/Modal';
-import { Typography } from '@/shared/ui/typography';
+import {getLayout} from '@/components/Layout/BaseLayout/BaseLayout';
+import {Typography} from '@/shared/ui/typography';
 import classes from './AddPost.module.scss';
-import { ImagePlaceholder, LoremIpsumPlaceholder } from '@/shared/ui/placeholder/placeholder';
-import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
-import React, { useState } from 'react';
-import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@/shared/ui/button';
-import { useAppSelector } from '@/store';
-
-import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
+import {ImagePlaceholder, LoremIpsumPlaceholder} from '@/shared/ui/placeholder/placeholder';
+import {ImageUploader} from '@/shared/ui/file-uploader/file-uploader';
+import React, {useState} from 'react';
+import {addImage, currentImage, removeImage} from '@/shared/lib/imageStore';
+import {useDispatch} from 'react-redux';
+import {Button} from '@/shared/ui/button';
+import {useAppSelector} from '@/store';
 import CreatePostModal from "@/pages/post/createPostModal/CreatePostModal";
 
 export const AddPost = () => {
@@ -82,7 +79,7 @@ export const AddPost = () => {
       )}
       <LoremIpsumPlaceholder />
 
-      <ImageEditor image={''} />
+      {/*<ImageEditor image={''} />*/}
 
       <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
         Image

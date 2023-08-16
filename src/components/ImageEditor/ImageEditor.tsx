@@ -1,9 +1,8 @@
-import { useAppSelector } from '@/store';
-import { useDispatch } from 'react-redux';
-import { ImageSlider } from '../ImageSlider/ImageSlider';
+import {useAppSelector} from '@/store';
+import {ImageSlider} from '../ImageSlider/ImageSlider';
 import classes from './ImageEditor.module.scss';
-import { ImageNavbar } from './Navbar/ImageNavbar';
-import { ImageFilter } from './NavbarItems/Filter/ImageFilter';
+import {ImageNavbar} from './Navbar/ImageNavbar';
+import {ImageFilter} from './NavbarItems/Filter/ImageFilter';
 import {StepType} from "@/pages/post/createPostModal/CreatePostModal";
 
 type ImageEditorPropsType = {
@@ -12,7 +11,7 @@ type ImageEditorPropsType = {
 };
 
 export const ImageEditor = (props:ImageEditorPropsType) => {
-  const currentImage = useAppSelector((state) => state.images.currentImage) || '';
+  const currentImage = useAppSelector((state) => state.images.currentImage);
   const images = useAppSelector((state) => state.images.images);
 
   return (

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { MouseEvent } from 'react';
 
 type ImageSliderPropsType = {
-  currImage: string;
+  currImage: {src: string, hash: string}
   images: Array<ImageType>;
 };
 
@@ -54,7 +54,7 @@ export const ImageSlider = ({ currImage, images }:ImageSliderPropsType) => {
           {images.map(({originalSRC}) => (
             <li key={originalSRC} className={s.bullets__item}>
               <button
-                className={s.btn + ' ' + (originalSRC === currImage ? s.btn_active : '')}
+                className={s.btn + ' ' + (originalSRC === currImage.src ? s.btn_active : '')}
                 value={originalSRC}
                 onClick={bulletHandler}
               ></button>
