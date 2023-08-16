@@ -1,11 +1,10 @@
-import { addFilterToCurrentImage, createNewImageBlob } from '@/shared/lib/imageStore';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { addFilterToCurrentImage } from '@/shared/lib/imageStore';
+import { useAppDispatch } from '@/store';
 import { MouseEvent } from 'react';
 import s from './ImageCrop.module.scss';
 
-
 export const ImageCrop = () => {
-/*
+  /*
   const img = fetch(image).then(r => r.blob());
 
   const [img, setImage] = useState(image);
@@ -61,25 +60,25 @@ export const ImageCrop = () => {
   //const images = useAppSelector(state => state.images.images);
   //const imageIndex = useAppSelector(state => state.images.currentImageIndex);
 
-  const cropImageHandler = (e: MouseEvent<HTMLButtonElement>) =>{
-    if (e.currentTarget.value){
-      console.log(e.currentTarget.value)
+  const cropImageHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.value) {
+      console.log(e.currentTarget.value);
       /*dispatch(
         addFilterToCurrentImage({ 
           filterName: 'crop',
           args: e.currentTarget.value 
         }
       ));*/
-      dispatch(createNewImageBlob({ filterName: 'crop', args: e.currentTarget.value }));
+      dispatch(addFilterToCurrentImage({ filterName: 'crop', args: e.currentTarget.value }));
     }
-  }
+  };
 
   return (
     <ul className={s.items}>
       <li className={s.item}>
         <button value={0} onClick={cropImageHandler}>
           <span>Original</span>
-          <span className='icon_image'></span>
+          <span className="icon_image"></span>
         </button>
       </li>
       <li className={s.item}>
@@ -101,6 +100,5 @@ export const ImageCrop = () => {
         </button>
       </li>
     </ul>
-  )
+  );
 };
-

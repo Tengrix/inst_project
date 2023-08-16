@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/store';
 import { MouseEvent } from 'react';
 import s from './ImageFilter.module.scss';
-import { createNewImageBlob } from '@/shared/lib/imageStore';
+import { addFilterToCurrentImage, createNewImageBlob } from '@/shared/lib/imageStore';
 
 export const ImageFilter = ({ image }) => {
   const dispatch = useAppDispatch();
@@ -20,7 +20,10 @@ export const ImageFilter = ({ image }) => {
   const applyFilterForImageHandler = (/* e: MouseEvent<HTMLButtonElement> */ filter: string) => {
     if (filter) {
       dispatch(
-        createNewImageBlob({ filterName: 'color', /* args: e.currentTarget.value */ args: filter }),
+        addFilterToCurrentImage({
+          filterName: 'color',
+          /* args: e.currentTarget.value */ args: filter,
+        }),
       );
     }
   };

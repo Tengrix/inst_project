@@ -20,9 +20,9 @@ export const ImageEditor = ({ image }: ImageEditorPropsType) => {
         <ImageNavbar image={currentImage} />
       </div>
       <div className={classes.container}>
-        <div className={classes.slider}>
+        {/* <div className={classes.slider}>
           <ImageSlider currImage={currentImage} images={images} />
-        </div>
+        </div> */}
         <div className={classes.filters}>
           <ImageFilter image={currentImage} />
         </div>

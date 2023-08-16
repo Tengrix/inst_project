@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { MouseEvent } from 'react';
+import { Canvas } from '../Canvas/Canvas';
 
 type ImageSliderPropsType = {
   currImage: string;
@@ -43,7 +44,8 @@ export const ImageSlider = ({ currImage, images }) => {
               //@ts-ignore
               ref={(el) => (itemsRef.current[hash] = el)}
             >
-              <img className={s.slider__image} src={src} alt="" />
+              <Canvas />
+              {/*  <img className={s.slider__image} src={src} alt="" /> */}
             </li>
           ))}
         </ul>
