@@ -1,9 +1,9 @@
-import { useAppDispatch } from '@/store';
-import { MouseEvent } from 'react';
+import {useAppDispatch} from '@/store';
 import s from './ImageFilter.module.scss';
-import { createNewImageBlob } from '@/shared/lib/imageStore';
+import {createNewImageBlob, CurrentImageType} from '@/shared/lib/imageStore';
 
-export const ImageFilter = ({ image }) => {
+
+export const ImageFilter = ({image}: {image: CurrentImageType }) => {
   const dispatch = useAppDispatch();
   const filters = [
     { className: 'blur', value: 'blur(4px)' },

@@ -1,5 +1,5 @@
 import  imagesReducer  from "@/shared/lib/imageStore";
-import {configureStore} from "@reduxjs/toolkit";
+import {AnyAction, configureStore, ThunkDispatch} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {authApi} from "src/api/authApi";
 
@@ -13,7 +13,7 @@ export const store = configureStore({
 
 
 export type RootStateType = ReturnType<typeof store.getState>
+export type ThunkAppDispatchType = ThunkDispatch<RootStateType, any, AnyAction>
 
 export const useAppSelector: TypedUseSelectorHook<RootStateType> = useSelector
-export type AppDispatch = typeof store.dispatch
-export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()

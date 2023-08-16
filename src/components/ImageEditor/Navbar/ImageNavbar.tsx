@@ -14,23 +14,23 @@ type IconType = {
   children: ReactNode;
 };
 
-export const ImageNavbar = ({ image, callback }: ImageNavbarPropsType) => {
+export const ImageNavbar = () => {
   const [items, setItems] = useState([
     { iconTitle: 'resize',
       className: 'icon_expand',
-      children: (image: string) => <ImageCrop image={image} />
-      //isShow: false 
+      children: <ImageCrop />
+      //isShow: false
     },
     {
       iconTitle: 'scale',
       className: 'icon_maximizeOutline',
-      children: (image: string) => <ImageScale image={image} />
+      children:<ImageScale/>
       //isShow: false,
     },
     {
       iconTitle: 'gallery',
       className: 'icon_imageOutline',
-      children: (image: string) => <ImageGallery image={image} />
+      children: <ImageGallery/>
       //isShow: false,
     },
   ]);
@@ -50,7 +50,7 @@ export const ImageNavbar = ({ image, callback }: ImageNavbarPropsType) => {
 
     iconTitle === iTitle ? setShow(!isShow) : setShow(true);
     setTitle(iconTitle);
-    setComp(component(image));
+    setComp(component);
   };
 
   return (
