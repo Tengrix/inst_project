@@ -23,6 +23,7 @@ const CreatePostModal = (props: Props) => {
     const dispatch = useDispatch();
     const [preview, setPreview] = useState<string>(''); // Фото-превью
     const [editModal, setEditModal] = useState(false)
+    const [error, setError] = useState('')
 
     const [confirmCloseModal, setConfirmCloseModal] = useState(false)
 
@@ -90,6 +91,7 @@ const CreatePostModal = (props: Props) => {
             dispatch(addImage({...image}));
             dispatch(currentImage(src));
             setPreview(src)
+            setError('')
         }
     };
 
@@ -102,8 +104,9 @@ const CreatePostModal = (props: Props) => {
                     <ImageUploader
                         label="Select from Computer"
                         onImageChangeHandler={onImageChangeHandler}/>
-                    <Button onClick={()=> {
-                        setEditModal(true)
+                    <Button onClick={() => {
+                        if (preview) setEditModal(true)
+                        else setError('Upload image first')
                     }}>Next</Button>
                 </>}
             modalHandler={props.modalHandler}
@@ -114,6 +117,7 @@ const CreatePostModal = (props: Props) => {
                     <ImagePlaceholder/>
                     :
                     <img width='250px' height='250px' src={preview} alt=""/>}
+                {error}
             </div>
 
             <Modal
@@ -127,7 +131,7 @@ const CreatePostModal = (props: Props) => {
                 onPointerOutsideClickHandler={onPointerOutsideClickHandler}
 
             >
-                <ImageEditor image={''} step={currentStep} />
+                <ImageEditor image={''} step={currentStep}/>
                 <ConfirmCloseModal
                     open={confirmCloseModal}
                     modalHandler={setConfirmCloseModal}
