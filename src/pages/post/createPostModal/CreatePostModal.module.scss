@@ -1,6 +1,12 @@
 .btn {
   border-color: transparent;
+
   &:hover, &:focus, &:active, &:disabled {
     border-color: transparent;
   }
+}
+
+.preview {
+  align-self: center;
+  margin-bottom: 60px;
 }

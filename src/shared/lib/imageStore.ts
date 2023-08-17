@@ -1,13 +1,11 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import {RootStateType, ThunkAppDispatchType} from "@/store";
 
 export type ImageStoreStateType = {
   images: Array<ImageType>
   error: string 
-  currentImage: {
-    src: string
-    hash: string
-  }
+  currentImage: CurrentImageType
 }
 
 export type ImageType = {
@@ -17,79 +15,15 @@ export type ImageType = {
     name: string
     hash: string
     size: number
-    filters: {[key: string]: number | string}
+    filters: {[key: string]:string}
 }
 
-export const createNewImageBlob = createAsyncThunk(
-  'image/createNewImageBlob',
-  async (filter: { filterName: string, args: number | string }, thunkAPI) => {
-    //const aspectRatio = +image.filters.crop;
-    //const size = 64;
-    thunkAPI.dispatch(addFilterToCurrentImage(filter));
-
-    const state = thunkAPI.getState();
-    const { currentImage, images} = state.images;
-
-    const [{src, originalSRC, type, filters}] = images.filter((image: ImageType) => image.originalSRC === currentImage.src);
-
-    if (src !== originalSRC) URL.revokeObjectURL(src);
-
-    const blob = await fetch(originalSRC).then(r => r.blob());
-    const bitmap = await createImageBitmap(blob);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    //const canvas = new OffscreenCanvas(256, 256);
-    //const ctx = offscreen.getContext("webgl");
-
-    const { width, height } = bitmap;
-    let outputWidth = width;
-    let outputHeight = height;
-    const imageAspectRatio = width / height;
-    const aspectRatio = +filters.crop;
-
-    const effects = filters.color
-
-    if (aspectRatio) {
-      // if it's bigger than our target aspect ratio
-      if (imageAspectRatio > aspectRatio) {
-        outputWidth = height * aspectRatio;
-      } else if (imageAspectRatio < aspectRatio) {
-        outputHeight = width / aspectRatio;
-    }
-    }
-    
+export type CurrentImageType = {
+    src: string
+    hash: string
+}
 
 
-    // calculate the position to draw the image at
-    //const outputX = (outputWidth - width) * 0.5;
-    //const outputY = (outputHeight - height) * 0.5;
-
-    canvas.width = outputWidth
-    canvas.height = outputHeight
-
-    //const ratio = Math.max(size / width, size / height)
-
-    //const x = (size - (width * ratio)) / 2;
-    //const y = (size - (height * ratio)) / 2;
-    //ctx.filter = 'invert(1)';
-    //ctx.filter = "grayscale(100%)";
-    //console.log(width, height, outputWidth, outputHeight)
-
-   if(effects){
-    ctx.filter=effects
-   }
-
-    ctx.drawImage(bitmap, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
-   
-    const newBlob = await new Promise(resolve => canvas.toBlob(resolve, type, 1));
-
-    const newSRC = URL.createObjectURL(newBlob);
-    const { size } = newBlob;
-
-    return {newSRC, size}
-  }
-)
 
 
 const initialState: ImageStoreStateType = {
@@ -134,7 +68,7 @@ export const imageSlice = createSlice({
         state.images = filteredImages;
     },
 
-    addFilterToCurrentImage: (state, action: PayloadAction<{ filterName: string, args: number | string }>) => {
+    addFilterToCurrentImage: (state, action: PayloadAction<{ filterName: string, args:string }>) => {
       const {filterName, args} = action.payload;
       for (let i = 0; i < state.images.length; i++) {
         if (state.images[i].originalSRC === state.currentImage.src) {
@@ -169,3 +103,82 @@ export const imageSlice = createSlice({
 export const { addImage, removeImage, addFilterToCurrentImage, currentImage} = imageSlice.actions
 
 export default imageSlice.reducer
+
+//types
+export type AsyncConfigType = {
+    dispatch: ThunkAppDispatchType,
+    rejectWithValue: string,
+    state: RootStateType
+}
+
+//thunks
+export const createNewImageBlob = createAsyncThunk<{newSRC:string, size:number},{ filterName: string, args: string },AsyncConfigType>(
+    'image/createNewImageBlob',
+    async (filter, thunkAPI) => {
+        //const aspectRatio = +image.filters.crop;
+        //const size = 64;
+        thunkAPI.dispatch(addFilterToCurrentImage(filter));
+
+        const state = thunkAPI.getState();
+        const { currentImage, images} = state.images;
+
+        const [{src, originalSRC, type, filters}] = images.filter((image: ImageType) => image.originalSRC === currentImage.src);
+
+        if (src !== originalSRC) URL.revokeObjectURL(src);
+
+        const blob = await fetch(originalSRC).then(r => r.blob());
+        const bitmap = await createImageBitmap(blob);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        //const canvas = new OffscreenCanvas(256, 256);
+        //const ctx = offscreen.getContext("webgl");
+
+        const { width, height } = bitmap;
+        let outputWidth = width;
+        let outputHeight = height;
+        const imageAspectRatio = width / height;
+        const aspectRatio = +filters.crop;
+
+        const effects = filters.color
+
+        if (aspectRatio) {
+            // if it's bigger than our target aspect ratio
+            if (imageAspectRatio > aspectRatio) {
+                outputWidth = height * aspectRatio;
+            } else if (imageAspectRatio < aspectRatio) {
+                outputHeight = width / aspectRatio;
+            }
+        }
+
+
+
+        // calculate the position to draw the image at
+        //const outputX = (outputWidth - width) * 0.5;
+        //const outputY = (outputHeight - height) * 0.5;
+
+        canvas.width = outputWidth
+        canvas.height = outputHeight
+
+        //const ratio = Math.max(size / width, size / height)
+
+        //const x = (size - (width * ratio)) / 2;
+        //const y = (size - (height * ratio)) / 2;
+        //ctx.filter = 'invert(1)';
+        //ctx.filter = "grayscale(100%)";
+        //console.log(width, height, outputWidth, outputHeight)
+
+        if (ctx) {
+            ctx.filter = effects && effects
+
+            ctx.drawImage(bitmap, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
+        }
+
+        const newBlob = await new Promise<Blob>(resolve => canvas.toBlob(blob=>blob&&resolve(blob), type, 1));
+
+        const newSRC = URL.createObjectURL(newBlob);
+        const { size } = newBlob;
+
+        return {newSRC, size}
+    }
+)

@@ -1,32 +1,35 @@
-import { useAppSelector } from '@/store';
-import { useDispatch } from 'react-redux';
-import { ImageSlider } from '../ImageSlider/ImageSlider';
+import {useAppSelector} from '@/store';
+import {ImageSlider} from '../ImageSlider/ImageSlider';
 import classes from './ImageEditor.module.scss';
-import { ImageNavbar } from './Navbar/ImageNavbar';
-import { ImageFilter } from './NavbarItems/Filter/ImageFilter';
+import {ImageNavbar} from './Navbar/ImageNavbar';
+import {ImageFilter} from './NavbarItems/Filter/ImageFilter';
+import {StepType} from "@/pages/post/createPostModal/CreatePostModal";
 
 type ImageEditorPropsType = {
   image: string;
+  step: StepType
 };
 
-export const ImageEditor = ({ image }: ImageEditorPropsType) => {
-  const currentImage = useAppSelector((state) => state.images.currentImage) || '';
+export const ImageEditor = (props:ImageEditorPropsType) => {
+  const currentImage = useAppSelector((state) => state.images.currentImage);
   const images = useAppSelector((state) => state.images.images);
 
   return (
-    <>
+    <div className={classes.container}>
       <div className={classes.currentImageField}>
         <ImageSlider currImage={currentImage} images={images} />
-        <ImageNavbar image={currentImage} />
+          {props.step === 'Cropping' && <ImageNavbar/>}
       </div>
-      <div className={classes.container}>
-        <div className={classes.slider}>
-          <ImageSlider currImage={currentImage} images={images} />
-        </div>
-        <div className={classes.filters}>
-          <ImageFilter image={currentImage} />
-        </div>
-      </div>
-    </>
+        {props.step === 'Filters' &&
+            <div className={classes.right}>
+                <ImageFilter image={currentImage}/>
+            </div>
+        }
+        {props.step === 'Publication' &&
+            <div className={classes.right}>
+                DESCRIPTION BLOCK
+            </div>
+        }
+    </div>
   );
 };

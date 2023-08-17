@@ -7,11 +7,11 @@ import { MouseEvent } from 'react';
 import { Canvas } from '../Canvas/Canvas';
 
 type ImageSliderPropsType = {
-  currImage: string;
+  currImage: {src: string, hash: string}
   images: Array<ImageType>;
 };
 
-export const ImageSlider = ({ currImage, images }) => {
+export const ImageSlider = ({ currImage, images }:ImageSliderPropsType) => {
   //const getHash = (src: string) => (src.match(/(?=\/([a-z-0-9]+)$)/) || [])[1] ?? src;
   //const getHash = (src: string) => src.replace(/^.*\//, '');
   //const images = useAppSelector(state => state.images.images);
@@ -52,7 +52,7 @@ export const ImageSlider = ({ currImage, images }) => {
 
       {images.length > 1 && (
         <ul className={s.bullets}>
-          {images.map(({ originalSRC }) => (
+          {images.map(({originalSRC}) => (
             <li key={originalSRC} className={s.bullets__item}>
               <button
                 className={s.btn + ' ' + (originalSRC === currImage.src ? s.btn_active : '')}
