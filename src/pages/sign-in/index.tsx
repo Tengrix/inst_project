@@ -32,8 +32,6 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
     };
 }
 
-const translationPath = 'auth';
-
 const SignIn = () => {
     const [signIn, {error,isLoading, data, isError}] = useLoginMutation();
     const translationPath = 'auth';

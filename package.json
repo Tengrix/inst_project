@@ -33,6 +33,7 @@
     "moment": "^2.29.4",
     "next": "13.4.12",
     "next-intl": "^2.19.1",
+    "next-recaptcha-v3": "^1.2.0",
     "postcss": "8.4.27",
     "react": "18.2.0",
     "react-dates": "^21.8.0",

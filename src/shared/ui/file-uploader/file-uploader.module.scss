@@ -1,0 +1,120 @@
+.imageUploader {
+    text-align: center;
+    & input {
+        display: none;
+    }
+    & label p {
+        font: var(--font-h3);
+        color: var(--color-light-100)
+    }
+}
+
+.galleryContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+
+    & .btn{
+        padding: 0;
+        border: none;
+        background: transparent;
+    }
+    & label p{
+        font: var(--font-h1);
+        color: var(--color-light-100);
+        border-radius: 50%;
+        padding: 0 12px;
+        border: 2px solid var(--color-light-100);
+    }
+    & input{
+        display: none;
+    }
+
+    .images{
+        display: inline-flex;
+        flex: 0 400px;
+        gap:6px;
+        border-radius: 2px;
+        padding: 8px;
+        overflow-y: hidden;
+        overflow-x: auto;
+        text-align: center;
+        background-color: rgba(var(--color-dark-500), .8);
+
+        &__image{
+            flex:0 124px;
+            height: 82px;
+            position: relative;
+
+            img {
+                width: 124px;
+                max-width: 124px;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            &_close {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                padding: 3px;
+                border: none;
+                border-radius: 2px;
+                background-color: transparent;
+                color: var(--color-light-100);
+                z-index: 100;
+                transition: all .3s;
+
+                &:hover {
+                    color: var(--color-primary-500);
+                }
+
+                &:hover .icon__close::before, 
+                &:hover .icon__close::after {
+                    background-color: var(--color-primary-500);
+                }
+
+                &::before{
+                    content: '';
+                        background-color: var(--color-dark-500);
+                    opacity: .6;
+                    border-radius: 2px;
+                    z-index: -1;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                }
+
+             & .icon__close {
+                position: relative;
+                width: 10px;
+                height: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                    &:before, &:after {
+                        height: 8px;
+                        width: 1px;
+                        content: '';
+                        position: absolute;
+                        background-color: #fff;
+                        transition: background-color .3s;
+                        }
+                        &:before {
+                        transform: rotate(45deg);
+                        }
+                        &:after {
+                        transform: rotate(-45deg);
+                        }
+
+                }
+            }
+        }
+    }
+}
