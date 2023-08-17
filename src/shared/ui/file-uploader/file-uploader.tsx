@@ -3,7 +3,7 @@ import { Button } from '../button';
 import { TextField } from '../text-field/text-field';
 import classes from './file-uploader.module.scss';
 import Image from 'next/image';
-import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
+import { addImage, setCurrentImage, removeImage } from '@/shared/lib/imageStore';
 import { useAppDispatch, useAppSelector } from '@/store';
 
 export type FileUploaderPropsType = {

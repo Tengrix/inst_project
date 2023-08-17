@@ -1,17 +1,17 @@
-import { ImageType, currentImage } from '@/shared/lib/imageStore';
+import {ImageType, setCurrentImage} from '@/shared/lib/imageStore';
 import s from './ImagesSlider.module.scss';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { MouseEvent } from 'react';
-import { Canvas } from '../Canvas/Canvas';
+import {MouseEvent, useEffect, useRef} from 'react';
+import {useAppDispatch} from '@/store';
+import {Canvas} from '../Canvas/Canvas';
+import {StepType} from "@/pages/post/createPostModal/CreatePostModal";
 
 type ImageSliderPropsType = {
   currImage: {src: string, hash: string}
   images: Array<ImageType>;
+  step: StepType
 };
 
-export const ImageSlider = ({ currImage, images }:ImageSliderPropsType) => {
+export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) => {
   //const getHash = (src: string) => (src.match(/(?=\/([a-z-0-9]+)$)/) || [])[1] ?? src;
   //const getHash = (src: string) => src.replace(/^.*\//, '');
   //const images = useAppSelector(state => state.images.images);
@@ -28,7 +28,7 @@ export const ImageSlider = ({ currImage, images }:ImageSliderPropsType) => {
     if (e.currentTarget.value) {
       //const hash = images[imageIndex].hash;
       //const [i, hash] = e.currentTarget.value;
-      dispatch(currentImage(e.currentTarget.value));
+      dispatch(setCurrentImage(e.currentTarget.value));
       //document.getElementById(e.currentTarget.value)?.scrollIntoView();
     }
   };
@@ -37,14 +37,14 @@ export const ImageSlider = ({ currImage, images }:ImageSliderPropsType) => {
     <div className={s.slider}>
       {images.length > 0 && (
         <ul className={s.slider__list}>
-          {images.map(({ src, hash, originalSRC, filters }) => (
+          {images.map(({ src, hash, originalSRC, filters,crop }) => (
             <li
               key={src}
               className={s.slider__item}
               //@ts-ignore
               ref={(el) => (itemsRef.current[hash] = el)}
             >
-              <Canvas imageSRC={originalSRC} filters={filters} />
+              <Canvas imageSRC={originalSRC} filters={filters} step={step} crop={crop} />
             </li>
           ))}
         </ul>

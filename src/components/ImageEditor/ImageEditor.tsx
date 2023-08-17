@@ -17,7 +17,7 @@ export const ImageEditor = (props:ImageEditorPropsType) => {
   return (
     <div className={classes.container}>
       <div className={classes.currentImageField}>
-        <ImageSlider currImage={currentImage} images={images} />
+        <ImageSlider currImage={currentImage} images={images} step={props.step} />
           {props.step === 'Cropping' && <ImageNavbar/>}
       </div>
         {props.step === 'Filters' &&
