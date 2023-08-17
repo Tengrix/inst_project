@@ -8,8 +8,7 @@ export const AddPost = () => {
 
   return (
     <div className={classes.container}>
-      <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
-      </CreatePostModal>
+      <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}/>
     </div>
   );
 };

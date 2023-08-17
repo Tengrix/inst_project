@@ -45,7 +45,7 @@ const ImageCropper = (props: PropsType) => {
     const [completedCrop, setCompletedCrop] = useState<Crop | null>(null)
 
 
-    const debouncedCrop = useDebounce(completedCrop, 2000)
+    const debouncedCrop = useDebounce(completedCrop, 500)
 
 
     // const generateCroppedImageURL = () => {
@@ -85,6 +85,7 @@ const ImageCropper = (props: PropsType) => {
 
     useEffect(() => {
         debouncedCrop && (dispatch(setCrop({crop:debouncedCrop,src:props.src})))
+        console.log(debouncedCrop )
     }, [debouncedCrop])
 
 

@@ -52,7 +52,7 @@ export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) =>
           setCurrentImageIdx(newIndex);
         }
         if (newIndex !== i) {
-          dispatch(currentImage(images[newIndex].originalSRC));
+          dispatch(setCurrentImage(images[newIndex].originalSRC));
         }
       }
     });

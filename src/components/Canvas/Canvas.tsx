@@ -6,7 +6,7 @@ import {Crop} from "react-image-crop";
 
 type CanvasPropsType = {
   imageSRC: string
-  filters: { [key: string]: number | string }
+  filters: { [key: string]: string }
   step: StepType
   crop:Crop
 }
@@ -22,36 +22,36 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
     //);
 
     const effects = filters.color;
-    const aspectRatio = +filters.crop;
+    // const aspectRatio = +filters.crop;
 
     const canvas = canvasRef.current;
     const ctx = canvas!.getContext('2d');
 
     const img = new Image();
     img.src = imageSRC;
-    if (!crop) {
-      crop ={
-        unit: 'px',
-        x: 0,
-        y: 0,
-        width: img.width,
-        height: img.height,
-      }
-    }
 
     img.onload = () => {
-
+      const imageRatio = img.width/img.height
       const scaleX = img.width / 462;
       const scaleY = img.height / 346;
+      const defRatio = 462/346
+
+      if (!crop) {
+        crop ={
+          unit: 'px',
+          x: 0,
+          y: 0,
+          width: 462,
+          height: 462 / imageRatio,
+        }
+      }
+
 
       let outputWidth =  crop.width
       let outputHeight =  crop.height
 
-      // ctx!.canvas.width = step==='Cropping' ? img.width : crop.width
-      // ctx!.canvas.height = step==='Cropping' ? img.height : crop.height
-      ctx!.canvas.width = img.width
-      ctx!.canvas.height = img.height
-      const imageAspectRatio = outputWidth / outputHeight;
+
+      const imageAspectRatio = crop.width / crop.height;
       // if (aspectRatio) {
       //   // if it's bigger than our target aspect ratio
       //   if (imageAspectRatio > aspectRatio) {
@@ -61,17 +61,27 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
       //   }
       // }
 
+      console.log('crop',crop)
+        console.log(imageAspectRatio,defRatio)
       if (effects) {
         ctx!.filter = effects;
       }
-      console.log('cropsize',crop)
       if(step==='Cropping') {
-        console.log( 'Crop',0, 0, img.width, img.height, 0, 0, img.width, img.height)
-        ctx!.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+        const canvasWidth = imageRatio>=1?700:700*imageRatio
+        const canvasHeight = imageRatio>=1?700/imageRatio:700
+        ctx!.canvas.width = canvasWidth
+        ctx!.canvas.height = canvasHeight
+        // ctx!.canvas.width = img.width
+        // ctx!.canvas.height = img.height*scaleX
+        ctx!.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasWidth, canvasHeight);
 
       } else {
-        console.log('Not crop',crop.x!*scaleX, crop.y!*scaleY, outputWidth * scaleX, outputHeight * scaleY, 0, 0, img.width, img.height)
-        ctx!.drawImage(img, crop.x!*scaleX, crop.y!*scaleY, outputWidth * scaleX, outputHeight * scaleY, 0, 0, img.width, img.height);
+        console.log(imageAspectRatio,'image aspect ')
+        const canvasWidth = imageAspectRatio >= defRatio ? 462 : 346 * imageAspectRatio
+        const canvasHeight = imageAspectRatio >= defRatio ? 462 / imageAspectRatio : 346
+        ctx!.canvas.width = canvasWidth
+        ctx!.canvas.height = canvasHeight
+        ctx!.drawImage(img, crop.x!*scaleX, crop.y!*scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, canvasWidth, canvasHeight);
 
       }
     }
