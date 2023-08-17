@@ -56,6 +56,7 @@ export const TextArea: FC<TextAreaFieldProps> = ({
             disabled={disabled}
             className={classNames.textarea}
             onKeyDown={handleKeyDown}
+            maxLength={500}
             {...rest}
           />
         </div>

@@ -38,3 +38,56 @@
 .right {
     width: 486px;
 }
+
+.publicationDescriptionBlock{
+    display: flex;
+    flex-direction: column;
+    margin: 24px;
+
+    .user{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 28px;
+    }
+   
+    & .user img {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+        border-radius: 50%;
+        border: 1px solid var(--color-primary-500) // TODO DELETE
+    }
+}
+.form {
+    & label p{
+        color: var(--color-light-900);
+    }
+    & textarea {
+        background-color: var(--color-dark-500);
+    }
+    & input {
+        background-color: var(--color-dark-500);
+        margin-bottom: 10px ;
+    }
+    /* & p {
+        
+    } */
+    .symbolsCounter{
+        color: var(--color-light-900);
+        text-align: right;
+        right: 0;
+    }
+}
+
+
+
+// TODO DELETE
+.buttonForTest{
+    background-color: var(--color-primary-500);
+    padding: 10px;
+    margin: 20px;
+}
+.buttonForTest:hover{
+    cursor: pointer;
+}
