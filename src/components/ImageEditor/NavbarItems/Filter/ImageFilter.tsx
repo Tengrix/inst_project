@@ -7,7 +7,7 @@ export const ImageFilter = ({ image }) => {
   const dispatch = useAppDispatch();
   const filters = [
     { className: 'blur', value: 'blur(4px)' },
-    { className: 'brightness', value: 'brightness(250%' },
+    { className: 'brightness', value: 'brightness(250%)' },
     { className: 'contrast', value: 'contrast(180%)' },
     { className: 'grayscale', value: 'grayscale(100%)' },
     { className: 'huerotate', value: 'hue-rotate(180deg)' },
