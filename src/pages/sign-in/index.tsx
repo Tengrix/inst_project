@@ -13,9 +13,9 @@ import { Github } from "public/icon/github-logo";
 import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import Spinner from "@/assets/icons/Spinner";
-import { z } from "zod";
 import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {authAction} from "@/store/Auth/authSlice";
 
 
 export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
@@ -39,19 +39,17 @@ const SignIn = () => {
     const translationPath = 'auth';
     const router = useRouter()
     const t = useTranslations(translationPath);
-
-    //const onSubmitHandler = (data: LoginFormType) => console.log(data);
+    const dispatch = useDispatch()
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
         signIn({ password: data.password, login: data.userName })
             .unwrap()
-            .then(() => router.push('/profile'))
+            .then(()=> dispatch(authAction.setAuth(true)))
     })
 
     if(data && data.message==='Success'){
         router.push('/profile')
     }
-
     return (
         <div className={classes.container}>
             <Card className={classes.signInForm}>

@@ -81,18 +81,6 @@ export const authApi = createApi({
                     method: 'POST',
                     body:args
                 }),
-                // async onQueryStarted(_, {dispatch, queryFulfilled}) {
-                //     const patchResult = dispatch(
-                //         authApi.util?.updateQueryData('getMe', undefined, () => {
-                //             return null
-                //         })
-                //     )
-                //     try {
-                //         await queryFulfilled
-                //     } catch {
-                //         patchResult.undo()
-                //     }
-                // }
             }),
         }
     }
