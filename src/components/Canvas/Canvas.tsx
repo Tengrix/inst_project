@@ -32,8 +32,7 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
 
     img.onload = () => {
       const imageRatio = img.width/img.height
-      const scaleX = img.width / 462;
-      const scaleY = img.height / 346;
+      const scale = img.width / 462;
       const defRatio = 462/346
 
       if (!crop) {
@@ -77,11 +76,11 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
 
       } else {
         console.log(imageAspectRatio,'image aspect ')
-        const canvasWidth = imageAspectRatio >= defRatio ? 462 : 346 * imageAspectRatio
-        const canvasHeight = imageAspectRatio >= defRatio ? 462 / imageAspectRatio : 346
+        const canvasWidth = imageAspectRatio >= 1 ? 700 : 700 * imageAspectRatio
+        const canvasHeight = imageAspectRatio >= 1 ? 700 / imageAspectRatio : 700
         ctx!.canvas.width = canvasWidth
         ctx!.canvas.height = canvasHeight
-        ctx!.drawImage(img, crop.x!*scaleX, crop.y!*scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, canvasWidth, canvasHeight);
+        ctx!.drawImage(img, crop.x!*scale, crop.y!*scale, crop.width * scale, crop.height * scale, 0, 0, canvasWidth, canvasHeight);
 
       }
     }
