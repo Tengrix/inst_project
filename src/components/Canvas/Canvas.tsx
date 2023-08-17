@@ -1,4 +1,4 @@
-import { useEffect, useRef }  from 'react';
+import { useCallback, useEffect, useRef, useState }  from 'react';
 
 
 type CanvasPropsType = {
@@ -8,16 +8,16 @@ type CanvasPropsType = {
 
 export const Canvas = ({ imageSRC, filters } : CanvasPropsType) => {
   //const { images, currentImage } = useAppSelector((state) => state.images);
-  const canvasRef = useRef();
+  //const canvasRef = useRef();
+  const [canvas, setCanvas] = useState(null);
 
-  useEffect(() => {
+  const fn = useCallback(canvas => {
     //const [{ src, originalSRC, type, filters }] = images.filter(
      // (image: ImageType) => image.originalSRC === imageSRC,
     //);
     const effects = filters.color;
     const aspectRatio = +filters.crop;
 
-    const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
     const img = new Image();
@@ -45,9 +45,17 @@ export const Canvas = ({ imageSRC, filters } : CanvasPropsType) => {
         ctx.filter = effects;
       }
 
+      //ctx.scale(1.5, 1.5);
+
       ctx.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
     }
   }, [imageSRC, filters]);
 
-  return <canvas ref={canvasRef} />
+  useEffect(() => {
+    if (canvas) {
+      fn(canvas);
+    }
+  }, [fn, canvas]);
+
+  return <canvas ref={(htmlElement) => setCanvas(htmlElement)} />
 };
