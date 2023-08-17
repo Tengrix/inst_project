@@ -1,7 +1,7 @@
 import { ImageType, currentImage } from '@/shared/lib/imageStore';
 import s from './ImagesSlider.module.scss';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { MouseEvent } from 'react';
 import { Canvas } from '../Canvas/Canvas';
@@ -37,15 +37,14 @@ export const ImageSlider = ({ currImage, images }) => {
     <div className={s.slider}>
       {images.length > 0 && (
         <ul className={s.slider__list}>
-          {images.map(({ src, hash }) => (
+          {images.map(({ src, hash, originalSRC, filters }) => (
             <li
               key={src}
               className={s.slider__item}
               //@ts-ignore
               ref={(el) => (itemsRef.current[hash] = el)}
             >
-              <Canvas />
-              {/*  <img className={s.slider__image} src={src} alt="" /> */}
+              <Canvas imageSRC={originalSRC} filters={filters} />
             </li>
           ))}
         </ul>

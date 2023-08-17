@@ -1,54 +1,53 @@
-import { ImageType } from '@/shared/lib/imageStore';
-import { useAppSelector } from '@/store';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef }  from 'react';
 
-export const Canvas = (props: any) => {
-  const { images, currentImage } = useAppSelector((state) => state.images);
-  const canvasRef = useRef(null);
+
+type CanvasPropsType = {
+  imageSRC: string
+  filters: { [key: string]: number | string }
+}
+
+export const Canvas = ({ imageSRC, filters } : CanvasPropsType) => {
+  //const { images, currentImage } = useAppSelector((state) => state.images);
+  const canvasRef = useRef();
 
   useEffect(() => {
-    const [{ src, originalSRC, type, filters }] = images.filter(
-      (image: ImageType) => image.originalSRC === currentImage.src,
-    );
+    //const [{ src, originalSRC, type, filters }] = images.filter(
+     // (image: ImageType) => image.originalSRC === imageSRC,
+    //);
     const effects = filters.color;
+    const aspectRatio = +filters.crop;
 
     const canvas = canvasRef.current;
-    //@ts-ignore
-
     const ctx = canvas.getContext('2d');
 
     const img = new Image();
-    img.src = src;
-    console.log('IMG : ', img);
+    img.src = imageSRC;
 
-    const aspectRatio = +filters.crop;
+    img.onload = () => {
 
-    let outputWidth = img.width;
-    let outputHeight = img.height;
+      let outputWidth = img.width;
+      let outputHeight = img.height;
 
-    const imageAspectRatio = outputWidth / outputHeight;
-    if (aspectRatio) {
-      // if it's bigger than our target aspect ratio
-      if (imageAspectRatio > aspectRatio) {
-        outputWidth = outputHeight * aspectRatio;
-      } else if (imageAspectRatio < aspectRatio) {
-        outputHeight = outputWidth / aspectRatio;
+      ctx.canvas.width = outputWidth
+      ctx.canvas.height = outputHeight
+
+      const imageAspectRatio = outputWidth / outputHeight;
+      if (aspectRatio) {
+        // if it's bigger than our target aspect ratio
+        if (imageAspectRatio > aspectRatio) {
+          outputWidth = outputHeight * aspectRatio;
+        } else if (imageAspectRatio < aspectRatio) {
+          outputHeight = outputWidth / aspectRatio;
+        }
       }
+
+      if (effects) {
+        ctx.filter = effects;
+      }
+
+      ctx.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
     }
-    canvas.width = 200;
-    canvas.height = 200;
+  }, [imageSRC, filters]);
 
-    console.log('width : ', img.width, 'height : ', img.height);
-
-    if (effects) {
-      ctx.filter = effects;
-    }
-    ctx.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, 200, 200);
-
-    //Our first draw
-    /* context.fillStyle = '#000000';
-    context.fillRect(0, 0, context.canvas.width, context.canvas.height); */
-  }, [currentImage, images]);
-
-  return <canvas ref={canvasRef} {...props} />;
+  return <canvas ref={canvasRef} />
 };

@@ -1,15 +1,23 @@
 .slider {
+    position: relative;
+
     &__list {
         display: flex;
         overflow: hidden;
         align-items: center;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
+        //width: 560px;
     }
 
     &__item {
         flex: 1 0 100%;
         scroll-snap-align: start;
+
+        & canvas {
+            display: inline;
+            width: 100%;
+        }
     }
 
     &__image {
