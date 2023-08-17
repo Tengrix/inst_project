@@ -1,10 +1,9 @@
 import { ImageType, currentImage } from '@/shared/lib/imageStore';
-import s from './ImagesSlider.module.scss';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { MouseEvent } from 'react';
+import { useAppDispatch } from '@/store';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Canvas } from '../Canvas/Canvas';
+import s from './ImagesSlider.module.scss';
+
 
 type ImageSliderPropsType = {
   currImage: { src: string; hash: string };
@@ -12,10 +11,6 @@ type ImageSliderPropsType = {
 };
 
 export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
-  //const getHash = (src: string) => (src.match(/(?=\/([a-z-0-9]+)$)/) || [])[1] ?? src;
-  //const getHash = (src: string) => src.replace(/^.*\//, '');
-  //const images = useAppSelector(state => state.images.images);
-  //const currentImage = useAppSelector(state => state.images.currentImagex);
   const dispatch = useAppDispatch();
   const itemsRef = useRef({});
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
@@ -24,17 +19,14 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
     //@ts-ignore
     itemsRef.current[currImage.hash]?.scrollIntoView();
     const index = images.findIndex((image) => image.originalSRC === currImage.src);
-    if (index && index > -1) {
+    if (index > -1) {
       setCurrentImageIdx(index);
     }
   }, [currImage, images]);
 
   const bulletHandler = (e: MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.value) {
-      //const hash = images[imageIndex].hash;
-      //const [i, hash] = e.currentTarget.value;
       dispatch(currentImage(e.currentTarget.value));
-      //document.getElementById(e.currentTarget.value)?.scrollIntoView();
     }
   };
 
