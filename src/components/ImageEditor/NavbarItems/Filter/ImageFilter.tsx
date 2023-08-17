@@ -1,13 +1,13 @@
 import {useAppDispatch} from '@/store';
 import s from './ImageFilter.module.scss';
-import {createNewImageBlob, CurrentImageType} from '@/shared/lib/imageStore';
+import { addFilterToCurrentImage, CurrentImageType  } from '@/shared/lib/imageStore';
 
 
 export const ImageFilter = ({image}: {image: CurrentImageType }) => {
   const dispatch = useAppDispatch();
   const filters = [
     { className: 'blur', value: 'blur(4px)' },
-    { className: 'brightness', value: 'brightness(250%' },
+    { className: 'brightness', value: 'brightness(250%)' },
     { className: 'contrast', value: 'contrast(180%)' },
     { className: 'grayscale', value: 'grayscale(100%)' },
     { className: 'huerotate', value: 'hue-rotate(180deg)' },
@@ -20,7 +20,10 @@ export const ImageFilter = ({image}: {image: CurrentImageType }) => {
   const applyFilterForImageHandler = (/* e: MouseEvent<HTMLButtonElement> */ filter: string) => {
     if (filter) {
       dispatch(
-        createNewImageBlob({ filterName: 'color', /* args: e.currentTarget.value */ args: filter }),
+        addFilterToCurrentImage({
+          filterName: 'color',
+          /* args: e.currentTarget.value */ args: filter,
+        }),
       );
     }
   };
