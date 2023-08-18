@@ -71,6 +71,9 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
         ctx!.canvas.height = canvasHeight
         // ctx!.canvas.width = img.width
         // ctx!.canvas.height = img.height*scaleX
+        if (effects) {
+          ctx!.filter = effects;
+        }
         ctx!.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasWidth, canvasHeight);
 
       } else {
@@ -80,12 +83,15 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
         console.log(canvasHeight, canvasWidth)
         ctx!.canvas.width = canvasWidth
         ctx!.canvas.height = canvasHeight
+        if (effects) {
+          ctx!.filter = effects;
+        }
         ctx!.drawImage(img, crop.x! * scale, crop.y! * scale, crop.width * scale, crop.height * scale, 0, 0, canvasWidth, canvasHeight);
 
 
         //ctx.scale(1.5, 1.5);
 
-        ctx!.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
+        //ctx!.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
       }
     }
   }, [imageSRC, filters,step]);
