@@ -126,7 +126,7 @@ export const imageSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 
-export const { addImage, removeImage, addFilterToCurrentImage, currentImage,setDescription,setCrop} = imageSlice.actions
+export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
 export default imageSlice.reducer
 
