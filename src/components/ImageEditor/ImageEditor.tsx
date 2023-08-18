@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/store';
+import {useAppDispatch, useAppSelector} from '@/store';
 import { ImageSlider } from '../ImageSlider/ImageSlider';
 import classes from './ImageEditor.module.scss';
 import { ImageNavbar } from './Navbar/ImageNavbar';
@@ -8,37 +8,41 @@ import { ControlledTextField } from '@/shared/ui/controlled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreatePostFormType, createPostSchema } from '@/shared/utils/schemas/createPostSchema';
-import { TextArea } from '@/shared/ui/text-area';
 import { ControlledTextAreaField } from '@/shared/ui/controlled/controlled-text-area';
 import { Typography } from '@/shared/ui/typography';
 import Person from 'public/assets/icons/fonts/person.svg';
 import Image from 'next/image';
-import { useState } from 'react';
+import {KeyboardEvent, useEffect, useState} from 'react';
+import {setDescription} from "@/shared/lib/imageStore";
 
 type ImageEditorPropsType = {
-  image: string;
   step: StepType;
 };
 
 export const ImageEditor = (props: ImageEditorPropsType) => {
+  const dispatch = useAppDispatch()
   const currentImage = useAppSelector((state) => state.images.currentImage);
   const images = useAppSelector((state) => state.images.images);
 
-  const [symbols, setSymbols] = useState([]);
+  const [descriptionSymbols, setDescriptionSymbols] = useState('');
 
-  const { control, handleSubmit } = useForm<CreatePostFormType>({
+  const {control, setValue, trigger, watch, formState} = useForm<CreatePostFormType>({
     resolver: zodResolver(createPostSchema),
   });
 
-  /*  В data лежит description и title для отправки на сервер. Присутуль, пожалуйста, к кнопке publish*/
-  const onSubmit = handleSubmit((data) => {
-    console.log('PUBLISH TEST : ', data);
-  });
-  /*  В data лежит description и title для отправки на сервер. Присутуль, пожалуйста, к кнопке publish*/
+  const handleChange = (name:keyof CreatePostFormType, value:string) => {
+    setValue(name, value)
+    trigger(name)
+  }
+  const [title, description] = watch(['title', 'description'])
 
-  const calculateSymbols = (e: any) => {
-    console.log(e.currentTarget.value);
-    setSymbols(e.currentTarget.value);
+  useEffect(()=> {
+    formState.isValid && dispatch(setDescription({title,description}))
+  },[title,description])
+
+
+  const calculateSymbols = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    setDescriptionSymbols(e.currentTarget.value);
   };
 
   return (
@@ -59,23 +63,26 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
               <Image src={Person} alt="Person avatar" />
               <Typography variant="regular16">User name</Typography>
             </div>
-            <form className={classes.form} onSubmit={onSubmit}>
-              <ControlledTextField name={'title'} label={'Post title'} control={control} />
+            <form className={classes.form}>
+              <ControlledTextField
+                  name={'title'}
+                  label={'Post title'}
+                  control={control}
+                  onKeyDown={(e) => handleChange('title', e.currentTarget.value)}
+              />
               <ControlledTextAreaField
                 name={'description'}
                 label={'Add publication descriptions'}
                 control={control}
-                onKeyUp={calculateSymbols}
+                onKeyUp={(e) => {
+                  handleChange('description', e.currentTarget.value)
+                  calculateSymbols(e)
+                }}
               />
               <Typography
                 variant="medium14"
                 className={classes.symbolsCounter}
-              >{`${symbols.length}/500 `}</Typography>
-              {/* Publish test  - это кнопка для теста, чтобы button c onSubmit не перезагружал страницу . Можно удалять */}
-              <div className={classes.buttonForTest} onClick={onSubmit}>
-                PUBLISH TEST
-              </div>
-              {/* Publish test  - это кнопка для теста, чтобы button c onSubmit не перезагружал страницу . Можно удалять */}
+              >{`${descriptionSymbols.length}/500 `}</Typography>
             </form>
           </div>
         </div>
