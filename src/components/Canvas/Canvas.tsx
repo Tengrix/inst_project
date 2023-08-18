@@ -78,6 +78,7 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
         console.log(imageAspectRatio,'image aspect ')
         const canvasWidth = imageAspectRatio >= 1 ? 700 : 700 * imageAspectRatio
         const canvasHeight = imageAspectRatio >= 1 ? 700 / imageAspectRatio : 700
+        console.log(canvasHeight,canvasWidth)
         ctx!.canvas.width = canvasWidth
         ctx!.canvas.height = canvasHeight
         ctx!.drawImage(img, crop.x!*scale, crop.y!*scale, crop.width * scale, crop.height * scale, 0, 0, canvasWidth, canvasHeight);
