@@ -12,9 +12,6 @@ const Profile = () => {
     return (
         <div>
             <Sidebar/>
-                <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
-                    Image
-                </CreatePostModal>
         </div>
     );
 };

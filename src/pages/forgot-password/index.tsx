@@ -36,7 +36,6 @@ const ForgotPassword = () => {
 
   const t = useTranslations('auth');
 
-  const {reCaptchaKey,executeRecaptcha} = useReCaptcha()
 
   const { control, handleSubmit } = useForm<ForgotPasswordFormType>({
     resolver: zodResolver(forgotPasswordSchema),

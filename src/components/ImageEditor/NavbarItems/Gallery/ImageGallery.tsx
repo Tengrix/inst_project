@@ -18,15 +18,13 @@ export const ImageGallery = () => {
       const filters = {};
       const originalSRC = src;
       const image = {
-        name,
-        size,
-        type,
         src,
         originalSRC,
+        type,
+        name,
+        size,
         filters,
-        get hash() {
-          return this.originalSRC.replace(/^.*\//, '');
-        },
+
       };
       dispatch(addImage({ ...image }));
       dispatch(setCurrentImage(originalSRC));
