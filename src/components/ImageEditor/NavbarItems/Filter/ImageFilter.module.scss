@@ -29,9 +29,9 @@
                 filter: hue-rotate(180deg);
             }
 
-            & .invert {
+           /*  & .invert {
                 filter: invert(100%);
-            }
+            } */
 
             & .opacity {
                 filter: opacity(50%);
@@ -43,6 +43,13 @@
 
             & .sepia {
                 filter: sepia(100%);
+            }
+            
+            & .original {
+                filter:none
+            }
+            & .some {
+                filter: sepia(1) contrast(2) brightness(200%);
             }
         }
     }

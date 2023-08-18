@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import s from './TextArea.module.scss';
 import { Typography } from '@/shared/ui/typography';
 
-export type TextAreaProps = {
+export type TextAreaFieldProps = {
   value?: string;
   label?: string;
   errorMessage?: string;
@@ -24,7 +24,7 @@ export type TextAreaProps = {
   className?: string;
 } & ComponentProps<'textarea'>;
 
-export const TextArea: FC<TextAreaProps> = ({
+export const TextArea: FC<TextAreaFieldProps> = ({
   disabled,
   value,
   label,
@@ -56,6 +56,7 @@ export const TextArea: FC<TextAreaProps> = ({
             disabled={disabled}
             className={classNames.textarea}
             onKeyDown={handleKeyDown}
+            maxLength={500}
             {...rest}
           />
         </div>
