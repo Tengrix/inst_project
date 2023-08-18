@@ -12,6 +12,8 @@ import s from 'src/pages/forgot-password/link-has-been-sent/LinkHasBeenSent.modu
 import {useTranslations} from 'next-intl';
 import {GetStaticPropsContext} from 'next';
 import {usePasswordRecoveryMutation} from '@/api/authApi';
+import {ReCaptcha, ReCaptchaProvider} from "next-recaptcha-v3";
+import {useState} from "react";
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {
@@ -29,17 +31,21 @@ export async function getStaticProps({locale}: GetStaticPropsContext) {
 
 const LinkHasBeenSent = () => {
     const [passwordRecovery] = usePasswordRecoveryMutation();
+    const [token, setToken] = useState<string|null>(null);
+
     const onSubmitHandler = (data: RegisterFormType) => console.log(data);
     const {control, handleSubmit} = useForm<RegisterFormType>({
         resolver: zodResolver(registerSchema),
     });
     const onSubmit = handleSubmit((data) => {
         console.log(data);
-        passwordRecovery(data);
+        passwordRecovery({email:data.email, recaptchaValue:token as string});
     });
     const t = useTranslations('auth');
 
     return (
+        <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
+            <ReCaptcha onValidate={setToken} action="page_view" />
         <div className={s.container}>
             <Card className={s.card}>
                 <Typography variant={'large'}>{t('forgotPasswordPage.title')}</Typography>
@@ -66,6 +72,7 @@ const LinkHasBeenSent = () => {
                 </Button>
             </Card>
         </div>
+        </ReCaptchaProvider>
     );
 };
 

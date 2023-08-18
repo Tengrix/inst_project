@@ -16,10 +16,10 @@ export type ImageType = {
     originalSRC: string
     type: string
     name: string
-    hash: string
+    hash?: string
     size: number
     filters: {[key: string]:string}
-    crop:Crop
+    crop?:Crop
 
 }
 
