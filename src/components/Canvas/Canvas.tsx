@@ -15,9 +15,9 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
   //const { images, currentImage } = useAppSelector((state) => state.images);
   //const canvasRef = useRef<HTMLCanvasElement | null>(null);
   //const canvasRef = useRef();
-  const [canvas, setCanvas] = useState(null);
+  const [canvas, setCanvas] = useState<HTMLCanvasElement|null>(null);
 
-  const fn = useCallback(canvas => {
+  const fn = useCallback((canvas:HTMLCanvasElement) => {
     //const [{ src, originalSRC, type, filters }] = images.filter(
      // (image: ImageType) => image.originalSRC === imageSRC,
     //);
@@ -31,12 +31,12 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
     img.src = imageSRC;
 
     img.onload = () => {
-      const imageRatio = img.width/img.height
+      const imageRatio = img.width / img.height
       const scale = img.width / 462;
-      const defRatio = 462/346
+      const defRatio = 462 / 346
 
       if (!crop) {
-        crop ={
+        crop = {
           unit: 'px',
           x: 0,
           y: 0,
@@ -46,8 +46,8 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
       }
 
 
-      let outputWidth =  crop.width
-      let outputHeight =  crop.height
+      let outputWidth = crop.width
+      let outputHeight = crop.height
 
 
       const imageAspectRatio = crop.width / crop.height;
@@ -60,13 +60,13 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
       //   }
       // }
 
-      console.log('crop',crop)
+      console.log('crop', crop)
       if (effects) {
         ctx!.filter = effects;
       }
-      if(step==='Cropping') {
-        const canvasWidth = imageRatio>=1?700:700*imageRatio
-        const canvasHeight = imageRatio>=1?700/imageRatio:700
+      if (step === 'Cropping') {
+        const canvasWidth = imageRatio >= 1 ? 700 : 700 * imageRatio
+        const canvasHeight = imageRatio >= 1 ? 700 / imageRatio : 700
         ctx!.canvas.width = canvasWidth
         ctx!.canvas.height = canvasHeight
         // ctx!.canvas.width = img.width
@@ -74,18 +74,19 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
         ctx!.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasWidth, canvasHeight);
 
       } else {
-        console.log(imageAspectRatio,'image aspect ')
+        console.log(imageAspectRatio, 'image aspect ')
         const canvasWidth = imageAspectRatio >= 1 ? 700 : 700 * imageAspectRatio
         const canvasHeight = imageAspectRatio >= 1 ? 700 / imageAspectRatio : 700
-        console.log(canvasHeight,canvasWidth)
+        console.log(canvasHeight, canvasWidth)
         ctx!.canvas.width = canvasWidth
         ctx!.canvas.height = canvasHeight
-        ctx!.drawImage(img, crop.x!*scale, crop.y!*scale, crop.width * scale, crop.height * scale, 0, 0, canvasWidth, canvasHeight);
+        ctx!.drawImage(img, crop.x! * scale, crop.y! * scale, crop.width * scale, crop.height * scale, 0, 0, canvasWidth, canvasHeight);
 
 
-      //ctx.scale(1.5, 1.5);
+        //ctx.scale(1.5, 1.5);
 
-      ctx.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
+        ctx!.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
+      }
     }
   }, [imageSRC, filters,step]);
 
