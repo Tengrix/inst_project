@@ -61,7 +61,6 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
       // }
 
       console.log('crop',crop)
-        console.log(imageAspectRatio,defRatio)
       if (effects) {
         ctx!.filter = effects;
       }

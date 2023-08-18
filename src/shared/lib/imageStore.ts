@@ -18,6 +18,7 @@ export type ImageType = {
     size: number
     filters: {[key: string]:string}
     crop:Crop
+
 }
 
 export type CurrentImageType = {

@@ -10,7 +10,6 @@ type PropsType = {
     children?: ReactNode,
     ref: any
     src: string
-    // aspect?: number
 }
 
 const centerAspectCrop = (
@@ -20,8 +19,8 @@ const centerAspectCrop = (
 ) => centerCrop(
     makeAspectCrop(
         {
-            unit: '%',
-            width: 100,
+            unit: 'px',
+            width: mediaWidth,
         },
         aspect,
         mediaWidth,
@@ -33,9 +32,9 @@ const centerAspectCrop = (
 
 const ImageCropper = (props: PropsType) => {
     const dispatch = useAppDispatch()
-    const savedCrop = useAppSelector(state=>state.images.images.filter(image=>image.src===props.src)[0].crop)
-    // const imageRef = useRef<HTMLImageElement>(null);
-    const [curCrop, setCurCrop] = useState<Crop>(savedCrop||{
+    const savedCrop = useAppSelector(state => state.images.images.filter(image => image.src === props.src)[0].crop)
+    const cropRatio = +useAppSelector(state => state.images.images.filter(image => image.src === props.src)[0].filters.crop)
+    const [curCrop, setCurCrop] = useState<Crop>(savedCrop || {
         unit: '%',
         x: 0,
         y: 0,
@@ -74,35 +73,36 @@ const ImageCropper = (props: PropsType) => {
     //     }
     // };
 
-    // useEffect(() => {
-    //     if (props.src && props.ref.current) {
-    //         const {width, height} = props.ref.current
-    //         const newCrop = centerAspectCrop(width, height, props.aspect!)
-    //         setCrop(newCrop)
-    //         setCompletedCrop(newCrop)
-    //     }
-    // }, [props.aspect])
+    useEffect(() => {
+        if (props.src ) {
+            const newCrop = centerAspectCrop(curCrop.width, curCrop.height, cropRatio)
+            setCompletedCrop(newCrop)
+            setCurCrop(newCrop)
+            console.log('oldcrop',curCrop)
+            console.log('newcrop',newCrop)
+        }
+    }, [cropRatio])
 
     useEffect(() => {
-        debouncedCrop && (dispatch(setCrop({crop:debouncedCrop,src:props.src})))
-        console.log(debouncedCrop )
+        debouncedCrop && (dispatch(setCrop({crop: debouncedCrop, src: props.src})))
+        console.log(debouncedCrop)
     }, [debouncedCrop])
 
 
     return (
-                <ReactCrop
-                    // aspect={props.aspect}
-                    crop={curCrop}
-                    onChange={(c) => {
-                        setCurCrop(c)
-                    }}
-                    onComplete={(c) => {
-                        setCompletedCrop(c)
-                    }}
-                >
-                    {/*<img ref={imageRef} src={props.src}/>*/}
-                    {props.children}
-                </ReactCrop>
+        <ReactCrop
+            aspect={cropRatio}
+            crop={curCrop}
+            onChange={(c) => {
+                setCurCrop(c)
+            }}
+            onComplete={(c) => {
+                setCompletedCrop(c)
+            }}
+        >
+            {/*<img ref={imageRef} src={props.src}/>*/}
+            {props.children}
+        </ReactCrop>
 
 
     );
