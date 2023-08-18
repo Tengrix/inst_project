@@ -1,8 +1,7 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useCallback, useState } from 'react';
 import ImageCropper from "@/components/ImageCropper/ImageCropper";
 import {StepType} from "@/pages/post/createPostModal/CreatePostModal";
 import {Crop} from "react-image-crop";
-
 
 type CanvasPropsType = {
   imageSRC: string
@@ -14,9 +13,11 @@ type CanvasPropsType = {
 
 export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
   //const { images, currentImage } = useAppSelector((state) => state.images);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  //const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  //const canvasRef = useRef();
+  const [canvas, setCanvas] = useState(null);
 
-  useEffect(() => {
+  const fn = useCallback(canvas => {
     //const [{ src, originalSRC, type, filters }] = images.filter(
      // (image: ImageType) => image.originalSRC === imageSRC,
     //);
@@ -24,8 +25,7 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
     const effects = filters.color;
     // const aspectRatio = +filters.crop;
 
-    const canvas = canvasRef.current;
-    const ctx = canvas!.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
     const img = new Image();
     img.src = imageSRC;
@@ -82,15 +82,26 @@ export const Canvas = ({ imageSRC, filters, step, crop} : CanvasPropsType) => {
         ctx!.canvas.height = canvasHeight
         ctx!.drawImage(img, crop.x!*scale, crop.y!*scale, crop.width * scale, crop.height * scale, 0, 0, canvasWidth, canvasHeight);
 
-      }
+
+      //ctx.scale(1.5, 1.5);
+
+      ctx.drawImage(img, 0, 0, outputWidth, outputHeight, 0, 0, outputWidth, outputHeight);
     }
   }, [imageSRC, filters,step]);
 
-  return step === 'Cropping' ?
-      <ImageCropper ref={canvasRef} src={imageSRC}>
-        <canvas ref={canvasRef}/>
-      </ImageCropper>
-      :
-      <canvas ref={canvasRef}/>
 
+
+
+  useEffect(() => {
+    if (canvas) {
+      fn(canvas);
+    }
+  }, [fn, canvas]);
+
+  return step === 'Cropping' ?
+      <ImageCropper ref={canvas} src={imageSRC}>
+    <canvas ref={(htmlElement) => setCanvas(htmlElement)} />
+        </ImageCropper>
+    :
+    <canvas ref={(htmlElement) => setCanvas(htmlElement)} />
 };

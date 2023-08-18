@@ -1,17 +1,17 @@
-import {useAppDispatch} from '@/store';
+import { useAppDispatch } from '@/store';
 import s from './ImageFilter.module.scss';
-import { addFilterToCurrentImage, CurrentImageType  } from '@/shared/lib/imageStore';
+import { addFilterToCurrentImage, CurrentImageType } from '@/shared/lib/imageStore';
 
-
-export const ImageFilter = ({image}: {image: CurrentImageType }) => {
+export const ImageFilter = ({ image }: { image: CurrentImageType }) => {
   const dispatch = useAppDispatch();
   const filters = [
+    { className: 'original', value: 'none' },
     { className: 'blur', value: 'blur(4px)' },
     { className: 'brightness', value: 'brightness(250%)' },
     { className: 'contrast', value: 'contrast(180%)' },
     { className: 'grayscale', value: 'grayscale(100%)' },
     { className: 'huerotate', value: 'hue-rotate(180deg)' },
-    { className: 'invert', value: 'invert(100%)' },
+    /* { className: 'invert', value: 'invert(100%)' }, */
     { className: 'opacity', value: 'opacity(50%)' },
     { className: 'saturate', value: 'saturate(7)' },
     { className: 'sepia', value: 'sepia(100%)' },

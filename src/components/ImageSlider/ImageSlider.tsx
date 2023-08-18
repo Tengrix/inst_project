@@ -12,10 +12,7 @@ type ImageSliderPropsType = {
 };
 
 export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) => {
-  //const getHash = (src: string) => (src.match(/(?=\/([a-z-0-9]+)$)/) || [])[1] ?? src;
-  //const getHash = (src: string) => src.replace(/^.*\//, '');
-  //const images = useAppSelector(state => state.images.images);
-  //const currentImage = useAppSelector(state => state.images.currentImagex);
+
   const dispatch = useAppDispatch();
   const itemsRef = useRef({});
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
@@ -24,17 +21,14 @@ export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) =>
     //@ts-ignore
     itemsRef.current[currImage.hash]?.scrollIntoView();
     const index = images.findIndex((image) => image.originalSRC === currImage.src);
-    if (index && index > -1) {
+    if (index > -1) {
       setCurrentImageIdx(index);
     }
   }, [currImage, images]);
 
   const bulletHandler = (e: MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.value) {
-      //const hash = images[imageIndex].hash;
-      //const [i, hash] = e.currentTarget.value;
       dispatch(setCurrentImage(e.currentTarget.value));
-      //document.getElementById(e.currentTarget.value)?.scrollIntoView();
     }
   };
 

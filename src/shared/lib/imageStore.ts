@@ -7,6 +7,8 @@ export type ImageStoreStateType = {
   images: Array<ImageType>
   error: string 
   currentImage: CurrentImageType
+  title:string
+  description:string
 }
 
 export type ImageType = {
@@ -35,7 +37,9 @@ const initialState: ImageStoreStateType = {
   currentImage: {
     src: '',
     hash: ''
-  }
+  },
+  title:'',
+  description:''
 }
 
 export const imageSlice = createSlice({
@@ -97,8 +101,14 @@ export const imageSlice = createSlice({
             }
             return image;
         })
-    }
+    },
+    
+    setDescription:(state,action:PayloadAction<{title:string,description:string}>)=> {
+        state.title = action.payload.title
+        state.description = action.payload.description
+      }
   },
+
 
   extraReducers: (builder) => {
       builder.addCase(createNewImageBlob.fulfilled, (state, action) => {
@@ -115,7 +125,8 @@ export const imageSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setCrop} = imageSlice.actions
+
+export const { addImage, removeImage, addFilterToCurrentImage, currentImage,setDescription,setCrop} = imageSlice.actions
 
 export default imageSlice.reducer
 

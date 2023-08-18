@@ -9,6 +9,8 @@ import {addImage, setCurrentImage} from "@/shared/lib/imageStore";
 import {useDispatch} from "react-redux";
 import {ImagePlaceholder} from "@/shared/ui/placeholder/placeholder";
 import {ImageEditor} from "@/components/ImageEditor/ImageEditor";
+import {useSubmitUserDataMutation} from "@/api/authApi";
+import {useAppSelector} from "@/store";
 
 export type StepType = 'Cropping' | 'Filters' | 'Publication'
 
@@ -24,19 +26,22 @@ const CreatePostModal = (props: Props) => {
     const [preview, setPreview] = useState<string>(''); // Фото-превью
     const [editModal, setEditModal] = useState(false)
     const [error, setError] = useState('')
-
     const [confirmCloseModal, setConfirmCloseModal] = useState(false)
-
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping')
+
+    const {title,images,description} = useAppSelector(state => state.images)
+
+    const [publishPost] = useSubmitUserDataMutation()
 
     const nextBtnHandler = () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters')
         else if (currentStep === 'Filters') setCurrentStep('Publication')
         else if (currentStep === 'Publication') {
-            //publish request
-            setEditModal(false)
-            props.modalHandler(false)
-            setCurrentStep('Cropping')
+            console.log('publish')
+            publishPost({title,files:images as any,description})
+            // setEditModal(false)
+            // props.modalHandler(false)
+            // setCurrentStep('Cropping')
         }
     }
     const prevBtnHandler = () => {
@@ -131,7 +136,7 @@ const CreatePostModal = (props: Props) => {
                 onPointerOutsideClickHandler={onPointerOutsideClickHandler}
 
             >
-                <ImageEditor image={''} step={currentStep}/>
+                <ImageEditor step={currentStep}/>
                 <ConfirmCloseModal
                     open={confirmCloseModal}
                     modalHandler={setConfirmCloseModal}
