@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type {PayloadAction} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice, current} from '@reduxjs/toolkit'
 import {RootStateType, ThunkAppDispatchType} from "@/store";
+import {Crop} from "react-image-crop";
 
 export type ImageStoreStateType = {
   images: Array<ImageType>
@@ -18,6 +19,8 @@ export type ImageType = {
     hash: string
     size: number
     filters: {[key: string]:string}
+    crop:Crop
+
 }
 
 export type CurrentImageType = {
@@ -83,11 +86,23 @@ export const imageSlice = createSlice({
       }
     },
 
-    currentImage:(state, action:PayloadAction<string>)=>{
+    setCurrentImage:(state, action:PayloadAction<string>)=>{
         state.currentImage.src = action.payload;
         state.currentImage.hash = action.payload.replace(/^.*\//, '');
     },
 
+    setCrop:(state,action:PayloadAction<{ crop:Crop, src: string }>)=> {
+        state.images = state.images.map(image => {
+            if (image.originalSRC === action.payload.src) {
+                return {
+                    ...image,
+                    crop: action.payload.crop
+                };
+            }
+            return image;
+        })
+    },
+    
     setDescription:(state,action:PayloadAction<{title:string,description:string}>)=> {
         state.title = action.payload.title
         state.description = action.payload.description
@@ -110,7 +125,8 @@ export const imageSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addImage, removeImage, addFilterToCurrentImage, currentImage,setDescription} = imageSlice.actions
+
+export const { addImage, removeImage, addFilterToCurrentImage, currentImage,setDescription,setCrop} = imageSlice.actions
 
 export default imageSlice.reducer
 

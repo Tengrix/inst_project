@@ -1,9 +1,8 @@
 import classes from './ImageGallery.module.scss';
-import { addImage, currentImage, removeImage } from '@/shared/lib/imageStore';
-import { Button } from '@/shared/ui/button';
-import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { useDispatch } from 'react-redux';
+import {addImage, removeImage, setCurrentImage} from '@/shared/lib/imageStore';
+import {Button} from '@/shared/ui/button';
+import {ImageUploader} from '@/shared/ui/file-uploader/file-uploader';
+import {useAppDispatch, useAppSelector} from '@/store';
 
 export const ImageGallery = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +29,7 @@ export const ImageGallery = () => {
         },
       };
       dispatch(addImage({ ...image }));
-      dispatch(currentImage(originalSRC));
+      dispatch(setCurrentImage(originalSRC));
     }
     console.log('BUTTON IS WORKING');
   };
@@ -53,7 +52,7 @@ export const ImageGallery = () => {
                   id={hash}
                   alt=""
                   onClick={() => {
-                    dispatch(currentImage(originalSRC));
+                    dispatch(setCurrentImage(originalSRC));
                   }}
                 />
                 <Button

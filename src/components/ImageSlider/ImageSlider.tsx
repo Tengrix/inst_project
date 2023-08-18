@@ -1,16 +1,18 @@
-import { ImageType, currentImage } from '@/shared/lib/imageStore';
-import { useAppDispatch } from '@/store';
-import { MouseEvent, useEffect, useRef, useState } from 'react';
-import { Canvas } from '../Canvas/Canvas';
+import {ImageType, setCurrentImage} from '@/shared/lib/imageStore';
 import s from './ImagesSlider.module.scss';
-
+import {MouseEvent, useEffect, useRef, useState } from 'react';
+import {useAppDispatch} from '@/store';
+import {Canvas} from '../Canvas/Canvas';
+import {StepType} from "@/pages/post/createPostModal/CreatePostModal";
 
 type ImageSliderPropsType = {
-  currImage: { src: string; hash: string };
+  currImage: {src: string, hash: string}
   images: Array<ImageType>;
+  step: StepType
 };
 
-export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
+export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) => {
+
   const dispatch = useAppDispatch();
   const itemsRef = useRef({});
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
@@ -26,7 +28,7 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
 
   const bulletHandler = (e: MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.value) {
-      dispatch(currentImage(e.currentTarget.value));
+      dispatch(setCurrentImage(e.currentTarget.value));
     }
   };
 
@@ -44,7 +46,7 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
           setCurrentImageIdx(newIndex);
         }
         if (newIndex !== i) {
-          dispatch(currentImage(images[newIndex].originalSRC));
+          dispatch(setCurrentImage(images[newIndex].originalSRC));
         }
       }
     });
@@ -68,14 +70,14 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
       )}
       {images.length > 0 && (
         <ul className={s.slider__list}>
-          {images.map(({ src, hash, originalSRC, filters }) => (
+          {images.map(({ src, hash, originalSRC, filters,crop }) => (
             <li
               key={src}
               className={s.slider__item}
               //@ts-ignore
               ref={(el) => (itemsRef.current[hash] = el)}
             >
-              <Canvas imageSRC={originalSRC} filters={filters} />
+              <Canvas imageSRC={originalSRC} filters={filters} step={step} crop={crop} />
             </li>
           ))}
         </ul>
@@ -83,7 +85,7 @@ export const ImageSlider = ({ currImage, images }: ImageSliderPropsType) => {
 
       {images.length > 1 && (
         <ul className={s.bullets}>
-          {images.map(({ originalSRC }) => (
+          {images.map(({originalSRC}) => (
             <li key={originalSRC} className={s.bullets__item}>
               <button
                 className={s.btn + ' ' + (originalSRC === currImage.src ? s.btn_active : '')}

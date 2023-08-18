@@ -5,7 +5,7 @@ import s from '@/pages/post/createPostModal/CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
 import ConfirmCloseModal from "@/shared/ui/modal/ConfirmCloseModal";
 import {ImageUploader} from "@/shared/ui/file-uploader/file-uploader";
-import {addImage, currentImage} from "@/shared/lib/imageStore";
+import {addImage, setCurrentImage} from "@/shared/lib/imageStore";
 import {useDispatch} from "react-redux";
 import {ImagePlaceholder} from "@/shared/ui/placeholder/placeholder";
 import {ImageEditor} from "@/components/ImageEditor/ImageEditor";
@@ -17,7 +17,7 @@ export type StepType = 'Cropping' | 'Filters' | 'Publication'
 type Props = {
     open: boolean
     modalHandler: (isOpen: boolean) => void
-    children: ReactNode
+    // children: ReactNode
 }
 
 const CreatePostModal = (props: Props) => {
@@ -94,7 +94,7 @@ const CreatePostModal = (props: Props) => {
 
 
             dispatch(addImage({...image}));
-            dispatch(currentImage(src));
+            dispatch(setCurrentImage(src));
             setPreview(src)
             setError('')
         }
