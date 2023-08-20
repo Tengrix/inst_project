@@ -4,7 +4,6 @@ import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useAppDispatch, useAppSelector } from '@/store';
 import classes from './ImageGallery.module.scss';
 
-
 export const ImageGallery = () => {
   const dispatch = useAppDispatch();
   const images = useAppSelector((state) => state.images.images);
@@ -23,31 +22,29 @@ export const ImageGallery = () => {
     }
   };
 
+  const imagePreview = images.map(({ originalSRC }) => (
+    <li key={originalSRC} className={classes.images__image}>
+      <img
+        src={originalSRC}
+        alt=""
+        onClick={() => {
+          dispatch(setCurrentImage(originalSRC));
+        }}
+      />
+      <Button
+        className={classes.images__image_close}
+        onClick={removeImageFromGallery}
+        value={originalSRC}
+      >
+        <span className={classes.icon__close}></span>
+      </Button>
+    </li>
+  ));
+
   return (
     <div className={classes.imageGalleryUploader}>
       <div className={classes.galleryContainer}>
-        {images.length > 0 && (
-          <ul className={classes.images}>
-            {images.map(({ originalSRC }) => (
-              <li key={originalSRC} className={classes.images__image}>
-                <img
-                  src={originalSRC}
-                  alt=""
-                  onClick={() => {
-                    dispatch(setCurrentImage(originalSRC));
-                  }}
-                />
-                <Button
-                  className={classes.images__image_close}
-                  onClick={removeImageFromGallery}
-                  value={originalSRC}
-                >
-                  <span className={classes.icon__close}></span>
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
+        {images.length > 0 && <ul className={classes.images}>{imagePreview}</ul>}
         <ImageUploader label={'+'} onImageChangeHandler={addImageToGallery} />
       </div>
     </div>
