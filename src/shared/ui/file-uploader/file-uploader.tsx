@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react';
 import { Button } from '../button';
 import { TextField } from '../text-field/text-field';
 import classes from './file-uploader.module.scss';
-import Image from 'next/image';
-import { addImage, setCurrentImage, removeImage } from '@/shared/lib/imageStore';
-import { useAppDispatch, useAppSelector } from '@/store';
+
 
 export type FileUploaderPropsType = {
   className?: string;
@@ -27,8 +24,6 @@ export const ImageUploader = ({ label, onImageChangeHandler, ...rest }: ImageUpl
       <Button fullWidth color="secondary">
         <FileUploader label={label} onChange={onImageChangeHandler} {...rest} />
       </Button>
-      {/* {<img src={image} alt="test" width={100} height={100} />} */}
-      {/* check */}
     </div>
   );
 };
