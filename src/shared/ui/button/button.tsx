@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ComponentRef, ElementType, ReactNode } from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 
 import s from './button.module.scss';
 import Spinner from '@/shared/ui/spinner/Spinner';
@@ -10,7 +10,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   className?: string;
   isLoading?: boolean;
   children: ReactNode;
-} & ComponentRef<T>;
+} & ComponentPropsWithoutRef<T>;
 
 // С помощью Omit мы убираем из пропсов переданного компонента все пропсы,
 // которые уже есть в наших кастомных пропсах, тем самым избегая коллизий.
