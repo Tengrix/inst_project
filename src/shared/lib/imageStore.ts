@@ -43,27 +43,29 @@ const initialState: ImageStoreStateType = {
   description:''
 }
 
-export const imageSlice = createSlice({
-  name: 'image',
-  initialState,
-  reducers: {
-    addImage: (state,  action: PayloadAction<{blob: Blob}>) => {
-     if (state.images.length <= 10) {
-      const { name, size, type } = action.payload.blob;
-      const src = URL.createObjectURL(action.payload.blob);
+export const parseImageBlob = (blob: Blob) : ImageType => {
+      const { name, size, type } = blob;
+      const src = URL.createObjectURL(blob);
       const filters = {};
       const originalSRC = src;
-      const image = {
+      return {
         src,
         originalSRC,
         type,
         name,
         size,
         filters,
+      }
+}
 
-      };
-        state.images.push(image);
-        state.currentImage.src = originalSRC;
+export const imageSlice = createSlice({
+  name: 'image',
+  initialState,
+  reducers: {
+    addImage: (state,  action: PayloadAction<ImageType>) => {
+     if (state.images.length <= 10) {
+      state.images.push(action.payload);
+      state.currentImage.src = action.payload.originalSRC;
       }
     },
 

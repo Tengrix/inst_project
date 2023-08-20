@@ -5,7 +5,7 @@ import s from '@/pages/post/createPostModal/CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
 import ConfirmCloseModal from "@/shared/ui/modal/ConfirmCloseModal";
 import {ImageUploader} from "@/shared/ui/file-uploader/file-uploader";
-import {addImage, setCurrentImage} from "@/shared/lib/imageStore";
+import { addImage, parseImageBlob, setCurrentImage} from "@/shared/lib/imageStore";
 import {useDispatch} from "react-redux";
 import {ImagePlaceholder} from "@/shared/ui/placeholder/placeholder";
 import {ImageEditor} from "@/components/ImageEditor/ImageEditor";
@@ -78,7 +78,8 @@ const CreatePostModal = (props: Props) => {
     const onImageChangeHandler = (event: any) => {
         if (event.target.files && event.target.files[0]) {
             const blob = event.target.files[0];
-            dispatch(addImage({blob}));
+            const image = parseImageBlob(blob);
+            dispatch(addImage(image));
             setError('');
         }
     };

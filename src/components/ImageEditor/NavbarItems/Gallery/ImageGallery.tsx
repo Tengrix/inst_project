@@ -1,4 +1,4 @@
-import { addImage, removeImage, setCurrentImage } from '@/shared/lib/imageStore';
+import { addImage, parseImageBlob, removeImage, setCurrentImage } from '@/shared/lib/imageStore';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -12,7 +12,8 @@ export const ImageGallery = () => {
   const addImageToGallery = (event: any) => {
     if (event.target.files && event.target.files[0]) {
       const blob = event.target.files[0];
-      dispatch(addImage({ blob }));
+      const image = parseImageBlob(blob);
+      dispatch(addImage(image));
     }
   };
 
