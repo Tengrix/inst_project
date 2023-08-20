@@ -1,5 +1,5 @@
 import {Modal} from "@/shared/ui/modal/Modal";
-import React, {ReactNode, useState} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import {Button} from "@/shared/ui/button";
 import s from '@/pages/post/createPostModal/CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
@@ -30,6 +30,7 @@ const CreatePostModal = (props: Props) => {
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping')
 
     const {title,images,description} = useAppSelector(state => state.images)
+    const currentImage = useAppSelector((state) => state.images.currentImage);
 
     const [publishPost] = useSubmitUserDataMutation()
 
@@ -77,28 +78,14 @@ const CreatePostModal = (props: Props) => {
     const onImageChangeHandler = (event: any) => {
         if (event.target.files && event.target.files[0]) {
             const blob = event.target.files[0];
-            const {name, size, type} = blob;
-            const src = URL.createObjectURL(event.target.files[0]);
-            const filters = {}
-            const image = {
-                name,
-                size,
-                type,
-                src,
-                originalSRC: src,
-                filters,
-                get hash() {
-                    return this.originalSRC.replace(/^.*\//, '')
-                }
-            };
-
-
-            dispatch(addImage({...image}));
-            dispatch(setCurrentImage(src));
-            setPreview(src)
-            setError('')
+            dispatch(addImage({blob}));
+            setError('');
         }
     };
+
+    useEffect(() => {
+        setPreview(currentImage.src);
+    }, [currentImage])
 
     return (
         <Modal

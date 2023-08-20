@@ -1,7 +1,8 @@
-import type {PayloadAction} from '@reduxjs/toolkit'
-import {createAsyncThunk, createSlice, current} from '@reduxjs/toolkit'
-import {RootStateType, ThunkAppDispatchType} from "@/store";
-import {Crop} from "react-image-crop";
+import { RootStateType, ThunkAppDispatchType } from "@/store";
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Crop } from "react-image-crop";
+
 
 export type ImageStoreStateType = {
   images: Array<ImageType>
@@ -46,22 +47,29 @@ export const imageSlice = createSlice({
   name: 'image',
   initialState,
   reducers: {
-    addImage: (state,  action: PayloadAction<ImageType>) => {
-     if (state.images.length < 8) {
-       console.log('STATE - ', current(state))
-        state.images.push(action.payload) 
-        console.log(current(state))
-        if (state.error) state.error = '';
-      } else {
-        state.error = 'Error'
+    addImage: (state,  action: PayloadAction<{blob: Blob}>) => {
+     if (state.images.length <= 10) {
+      const { name, size, type } = action.payload.blob;
+      const src = URL.createObjectURL(action.payload.blob);
+      const filters = {};
+      const originalSRC = src;
+      const image = {
+        src,
+        originalSRC,
+        type,
+        name,
+        size,
+        filters,
+
+      };
+        state.images.push(image);
+        state.currentImage.src = originalSRC;
       }
     },
 
     removeImage: (state, action: PayloadAction<{ src: string }>) => {
-      console.log("CLICK ")
         const filteredImages = state.images.filter(({originalSRC}, i) => {
           if (action.payload.src === state.currentImage.src) {
-            console.log("CLICK ")
             if (i - 1 >= 0) {
               state.currentImage.src = state.images[i - 1].originalSRC;
               state.currentImage.hash = state.images[i - 1].originalSRC.replace(/^.*\//, '');
@@ -79,7 +87,6 @@ export const imageSlice = createSlice({
       const {filterName, args} = action.payload;
       for (let i = 0; i < state.images.length; i++) {
         if (state.images[i].originalSRC === state.currentImage.src) {
-          console.log("APPLY FILTERS ---", filterName);
           state.images[i].filters[filterName] = args;
           break;
         }
