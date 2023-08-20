@@ -1,12 +1,12 @@
+import { ChangeEvent } from 'react';
 import { Button } from '../button';
 import { TextField } from '../text-field/text-field';
 import classes from './file-uploader.module.scss';
 
-
 export type FileUploaderPropsType = {
   className?: string;
   label?: string;
-  onChange?: (event: any) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const FileUploader = ({ className, ...rest }: FileUploaderPropsType) => {
@@ -15,7 +15,7 @@ const FileUploader = ({ className, ...rest }: FileUploaderPropsType) => {
 
 type ImageUploaderPropsType = {
   label: string;
-  onImageChangeHandler?: (event: any) => void;
+  onImageChangeHandler?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const ImageUploader = ({ label, onImageChangeHandler, ...rest }: ImageUploaderPropsType) => {
