@@ -1,9 +1,11 @@
-import {ImageType, setCurrentImage} from '@/shared/lib/imageStore';
+import { StepType } from "@/pages/post/createPostModal/CreatePostModal";
+import { setCurrentImage } from '@/shared/lib/imageStore';
+import { ImageType } from '@/shared/lib/types/store';
+import { useAppDispatch } from '@/store';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { Canvas } from '../Canvas/Canvas';
 import s from './ImagesSlider.module.scss';
-import {MouseEvent, useEffect, useRef, useState } from 'react';
-import {useAppDispatch} from '@/store';
-import {Canvas} from '../Canvas/Canvas';
-import {StepType} from "@/pages/post/createPostModal/CreatePostModal";
+
 
 type ImageSliderPropsType = {
   currImage: {src: string, hash: string}
@@ -19,7 +21,7 @@ export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) =>
 
   useEffect(() => {
     //@ts-ignore
-    itemsRef.current[currImage.hash]?.scrollIntoView();
+    itemsRef.current[currImage.src]?.scrollIntoView();
     const index = images.findIndex((image) => image.originalSRC === currImage.src);
     if (index > -1) {
       setCurrentImageIdx(index);
@@ -70,12 +72,12 @@ export const ImageSlider = ({ currImage, images, step }:ImageSliderPropsType) =>
       )}
       {images.length > 0 && (
         <ul className={s.slider__list}>
-          {images.map(({ src, hash, originalSRC, filters,crop }) => (
+          {images.map(({ src, originalSRC, filters,crop }) => (
             <li
               key={src}
               className={s.slider__item}
               //@ts-ignore
-              ref={(el) => (itemsRef.current[hash] = el)}
+              ref={(el) => (itemsRef.current[src] = el)}
             >
               <Canvas imageSRC={originalSRC} filters={filters} step={step} crop={crop} />
             </li>

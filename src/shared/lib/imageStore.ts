@@ -1,34 +1,7 @@
-import type {PayloadAction} from '@reduxjs/toolkit'
-import {createAsyncThunk, createSlice, current} from '@reduxjs/toolkit'
-import {RootStateType, ThunkAppDispatchType} from "@/store";
-import {Crop} from "react-image-crop";
-
-export type ImageStoreStateType = {
-  images: Array<ImageType>
-  error: string 
-  currentImage: CurrentImageType
-  title:string
-  description:string
-}
-
-export type ImageType = {
-    src: string
-    originalSRC: string
-    type: string
-    name: string
-    hash?: string
-    size: number
-    filters: {[key: string]:string}
-    crop?:Crop
-
-}
-
-export type CurrentImageType = {
-    src: string
-    hash: string
-}
-
-
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Crop } from "react-image-crop";
+import { AsyncConfigType, ImageStoreStateType, ImageType } from './types/store';
 
 
 const initialState: ImageStoreStateType = {
@@ -42,26 +15,35 @@ const initialState: ImageStoreStateType = {
   description:''
 }
 
+export const parseImageBlob = (blob: Blob) : ImageType => {
+      const { name, size, type } = blob;
+      const src = URL.createObjectURL(blob);
+      const filters = {};
+      const originalSRC = src;
+      return {
+        src,
+        originalSRC,
+        type,
+        name,
+        size,
+        filters,
+      }
+}
+
 export const imageSlice = createSlice({
   name: 'image',
   initialState,
   reducers: {
     addImage: (state,  action: PayloadAction<ImageType>) => {
-     if (state.images.length < 8) {
-       console.log('STATE - ', current(state))
-        state.images.push(action.payload) 
-        console.log(current(state))
-        if (state.error) state.error = '';
-      } else {
-        state.error = 'Error'
+     if (state.images.length <= 10) {
+      state.images.push(action.payload);
+      state.currentImage.src = action.payload.originalSRC;
       }
     },
 
     removeImage: (state, action: PayloadAction<{ src: string }>) => {
-      console.log("CLICK ")
         const filteredImages = state.images.filter(({originalSRC}, i) => {
           if (action.payload.src === state.currentImage.src) {
-            console.log("CLICK ")
             if (i - 1 >= 0) {
               state.currentImage.src = state.images[i - 1].originalSRC;
               state.currentImage.hash = state.images[i - 1].originalSRC.replace(/^.*\//, '');
@@ -79,7 +61,6 @@ export const imageSlice = createSlice({
       const {filterName, args} = action.payload;
       for (let i = 0; i < state.images.length; i++) {
         if (state.images[i].originalSRC === state.currentImage.src) {
-          console.log("APPLY FILTERS ---", filterName);
           state.images[i].filters[filterName] = args;
           break;
         }
@@ -91,7 +72,7 @@ export const imageSlice = createSlice({
         state.currentImage.hash = action.payload.replace(/^.*\//, '');
     },
 
-    setCrop:(state,action:PayloadAction<{ crop:Crop, src: string }>)=> {
+    setCrop:(state,action:PayloadAction<{ crop: Crop, src: string }>)=> {
         state.images = state.images.map(image => {
             if (image.originalSRC === action.payload.src) {
                 return {
@@ -129,13 +110,6 @@ export const imageSlice = createSlice({
 export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
 export default imageSlice.reducer
-
-//types
-export type AsyncConfigType = {
-    dispatch: ThunkAppDispatchType,
-    rejectWithValue: string,
-    state: RootStateType
-}
 
 //thunks
 export const createNewImageBlob = createAsyncThunk<{newSRC:string, size:number},{ filterName: string, args: string },AsyncConfigType>(
