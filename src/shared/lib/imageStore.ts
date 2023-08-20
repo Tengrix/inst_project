@@ -1,35 +1,7 @@
-import { RootStateType, ThunkAppDispatchType } from "@/store";
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Crop } from "react-image-crop";
-
-
-export type ImageStoreStateType = {
-  images: Array<ImageType>
-  error: string 
-  currentImage: CurrentImageType
-  title:string
-  description:string
-}
-
-export type ImageType = {
-    src: string
-    originalSRC: string
-    type: string
-    name: string
-    hash?: string
-    size: number
-    filters: {[key: string]:string}
-    crop?:Crop
-
-}
-
-export type CurrentImageType = {
-    src: string
-    hash: string
-}
-
-
+import { AsyncConfigType, ImageStoreStateType, ImageType } from './types/store';
 
 
 const initialState: ImageStoreStateType = {
@@ -100,7 +72,7 @@ export const imageSlice = createSlice({
         state.currentImage.hash = action.payload.replace(/^.*\//, '');
     },
 
-    setCrop:(state,action:PayloadAction<{ crop:Crop, src: string }>)=> {
+    setCrop:(state,action:PayloadAction<{ crop: Crop, src: string }>)=> {
         state.images = state.images.map(image => {
             if (image.originalSRC === action.payload.src) {
                 return {
@@ -138,13 +110,6 @@ export const imageSlice = createSlice({
 export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
 export default imageSlice.reducer
-
-//types
-export type AsyncConfigType = {
-    dispatch: ThunkAppDispatchType,
-    rejectWithValue: string,
-    state: RootStateType
-}
 
 //thunks
 export const createNewImageBlob = createAsyncThunk<{newSRC:string, size:number},{ filterName: string, args: string },AsyncConfigType>(
