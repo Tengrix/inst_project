@@ -1,18 +1,12 @@
-import 'react-dates/initialize';
 import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
 import React, {useEffect} from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import {useState} from "react";
-import CreatePostModal from "@/pages/post/createPostModal/CreatePostModal";
-import {useAppSelector} from "@/store";
 import {useRouter} from "next/router";
-
-import {useScreenSize} from "@/shared/hooks/useScreenSize";
 import Spinner from "@/shared/ui/spinner/Spinner";
+import {useAppSelector} from "@/redux/store";
 
 
 const Profile = () => {
-    const [createPostModal, setCreatePostModal] = useState(false)
     const router = useRouter()
     const authData = useAppSelector(state => state.authSlice.isInit)
     useEffect(()=>{
@@ -25,9 +19,6 @@ const Profile = () => {
             {authData ?
                 <div>
                     <Sidebar/>
-                <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
-                    Image
-                </CreatePostModal>
                 </div>
                 :<Spinner/>
             }
