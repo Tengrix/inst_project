@@ -33,8 +33,6 @@
         border-radius: 2px;
         transform: translateY(-50%);
 
-
-        
         &::before {
             position: absolute;
             z-index: -1;
@@ -65,12 +63,11 @@
     .nextBtn {
         right: 12px
     }
-
 }
 
 .bullets {
     position: absolute;
-    bottom: 30px;
+    bottom: 15px;
     left: 50%;
     z-index: 200;
     display: inline-flex;
@@ -83,15 +80,15 @@
     border-radius: 2px;
     transform: translateX(-50%);
 
-        .btn {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--color-light-100);
-            border-radius: 50%;
+    .btn {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-light-100);
+        border-radius: 50%;
 
-            &_active {
-                background-color: var(--color-primary-500)
-            }
+        &_active {
+            background-color: var(--color-primary-500)
         }
+    }
 }
