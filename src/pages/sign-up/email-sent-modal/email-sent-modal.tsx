@@ -7,7 +7,7 @@ type EmailSentModalType = {
     title: string
     email: string
 }
-export const EmailSentModal = ({isOpen, modalHandler, title, email}: EmailSentModalType) => {
+ const EmailSentModal = ({isOpen, modalHandler, title, email}: EmailSentModalType) => {
 
     return (
         <Modal title={title} open={isOpen} modalHandler={modalHandler}>
@@ -17,3 +17,4 @@ export const EmailSentModal = ({isOpen, modalHandler, title, email}: EmailSentMo
         </Modal>
     )
 }
+export default EmailSentModal;

@@ -14,6 +14,8 @@ import { Google } from "public/icon/google-logo";
 import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {authAction} from "@/redux/store/Auth/authSlice";
 
 
 export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
@@ -35,18 +37,20 @@ const SignIn = () => {
     const translationPath = 'auth';
     const router = useRouter()
     const t = useTranslations(translationPath);
-
-    //const onSubmitHandler = (data: LoginFormType) => console.log(data);
+    const dispatch = useDispatch()
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
     const onSubmit = handleSubmit(data => {
         signIn({ password: data.password, login: data.userName })
             .unwrap()
-            .then(() => router.push('/profile'))
+            .then(()=> dispatch(authAction.setAuth(true)))
     })
 
     if(data && data.message==='Success'){
         router.push('/profile')
     }
+
+    const err = error && 'data' in error ? (error as CustomerError ).data.errorsMessages : 'Something went wrong'
+
 
     return (
         <div className={classes.container}>
@@ -74,7 +78,7 @@ const SignIn = () => {
                         {t('button.signInButton')}
                     </Button>
                     <div className={classes.form__error}>
-                        {isError && (error as CustomerError ).data.errorsMessages}
+                        {isError && err}
                     </div>
                 </form>
                 <div className={classes.footer}>

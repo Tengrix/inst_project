@@ -1,49 +1,55 @@
 .container {
     padding: 16px;
 
-    & .filters{
+    .filters {
         display: flex;
-        gap: 16px;
         flex-wrap: wrap;
+        gap: 16px
 
-        & .filter {
-            flex: 1 27%;
-            
-            & .blur {
-                filter: blur(4px);
-            }
+        
+    }
 
-            & .brightness {
-                filter: brightness(250%);
-            }
+    .filter {
+        flex: 1 27%;
+        
+        .blur {
+            filter: blur(4px)
+        }
 
-            & .contrast {
-                filter: contrast(180%);
-            }
+        .brightness {
+            filter: brightness(250%)
+        }
 
-            & .grayscale {
-                filter: grayscale(100%);
-            }
+        .contrast {
+            filter: contrast(180%)
+        }
 
-            & .huerotate {
-                filter: hue-rotate(180deg);
-            }
+        .grayscale {
+            filter: grayscale(100%)
+        }
 
-            & .invert {
-                filter: invert(100%);
-            }
+        .huerotate {
+            filter: hue-rotate(180deg)
+        }
 
-            & .opacity {
-                filter: opacity(50%);
-            }
+        .opacity {
+            filter: opacity(50%)
+        }
 
-            & .saturate {
-                filter: saturate(7);
-            }
+        .saturate {
+            filter: saturate(7)
+        }
 
-            & .sepia {
-                filter: sepia(100%);
-            }
+        .sepia {
+            filter: sepia(100%)
+        }
+        
+        .original {
+            filter:none
+        }
+
+        .some {
+            filter: sepia(1) contrast(2) brightness(200%)
         }
     }
 }

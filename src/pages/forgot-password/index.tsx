@@ -7,13 +7,11 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
-import { Captcha } from '@/shared/captcha/Captcha';
 import { usePasswordRecoveryMutation } from '@/api/authApi';
 import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
-import { TextArea } from '@/shared/ui/text-area';
 import { useRouter } from 'next/router';
 import {ReCaptcha, ReCaptchaProvider, useReCaptcha} from "next-recaptcha-v3";
 
@@ -32,22 +30,22 @@ const ForgotPassword = () => {
   const { push, pathname } = useRouter();
   const [forgotPassword, { status }] = usePasswordRecoveryMutation();
   const [email, setEmail] = useState('');
-  const [captcha,setCaptcha] = useState<string|null>(null)
+  const [token, setToken] = useState<string|null>(null);
 
   const t = useTranslations('auth');
 
-  const {reCaptchaKey,executeRecaptcha} = useReCaptcha()
+  const {executeRecaptcha} = useReCaptcha()
+
 
   const { control, handleSubmit } = useForm<ForgotPasswordFormType>({
     resolver: zodResolver(forgotPasswordSchema),
   });
   const onSubmit = handleSubmit (async (data) => {
-    // const token = await executeRecaptcha('token')
-    forgotPassword({email:data.email,recaptchaValue:token as string});
+    const captcha = await executeRecaptcha('password_recovery')
+    forgotPassword({email:data.email,recaptchaValue:captcha as string});
     setEmail(data.email);
   });
 
-  const [token, setToken] = useState<string|null>(null);
 
 
   useEffect(() => {
@@ -55,8 +53,7 @@ const ForgotPassword = () => {
   }, [status]);
 
   return (
-    <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
-      <ReCaptcha onValidate={setToken} action="page_view" />
+      <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
       <div className={s.container}>
         <Card className={s.card}>
           <Typography variant={'large'}>{t('forgotPasswordPage.title')}</Typography>
@@ -74,7 +71,6 @@ const ForgotPassword = () => {
               type={'submit'}
               fullWidth
               className={s.registerBtn}
-              // disabled={!captcha}
             >
               {t('button.sendLink')}
             </Button>
@@ -82,10 +78,10 @@ const ForgotPassword = () => {
           <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
             {t('button.backToSignIn')}
           </Button>
-          {/*<Captcha setCaptchaValue={setCaptcha} />*/}
         </Card>
+        <ReCaptcha onValidate={setToken} action="password_recovery"  />
       </div>
-    </ReCaptchaProvider>
+      </ReCaptchaProvider>
   );
 };
 

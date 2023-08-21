@@ -54,7 +54,7 @@ export const Modal = ({
                 </Dialog.Trigger>
             )}
             <Dialog.Portal>
-                <Dialog.Overlay className={s.DialogOverlay}/>
+                <div className={s.DialogOverlay}/>
                 <Dialog.Content
                     className={s.DialogContent}
                     onOpenAutoFocus={(e) => e.preventDefault()}

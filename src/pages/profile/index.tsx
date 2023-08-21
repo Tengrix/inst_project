@@ -1,20 +1,27 @@
-import 'react-dates/initialize';
 import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
-import React from "react";
+import React, {useEffect} from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import {useState} from "react";
-import CreatePostModal from "@/pages/post/createPostModal/CreatePostModal";
+import {useRouter} from "next/router";
+import Spinner from "@/shared/ui/spinner/Spinner";
+import {useAppSelector} from "@/redux/store";
 
 
 const Profile = () => {
-    const [createPostModal, setCreatePostModal] = useState(false)
-
+    const router = useRouter()
+    const authData = useAppSelector(state => state.authSlice.isInit)
+    useEffect(()=>{
+        if(!authData){
+            router.push('/sign-in')
+        }
+    },[authData])
     return (
         <div>
-            <Sidebar/>
-                <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
-                    Image
-                </CreatePostModal>
+            {authData ?
+                <div>
+                    <Sidebar/>
+                </div>
+                :<Spinner/>
+            }
         </div>
     );
 };

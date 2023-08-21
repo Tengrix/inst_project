@@ -1,5 +1,5 @@
-import s from './ImageScale.module.scss';
+import s from '@/components/ImageEditor/NavbarItems/Scale/ImageScale.module.scss';
 
-export const ImageScale = ({image}) => {
-  return <div><img src={image} alt="" />{<div className={s.imageScale}>IMAGE SCALE</div>}</div>;
+export const ImageScale = () => {
+  return <div className={s.imageScale}>IMAGE SCALE</div>;
 };

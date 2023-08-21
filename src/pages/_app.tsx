@@ -1,4 +1,4 @@
-import { store } from "@/store";
+import { store } from "@/redux/store";
 import '@/styles/variables/index.scss';
 import '@/shared/ui/datePicker/datepicker.css';
 import { NextPage } from 'next';
@@ -8,6 +8,7 @@ import { Inter } from 'next/font/google';
 import Head from "next/head";
 import { ReactElement, ReactNode } from 'react';
 import { Provider } from "react-redux";
+import {ReCaptchaProvider} from "next-recaptcha-v3";
 
 
 const inter = Inter({
