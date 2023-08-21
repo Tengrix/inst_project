@@ -6,31 +6,31 @@ import {useState} from "react";
 import CreatePostModal from "@/pages/post/createPostModal/CreatePostModal";
 import {useAppSelector} from "@/store";
 import {useRouter} from "next/router";
-import Spinner from "@/shared/ui/spinner/Spinner";
+
+import {useScreenSize} from "@/shared/hooks/useScreenSize";
 
 
 const Profile = () => {
     const [createPostModal, setCreatePostModal] = useState(false)
     const router = useRouter()
     const authData = useAppSelector(state => state.authSlice.isInit)
-
-    useEffect(()=>{
-        if(!authData){
-            router.push('/sign-in')
-        }
-    },[authData])
-
+    const screenSize = useScreenSize()
+    // useEffect(()=>{
+    //     if(!authData){
+    //         router.push('/sign-in')
+    //     }
+    // },[authData])
     return (
         <div>
-            {authData ?
+            {/*{authData ?*/}
                 <div>
-            <Sidebar/>
+                    <Sidebar/>
                 <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
                     Image
                 </CreatePostModal>
                 </div>
-                :<Spinner/>
-            }
+            {/*    :<Spinner/>*/}
+            {/*}*/}
         </div>
     );
 };
