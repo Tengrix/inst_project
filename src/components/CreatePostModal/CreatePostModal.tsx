@@ -91,6 +91,7 @@ const CreatePostModal = (props: Props) => {
 
     return (
         <Modal
+            className={s.container}
             title='Add photo'
             open={props.open}
             customButtonsBlock={
@@ -104,7 +105,6 @@ const CreatePostModal = (props: Props) => {
                     }}>Next</Button>
                 </>}
             modalHandler={props.modalHandler}
-            modalTrigger={<Button>Create Post</Button>}
         >
             <div className={s.preview}>
                 {!preview ?
