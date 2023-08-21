@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Crop } from "react-image-crop";
 import { AsyncConfigType, ImageStoreStateType, ImageType } from '@/redux/store/imageSlice/types/store';
+import {authSlice} from "@/store/Auth/authSlice";
 
 
 const initialState: ImageStoreStateType = {
@@ -68,7 +69,7 @@ export const imageSlice = createSlice({
             return image;
         })
     },
-    
+
     setDescription:(state,action:PayloadAction<{title:string,description:string}>)=> {
         state.title = action.payload.title
         state.description = action.payload.description
@@ -94,7 +95,8 @@ export const imageSlice = createSlice({
 
 export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
-export default imageSlice.reducer
+export const {actions:imageAction} = imageSlice
+export const {reducer:imageReducer} = imageSlice
 
 
 //thunks
