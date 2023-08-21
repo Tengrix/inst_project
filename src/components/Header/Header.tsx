@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react';
 import styles from './styles.module.css';
-import LangSwitcher from "@/components/langSwitcher/LangSwitcher";
 import {
     BarChartIcon,
     BookmarkIcon,
@@ -12,6 +11,7 @@ import { BellIcon } from '@radix-ui/react-icons'
 import CustomPopover from "@/shared/ui/popover/Popover";
 import Link from "next/link";
 import {SideBarRoutesType} from "@/shared/types/CommonTypes";
+import LangSwitcher from "@/components/LangSwitcher/LangSwitcher";
 
 export type HeaderProps = {
   title?: string,
@@ -51,7 +51,7 @@ const Header = (props: HeaderProps) => {
             </div>
           <LangSwitcher/>
             <div className={styles.dots}>
-                <CustomPopover children={<DotsHorizontalIcon width={25} height={25}/>}
+                <CustomPopover icon={<DotsHorizontalIcon width={25} height={25}/>}
                              contentChildren={mappedRoutes}/>
             </div>
         </div>
