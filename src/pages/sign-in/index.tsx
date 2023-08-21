@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
-import {authAction} from "@/store/Auth/authSlice";
+import {authAction} from "@/redux/store/Auth/authSlice";
 
 
 export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
