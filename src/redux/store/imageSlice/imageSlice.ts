@@ -94,7 +94,6 @@ export const imageSlice = createSlice({
 
 export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
-export const {actions:imageAction} = imageSlice
 export const {reducer:imageReducer} = imageSlice
 
 
