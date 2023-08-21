@@ -28,7 +28,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 
 const ForgotPassword = () => {
   const { push, pathname } = useRouter();
-  const [forgotPassword, { status }] = usePasswordRecoveryMutation();
+  const [forgotPassword, { status, isLoading }] = usePasswordRecoveryMutation();
   const [email, setEmail] = useState('');
   const [token, setToken] = useState<string|null>(null);
 
@@ -71,6 +71,8 @@ const ForgotPassword = () => {
               type={'submit'}
               fullWidth
               className={s.registerBtn}
+              disabled={isLoading}
+              isLoading={isLoading}
             >
               {t('button.sendLink')}
             </Button>

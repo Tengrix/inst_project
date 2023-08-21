@@ -69,7 +69,6 @@ const LinkHasBeenSent = () => {
                     {t('button.backToSignIn')}
                 </Button>
             </Card>
-            <ReCaptcha onValidate={setToken} action="password-recovery" />
         </div>
         </ReCaptchaProvider>
     );
