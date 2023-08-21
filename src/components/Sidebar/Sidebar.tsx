@@ -8,7 +8,7 @@ import {
     MagnifyingGlassIcon,
     BarChartIcon,
     BookmarkIcon,
-    ExitIcon
+    ExitIcon,
 } from '@radix-ui/react-icons'
 import Link from "next/link";
 import {useLogoutMutation} from "@/api/authApi";
@@ -16,11 +16,11 @@ import {Button} from "@/shared/ui/button";
 import {useRouter} from "next/router";
 
 const routes = [
-    {title: 'Home', icon: <HomeIcon height={60} width={24}/>, route: '/home'},
-    {title: 'Create', icon: <PlusCircledIcon height={60} width={24}/>, route: '/create'},
-    {title: 'My Profile', icon: <PersonIcon height={60} width={24}/>, route: '/profile'},
-    {title: 'Messenger', icon: <ChatBubbleIcon height={60} width={24}/>, route: '/messenger'},
-    {title: 'Search', icon: <MagnifyingGlassIcon height={60} width={24}/>, route: '/search'}
+    {title: 'Home', icon: <HomeIcon height={60} width={24}/>, path: '/home'},
+    {title: 'Create', icon: <PlusCircledIcon height={60} width={24}/>, path: '/create'},
+    {title: 'My Profile', icon: <PersonIcon height={60} width={24}/>, path: '/profile'},
+    {title: 'Messenger', icon: <ChatBubbleIcon height={60} width={24}/>, path: '/messenger'},
+    {title: 'Search', icon: <MagnifyingGlassIcon height={60} width={24}/>, path: '/search'}
 ]
 const Sidebar = () => {
     const [logout, {isLoading}] = useLogoutMutation()
@@ -43,7 +43,7 @@ const Sidebar = () => {
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>
                         {routes.map(route => {
-                            return <Link href={route.route} className={s.route} key={route.title}>
+                            return <Link href={route.path} className={s.route} key={route.title}>
                                 {route.icon}
                                 <span>{route.title}</span>
                             </Link>
@@ -61,7 +61,7 @@ const Sidebar = () => {
                     <div className={s.footer}>
                         <Link className={s.route} href={'/sign-in'}>
                             <ExitIcon height={60} width={24}/>
-                            <Button isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
+                            <Button variant={'link'} isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
                                 Log out
                             </Button>
                         </Link>
