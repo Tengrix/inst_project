@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Crop } from "react-image-crop";
-import { AsyncConfigType, ImageStoreStateType, ImageType } from './types/store';
+import { AsyncConfigType, ImageStoreStateType, ImageType } from '@/redux/store/imageSlice/types/store';
 
 
 const initialState: ImageStoreStateType = {

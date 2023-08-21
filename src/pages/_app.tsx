@@ -1,4 +1,4 @@
-import { store } from "@/store";
+import { store } from "@/redux/store";
 import '@/styles/variables/index.scss';
 import '@/shared/ui/datePicker/datepicker.css';
 import { NextPage } from 'next';

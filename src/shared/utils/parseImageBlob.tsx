@@ -1,4 +1,4 @@
-import {ImageType} from "@/shared/lib/types/store";
+import {ImageType} from "@/redux/store/imageSlice/types/store";
 
 export const parseImageBlob = (blob: Blob) : ImageType => {
     const { name, size, type } = blob;

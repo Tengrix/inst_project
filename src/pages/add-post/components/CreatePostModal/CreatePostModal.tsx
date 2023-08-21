@@ -5,12 +5,12 @@ import s from '@/pages/add-post/createPostModal/CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
 import ConfirmCloseModal from "@/shared/ui/modal/ConfirmCloseModal";
 import {ImageUploader} from "@/shared/ui/file-uploader/file-uploader";
-import { addImage, setCurrentImage} from "@/shared/lib/imageSlice";
+import { addImage, setCurrentImage} from "@/redux/store/imageSlice/imageSlice";
 import {useDispatch} from "react-redux";
 import {ImagePlaceholder} from "@/shared/ui/placeholder/placeholder";
-import {ImageEditor} from "@/components/ImageEditor/ImageEditor";
+import {ImageEditor} from "@/pages/add-post/components/ImageEditor/ImageEditor";
 import {useSubmitUserDataMutation} from "@/api/authApi";
-import {useAppSelector} from "@/store";
+import {useAppSelector} from "@/redux/store";
 import {parseImageBlob} from "@/shared/utils/parseImageBlob";
 
 export type StepType = 'Cropping' | 'Filters' | 'Publication'

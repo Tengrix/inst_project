@@ -1,4 +1,4 @@
-import { RootStateType, ThunkAppDispatchType } from "@/store";
+import { RootStateType, ThunkAppDispatchType } from "@/redux/store";
 import { Crop } from "react-image-crop";
 
 

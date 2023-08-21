@@ -1,9 +1,9 @@
 import {centerCrop, Crop, makeAspectCrop, ReactCrop} from "react-image-crop";
 import 'react-image-crop/src/ReactCrop.scss'
 import {ReactNode, useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "@/store";
+import {useAppDispatch, useAppSelector} from "@/redux/store";
 import useDebounce from "@/hooks/useDebounce";
-import {setCrop} from "@/shared/lib/imageSlice";
+import {setCrop} from "@/redux/store/imageSlice/imageSlice";
 
 
 type PropsType = {
