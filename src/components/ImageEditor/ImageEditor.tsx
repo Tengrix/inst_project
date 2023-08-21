@@ -13,7 +13,7 @@ import { Typography } from '@/shared/ui/typography';
 import Person from 'public/assets/icons/fonts/person.svg';
 import Image from 'next/image';
 import {KeyboardEvent, useEffect, useState} from 'react';
-import {setDescription} from "@/shared/lib/imageStore";
+import {setDescription} from "@/shared/lib/imageSlice";
 
 type ImageEditorPropsType = {
   step: StepType;

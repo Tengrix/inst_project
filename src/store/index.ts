@@ -1,4 +1,4 @@
-import  imagesReducer  from "@/shared/lib/imageStore";
+import  imagesReducer  from "@/shared/lib/imageSlice";
 import {AnyAction, configureStore, ThunkDispatch} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {authApi} from "src/api/authApi";

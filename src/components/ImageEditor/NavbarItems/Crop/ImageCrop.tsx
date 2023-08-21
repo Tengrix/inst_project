@@ -1,4 +1,4 @@
-import { addFilterToCurrentImage } from '@/shared/lib/imageStore';
+import { addFilterToCurrentImage } from '@/shared/lib/imageSlice';
 import { useAppDispatch } from '@/store';
 import { MouseEvent } from 'react';
 import s from './ImageCrop.module.scss';

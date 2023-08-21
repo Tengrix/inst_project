@@ -1,5 +1,5 @@
 import { StepType } from '@/pages/post/createPostModal/CreatePostModal';
-import { setCurrentImage } from '@/shared/lib/imageStore';
+import { setCurrentImage } from '@/shared/lib/imageSlice';
 import { ImageType } from '@/shared/lib/types/store';
 import { useAppDispatch } from '@/store';
 import { MouseEvent, useEffect, useRef, useState } from 'react';

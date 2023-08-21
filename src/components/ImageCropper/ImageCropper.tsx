@@ -3,7 +3,7 @@ import 'react-image-crop/src/ReactCrop.scss'
 import {ReactNode, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "@/store";
 import useDebounce from "@/hooks/useDebounce";
-import {setCrop} from "@/shared/lib/imageStore";
+import {setCrop} from "@/shared/lib/imageSlice";
 
 
 type PropsType = {

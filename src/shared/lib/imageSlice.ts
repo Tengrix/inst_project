@@ -15,20 +15,7 @@ const initialState: ImageStoreStateType = {
   description:''
 }
 
-export const parseImageBlob = (blob: Blob) : ImageType => {
-      const { name, size, type } = blob;
-      const src = URL.createObjectURL(blob);
-      const filters = {};
-      const originalSRC = src;
-      return {
-        src,
-        originalSRC,
-        type,
-        name,
-        size,
-        filters,
-      }
-}
+
 
 export const imageSlice = createSlice({
   name: 'image',
@@ -110,6 +97,7 @@ export const imageSlice = createSlice({
 export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
 export default imageSlice.reducer
+
 
 //thunks
 export const createNewImageBlob = createAsyncThunk<{newSRC:string, size:number},{ filterName: string, args: string },AsyncConfigType>(

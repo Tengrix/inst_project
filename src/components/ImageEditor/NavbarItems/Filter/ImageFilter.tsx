@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/store';
 import s from './ImageFilter.module.scss';
-import { addFilterToCurrentImage } from '@/shared/lib/imageStore';
+import { addFilterToCurrentImage } from '@/shared/lib/imageSlice';
 import { CurrentImageType } from '@/shared/lib/types/store';
 
 export const ImageFilter = ({ image }: { image: CurrentImageType }) => {
