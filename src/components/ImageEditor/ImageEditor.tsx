@@ -1,9 +1,9 @@
 import {useAppDispatch, useAppSelector} from '@/redux/store';
-import { ImageSlider } from '@/pages/add-post/components/ImageSlider/ImageSlider';
-import classes from '@/pages/add-post/components/ImageEditor/ImageEditor.module.scss';
-import { ImageNavbar } from '@/pages/add-post/components/ImageEditor/Navbar/ImageNavbar';
-import { ImageFilter } from '@/pages/add-post/components/ImageEditor/NavbarItems/Filter/ImageFilter';
-import { StepType } from '@/pages/add-post/components/CreatePostModal/CreatePostModal';
+import { ImageSlider } from '@/components/ImageSlider/ImageSlider';
+import classes from './ImageEditor.module.scss';
+import { ImageNavbar } from '@/components/ImageEditor/Navbar/ImageNavbar';
+import { ImageFilter } from '@/components/ImageEditor/NavbarItems/Filter/ImageFilter';
+import { StepType } from '@/components/CreatePostModal/CreatePostModal';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

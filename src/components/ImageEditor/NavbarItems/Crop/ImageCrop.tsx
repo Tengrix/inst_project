@@ -1,7 +1,7 @@
 import { addFilterToCurrentImage } from '@/redux/store/imageSlice/imageSlice';
 import { useAppDispatch } from '@/redux/store';
 import { MouseEvent } from 'react';
-import s from '@/pages/add-post/components/ImageEditor/NavbarItems/Crop/ImageCrop.module.scss';
+import s from '@/components/ImageEditor/NavbarItems/Crop/ImageCrop.module.scss';
 
 export const ImageCrop = () => {
   const dispatch = useAppDispatch();

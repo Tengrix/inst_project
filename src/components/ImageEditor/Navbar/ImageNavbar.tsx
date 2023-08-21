@@ -1,8 +1,8 @@
 import { ReactNode, useState } from 'react';
-import { ImageGallery } from '@/pages/add-post/components/ImageEditor/NavbarItems/Gallery/ImageGallery';
-import { ImageCrop } from '@/pages/add-post/components/ImageEditor/NavbarItems/Crop/ImageCrop';
-import { ImageScale } from '@/pages/add-post/components/ImageEditor/NavbarItems/Scale/ImageScale';
-import s from '@/pages/add-post/components/ImageEditor/Navbar/ImageNavbar.module.scss';
+import { ImageGallery } from '@/components/ImageEditor/NavbarItems/Gallery/ImageGallery';
+import { ImageCrop } from '@/components/ImageEditor/NavbarItems/Crop/ImageCrop';
+import { ImageScale } from '@/components/ImageEditor/NavbarItems/Scale/ImageScale';
+import s from './ImageNavbar.module.scss';
 
 type ItemsType = Array<ItemType>;
 

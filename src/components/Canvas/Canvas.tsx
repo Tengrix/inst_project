@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Crop } from 'react-image-crop';
-import ImageCropper from "@/pages/add-post/components/ImageCropper/ImageCropper";
-import {StepType} from "@/pages/add-post/components/CreatePostModal/CreatePostModal";
+import ImageCropper from "@/components/ImageCropper/ImageCropper";
+import {StepType} from "@/components/CreatePostModal/CreatePostModal";
 
 type CanvasPropsType = {
   imageSRC: string;

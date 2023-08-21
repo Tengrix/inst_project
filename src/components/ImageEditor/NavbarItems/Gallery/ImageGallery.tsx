@@ -2,7 +2,7 @@ import { addImage, removeImage, setCurrentImage } from '@/redux/store/imageSlice
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import classes from '@/pages/add-post/components/ImageEditor/NavbarItems/Gallery/ImageGallery.module.scss';
+import classes from '@/components/ImageEditor/NavbarItems/Gallery/ImageGallery.module.scss';
 import {parseImageBlob} from "@/shared/utils/parseImageBlob";
 
 export const ImageGallery = () => {

@@ -3,8 +3,8 @@ import { ImageType } from '@/redux/store/imageSlice/types/store';
 import { useAppDispatch } from '@/redux/store';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Canvas } from '@/components/Canvas/Canvas';
-import s from '@/pages/add-post/components/ImageSlider/ImagesSlider.module.scss';
-import {StepType} from "@/pages/add-post/components/CreatePostModal/CreatePostModal";
+import s from '@/components/ImageSlider/ImagesSlider.module.scss';
+import {StepType} from "@/components/CreatePostModal/CreatePostModal";
 
 type ImageSliderPropsType = {
   currImage: { src: string; hash: string };

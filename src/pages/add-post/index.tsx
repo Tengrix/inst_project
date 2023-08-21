@@ -1,7 +1,7 @@
 import {getLayout} from '@/components/Layout/BaseLayout/BaseLayout';
 import classes from './AddPost.module.scss';
 import React, {useState} from 'react';
-import CreatePostModal from "@/pages/add-post/components/CreatePostModal/CreatePostModal";
+import CreatePostModal from "@/components/CreatePostModal/CreatePostModal";
 
 export const AddPost = () => {
   const [createPostModal, setCreatePostModal] = useState(false)

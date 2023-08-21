@@ -8,7 +8,7 @@ import {ImageUploader} from "@/shared/ui/file-uploader/file-uploader";
 import { addImage, setCurrentImage} from "@/redux/store/imageSlice/imageSlice";
 import {useDispatch} from "react-redux";
 import {ImagePlaceholder} from "@/shared/ui/placeholder/placeholder";
-import {ImageEditor} from "@/pages/add-post/components/ImageEditor/ImageEditor";
+import {ImageEditor} from "@/components/ImageEditor/ImageEditor";
 import {useSubmitUserDataMutation} from "@/api/authApi";
 import {useAppSelector} from "@/redux/store";
 import {parseImageBlob} from "@/shared/utils/parseImageBlob";

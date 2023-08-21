@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/redux/store';
-import s from '@/pages/add-post/components/ImageEditor/NavbarItems/Filter/ImageFilter.module.scss';
+import s from '@/components/ImageEditor/NavbarItems/Filter/ImageFilter.module.scss';
 import { addFilterToCurrentImage } from '@/redux/store/imageSlice/imageSlice';
 import { CurrentImageType } from '@/redux/store/imageSlice/types/store';
 
