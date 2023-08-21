@@ -12,10 +12,10 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledCheckbox, ControlledTextField} from "@/shared/ui/controlled";
 import s from "./SignUp.module.scss"
-import {EmailSentModal} from "@/pages/sign-up/email-sent-modal/email-sent-modal";
 import {GetStaticPropsContext} from "next/types";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
+import EmailSentModal from "@/pages/sign-up/email-sent-modal/email-sent-modal";
 
 export type RegisterFormType = z.infer<typeof registerSchema>
 

@@ -48,6 +48,10 @@ const SignIn = () => {
     if(data && data.message==='Success'){
         router.push('/profile')
     }
+
+    const err = error && 'data' in error ? (error as CustomerError ).data.errorsMessages : 'Something went wrong'
+
+
     return (
         <div className={classes.container}>
             <Card className={classes.signInForm}>
@@ -74,7 +78,7 @@ const SignIn = () => {
                         {t('button.signInButton')}
                     </Button>
                     <div className={classes.form__error}>
-                        {isError && (error as CustomerError ).data.errorsMessages}
+                        {isError && err}
                     </div>
                 </form>
                 <div className={classes.footer}>

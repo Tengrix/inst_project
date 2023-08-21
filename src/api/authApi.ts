@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {baseURL} from "@/api/instances";
 import {CommonServerResponse} from "@/api/types/LoginPropsType";
+import {ImageType} from "@/redux/store/imageSlice/types/store";
 
 
 export const authApi = createApi({
@@ -82,6 +83,23 @@ export const authApi = createApi({
                     body:args
                 }),
             }),
+            submitUserData: builder.mutation<void, PostFormData>({
+                query: (data) => {
+                    const formData = new FormData()
+                    formData.append('description',data.description)
+                    data.files.forEach((photo,index)=> {
+                        formData.append('files',photo.src)
+                    })
+                    formData.append('title',data.title)
+                    console.log(formData)
+                    return {
+                        url: "/user",
+                        method: "POST",
+                        body: formData,
+                        headers: {'Content-Type': 'multipart/form-data'},
+                    }
+                },
+            })
         }
     }
 })
@@ -94,7 +112,8 @@ export const {useCheckAppQuery,
     useSignUpConfirmationMutation,
     useResetPasswordMutation,
     usePasswordRecoveryMutation,
-    useLogoutMutation} = authApi
+    useLogoutMutation,
+    useSubmitUserDataMutation} = authApi
 
 //types
 export type RegisterParamsType = {
@@ -109,4 +128,9 @@ export type ErrorDataType = {
 export type CustomerError = {
     data:ErrorDataType,
     status:number
+}
+export type PostFormData = {
+    description: string
+    files: ImageType[]
+    title: string
 }

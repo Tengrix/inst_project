@@ -1,6 +1,5 @@
 import {getLayout} from 'src/components/Layout/BaseLayout/BaseLayout';
 import {useForm} from 'react-hook-form';
-/* import EmailSentModal from 'src/styles/styledComponents/Modal/EmailSentModal'; */
 import {Card} from '@/shared/ui/card';
 import {Typography} from '@/shared/ui/typography';
 import {Button} from '@/shared/ui/button';
@@ -12,6 +11,8 @@ import s from 'src/pages/forgot-password/link-has-been-sent/LinkHasBeenSent.modu
 import {useTranslations} from 'next-intl';
 import {GetStaticPropsContext} from 'next';
 import {usePasswordRecoveryMutation} from '@/api/authApi';
+import {ReCaptcha} from "next-recaptcha-v3";
+import {useState} from "react";
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {
@@ -29,13 +30,15 @@ export async function getStaticProps({locale}: GetStaticPropsContext) {
 
 const LinkHasBeenSent = () => {
     const [passwordRecovery] = usePasswordRecoveryMutation();
+    const [token, setToken] = useState<string|null>(null);
+
     const onSubmitHandler = (data: RegisterFormType) => console.log(data);
     const {control, handleSubmit} = useForm<RegisterFormType>({
         resolver: zodResolver(registerSchema),
     });
     const onSubmit = handleSubmit((data) => {
         console.log(data);
-        passwordRecovery(data);
+        passwordRecovery({email:data.email, recaptchaValue:token as string});
     });
     const t = useTranslations('auth');
 
@@ -65,6 +68,7 @@ const LinkHasBeenSent = () => {
                     {t('button.backToSignIn')}
                 </Button>
             </Card>
+            <ReCaptcha onValidate={setToken} action="password-recovery" />
         </div>
     );
 };
