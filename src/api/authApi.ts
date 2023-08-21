@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {baseURL} from "@/api/instances";
 import {CommonServerResponse} from "@/api/types/LoginPropsType";
-import {ImageType} from "@/shared/lib/imageStore";
+import {ImageType} from "@/redux/store/imageSlice/types/store";
 
 
 export const authApi = createApi({

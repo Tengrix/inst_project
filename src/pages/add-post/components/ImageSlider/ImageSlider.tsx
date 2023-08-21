@@ -1,10 +1,10 @@
-import { StepType } from '@/pages/post/createPostModal/CreatePostModal';
-import { setCurrentImage } from '@/shared/lib/imageStore';
-import { ImageType } from '@/shared/lib/types/store';
-import { useAppDispatch } from '@/store';
+import { StepType } from '@/pages/add-post/components/createPostModal/CreatePostModal';
+import { setCurrentImage } from '@/redux/store/imageSlice/imageSlice';
+import { ImageType } from '@/redux/store/imageSlice/types/store';
+import { useAppDispatch } from '@/redux/store';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
-import { Canvas } from '../Canvas/Canvas';
-import s from './ImagesSlider.module.scss';
+import { Canvas } from '@/components/Canvas/Canvas';
+import s from '@/pages/add-post/components/ImageSlider/ImagesSlider.module.scss';
 
 type ImageSliderPropsType = {
   currImage: { src: string; hash: string };
