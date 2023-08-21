@@ -13,7 +13,6 @@
     }  
 }
 
-
 .container {
     display: flex;
     max-width: 972px
@@ -35,7 +34,7 @@
         align-items: center;
         margin-bottom: 28px
     }
-   
+
     .user img {
         width: 36px;
         height: 36px;
@@ -59,15 +58,12 @@
         background-color: var(--color-dark-500)
     }
 
- 
     .symbolsCounter {
         right: 0;
         color: var(--color-light-900);
         text-align: right
     }
 }
-
-
 
 // TODO DELETE
 .buttonForTest {

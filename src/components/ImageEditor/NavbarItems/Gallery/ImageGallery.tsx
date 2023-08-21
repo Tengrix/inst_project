@@ -1,5 +1,4 @@
 import { addImage, parseImageBlob, removeImage, setCurrentImage } from '@/shared/lib/imageStore';
-import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useAppDispatch, useAppSelector } from '@/store';
 import classes from './ImageGallery.module.scss';
@@ -23,7 +22,7 @@ export const ImageGallery = () => {
   };
 
   const imagePreview = images.map(({ originalSRC }) => (
-    <li key={originalSRC} className={classes.images__image}>
+    <li key={originalSRC} className={classes.image}>
       <img
         src={originalSRC}
         alt=""
@@ -31,13 +30,13 @@ export const ImageGallery = () => {
           dispatch(setCurrentImage(originalSRC));
         }}
       />
-      <Button
-        className={classes.images__image_close}
+      <button
+        className={classes.image_close}
         onClick={removeImageFromGallery}
         value={originalSRC}
       >
         <span className={classes.icon__close}></span>
-      </Button>
+      </button>
     </li>
   ));
 
