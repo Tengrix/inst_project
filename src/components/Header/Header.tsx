@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import styles from './styles.module.css';
 import LangSwitcher from "@/components/langSwitcher/LangSwitcher";
-import Image from "next/image";
+// import Image from "next/image";
 import { BellIcon } from '@radix-ui/react-icons'
 
 export type HeaderProps = {
