@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
-import {ReCaptcha, useReCaptcha} from "next-recaptcha-v3";
+import {ReCaptcha, ReCaptchaProvider, useReCaptcha} from "next-recaptcha-v3";
 
 
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
@@ -53,6 +53,7 @@ const ForgotPassword = () => {
   }, [status]);
 
   return (
+      <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
       <div className={s.container}>
         <Card className={s.card}>
           <Typography variant={'large'}>{t('forgotPasswordPage.title')}</Typography>
@@ -70,7 +71,6 @@ const ForgotPassword = () => {
               type={'submit'}
               fullWidth
               className={s.registerBtn}
-              // disabled={!captcha}
             >
               {t('button.sendLink')}
             </Button>
@@ -81,6 +81,7 @@ const ForgotPassword = () => {
         </Card>
         <ReCaptcha onValidate={setToken} action="password_recovery"  />
       </div>
+      </ReCaptchaProvider>
   );
 };
 
