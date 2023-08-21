@@ -1,93 +1,81 @@
 
 .currentImageField {
-    //position: relative;
-    width: 486px;
     display: flex;
     flex-direction: column;
-    padding: 12px;
     align-items: flex-end;
+    width: 486px;
+    padding: 12px;
 
-    & img {
+     img {
         width: 460px;
         height: 460px;
-        object-fit: contain;
-    }
-
+        object-fit: contain
+    }  
 }
 
-//.container {
-//    display: flex;
-//    gap: 16px;
-//    max-width: 900px;
-//
-//    & .slider,
-//    & .filters{
-//        flex: 1 50%;
-//    }
-//
-//    & .slider{
-//        position: relative;
-//    }
-//}
 
 .container {
     display: flex;
-    max-width: 972px;
-    //width: 100%;
-}
-.right {
-    width: 486px;
+    max-width: 972px
+
 }
 
-.publicationDescriptionBlock{
+.right {
+    width: 486px
+}
+
+.publicationDescriptionBlock {
     display: flex;
     flex-direction: column;
     margin: 24px;
 
-    .user{
+    .user {
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin-bottom: 28px;
+        margin-bottom: 28px
     }
    
-    & .user img {
+    .user img {
         width: 36px;
         height: 36px;
         margin-right: 12px;
-        border-radius: 50%;
-        border: 1px solid var(--color-primary-500) // TODO DELETE
+        border: 1px solid var(--color-primary-500); // TODO DELETE
+        border-radius: 50%
     }
 }
+
 .form {
-    & label p{
-        color: var(--color-light-900);
+    label p {
+        color: var(--color-light-900)
     }
-    & textarea {
-        background-color: var(--color-dark-500);
+
+    textarea {
+        background-color: var(--color-dark-500)
     }
-    & input {
-        background-color: var(--color-dark-500);
+
+    input {
         margin-bottom: 10px ;
+        background-color: var(--color-dark-500)
     }
-    /* & p {
-        
-    } */
-    .symbolsCounter{
-        color: var(--color-light-900);
-        text-align: right;
+
+ 
+    .symbolsCounter {
         right: 0;
+        color: var(--color-light-900);
+        text-align: right
     }
 }
 
 
 
 // TODO DELETE
-.buttonForTest{
-    background-color: var(--color-primary-500);
-    padding: 10px;
+.buttonForTest {
     margin: 20px;
+    padding: 10px;
+    background-color: var(--color-primary-500)
 }
-.buttonForTest:hover{
-    cursor: pointer;
+
+.buttonForTest:hover {
+    cursor: pointer
 }
