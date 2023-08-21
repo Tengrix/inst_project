@@ -56,7 +56,6 @@
     "@storybook/nextjs": "^7.1.1",
     "@storybook/react": "^7.1.1",
     "@storybook/testing-library": "^0.2.0",
-    "@types/react-dates": "^21.8.3",
     "@types/react-google-recaptcha": "^2.1.5",
     "eslint-plugin-storybook": "^0.6.13",
     "postcss": "^8.4.28",
