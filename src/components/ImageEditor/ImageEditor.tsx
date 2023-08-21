@@ -1,9 +1,9 @@
 import {useAppDispatch, useAppSelector} from '@/store';
-import { ImageSlider } from '../ImageSlider/ImageSlider';
+import { ImageSlider } from '../../pages/add-post/ImageSlider/ImageSlider';
 import classes from './ImageEditor.module.scss';
 import { ImageNavbar } from './Navbar/ImageNavbar';
 import { ImageFilter } from './NavbarItems/Filter/ImageFilter';
-import { StepType } from '@/pages/post/createPostModal/CreatePostModal';
+import { StepType } from '@/pages/add-post/createPostModal/CreatePostModal';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

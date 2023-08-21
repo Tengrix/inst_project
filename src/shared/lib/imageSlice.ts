@@ -46,11 +46,9 @@ export const imageSlice = createSlice({
 
     addFilterToCurrentImage: (state, action: PayloadAction<{ filterName: string, args:string }>) => {
       const {filterName, args} = action.payload;
-      for (let i = 0; i < state.images.length; i++) {
-        if (state.images[i].originalSRC === state.currentImage.src) {
-          state.images[i].filters[filterName] = args;
-          break;
-        }
+      const index = state.images.findIndex(image => image.originalSRC === state.currentImage.src);
+      if (index !== -1) {
+            state.images[index].filters[filterName] = args;
       }
     },
 
