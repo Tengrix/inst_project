@@ -26,14 +26,31 @@
     justify-content: flex-end;
   }
 
-
+   @media screen and (min-width: 425px) {
+       .dots {
+           display: none;
+       }
+   }
 
   .notificationIcon {
     position: relative;
     right: 35px;
   }
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 425px) {
       .notificationIcon {
           display: none;
       }
+      .header{
+          display: flex;
+      }
+      .dots {
+          margin-left: 20px;
+      }
   }
+  .dotsIcon{
+      display:flex;
+      align-items:center;
+  }
+   .icon{
+       margin-right: 10px;
+   }
