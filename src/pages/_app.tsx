@@ -8,6 +8,7 @@ import { Inter } from 'next/font/google';
 import Head from "next/head";
 import { ReactElement, ReactNode } from 'react';
 import { Provider } from "react-redux";
+import {ReCaptchaProvider} from "next-recaptcha-v3";
 
 
 const inter = Inter({
@@ -31,6 +32,7 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
 
     return getLayout(
         <Provider store={store}>
+            <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
             <Head>
                 <title>{title}</title>
                 <meta name="description" content={metaDescription} />
@@ -41,6 +43,7 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
                 </style>
                 <Component {...pageProps} />
             </NextIntlClientProvider>
+            </ReCaptchaProvider>
         </Provider>
     );
 }
