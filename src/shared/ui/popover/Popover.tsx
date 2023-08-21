@@ -3,10 +3,10 @@ import * as Popover from '@radix-ui/react-popover';
 import {Cross2Icon} from '@radix-ui/react-icons';
 import s from './Popover.module.css';
 
-const CustomPopover = ({children, contentChildren}: { children: ReactNode, contentChildren: ReactNode }) => (
+const CustomPopover = ({icon, contentChildren}: { icon: ReactNode, contentChildren: ReactNode }) => (
     <Popover.Root>
         <Popover.Trigger asChild>
-            {children}
+            {icon}
         </Popover.Trigger>
         <Popover.Portal>
             <Popover.Content className={s.PopoverContent} sideOffset={5}>
