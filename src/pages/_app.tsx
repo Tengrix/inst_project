@@ -32,7 +32,6 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
 
     return getLayout(
         <Provider store={store}>
-            <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
             <Head>
                 <title>{title}</title>
                 <meta name="description" content={metaDescription} />
@@ -43,7 +42,6 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
                 </style>
                 <Component {...pageProps} />
             </NextIntlClientProvider>
-            </ReCaptchaProvider>
         </Provider>
     );
 }
