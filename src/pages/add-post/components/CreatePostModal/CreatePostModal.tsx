@@ -1,7 +1,7 @@
 import {Modal} from "@/shared/ui/modal/Modal";
 import React, {ReactNode, useEffect, useState} from "react";
 import {Button} from "@/shared/ui/button";
-import s from '@/pages/add-post/createPostModal/CreatePostModal.module.scss'
+import s from './CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
 import ConfirmCloseModal from "@/shared/ui/modal/ConfirmCloseModal";
 import {ImageUploader} from "@/shared/ui/file-uploader/file-uploader";
