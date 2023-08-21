@@ -17,6 +17,10 @@
     }
   ],
   "rules": {
+    "selector-no-qualifying-type": [true, { 
+        "ignore": ["attribute", "class", "id"]
+    }],
+    "max-nesting-depth": 2,
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": true,
     "scss/at-use-no-unnamespaced": true,
