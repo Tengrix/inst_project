@@ -1,4 +1,3 @@
-import 'react-dates/initialize';
 import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
 import React, {useEffect} from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
