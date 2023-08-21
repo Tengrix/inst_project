@@ -8,29 +8,29 @@ import {useAppSelector} from "@/store";
 import {useRouter} from "next/router";
 
 import {useScreenSize} from "@/shared/hooks/useScreenSize";
+import Spinner from "@/shared/ui/spinner/Spinner";
 
 
 const Profile = () => {
     const [createPostModal, setCreatePostModal] = useState(false)
     const router = useRouter()
     const authData = useAppSelector(state => state.authSlice.isInit)
-    const screenSize = useScreenSize()
-    // useEffect(()=>{
-    //     if(!authData){
-    //         router.push('/sign-in')
-    //     }
-    // },[authData])
+    useEffect(()=>{
+        if(!authData){
+            router.push('/sign-in')
+        }
+    },[authData])
     return (
         <div>
-            {/*{authData ?*/}
+            {authData ?
                 <div>
                     <Sidebar/>
                 <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal}>
                     Image
                 </CreatePostModal>
                 </div>
-            {/*    :<Spinner/>*/}
-            {/*}*/}
+                :<Spinner/>
+            }
         </div>
     );
 };

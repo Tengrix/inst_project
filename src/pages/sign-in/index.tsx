@@ -45,9 +45,9 @@ const SignIn = () => {
             .then(()=> dispatch(authAction.setAuth(true)))
     })
 
-    // if(data && data.message==='Success'){
-    //     router.push('/profile')
-    // }
+    if(data && data.message==='Success'){
+        router.push('/profile')
+    }
     return (
         <div className={classes.container}>
             <Card className={classes.signInForm}>
