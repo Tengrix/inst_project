@@ -24,7 +24,7 @@ export const ImageGallery = () => {
   };
 
   const imagePreview = images.map(({ originalSRC }) => (
-    <li key={originalSRC} className={classes.images__image}>
+    <li key={originalSRC} className={classes.image}>
       <img
         src={originalSRC}
         alt=""
@@ -32,13 +32,13 @@ export const ImageGallery = () => {
           dispatch(setCurrentImage(originalSRC));
         }}
       />
-      <Button
-        className={classes.images__image_close}
+      <button
+        className={classes.image_close}
         onClick={removeImageFromGallery}
         value={originalSRC}
       >
         <span className={classes.icon__close}></span>
-      </Button>
+      </button>
     </li>
   ));
 
