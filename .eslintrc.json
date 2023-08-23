@@ -21,12 +21,15 @@
   "plugins": [
     "prettier",
     "import",
-    "jsx-a11y"
+    "jsx-a11y",
+    "@typescript-eslint"
   ],
   "rules": {
     "no-console": "warn",
     "no-nested-ternary": "error",
+    "import/named": "warn",
     "no-debugger": "warn",
+    "no-unused-vars": "warn",
     "arrow-parens": ["error", "as-needed"],
     "no-multiple-empty-lines": ["error", {"max": 2, "maxBOF": 1, "maxEOF": 1}],
     "prettier/prettier": "error",

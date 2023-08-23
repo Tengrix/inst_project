@@ -1,29 +1,27 @@
 .pageButton {
-  cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 24px;
   height: 24px;
-
   border-radius: 2px;
-
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all .3s ease;
 
   &:focus {
-    box-shadow: 0 0 0 2px var(--color-info-900);
-  }
-
-  &:hover:not(&:disabled) {
-    background-color: var(--color-dark-500);
+    box-shadow: 0 0 0 2px var(--color-info-900)
   }
 
   &:disabled {
     cursor: initial;
-    opacity: 1;
+    opacity: 1
   }
+
+  &:hover:not(&:disabled) {
+    background-color: var(--color-dark-500)
+  }
+
+
 }
 
 .selected {
@@ -31,6 +29,6 @@
   background-color: var(--color-light-100);
 
   .selectedPageNumber {
-    color: var(--color-dark-900);
+    color: var(--color-dark-900)
   }
 }

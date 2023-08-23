@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+
 import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useAppSelector } from '@/redux/store';
