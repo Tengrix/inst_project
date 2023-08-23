@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 
 import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Spinner from '@/shared/ui/spinner/Spinner';
-
 import { useAppSelector } from '@/redux/store';
+import Spinner from '@/shared/ui/spinner/Spinner';
 
 const Profile = () => {
     const router = useRouter();
@@ -15,7 +14,7 @@ const Profile = () => {
         if (!authData) {
             router.push('/sign-in');
         }
-    }, [authData]);
+    }, [authData, router]);
 
     return (
         <div>
