@@ -1,12 +1,15 @@
-import  imagesReducer  from "@/shared/lib/imageStore";
 import {AnyAction, configureStore, ThunkDispatch} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {authApi} from "src/api/authApi";
+import {authReducer} from "@/redux/store/Auth/authSlice";
+import {imageReducer} from "@/redux/store/imageSlice/imageSlice";
 
 export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
-        images:imagesReducer
+        authSlice:authReducer,
+        images:imageReducer
+
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authApi.middleware)
 })

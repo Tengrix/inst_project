@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
-import { ImageGallery } from '../NavbarItems/Gallery/ImageGallery';
-import { ImageCrop } from '../NavbarItems/Crop/ImageCrop';
-import { ImageScale } from '../NavbarItems/Scale/ImageScale';
+import { ImageGallery } from '@/components/ImageEditor/NavbarItems/Gallery/ImageGallery';
+import { ImageCrop } from '@/components/ImageEditor/NavbarItems/Crop/ImageCrop';
+import { ImageScale } from '@/components/ImageEditor/NavbarItems/Scale/ImageScale';
 import s from './ImageNavbar.module.scss';
 
 type ItemsType = Array<ItemType>;

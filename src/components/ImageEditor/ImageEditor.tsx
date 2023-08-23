@@ -1,9 +1,9 @@
-import {useAppDispatch, useAppSelector} from '@/store';
-import { ImageSlider } from '../ImageSlider/ImageSlider';
+import {useAppDispatch, useAppSelector} from '@/redux/store';
+import { ImageSlider } from '@/components/ImageSlider/ImageSlider';
 import classes from './ImageEditor.module.scss';
-import { ImageNavbar } from './Navbar/ImageNavbar';
-import { ImageFilter } from './NavbarItems/Filter/ImageFilter';
-import { StepType } from '@/pages/post/createPostModal/CreatePostModal';
+import { ImageNavbar } from '@/components/ImageEditor/Navbar/ImageNavbar';
+import { ImageFilter } from '@/components/ImageEditor/NavbarItems/Filter/ImageFilter';
+import { StepType } from '@/components/CreatePostModal/CreatePostModal';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +13,7 @@ import { Typography } from '@/shared/ui/typography';
 import Person from 'public/assets/icons/fonts/person.svg';
 import Image from 'next/image';
 import {KeyboardEvent, useEffect, useState} from 'react';
-import {setDescription} from "@/shared/lib/imageStore";
+import {setDescription} from "@/redux/store/imageSlice/imageSlice";
 
 type ImageEditorPropsType = {
   step: StepType;

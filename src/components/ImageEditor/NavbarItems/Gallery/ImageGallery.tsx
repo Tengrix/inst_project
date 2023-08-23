@@ -1,7 +1,9 @@
-import { addImage, parseImageBlob, removeImage, setCurrentImage } from '@/shared/lib/imageStore';
+import { addImage, removeImage, setCurrentImage } from '@/redux/store/imageSlice/imageSlice';
+import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
-import { useAppDispatch, useAppSelector } from '@/store';
-import classes from './ImageGallery.module.scss';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import classes from '@/components/ImageEditor/NavbarItems/Gallery/ImageGallery.module.scss';
+import {parseImageBlob} from "@/shared/utils/parseImageBlob";
 
 export const ImageGallery = () => {
   const dispatch = useAppDispatch();

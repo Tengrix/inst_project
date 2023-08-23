@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {baseURL} from "@/api/instances";
 import {CommonServerResponse} from "@/api/types/LoginPropsType";
-import {ImageType} from "@/shared/lib/imageStore";
+import {ImageType} from "@/redux/store/imageSlice/types/store";
 
 
 export const authApi = createApi({
@@ -82,18 +82,6 @@ export const authApi = createApi({
                     method: 'POST',
                     body:args
                 }),
-                // async onQueryStarted(_, {dispatch, queryFulfilled}) {
-                //     const patchResult = dispatch(
-                //         authApi.util?.updateQueryData('getMe', undefined, () => {
-                //             return null
-                //         })
-                //     )
-                //     try {
-                //         await queryFulfilled
-                //     } catch {
-                //         patchResult.undo()
-                //     }
-                // }
             }),
             submitUserData: builder.mutation<void, PostFormData>({
                 query: (data) => {

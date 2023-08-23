@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Crop } from "react-image-crop";
-import { AsyncConfigType, ImageStoreStateType, ImageType } from './types/store';
+import { AsyncConfigType, ImageStoreStateType, ImageType } from '@/redux/store/imageSlice/types/store';
 
 
 const initialState: ImageStoreStateType = {
@@ -15,20 +15,7 @@ const initialState: ImageStoreStateType = {
   description:''
 }
 
-export const parseImageBlob = (blob: Blob) : ImageType => {
-      const { name, size, type } = blob;
-      const src = URL.createObjectURL(blob);
-      const filters = {};
-      const originalSRC = src;
-      return {
-        src,
-        originalSRC,
-        type,
-        name,
-        size,
-        filters,
-      }
-}
+
 
 export const imageSlice = createSlice({
   name: 'image',
@@ -59,11 +46,9 @@ export const imageSlice = createSlice({
 
     addFilterToCurrentImage: (state, action: PayloadAction<{ filterName: string, args:string }>) => {
       const {filterName, args} = action.payload;
-      for (let i = 0; i < state.images.length; i++) {
-        if (state.images[i].originalSRC === state.currentImage.src) {
-          state.images[i].filters[filterName] = args;
-          break;
-        }
+      const index = state.images.findIndex(image => image.originalSRC === state.currentImage.src);
+      if (index !== -1) {
+            state.images[index].filters[filterName] = args;
       }
     },
 
@@ -83,7 +68,7 @@ export const imageSlice = createSlice({
             return image;
         })
     },
-    
+
     setDescription:(state,action:PayloadAction<{title:string,description:string}>)=> {
         state.title = action.payload.title
         state.description = action.payload.description
@@ -109,7 +94,8 @@ export const imageSlice = createSlice({
 
 export const { addImage, removeImage, addFilterToCurrentImage, setCurrentImage,setDescription,setCrop} = imageSlice.actions
 
-export default imageSlice.reducer
+export const {reducer:imageReducer} = imageSlice
+
 
 //thunks
 export const createNewImageBlob = createAsyncThunk<{newSRC:string, size:number},{ filterName: string, args: string },AsyncConfigType>(

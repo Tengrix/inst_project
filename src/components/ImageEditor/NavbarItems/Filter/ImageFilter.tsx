@@ -1,7 +1,7 @@
-import { useAppDispatch } from '@/store';
-import s from './ImageFilter.module.scss';
-import { addFilterToCurrentImage } from '@/shared/lib/imageStore';
-import { CurrentImageType } from '@/shared/lib/types/store';
+import { useAppDispatch } from '@/redux/store';
+import s from '@/components/ImageEditor/NavbarItems/Filter/ImageFilter.module.scss';
+import { addFilterToCurrentImage } from '@/redux/store/imageSlice/imageSlice';
+import { CurrentImageType } from '@/redux/store/imageSlice/types/store';
 
 export const ImageFilter = ({ image }: { image: CurrentImageType }) => {
   const dispatch = useAppDispatch();
