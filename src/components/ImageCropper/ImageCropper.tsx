@@ -8,8 +8,9 @@ import {setCrop} from "@/redux/store/imageSlice/imageSlice";
 
 type PropsType = {
     children?: ReactNode,
-    ref: any
     src: string
+    isCircular?: boolean
+    onCrop?: (crop:Crop) => void
 }
 
 const centerAspectCrop = (
@@ -30,10 +31,11 @@ const centerAspectCrop = (
     mediaHeight,
 );
 
-const ImageCropper = (props: PropsType) => {
+
+const ImageCropper = ({isCircular = false, ...props}: PropsType) => {
     const dispatch = useAppDispatch()
-    const savedCrop = useAppSelector(state => state.images.images.filter(image => image.src === props.src)[0].crop)
-    const cropRatio = +useAppSelector(state => state.images.images.filter(image => image.src === props.src)[0].filters.crop)
+    const savedCrop = useAppSelector(state => state.images.images.filter(image => image.src === props.src)[0]?.crop)
+    const cropRatio = +useAppSelector(state => state.images.images.filter(image => image.src === props.src)[0]?.filters.crop)
     const [curCrop, setCurCrop] = useState<Crop>(savedCrop || {
         unit: '%',
         x: 0,
@@ -41,57 +43,38 @@ const ImageCropper = (props: PropsType) => {
         width: 100,
         height: 100,
     })
+    console.log(curCrop, cropRatio)
     const [completedCrop, setCompletedCrop] = useState<Crop | null>(null)
-
-
     const debouncedCrop = useDebounce(completedCrop, 500)
 
-
-    // const generateCroppedImageURL = () => {
-    //     if (completedCrop && imageRef.current) {
-    //         const canvas = document.createElement("canvas");
-    //         const scaleX = imageRef.current.naturalWidth / imageRef.current.width;
-    //         const scaleY = imageRef.current.naturalHeight / imageRef.current.height;
-    //         canvas.width = completedCrop.width;
-    //         canvas.height = completedCrop.height;
-    //         const ctx = canvas.getContext("2d");
-    //
-    //         if (ctx) {
-    //             ctx.drawImage(
-    //                 imageRef.current,
-    //                 completedCrop.x! * scaleX,
-    //                 completedCrop.y! * scaleY,
-    //                 completedCrop.width! * scaleX,
-    //                 completedCrop.height! * scaleY,
-    //                 0,
-    //                 0,
-    //                 completedCrop.width!,
-    //                 completedCrop.height!
-    //             );
-    //
-    //         }
-    //     }
-    // };
-
     useEffect(() => {
-        if (props.src ) {
-            const newCrop = centerAspectCrop(curCrop.width, curCrop.height, cropRatio)
+        if (props.src) {
+            const newCrop = centerAspectCrop(curCrop.width, curCrop.height, isCircular ? 1 : cropRatio)
             setCompletedCrop(newCrop)
             setCurCrop(newCrop)
-            console.log('oldcrop',curCrop)
-            console.log('newcrop',newCrop)
+            console.log('oldcrop', curCrop)
+            console.log('newcrop', newCrop)
         }
     }, [cropRatio])
 
     useEffect(() => {
-        debouncedCrop && (dispatch(setCrop({crop: debouncedCrop, src: props.src})))
-        console.log(debouncedCrop)
+        if(debouncedCrop) {
+            isCircular ?
+                props.onCrop!(debouncedCrop)
+                :
+                (dispatch(setCrop({
+                    crop: debouncedCrop,
+                    src: props.src
+                })))
+            console.log(debouncedCrop)
+        }
     }, [debouncedCrop])
 
 
     return (
         <ReactCrop
-            aspect={cropRatio}
+            circularCrop={isCircular}
+            aspect={isCircular ? 1 : cropRatio}
             crop={curCrop}
             onChange={(c) => {
                 setCurCrop(c)
@@ -100,7 +83,6 @@ const ImageCropper = (props: PropsType) => {
                 setCompletedCrop(c)
             }}
         >
-            {/*<img ref={imageRef} src={props.src}/>*/}
             {props.children}
         </ReactCrop>
 

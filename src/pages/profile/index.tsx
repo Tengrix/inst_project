@@ -4,19 +4,20 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import {useRouter} from "next/router";
 import Spinner from "@/shared/ui/spinner/Spinner";
 import {useAppSelector} from "@/redux/store";
+import CreatePostModal from "@/components/CreatePostModal/CreatePostModal";
 
 
 const Profile = () => {
     const router = useRouter()
     const authData = useAppSelector(state => state.authSlice.isInit)
-    useEffect(()=>{
-        if(!authData){
-            router.push('/sign-in')
-        }
-    },[authData])
+    // useEffect(()=>{
+    //     if(!authData){
+    //         router.push('/sign-in')
+    //     }
+    // },[authData])
     return (
         <div>
-            {authData ?
+            {true ?
                 <div>
                     <Sidebar/>
                 </div>

@@ -1,7 +1,7 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 import {useForm} from "react-hook-form";
 import {useSignUpMutation} from "src/api/authApi";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card} from "@/shared/ui/card";
 import {Typography} from "@/shared/ui/typography";
 import {Button} from "@/shared/ui/button";
@@ -16,6 +16,7 @@ import {GetStaticPropsContext} from "next/types";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
 import EmailSentModal from "@/pages/sign-up/email-sent-modal/email-sent-modal";
+import {NoAvatar} from "public/icon/no-avator-icon";
 
 export type RegisterFormType = z.infer<typeof registerSchema>
 
@@ -105,6 +106,7 @@ const SignUp = () => {
                 </Button>
             </Card>}
             <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} modalHandler={setIsModalOpen}/>
+
         </div>
     );
 }
