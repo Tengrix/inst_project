@@ -1,31 +1,33 @@
-import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
-import React, {useEffect} from "react";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import {useRouter} from "next/router";
-import Spinner from "@/shared/ui/spinner/Spinner";
-import {useAppSelector} from "@/redux/store";
-import CreatePostModal from "@/components/CreatePostModal/CreatePostModal";
-
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
+import Sidebar from '@/components/Sidebar/Sidebar';
+import { useAppSelector } from '@/redux/store';
+import Spinner from '@/shared/ui/spinner/Spinner';
 
 const Profile = () => {
-    const router = useRouter()
-    const authData = useAppSelector(state => state.authSlice.isInit)
-    // useEffect(()=>{
-    //     if(!authData){
-    //         router.push('/sign-in')
-    //     }
-    // },[authData])
+    const router = useRouter();
+    const authData = useAppSelector(state => state.authSlice.isInit);
+
+    useEffect(() => {
+        if (!authData) {
+            router.push('/sign-in');
+        }
+    }, [authData, router]);
+
     return (
         <div>
-            {true ?
+            {authData ? (
                 <div>
-                    <Sidebar/>
+                    <Sidebar />
                 </div>
-                :<Spinner/>
-            }
+            ) : (
+                <Spinner />
+            )}
         </div>
     );
 };
 
-Profile.getLayout = getLayout
+Profile.getLayout = getLayout;
+
 export default Profile;
