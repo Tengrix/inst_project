@@ -15,6 +15,7 @@ const EmailConfirmed = () => (
             </Button>
         </Link>
         <Image src={img.src} alt='' width={432} height={300}/>
+
     </div>
 )
 

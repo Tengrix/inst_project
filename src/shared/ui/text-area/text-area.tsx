@@ -47,7 +47,7 @@ export const TextArea: FC<TextAreaFieldProps> = ({
   return (
     <div className={classNames.root}>
       <Label.Root>
-        <Typography variant={'regular14'} color={'inherit'} className={s.errorLabelText}>
+        <Typography variant={'regular14'} color={'form'} className={s.errorLabelText}>
           {label}
         </Typography>
         <div className={s.textAreaContainer}>

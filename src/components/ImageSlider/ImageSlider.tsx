@@ -71,7 +71,7 @@ export const ImageSlider = ({ currImage, images, step }: ImageSliderPropsType) =
             className={s.slider__item}
             //@ts-ignore
             ref={el => (itemsRef.current[src] = el)}>
-            <Canvas imageSRC={originalSRC} filters={filters} step={step} crop={crop} />
+            <Canvas imageSRC={originalSRC} filters={filters} step={step} crop={crop} defWidth={486} defHeight={504} />
         </li>
     ));
 
