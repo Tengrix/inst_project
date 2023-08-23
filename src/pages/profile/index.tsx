@@ -1,20 +1,13 @@
-import 'react-dates/initialize';
-import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
-import React from "react";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import {useState} from "react";
-import CreatePostModal from "@/pages/post/createPostModal/CreatePostModal";
-
+import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 const Profile = () => {
-    const [createPostModal, setCreatePostModal] = useState(false)
-
     return (
         <div>
-            <Sidebar/>
+            <Sidebar />
         </div>
     );
 };
 
-Profile.getLayout = getLayout
+Profile.getLayout = getLayout;
 export default Profile;
