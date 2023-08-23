@@ -8,7 +8,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl: baseURL,
-        credentials: 'include'
+        credentials: 'include',
     }),
     endpoints: (builder) => {
         return {
@@ -83,7 +83,7 @@ export const authApi = createApi({
                     body:args
                 }),
             }),
-            submitUserData: builder.mutation<void, PostFormData>({
+            createPost: builder.mutation<void, PostFormData>({
                 query: (data) => {
                     const formData = new FormData()
                     formData.append('description',data.description)
@@ -93,10 +93,28 @@ export const authApi = createApi({
                     formData.append('title',data.title)
                     console.log(formData)
                     return {
-                        url: "/user",
+                        url: "/post",
                         method: "POST",
                         body: formData,
                         headers: {'Content-Type': 'multipart/form-data'},
+                    }
+                },
+            }),
+            submitUserData: builder.mutation<void, ProfileData>({
+                query: (data) => {
+                    const formData = new FormData()
+                    formData.append('aboutMe',data.aboutMe)
+                    formData.append('birthdayDate',data.birthdayDate)
+                    formData.append('city',data.city)
+                    formData.append('file',data.file)
+                    formData.append('firstName',data.firstName)
+                    formData.append('lastName',data.lastName)
+
+                    return {
+                        url: "/user",
+                        method: "PATCH",
+                        body:formData,
+                        headers: {'Content-Type': 'multipart/form-data'}
                     }
                 },
             })
@@ -113,9 +131,19 @@ export const {useCheckAppQuery,
     useResetPasswordMutation,
     usePasswordRecoveryMutation,
     useLogoutMutation,
+    useCreatePostMutation,
     useSubmitUserDataMutation} = authApi
 
 //types
+export type ProfileData = {
+    aboutMe: string;
+    birthdayDate: string;
+    city: string;
+    file: Blob;
+    firstName: string;
+    lastName: string;
+};
+
 export type RegisterParamsType = {
     userName: string
     email: string
