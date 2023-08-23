@@ -12,6 +12,7 @@ const ProfileSettings = () => {
 
 
     const Tabs = [ProfileTab,Devices,AccountManagement,MyPayments]
+
     return (
         <CustomTabs tabs={Tabs}/>
     );

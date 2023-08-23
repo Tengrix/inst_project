@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { Button } from '../button';
 import { TextField } from '@/shared/ui/text-field';
-import classes from './file-uploader.module.scss';
+import classes from './image-uploader.module.scss';
 
 export type FileUploaderPropsType = {
     className?: string;
