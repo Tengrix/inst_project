@@ -1,24 +1,23 @@
-import { store } from "@/redux/store";
+import { store } from '@/redux/store';
+
 import '@/styles/variables/index.scss';
-import '@/shared/ui/datePicker/datepicker.css';
 import { NextPage } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
-import Head from "next/head";
+import Head from 'next/head';
+import { NextIntlClientProvider } from 'next-intl';
 import { ReactElement, ReactNode } from 'react';
-import { Provider } from "react-redux";
-import {ReCaptchaProvider} from "next-recaptcha-v3";
-
+import { Provider } from 'react-redux';
 
 const inter = Inter({
     display: 'swap',
     style: ['normal'],
     subsets: ['latin', 'cyrillic'],
     weight: ['400', '500', '600', '700']
-})
+});
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
+    // eslint-disable-next-line no-unused-vars
     getLayout?: (page: ReactElement) => ReactNode;
 };
 
@@ -26,8 +25,8 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout;
 };
 
-export default function App({Component, pageProps}: AppPropsWithLayout) {
-    const getLayout = Component.getLayout ?? ((page) => page);
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+    const getLayout = Component.getLayout ?? (page => page);
     const { title, metaDescription, messages } = pageProps;
 
     return getLayout(
@@ -38,8 +37,13 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
                 <meta name="description" content={metaDescription} />
             </Head>
             <NextIntlClientProvider messages={messages}>
+                {/* eslint-disable-next-line react/no-unknown-property */}
                 <style jsx global>
-                    {`:root {--font-family-main: ${inter.style.fontFamily}, sans-serif}`}
+                    {`
+                        :root {
+                            --font-family-main: ${inter.style.fontFamily}, sans-serif;
+                        }
+                    `}
                 </style>
                 <Component {...pageProps} />
             </NextIntlClientProvider>

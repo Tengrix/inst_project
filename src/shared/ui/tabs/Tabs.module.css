@@ -2,65 +2,72 @@
     display: flex;
     flex-direction: column;
     width: 300px;
-    box-shadow: 0 2px 10px var(--color-dark-500);
+    box-shadow: 0 2px 10px var(--color-dark-500)
 }
 
 .TabsList {
-    flex-shrink: 0;
     display: flex;
-    border-bottom: 2px solid var(--color-primary-100);
+    flex-shrink: 0;
+    border-bottom: 2px solid var(--color-primary-100)
 }
 
 .TabsTrigger {
-    font-family: inherit;
-    background-color: var(--color-dark-700);
-    padding: 0 20px;
-    height: 45px;
-    flex: 1;
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
+    height: 45px;
+    padding: 0 20px;
+    color: var(--color-primary-500);
     font-size: 15px;
+    font-family: inherit;
     line-height: 1;
-    color: var(--color-primary-500);
-    user-select: none;
+    background-color: var(--color-dark-700);
+    user-select: none
 }
+
 .TabsTrigger:first-child {
-    border-top-left-radius: 6px;
+    border-top-left-radius: 6px
 }
+
 .TabsTrigger:last-child {
-    border-top-right-radius: 6px;
+    border-top-right-radius: 6px
 }
+
 .TabsTrigger:hover {
-    background-color: var(--color-primary-900);
+    background-color: var(--color-primary-900)
 }
+
 .TabsTrigger[data-state='active'] {
-    background-color: var(--color-primary-900);
     color: var(--color-primary-500);
+    background-color: var(--color-primary-900)
 }
+
 .TabsTrigger:focus {
     position: relative;
     background-color: var(--color-dark-700);
-    border:1px solid var(--color-primary-500);
+    border: 1px solid var(--color-primary-500)
 }
 
 .TabsTrigger:disabled {
-    color: var(--color-primary-900);
+    color: var(--color-primary-900)
 }
 
 .TabsContent {
     flex-grow: 1;
     padding: 20px;
     background-color: var(--color-dark-700);
-    border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    outline: none;
+    border-bottom-left-radius: 6px;
+    outline: none
 }
+
 .TabsContent:focus {
-    box-shadow: 0 0 0 2px black;
+    box-shadow: 0 0 0 2px var(--color-dark-900)
 }
+
 .TabsContent:disabled {
-    box-shadow: 0 0 0 2px black;
+    box-shadow: 0 0 0 2px var(--color-dark-900)
 }
 
 .Text {
@@ -68,22 +75,22 @@
     margin-bottom: 20px;
     color: var(--color-primary-100);
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.5
 }
 
 .Fieldset {
-    margin-bottom: 15px;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 15px
 }
 
 .Label {
-    font-size: 13px;
-    line-height: 1;
+    display: block;
     margin-bottom: 10px;
     color: var(--color-dark-500);
-    display: block;
+    font-size: 13px;
+    line-height: 1
 }
 

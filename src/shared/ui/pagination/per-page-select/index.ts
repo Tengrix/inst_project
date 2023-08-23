@@ -1,1 +1,1 @@
-export * from './per-page-select'
+export * from './per-page-select';

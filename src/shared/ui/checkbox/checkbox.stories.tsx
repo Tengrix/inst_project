@@ -1,8 +1,7 @@
-import {useState} from 'react'
+import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
-import type {Meta, StoryObj} from '@storybook/react'
-
-import {Checkbox, CheckboxPropsType} from './'
+import { Checkbox, CheckboxPropsType } from './';
 
 const meta = {
     title: 'Components/Checkbox',
@@ -11,17 +10,16 @@ const meta = {
     argTypes: {
         checked: {
             options: [true, false],
-            control: {type: 'boolean'},
-        },
-    },
-} satisfies Meta<typeof Checkbox>
+            control: { type: 'boolean' }
+        }
+    }
+} satisfies Meta<typeof Checkbox>;
 
-export default meta
-type Story = StoryObj<typeof Checkbox>
-
+export default meta;
+type Story = StoryObj<typeof Checkbox>;
 
 const Template = (args: CheckboxPropsType) => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
 
     return (
         <>
@@ -34,22 +32,21 @@ const Template = (args: CheckboxPropsType) => {
             />
             <div>Checked: {checked ? 'true' : 'false'}</div>
         </>
-    )
-}
+    );
+};
 
-
-export const Default= Template
+export const Default = Template;
 
 export const Checked: Story = {
-    args: {disabled: false, checked: true},
-}
+    args: { disabled: false, checked: true }
+};
 export const NotChecked: Story = {
-    args: {disabled: false, checked: false},
-}
+    args: { disabled: false, checked: false }
+};
 export const DisabledAndChecked: Story = {
-    args: {disabled: true, checked: true},
-}
+    args: { disabled: true, checked: true }
+};
 
 export const DisabledAndNotChecked: Story = {
-    args: {disabled: true, checked: false},
-}
+    args: { disabled: true, checked: false }
+};

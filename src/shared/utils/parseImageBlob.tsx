@@ -1,6 +1,6 @@
-import {ImageType} from "@/redux/store/imageSlice/types/store";
+import { ImageType } from '@/redux/store/imageSlice/types/store';
 
-export const parseImageBlob = (blob: Blob) : ImageType => {
+export const parseImageBlob = (blob: Blob): ImageType => {
     const { name, size, type } = blob;
     const src = URL.createObjectURL(blob);
     const filters = {};
@@ -11,6 +11,6 @@ export const parseImageBlob = (blob: Blob) : ImageType => {
         type,
         name,
         size,
-        filters,
-    }
-}
+        filters
+    };
+};

@@ -1,17 +1,16 @@
-import {NextPage} from 'next';
-import React, {PropsWithChildren} from 'react';
-import Header from "src/components/Header/Header";
+import { NextPage } from 'next';
+import React, { PropsWithChildren } from 'react';
 
-export const Layout: NextPage<PropsWithChildren> = (props) => {
-    const {children} = props
+import Header from 'src/components/Header/Header';
+
+export const Layout: NextPage<PropsWithChildren> = props => {
+    // eslint-disable-next-line react/prop-types
+    const { children } = props;
 
     return (
         <div>
-            <Header/>
-            <div>
-                {children}
-            </div>
+            <Header />
+            {children}
         </div>
-    )
-}
-
+    );
+};
