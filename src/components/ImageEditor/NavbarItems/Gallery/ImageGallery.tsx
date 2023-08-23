@@ -1,9 +1,9 @@
 import { addImage, removeImage, setCurrentImage } from '@/redux/store/imageSlice/imageSlice';
 import { Button } from '@/shared/ui/button';
-import { ImageUploader } from '@/shared/ui/file-uploader/file-uploader';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import classes from '@/components/ImageEditor/NavbarItems/Gallery/ImageGallery.module.scss';
 import {parseImageBlob} from "@/shared/utils/parseImageBlob";
+import {ImageUploader} from "@/shared/ui/image-uploader/ImageUploader";
 
 export const ImageGallery = () => {
   const dispatch = useAppDispatch();

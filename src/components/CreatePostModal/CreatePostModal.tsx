@@ -4,14 +4,14 @@ import {Button} from "@/shared/ui/button";
 import s from './CreatePostModal.module.scss'
 import {Typography} from "@/shared/ui/typography";
 import ConfirmCloseModal from "@/shared/ui/modal/ConfirmCloseModal";
-import {ImageUploader} from "@/shared/ui/file-uploader/file-uploader";
 import { addImage, setCurrentImage} from "@/redux/store/imageSlice/imageSlice";
 import {useDispatch} from "react-redux";
 import {ImagePlaceholder} from "@/shared/ui/placeholder/placeholder";
 import {ImageEditor} from "@/components/ImageEditor/ImageEditor";
-import {useSubmitUserDataMutation} from "@/api/authApi";
+import {useCreatePostMutation} from "@/api/authApi";
 import {useAppSelector} from "@/redux/store";
 import {parseImageBlob} from "@/shared/utils/parseImageBlob";
+import {ImageUploader} from "@/shared/ui/image-uploader/ImageUploader";
 
 export type StepType = 'Cropping' | 'Filters' | 'Publication'
 
@@ -33,7 +33,7 @@ const CreatePostModal = (props: Props) => {
     const {title,images,description} = useAppSelector(state => state.images)
     const currentImage = useAppSelector((state) => state.images.currentImage);
 
-    const [publishPost] = useSubmitUserDataMutation()
+    const [publishPost] = useCreatePostMutation()
 
     const nextBtnHandler = () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters')
