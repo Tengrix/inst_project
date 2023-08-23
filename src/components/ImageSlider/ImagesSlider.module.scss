@@ -1,6 +1,7 @@
 .slider {
   position: relative;
 
+
   &__list {
     display: flex;
 
@@ -22,6 +23,36 @@
     }
   }
 
+  .bullets {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    z-index: 200;
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    line-height: 0;
+    background: rgba(#333, .5);
+    border-radius: 2px;
+    transform: translateX(-50%);
+
+    &__item {
+      .btn {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-light-100);
+        border-radius: 50%;
+
+        &_active {
+          background-color: var(--color-primary-500)
+        }
+      }
+    }
+  }
+
   .prevBtn,
   .nextBtn {
     position: absolute;
@@ -35,7 +66,7 @@
     transform: translateY(-50%);
 
 
-    ::before {
+    &::before {
       position: absolute;
       z-index: -1;
       width: 100%;
@@ -65,34 +96,6 @@
   .nextBtn {
     right: 12px
   }
-}
 
-.bullets {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  z-index: 200;
-  display: inline-flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  line-height: 0;
-  background: rgba(#333, .5);
-  border-radius: 2px;
-  transform: translateX(-50%);
 
-  &__item {
-    .btn {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background-color: var(--color-light-100);
-      border-radius: 50%;
-
-      &_active {
-        background-color: var(--color-primary-500)
-      }
-    }
-  }
 }

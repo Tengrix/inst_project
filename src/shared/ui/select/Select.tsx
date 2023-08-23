@@ -68,7 +68,7 @@ const Select = ({
                         <SelectComponent.ScrollUpButton className={s.SelectScrollButton}>
                             <ChevronUpIcon />
                         </SelectComponent.ScrollUpButton>
-                        <SelectComponent.Viewport className={s.SelectViewport}>
+                        <SelectComponent.Viewport>
                             {renderingItems}
                             {/*<SelectComponent.Separator/>*/}
                         </SelectComponent.Viewport>

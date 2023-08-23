@@ -4,10 +4,6 @@
   appearance: none
 }
 
-// input {
-//   all: unset;
-// }
-
 .root {
   display: flex;
   flex-direction: column;
@@ -48,6 +44,7 @@
 }
 
 .input {
+  all: unset;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -56,14 +53,11 @@
   color: var(--color-light-100);
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
-
-  // box-shadow: 0 0 0 1px var(--color-dark-500);
   border: 1px solid var(--color-dark-100);
   border-radius: 2px;
   outline: none;
   cursor: auto;
   transition: .3s;
-  all: unset;
 
   &::placeholder {
     color: var(--color-dark-100)
@@ -74,7 +68,6 @@
   }
 
   // TODO: focus visible border info700 var
-
   &:focus,
   &:active:enabled {
     box-shadow: 0 0 0 1px var(--color-light-100);
@@ -107,13 +100,13 @@
 }
 
 .iconButton {
+  all: unset;
   position: absolute;
   right: 10px;
   display: flex;
   border-radius: 100%;
   cursor: pointer;
   transition: .4s;
-  all: unset;
 
   &:hover {
     background-color: var(--color-light-700)
@@ -124,24 +117,3 @@
     cursor: unset
   }
 }
-
-// input:-webkit-autofill,
-// input:-webkit-autofill:hover,
-// input:-webkit-autofill:focus,
-// textarea:-webkit-autofill,
-// textarea:-webkit-autofill:hover,
-// textarea:-webkit-autofill:focus,
-// select:-webkit-autofill,
-// select:-webkit-autofill:hover,
-// select:-webkit-autofill:focus {
-//  background: linear-gradient(
-//    top,
-//    rgb(255 255 255 / 0%) 0%,
-//    rgb(0 174 255 / 4%) 50%,
-//    rgb(255 255 255 / 0%) 51%,
-//    rgb(0 174 255 / 3%) 100%
-//  );
-//  transition: background-color 5000s ease-in-out 0s;
-
-// -webkit-text-fill-color: #dfdfdf;
-// }
