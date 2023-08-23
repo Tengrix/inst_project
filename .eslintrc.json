@@ -1,6 +1,49 @@
 {
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
+    "eslint:recommended",
+    "eslint-config-prettier",
     "next/core-web-vitals",
-    "plugin:storybook/recommended"
-  ]
+    "plugin:import/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "prettier",
+    "import",
+    "jsx-a11y"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "no-nested-ternary": "error",
+    "no-debugger": "warn",
+    "arrow-parens": ["error", "as-needed"],
+    "no-multiple-empty-lines": ["error", {"max": 2, "maxBOF": 1, "maxEOF": 1}],
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off",
+    "import/order": ["warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "alphabetize": {"order": "asc", "caseInsensitive": false},
+        "newlines-between": "always"
+      }
+    ]
+  }
 }
