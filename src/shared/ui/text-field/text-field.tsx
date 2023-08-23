@@ -72,13 +72,13 @@ export const TextField: FC<TextFieldProps> = ({
   return (
     <div className={classNames.root}>
       <Label.Root>
-        <Typography variant={'regular14'} color={'inherit'}>
+        <Typography variant={'regular14'} color={'form'}>
           {label}
         </Typography>
         <div className={s.inputContainer}>
           {iconStart && <span className={s.iconStart}>{iconStart}</span>}
           <input
-              ref={(ref) => setInputRef(ref)}
+            ref={(ref) => setInputRef(ref)}
             value={value}
             disabled={disabled}
             data-icon={dataIcon}
