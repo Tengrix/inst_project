@@ -1,29 +1,43 @@
 .container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
-  //margin-top: 24px;
+
+  //  margin-top: 24px;
 
 }
 
 
-/*.signUpForm {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    width: 500px;*/
-/*    height: 624px;*/
-/*    padding: 20px;*/
-/*    border: 1px solid #ccc;*/
-/*    background-color: #fff;*/
-/*}*/
+/* .signUpForm { */
 
-/*.inputForm {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*}*/
+/*    display: flex; */
+
+/*    flex-direction: column; */
+
+/*    align-items: center; */
+
+/*    width: 500px; */
+
+/*    height: 624px; */
+
+/*    padding: 20px; */
+
+/*    border: 1px solid #ccc; */
+
+/*    background-color: #fff; */
+
+/* } */
+
+/* .inputForm { */
+
+/*    display: flex; */
+
+/*    flex-direction: column; */
+
+/*    align-items: center; */
+
+/* } */
 .card {
   width: 100%;
   max-width: 420px;
@@ -31,52 +45,54 @@
   text-align: center;
 
   .iconContainer {
-    padding: 0 100px;
     display: flex;
     justify-content: space-between;
     margin-top: 13px;
     margin-bottom: 22px;
+    padding: 0 100px
   }
 
   .email {
     margin-top: 1.7rem;
-    text-align: left;
+    text-align: left
   }
 
   .password {
     margin-top: 1.5rem;
-    text-align: left;
+    text-align: left
   }
 
   .confirmPassword {
     margin-top: 1.5rem;
-    text-align: left;
+    text-align: left
   }
 
   .privacyBlock {
     display: flex;
     margin-top: 1.38rem;
+
     .privacyText {
-      padding-left:8px;
       display: flex;
       align-items: center;
-  }
+      padding-left: 8px
+    }
   }
 
   .registerBtn {
-    margin-top: 1.38rem;
+    margin-top: 1.38rem
   }
 
   .subtitle {
     margin-top: 1.25rem;
-    color: var(--color-light-900);
+    color: var(--color-light-900)
   }
 
   .link {
     color: var(--color-primary-500);
-    text-decoration: underline;
+    text-decoration: underline
   }
+
   .sizeText {
-    font-size: 12px;
+    font-size: 12px
   }
 }

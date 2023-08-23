@@ -1,5 +1,5 @@
-import s from './dots.module.scss'
+import s from './dots.module.scss';
 
 export const Dots = () => {
-  return <span className={s.dots}>&#8230;</span>
-}
+    return <span className={s.dots}>&#8230;</span>;
+};

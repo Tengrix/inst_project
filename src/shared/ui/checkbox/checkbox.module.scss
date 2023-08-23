@@ -2,90 +2,80 @@
 
 .container {
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 .label {
   @include typography($fs: var(--font-size-s));
 
-  cursor: pointer;
-
   display: inline-flex;
   gap: 8px;
   align-items: center;
-
   color: var(--color-light-100);
-
-  transition: 0.2s ease-in-out;
+  cursor: pointer;
+  transition: .2s ease-in-out;
 
   &.disabled {
-    color: var(--color-dark-100);
+    color: var(--color-dark-100)
+  }
+}
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 2px;
+  outline: 2px solid var(--color-light-900);
+  cursor: pointer;
+  transition: .2s ease-in-out;
+
+  :disabled {
+    outline: 2px solid var(--color-dark-100);
+    cursor: initial
   }
 }
 
 .buttonWrapper {
   all: unset;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 8px;
-
   background-color: inherit;
   border-radius: 50%;
-
-  transition: 0.1s ease-in-out;
+  transition: .1s ease-in-out;
 
   &.disabled {
-    cursor: default;
+    cursor: default
   }
 
   &:active:not(.disabled) {
-    background-color: var(--color-dark-100);
+    background-color: var(--color-dark-100)
   }
 
   &:focus-within:not(.disabled),
   &:hover:not(.disabled),
   &:hover .root:not([data-state='checked'], .disabled) {
-    background-color: var(--color-dark-100);
+    background-color: var(--color-dark-100)
   }
 }
 
-.root {
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-sizing: border-box;
-  width: 20px;
-  height: 20px;
-
-  border: none;
-  border-radius: 2px;
-  outline: 2px solid var(--color-light-900);
-
-  transition: 0.2s ease-in-out;
-
-  & :disabled {
-    cursor: initial;
-    outline: 2px solid var(--color-dark-100);
-  }
-}
 
 .checked {
   background-color: var(--color-light-100);
   outline: none;
 
   &.disabled {
-    background-color: var(--color-dark-100);
+    background-color: var(--color-dark-100)
   }
 }
 
 .indicator {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center
 }

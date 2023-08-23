@@ -20,9 +20,11 @@
     "selector-no-qualifying-type": [true, { 
         "ignore": ["attribute", "class", "id"]
     }],
-    "max-nesting-depth": 2,
+    "max-nesting-depth": 4,
+    "selector-max-compound-selectors": 4,
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": true,
+    "scss/dollar-variable-pattern": false,
     "scss/at-use-no-unnamespaced": true,
     "selector-class-pattern": null,
     "color-function-notation": "modern",
