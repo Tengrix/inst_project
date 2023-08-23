@@ -1,15 +1,17 @@
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 228px;
-    height: 228px;
-    background-color: var(--color-dark-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 228px;
+  height: 228px;
+  background-color: var(--color-dark-500)
 }
-.default{
-    border-radius: 2px
+
+.default {
+  border-radius: 2px
 }
+
 .rounded {
-        border-radius: 50%;
+  border-radius: 50%
 }
 

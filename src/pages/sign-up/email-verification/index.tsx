@@ -1,35 +1,30 @@
-import {useRouter} from "next/router";
-import jwtDecode from "jwt-decode";
-import {useSignUpConfirmationMutation} from "@/api/authApi";
-import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
-import {useSearchParams} from "next/navigation";
-import {useEffect} from "react";
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
-type TokenType = {
-    email: string
-    iat: number,
-    eat: number
-}
+import { useSignUpConfirmationMutation } from '@/api/authApi';
+import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
+
 const EmailLinkValidationWrapper = () => {
-    const router = useRouter()
-    const params = useSearchParams()
+    const router = useRouter();
+    const params = useSearchParams();
 
-    const code = params.get('code') as string
-    const email = params.get('email')
+    const code = params.get('code') as string;
+    const email = params.get('email');
 
-    const [confirmEmail] = useSignUpConfirmationMutation()
+    const [confirmEmail] = useSignUpConfirmationMutation();
 
-
-    useEffect(()=>{
-        email&&confirmEmail({code})
-            .unwrap()
-            .then(() => {
-                router.push('/sign-up/email-confirmed')
-            })
-            .catch((e)=>{
-                console.log(e)
-            })
-    },[code,email])
+    useEffect(() => {
+        email &&
+            confirmEmail({ code })
+                .unwrap()
+                .then(() => {
+                    router.push('/sign-up/email-confirmed');
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+    }, [code, email]);
 
     return (
         <div>
@@ -44,5 +39,5 @@ const EmailLinkValidationWrapper = () => {
     );
 };
 
-EmailLinkValidationWrapper.getLayout = getLayout
+EmailLinkValidationWrapper.getLayout = getLayout;
 export default EmailLinkValidationWrapper;

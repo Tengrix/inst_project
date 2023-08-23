@@ -1,22 +1,21 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 interface stateType {
-    isInit:boolean;
+    isInit: boolean;
 }
 
-const initialState:stateType = {
-    isInit:false,
-
-}
+const initialState: stateType = {
+    isInit: false
+};
 export const authSlice = createSlice({
-    name:'auth',
+    name: 'auth',
     initialState,
-    reducers:{
-        setAuth:(state, action)=>{
-         state.isInit = action.payload
+    reducers: {
+        setAuth: (state, action) => {
+            state.isInit = action.payload;
         }
     }
-})
+});
 
-export const {actions:authAction} = authSlice
-export const {reducer:authReducer} = authSlice
+export const { actions: authAction } = authSlice;
+export const { reducer: authReducer } = authSlice;

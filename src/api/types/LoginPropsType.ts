@@ -1,3 +1,3 @@
 export type CommonServerResponse = {
-    message:string
-}
+    message: string;
+};

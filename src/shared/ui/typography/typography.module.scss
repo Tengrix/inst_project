@@ -2,91 +2,89 @@
 
 // base style======================================================================
 .body1 {
-  @include typography;
+  @include typography
 }
 
 // variants ========================================================================
 .large {
-  font:var(--font-large)
+  font: var(--font-large)
 }
 
 .h1 {
-  font: var(--font-h1);
+  font: var(--font-h1)
 }
 
 .h2 {
-  font: var(--font-h2);
+  font: var(--font-h2)
 }
 
 .h3 {
-  font: var(--font-h3);
+  font: var(--font-h3)
 }
 
 .bold16 {
-  font: var(--font-bold-16);
+  font: var(--font-bold-16)
 }
 
 .regular16 {
-  font: var(--font-regular-16);
+  font: var(--font-regular-16)
 }
 
 .bold14 {
-  font: var(--font-bold-14);
+  font: var(--font-bold-14)
 }
 
 .medium14 {
-  font: var(--font-medium-14);
+  font: var(--font-medium-14)
 }
 
 .regular14 {
-  font: var(--font-regular-14);
+  font: var(--font-regular-14)
 }
 
 .bold-small {
-  font: var(--font-bold-small);
+  font: var(--font-bold-small)
 }
 
 .small {
-  font: var(--font-small);
+  font: var(--font-small)
 }
 
 .link-small {
-  font: var(--font-small-link);
+  font: var(--font-small-link)
 }
 
 .regular-link {
-  font: var(--font-regular-link);
+  font: var(--font-regular-link)
 }
 
 .error {
   @include typography($fs: var(--font-size-xs), $lh: var(--line-height-m));
+
+  color: var(--color-danger-300)
 }
 
 // colors ================================================================================
 .primary {
-  color: var(--color-light-100);
+  color: var(--color-light-100)
 }
 
 .secondary {
-  color: var(--color-dark-900);
+  color: var(--color-dark-900)
 }
 
 .inherit {
-  color: var(--color-dark-100);
+  color: var(--color-dark-100)
 }
 
 .link {
-  color: var(--color-info-500);
+  color: var(--color-info-500)
 }
 
 .tertiary {
-  color: var(--color-accent-500);
-}
-
- .error {
-  color: var(--color-danger-300);
+  color: var(--color-accent-500)
 }
 
 .form {
-  color: var(--color-light-900);
+  color: var(--color-light-900)
 }

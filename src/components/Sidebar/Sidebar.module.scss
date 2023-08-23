@@ -1,31 +1,32 @@
-.container{
+.container {
   width: 220px;
-  border-right: 1px solid var(--color-dark-100);
-
-  .sidebarRoutes{
-    .wrapper{
-      display: flex;
-      flex-direction: column;
-      align-content: space-around;
-      flex-wrap: wrap;
-      padding-top: 120px;
-
-      .route{
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        span{
-          margin-left: 15px;
-        }
-      }
-      .footer{
-        margin-top: 150px;
-      }
-    }
-  }
+  border-right: 1px solid var(--color-dark-100)
 }
+
 @media screen and (max-width: 425px) {
   .container {
-    display: none;
+    display: none
+  }
+}
+
+
+.wrapper {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-around;
+  padding-top: 120px;
+
+  .route {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      margin-left: 15px
+    }
+  }
+
+  .footer {
+    margin-top: 150px
   }
 }
