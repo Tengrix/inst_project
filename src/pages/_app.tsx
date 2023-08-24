@@ -30,25 +30,27 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? (page => page);
     const { title, metaDescription, messages } = pageProps;
 
-    return getLayout(
+    return (
         <Provider store={store}>
-            <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
-                <Head>
-                    <title>{title}</title>
-                    <meta name="description" content={metaDescription} />
-                </Head>
-                <NextIntlClientProvider messages={messages}>
-                    {/* eslint-disable-next-line react/no-unknown-property */}
-                    <style jsx global>
-                        {`
-                            :root {
-                                --font-family-main: ${inter.style.fontFamily}, sans-serif;
-                            }
-                        `}
-                    </style>
-                    <Component {...pageProps} />
-                </NextIntlClientProvider>
-            </ReCaptchaProvider>
+            {getLayout(
+                <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
+                    <Head>
+                        <title>{title}</title>
+                        <meta name="description" content={metaDescription} />
+                    </Head>
+                    <NextIntlClientProvider messages={messages}>
+                        {/* eslint-disable-next-line react/no-unknown-property */}
+                        <style jsx global>
+                            {`
+                                :root {
+                                    --font-family-main: ${inter.style.fontFamily}, sans-serif;
+                                }
+                            `}
+                        </style>
+                        <Component {...pageProps} />
+                    </NextIntlClientProvider>
+                </ReCaptchaProvider>
+            )}
         </Provider>
     );
 }

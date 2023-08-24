@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType, LoginResponseType } from "@/api/types";
+import { GetUserDataResponseType, LoginResponseType } from '@/api/types';
 import { ImageType } from '@/redux/store/imageSlice/types/store';
 
 export const authApi = createApi({
@@ -163,11 +163,11 @@ export type ErrorDataType = {
     errorsMessages: string;
 };
 export type CustomerError = {
-  data: ErrorDataType;
-  status: number;
+    data: ErrorDataType;
+    status: number;
 };
 export type PostFormData = {
-  description: string;
-  files: ImageType[];
-  title: string;
+    description: string;
+    files: ImageType[];
+    title: string;
 };
