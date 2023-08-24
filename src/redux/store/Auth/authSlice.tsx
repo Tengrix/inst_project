@@ -1,17 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface stateType {
     isInit: boolean;
+    accessToken: string;
 }
 
 const initialState: stateType = {
-    isInit: false
+    isInit: false,
+    accessToken: ''
 };
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAuth: (state, action) => {
+        setAuth: (state, action: PayloadAction<boolean>) => {
             state.isInit = action.payload;
         }
     }

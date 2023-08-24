@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
-import { CommonServerResponse } from '@/api/types/LoginPropsType';
+import { GetUserDataResponseType, LoginResponseType } from "@/api/types";
 import { ImageType } from '@/redux/store/imageSlice/types/store';
 
 export const authApi = createApi({
@@ -69,7 +69,7 @@ export const authApi = createApi({
                     body: data
                 })
             }),
-            login: builder.mutation<CommonServerResponse, { login: string; password: string }>({
+            login: builder.mutation<LoginResponseType, { login: string; password: string }>({
                 query: data => ({
                     url: `/auth/login`,
                     method: 'POST',
@@ -106,15 +106,21 @@ export const authApi = createApi({
                     formData.append('aboutMe', data.aboutMe);
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file);
+                    formData.append('file', data.file, 'avatar.jpeg');
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
-
+                    console.log(formData);
                     return {
                         url: '/user',
                         method: 'PATCH',
-                        body: formData,
-                        headers: { 'Content-Type': 'multipart/form-data' }
+                        body: formData
+                    };
+                }
+            }),
+            getUserData: builder.query<GetUserDataResponseType, void>({
+                query: () => {
+                    return {
+                        url: '/user/profile'
                     };
                 }
             })
@@ -133,7 +139,8 @@ export const {
     usePasswordRecoveryMutation,
     useLogoutMutation,
     useCreatePostMutation,
-    useSubmitUserDataMutation
+    useSubmitUserDataMutation,
+    useGetUserDataQuery
 } = authApi;
 
 //types
@@ -156,11 +163,11 @@ export type ErrorDataType = {
     errorsMessages: string;
 };
 export type CustomerError = {
-    data: ErrorDataType;
-    status: number;
+  data: ErrorDataType;
+  status: number;
 };
 export type PostFormData = {
-    description: string;
-    files: ImageType[];
-    title: string;
+  description: string;
+  files: ImageType[];
+  title: string;
 };
