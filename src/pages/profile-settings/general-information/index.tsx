@@ -33,7 +33,9 @@ const FormPage = () => {
         resolver: zodResolver(editProfileSchema)
     });
     useEffect(() => {
+        console.log(userData);
         if (userData) {
+            userData.photo && setImage(userData.photo);
             reset({
                 birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
                 aboutMe: userData?.aboutMe,
@@ -49,8 +51,9 @@ const FormPage = () => {
         setCanvas(canvas);
     };
 
-    const onSubmit = handleSubmit(data => {
-        const date = format(data.birthdayDate, 'yyyy-MM-dd');
+    const onSubmit = handleSubmit(async data => {
+        console.log(data);
+        const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         blob && editProfile({ ...data, file: blob, birthdayDate: date });
     });
 
@@ -61,7 +64,6 @@ const FormPage = () => {
                     <div className={styles.imageUpload}>
                         <div className={styles.avatar}>
                             {image ? (
-                                // <Image src={image} alt={"Avatar"} height={192} width={192}/>
                                 <Canvas
                                     crop={crop}
                                     step={'Publication'}

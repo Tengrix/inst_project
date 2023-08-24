@@ -6,6 +6,7 @@ import ImageCropper from '@/components/ImageCropper/ImageCropper';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import { Modal } from '@/shared/ui/modal/Modal';
+import { canvasToBlob } from '@/shared/utils/canvasToBlob';
 import github from 'public/assets/gitHub.png';
 
 type Props = {
@@ -26,17 +27,7 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) =>
             setImage(imageURL);
         }
     };
-    const canvasToBlob = (canvas: HTMLCanvasElement): Promise<Blob> => {
-        return new Promise((resolve, reject) => {
-            canvas.toBlob(blob => {
-                if (blob) {
-                    resolve(blob);
-                } else {
-                    reject(new Error('Failed to convert canvas to blob.'));
-                }
-            }, 'image/jpeg');
-        });
-    };
+
     const saveImageHandler = async () => {
         if (canvas) {
             const blob = await canvasToBlob(canvas);
@@ -51,7 +42,7 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) =>
             customButtonsBlock={<></>}>
             {image ? (
                 <ImageCropper src={image} isCircular onCrop={onCrop}>
-                    <Image src={image} alt={'Avatar'} ref={imgRef} height={340} width={340} />
+                    <img src={image} alt={'Avatar'} ref={imgRef} height={340} width={340} />
                 </ImageCropper>
             ) : (
                 <Image src={github} alt={'Avatar'} height={340} width={340} />

@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { centerCrop, makeAspectCrop, ReactCrop } from 'react-image-crop';
-import { Crop } from 'react-image-crop';
+import { centerCrop, Crop, makeAspectCrop, ReactCrop } from 'react-image-crop';
 import 'react-image-crop/src/ReactCrop.scss';
 
 import useDebounce from '@/hooks/useDebounce';
@@ -45,7 +44,6 @@ const ImageCropper = ({ isCircular = false, ...props }: PropsType) => {
             height: 100
         }
     );
-    console.log(curCrop, cropRatio);
     const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
     const debouncedCrop = useDebounce(completedCrop, 500);
 
@@ -54,8 +52,6 @@ const ImageCropper = ({ isCircular = false, ...props }: PropsType) => {
             const newCrop = centerAspectCrop(curCrop.width, curCrop.height, isCircular ? 1 : cropRatio);
             setCompletedCrop(newCrop);
             setCurCrop(newCrop);
-            console.log('oldcrop', curCrop);
-            console.log('newcrop', newCrop);
         }
     }, [cropRatio]);
 
@@ -69,7 +65,6 @@ const ImageCropper = ({ isCircular = false, ...props }: PropsType) => {
                           src: props.src
                       })
                   );
-            console.log(debouncedCrop);
         }
     }, [debouncedCrop]);
 

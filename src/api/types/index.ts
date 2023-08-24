@@ -7,12 +7,12 @@ export type GetUserDataResponseType = {
     id: string;
     email: string;
     login: string;
-    photo?: any;
-    firstName?: any;
-    lastName?: any;
-    birthdayDate?: any;
-    city?: any;
-    aboutMe?: any;
+    photo?: string;
+    firstName?: string;
+    lastName?: string;
+    birthdayDate?: string;
+    city?: string;
+    aboutMe?: string;
     createdAt: string;
     updatedAt: string;
 };
