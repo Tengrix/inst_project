@@ -34,7 +34,9 @@ const Header = (props: HeaderProps) => {
     return (
         <div className={styles.header}>
             <div className={styles.text}>
-                <h1 className={styles.inctagramTitle}> {title} </h1>
+                <Link href={'/profile'}>
+                    <h1 className={styles.inctagramTitle}> {title} </h1>
+                </Link>
             </div>
             <div className={styles.languageSelector}>
                 {children}

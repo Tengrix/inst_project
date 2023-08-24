@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 24px 64px;
+  background-color: var(--color-dark-900)
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: row;
+  height: 261px
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  margin-left: 38px;
+
+  .username {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+  }
+
+  .profileStats {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+
+    .stats {
+      display: flex;
+      flex-direction: column
+    }
+  }
+
+  .aboutMe {
+    // empty
+  }
+}
+
+.photoGallery {
+  height: 100%
+}
