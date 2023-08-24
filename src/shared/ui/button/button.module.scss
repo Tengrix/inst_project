@@ -57,7 +57,7 @@
 
 .secondary {
   @include button(
-          $bgColor: var(--color-dark-500),
+          $bgColor: var(--color-dark-300),
           $color: var(--color-light-100),
   );
 
