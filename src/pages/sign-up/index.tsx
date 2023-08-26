@@ -113,9 +113,9 @@ const SignUp = () => {
                     <Typography variant={'regular14'} className={s.subtitle}>
                         {t('signUpPage.question')}
                     </Typography>
-                    <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
+                    <Link className={s.link} href={'/sign-in'}>
                         {t('signInPage.h1')}
-                    </Button>
+                    </Link>
                 </Card>
             )}
             <EmailSentModal email={email} isOpen={isModalOpen} title={'Email sent'} modalHandler={setIsModalOpen} />

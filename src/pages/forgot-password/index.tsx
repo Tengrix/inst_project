@@ -16,6 +16,7 @@ import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchem
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './ForgotPassword.module.css';
+import Link from 'next/link';
 
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
 
@@ -68,9 +69,9 @@ const ForgotPassword = () => {
                             {t('button.sendLink')}
                         </Button>
                     </form>
-                    <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
+                    <Link className={s.link} href={'/sign-in'}>
                         {t('button.backToSignIn')}
-                    </Button>
+                    </Link>
                 </Card>
             </div>
         </ReCaptchaProvider>
