@@ -1,5 +1,7 @@
+import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { useResendEmailConfirmationMutation } from '@/api/authApi';
@@ -9,10 +11,19 @@ import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './index.module.scss';
 
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+    return {
+        props: {
+            messages: (await import(`../../../../messages/${locale}/auth.json`)).default
+        }
+    };
+}
+
 const EmailVerificationLinkExpired = () => {
     const [resendEmailConfirmation] = useResendEmailConfirmationMutation();
     const router = useRouter();
     const { email } = router.query;
+    const t = useTranslations('auth');
 
     const resendHandler = () => {
         resendEmailConfirmation({ email: email as string });
@@ -20,14 +31,11 @@ const EmailVerificationLinkExpired = () => {
 
     return (
         <div className={s.container}>
-            <h2>Email verification link expired</h2>
-            <div className={s.body}>
-                {' '}
-                Looks like the verification link has expired. Not to worry, we can send the link again {email}
-            </div>
+            <h2>{t('verificationPage.linkExpiredTitle')}</h2>
+            <div className={s.body}>{t('verificationPage.verificationText')}</div>
             <div>
                 <Button variant="primary" onClick={resendHandler}>
-                    Resend verification link
+                    {t('button.resendVerificationLink')}
                 </Button>
             </div>
             <Image src={img.src} alt="" width={473} height={352} />
