@@ -1,19 +1,32 @@
+import { GetStaticPropsContext } from 'next';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+
 import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 import s from '@/pages/sign-up/terms-of-service/terms-of-service.module.scss';
-import { Button } from '@/shared/ui/button';
 import { Typography } from '@/shared/ui/typography';
 
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+    return {
+        props: {
+            messages: (await import(`../../../../messages/${locale}/auth.json`)).default
+        }
+    };
+}
+
 const TermsOfService = () => {
+    const t = useTranslations('auth');
+
     return (
         <div className={s.container}>
             <div className={s.backLink}>
-                <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
-                    Back to sign in
-                </Button>
+                <Link className={s.link} href={'/sign-in'}>
+                    {t('button.backToSignIn')}
+                </Link>
             </div>
 
             <Typography variant={'h1'} className={s.title}>
-                Terms of Service
+                {t('termsOfServicePage.h1')}
             </Typography>
             <Typography variant={'regular14'} className={s.content}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et

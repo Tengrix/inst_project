@@ -1,0 +1,76 @@
+{
+    "profile": {
+        "tab": {
+            "generalInformation": {
+                "generalInformationTitle": "Основная информация"
+            },
+            "devices": {
+                "devicesTitle": "Устройство",
+                "thisDevices": "Эти устройства",
+                "activeSessions": "Активные сеансы"
+            },
+            "accountManagement": {
+                "accountManagementTitle": "Управление учетной записью",
+                "accountType": "Тип учетной записи:",
+                "accountTypePersonal": "Личный",
+                "accountTypeBusiness": "Бизнес",
+                "yourSubscriptionCosts": "Стоимость вашей подписки:",
+                "changeYourSubscription": "Измените свою подписку:",
+                "currentSubscription": "Текущая подписка:",
+                "autoRenewal": "Автоматическое продление"
+            },
+            "myPayments": {
+                "myPaymentsTitle": "Мои платежи",
+                "dateOfPayment": "Дата платежа",
+                "endDateOfSubscription": "Дата окончания подписки",
+                "price": "Стоимость",
+                "subscriptionType": "Тип подписки",
+                "paymentType": "Тип платежа"
+            }
+        },
+        "sidebar": {
+            "home": "Домашняя",
+            "create": "Создать пост",
+            "myProfile": "Мой профиль",
+            "messenger": "Мессенджер",
+            "search": "Поиск",
+            "statistics": "Статистика",
+            "favorites": "Избранное",
+            "logOut": "Выйти"
+        },
+        "myProfilePage": {
+            "following": "Подписчик",
+            "followers": "Подписчики",
+            "publications": "Публикации"
+        },
+        "modal": {
+            "followingModalTitle": "Подписчик",
+            "followersModalTitle": "Подписчики",
+            "search": "Поиск",
+            "followingModalDeleteTitle": "Удалить Подписчика",
+            "followingModalDeleteDescription": "Вы действительно хотите удалить подписчика “URLProfiele”?",
+            "followersModalUnfollowTitle": "Отписаться",
+            "followingModalUnfollowDescription": "Вы действительно хотите отписаться от этого пользователя “URLProfiele”?",
+            "errorTransactionModalTitle": "Ошибка",
+            "errorTransactionModalDescription": "Транзакция завершилась неудачей, пожалуйста, повторите попытку",
+            "uccessTransactionModalTitle": "Успех",
+            "successTransactionModalDescription": "Оплата прошла успешно!"
+        },
+        "button": {
+            "addAProfilePhoto": "Добавьте фотографию профиля",
+            "selectFromComputer": "Выберать с компьютера",
+            "saveChanges": "Сохранить изменения",
+            "save": "Сохранить",
+            "profileSettings": "Настройки профиля",
+            "terminateAllOtherSession": "Завершите все остальные сеансы",
+            "backToPayment": "Вернуться к оплате",
+            "follow": "Подписаться",
+            "unfollow": "Отписаться",
+            "sendMessage": "Отправить сообщение",
+            "delete": "Удалить",
+            "yes": "Да",
+            "no": "Нет",
+            "ok": "Хорошо"
+        }
+    }
+}
