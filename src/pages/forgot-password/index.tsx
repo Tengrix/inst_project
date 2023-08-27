@@ -59,7 +59,7 @@ const ForgotPassword = () => {
         <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
             <div className={s.container}>
                 <Card className={s.card}>
-                    <Typography variant={'large'}>{t('forgotPasswordPage.title')}</Typography>
+                    <Typography variant={'large'}>{t('forgotPasswordPage.h1')}</Typography>
                     <form onSubmit={onSubmit}>
                         <ControlledTextField
                             control={control}
