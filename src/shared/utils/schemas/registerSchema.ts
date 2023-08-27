@@ -1,4 +1,4 @@
-import { z } from 'zod';
+/* import { z } from 'zod';
 
 export const registerSchema = z
     .object({
@@ -19,9 +19,9 @@ export const registerSchema = z
     .refine(data => data.password === data.confirmPassword, {
         message: "Passwords don't match",
         path: ['confirmPassword']
-    });
+    }); */
 
-/*     import { z } from 'zod';
+import { z } from 'zod';
 
 export const registerSchema = z
     .object({
@@ -38,4 +38,4 @@ export const registerSchema = z
     .refine(data => data.password === data.confirmPassword, {
         message: 'error.passwordsDontMatch',
         path: ['confirmPassword']
-    }); */
+    });

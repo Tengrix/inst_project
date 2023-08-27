@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetStaticPropsContext } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
+import { createTranslator, useTranslations } from 'next-intl';
 import { ReCaptchaProvider, useReCaptcha } from 'next-recaptcha-v3';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,14 +17,18 @@ import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchem
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './ForgotPassword.module.css';
-import Link from 'next/link';
 
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+
+    const t = createTranslator({ locale: locale as string, messages });
     return {
         props: {
-            messages: (await import(`../../../messages/${locale}/auth.json`)).default
+            messages: messages,
+            title: t('auth.forgotPasswordPage.title'),
+            metaDescription: t('auth.forgotPasswordPage.meta_description')
         }
     };
 }
@@ -32,8 +37,8 @@ const ForgotPassword = () => {
     const { push, pathname } = useRouter();
     const [forgotPassword, { status }] = usePasswordRecoveryMutation();
     const [, setEmail] = useState('');
-
-    const t = useTranslations('auth');
+    const translationPath = 'auth';
+    const t = useTranslations(translationPath);
 
     const { executeRecaptcha } = useReCaptcha();
 
@@ -58,6 +63,7 @@ const ForgotPassword = () => {
                     <form onSubmit={onSubmit}>
                         <ControlledTextField
                             control={control}
+                            translation={translationPath}
                             name={'email'}
                             label={t('form.email')}
                             className={s.email}
