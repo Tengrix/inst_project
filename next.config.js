@@ -28,5 +28,15 @@ module.exports = {
     i18n: {
         locales: ['en', 'ru'],
         defaultLocale: 'en'
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'instagramm-profile.s3.eu-north-1.amazonaws.com',
+                port: '',
+                pathname: '/**'
+            }
+        ]
     }
 };

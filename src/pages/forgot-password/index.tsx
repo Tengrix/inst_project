@@ -30,7 +30,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 
 const ForgotPassword = () => {
     const { push, pathname } = useRouter();
-    const [forgotPassword, { status }] = usePasswordRecoveryMutation();
+    const [forgotPassword, { status, isLoading }] = usePasswordRecoveryMutation();
     const [, setEmail] = useState('');
 
     const t = useTranslations('auth');
