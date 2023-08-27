@@ -80,21 +80,21 @@ const SignUp = () => {
                             control={control}
                             translation={translationPath}
                             name={'userName'}
-                            label={'Username'}
+                            label={t('form.username')}
                             className={s.email}
                         />
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
                             name={'email'}
-                            label={'Email'}
+                            label={t('form.email')}
                             className={s.email}
                         />
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
                             name={'password'}
-                            label={'Password'}
+                            label={t('form.password')}
                             className={s.password}
                             type={'password'}
                         />
@@ -102,7 +102,7 @@ const SignUp = () => {
                             control={control}
                             translation={translationPath}
                             name={'confirmPassword'}
-                            label={'Confirm password'}
+                            label={t('form.confirmPassword')}
                             className={s.confirmPassword}
                             type={'password'}
                         />
