@@ -19,7 +19,7 @@ import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
-    const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
 
     const t = createTranslator({ locale: locale as string, messages });
 
@@ -46,7 +46,7 @@ const SignIn = () => {
     });
 
     if (data && data.message === 'Success') {
-        router.push('/profile-settings/general-information');
+        router.push('/profile-settings');
     }
 
     const err = error && 'data' in error ? (error as CustomerError).data.errorsMessages : 'Something went wrong';

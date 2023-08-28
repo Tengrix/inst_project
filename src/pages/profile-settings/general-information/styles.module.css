@@ -13,9 +13,6 @@
     width: 100%
 }
 
-.profileHeader > * {
-    margin-top: 24px
-}
 
 .formContent {
     display: flex;
@@ -40,9 +37,13 @@
     border-radius: 50%
 }
 
-.profileHeader {
+.profileInfo {
     width: 70%;
     margin-left: 40px
+}
+
+.profileInfo > *:not(:first-child) {
+    margin-top: 24px
 }
 
 .profilePreview {

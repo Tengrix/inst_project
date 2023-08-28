@@ -6,7 +6,7 @@ export const getLayoutWithSidebar = (page: ReactElement) => {
     return (
         <BaseLayout>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <Sidebar />
+                {/*<Sidebar />*/}
                 {page}
             </div>
         </BaseLayout>

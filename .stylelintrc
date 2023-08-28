@@ -27,7 +27,7 @@
     "scss/dollar-variable-pattern": false,
     "scss/at-use-no-unnamespaced": true,
     "selector-class-pattern": null,
-    "color-function-notation": "modern",
+    "color-function-notation": false,
     "number-leading-zero": "never",
     "alpha-value-notation": "number",
     "media-feature-range-notation": "prefix",

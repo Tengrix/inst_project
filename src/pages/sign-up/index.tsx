@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -14,7 +14,7 @@ import { Typography } from '@/shared/ui/typography';
 import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
-import { useSignUpMutation } from 'src/api/authApi';
+import { SignUpErrorType, useSignUpMutation } from 'src/api/authApi';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './SignUp.module.scss';
@@ -39,20 +39,13 @@ const SignUp = () => {
     const translationPath = 'auth';
     const t = useTranslations(translationPath);
     const [email, setEmail] = useState<string>('');
-    const [signUp] = useSignUpMutation();
-    // const onSubmitHandler = (data: RegisterFormType) => console.log(data)
+    const [signUp, { error, isLoading }] = useSignUpMutation();
 
-    const { control, handleSubmit, watch } = useForm<RegisterFormType>({ resolver: zodResolver(registerSchema) });
-    const watchFields = watch(['userName', 'email', 'password', 'confirmPassword', 'serviceAndPrivacy']);
-    const [isFormValid, setIsFormValid] = useState<boolean>(false);
-
-    useEffect(() => {
-        setIsFormValid(Boolean(watchFields[0] && watchFields[1] && watchFields[2] && watchFields[3] && watchFields[4]));
-    }, [watchFields]);
+    const { control, handleSubmit } = useForm<RegisterFormType>({
+        resolver: zodResolver(registerSchema)
+    });
 
     const onSubmit = handleSubmit(data => {
-        console.log(data);
-        // onSubmitHandler(data)
         signUp(data)
             .unwrap()
             .then(() => {
@@ -60,6 +53,23 @@ const SignUp = () => {
             });
         setEmail(data.email);
     });
+    const err =
+        error &&
+        (error as SignUpErrorType).data.errorsMessages.reduce((acc: { [key: string]: string }, error) => {
+            acc[error.field] = error.message;
+            return acc;
+        }, {});
+    const errorHandler = (error: string) => {
+        return (
+            err &&
+            err[error] && (
+                <Typography variant={'error'} color={'error'} style={{ textAlign: 'start' }}>
+                    {err[error]}
+                </Typography>
+            )
+        );
+    };
+
     // if (isLoading) return <h2>...Loading</h2>
     return (
         <div className={s.container}>
@@ -74,7 +84,6 @@ const SignUp = () => {
                             <Github width={36} height={36} />
                         </Button>
                     </div>
-
                     <form onSubmit={onSubmit}>
                         <ControlledTextField
                             control={control}
@@ -83,6 +92,7 @@ const SignUp = () => {
                             label={t('form.username')}
                             className={s.email}
                         />
+                        {errorHandler('login')}
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
@@ -90,6 +100,7 @@ const SignUp = () => {
                             label={t('form.email')}
                             className={s.email}
                         />
+                        {errorHandler('email')}
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
@@ -121,7 +132,12 @@ const SignUp = () => {
                             </Typography>
                         </div>
 
-                        <Button type={'submit'} fullWidth className={s.registerBtn} disabled={!isFormValid}>
+                        <Button
+                            type={'submit'}
+                            fullWidth
+                            className={s.registerBtn}
+                            disabled={isLoading}
+                            isLoading={isLoading}>
                             {t('button.signUpButton')}
                         </Button>
                     </form>

@@ -26,7 +26,12 @@ import { z } from 'zod';
 export const registerSchema = z
     .object({
         userName: z.string().trim().min(6, 'error.userNameMin').max(30, 'error.userNameMax'),
-        email: z.string().trim().nonempty('error.emaileIsRequiredError').email('error.invalidEmailAddress'),
+        email: z
+            .string()
+            .trim()
+            .nonempty('error.emailIsRequiredError')
+            .email('error.invalidEmailAddress')
+            .toLowerCase(),
         password: z
             .string()
             .nonempty('error.passwordIsRequiredError')
