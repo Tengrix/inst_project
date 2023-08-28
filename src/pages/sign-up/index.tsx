@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { GetStaticPropsContext } from 'next/types';
-import { useTranslations } from 'next-intl';
+import { createTranslator, useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,17 +21,23 @@ import s from './SignUp.module.scss';
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+    const t = createTranslator({ locale: locale as string, messages });
+
     return {
         props: {
-            messages: (await import(`../../../messages/${locale}/auth.json`)).default
+            messages: messages,
+            title: t('auth.signUpPage.title'),
+            metaDescription: t('auth.signUpPage.meta_description')
         }
     };
 }
 
 const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const t = useTranslations('auth');
+    const translationPath = 'auth';
+    const t = useTranslations(translationPath);
     const [email, setEmail] = useState<string>('');
     const [signUp] = useSignUpMutation();
     // const onSubmitHandler = (data: RegisterFormType) => console.log(data)
@@ -72,22 +78,31 @@ const SignUp = () => {
                     <form onSubmit={onSubmit}>
                         <ControlledTextField
                             control={control}
+                            translation={translationPath}
                             name={'userName'}
-                            label={'Username'}
+                            label={t('form.username')}
                             className={s.email}
                         />
-                        <ControlledTextField control={control} name={'email'} label={'Email'} className={s.email} />
                         <ControlledTextField
                             control={control}
+                            translation={translationPath}
+                            name={'email'}
+                            label={t('form.email')}
+                            className={s.email}
+                        />
+                        <ControlledTextField
+                            control={control}
+                            translation={translationPath}
                             name={'password'}
-                            label={'Password'}
+                            label={t('form.password')}
                             className={s.password}
                             type={'password'}
                         />
                         <ControlledTextField
                             control={control}
+                            translation={translationPath}
                             name={'confirmPassword'}
-                            label={'Confirm password'}
+                            label={t('form.confirmPassword')}
                             className={s.confirmPassword}
                             type={'password'}
                         />

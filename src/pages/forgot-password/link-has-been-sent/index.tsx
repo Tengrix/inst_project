@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetStaticPropsContext } from 'next';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { ReCaptchaProvider, useReCaptcha } from 'next-recaptcha-v3';
 import { useForm } from 'react-hook-form';
@@ -11,7 +12,6 @@ import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { registerSchema } from '@/shared/utils/schemas/registerSchema';
-
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import s from 'src/pages/forgot-password/link-has-been-sent/LinkHasBeenSent.module.css';
 
@@ -42,7 +42,7 @@ const LinkHasBeenSent = () => {
         <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
             <div className={s.container}>
                 <Card className={s.card}>
-                    <Typography variant={'large'}>{t('forgotPasswordPage.title')}</Typography>
+                    <Typography variant={'large'}>{t('forgotPasswordPage.h1')}</Typography>
                     <form onSubmit={onSubmit}>
                         <ControlledTextField
                             control={control}
@@ -61,9 +61,9 @@ const LinkHasBeenSent = () => {
                         {t('button.sendLinkAgain')}
                     </Button>
 
-                    <Button as={'a'} variant={'link'} className={s.link} href={'/sign-in'}>
+                    <Link className={s.link} href={'/sign-in'}>
                         {t('button.backToSignIn')}
-                    </Button>
+                    </Link>
                 </Card>
             </div>
         </ReCaptchaProvider>

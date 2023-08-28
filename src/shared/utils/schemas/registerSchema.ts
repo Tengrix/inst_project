@@ -1,4 +1,4 @@
-import { z } from 'zod';
+/* import { z } from 'zod';
 
 export const registerSchema = z
     .object({
@@ -18,5 +18,24 @@ export const registerSchema = z
     })
     .refine(data => data.password === data.confirmPassword, {
         message: "Passwords don't match",
+        path: ['confirmPassword']
+    }); */
+
+import { z } from 'zod';
+
+export const registerSchema = z
+    .object({
+        userName: z.string().trim().min(6, 'error.userNameMin').max(30, 'error.userNameMax'),
+        email: z.string().trim().nonempty('error.emaileIsRequiredError').email('error.invalidEmailAddress'),
+        password: z
+            .string()
+            .nonempty('error.passwordIsRequiredError')
+            .min(6, 'error.passwordMin')
+            .max(20, 'error.passwordMax'),
+        confirmPassword: z.string(),
+        serviceAndPrivacy: z.boolean().optional()
+    })
+    .refine(data => data.password === data.confirmPassword, {
+        message: 'error.passwordsDontMatch',
         path: ['confirmPassword']
     });

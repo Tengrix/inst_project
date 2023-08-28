@@ -72,13 +72,13 @@ const SignIn = () => {
                         control={control}
                         translation={translationPath}
                         name={'userName'}
-                        label={'Username'}
+                        label={t('form.username')}
                     />
                     <ControlledTextField
                         control={control}
                         translation={translationPath}
                         name={'password'}
-                        label={'Password'}
+                        label={t('form.password')}
                         type={'password'}
                     />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
