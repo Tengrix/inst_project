@@ -9,7 +9,7 @@
   flex-direction: $flex-direction;
   gap: $gap;
   align-items: $align-items;
-  justify-content: $justify-content;
+  justify-content: $justify-content
 }
 
 @mixin typography(
@@ -19,8 +19,7 @@
 ) {
   margin: 0;
   padding: 0;
-
-  font-size: $fs;
   font-weight: $fw;
-  line-height: $lh;
+  font-size: $fs;
+  line-height: $lh
 }

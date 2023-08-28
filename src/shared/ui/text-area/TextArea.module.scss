@@ -1,87 +1,83 @@
 @import '/src/styles/variables/mixins';
 
 .search-input::-webkit-search-cancel-button {
-  appearance: none;
+  appearance: none
 }
 
 
 .root {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100%
 }
 
 .textAreaContainer {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 .textarea {
-  cursor: auto;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   padding: 6px 40px 6px 12px;
-
+  color: var(--color-light-100);
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
-  color: var(--color-light-100);
-
+  border: 1px solid var(--color-dark-100);
   border-radius: 2px;
   outline: none;
-  border: 1px solid var(--color-dark-100);
-
-  transition: 0.3s;
+  cursor: auto;
+  transition: .3s;
 
   &::placeholder {
-    color: var(--color-dark-100);
+    color: var(--color-dark-100)
   }
 
   &:disabled {
     color: var(--color-dark-300);
-    border:  1px solid (--color-dark-100);
+    border:  1px solid var(--color-dark-100)
   }
 
 
-  
+
   &:active {
     border:  2px var(--color-light-100);
 
     &::placeholder {
-      color: var(--color-dark-100);
+      color: var(--color-dark-100)
     }
   }
-  &:focus{
-    border:  2px solid var(--color-primary-700);
+
+  &:focus {
+    border:  2px solid var(--color-primary-700)
   }
 
- /*  &:hover:not(&:disabled) {
-    background-color: var(--color-dark-700);
-  } */
+  /*  &:hover:not(&:disabled) {
+     background-color: var(--color-dark-700);
+   } */
 
   &.error {
     color: var(--color-danger-300);
     box-shadow: 0 0 0 1px var(--color-danger-300);
 
     &::placeholder {
-      color: var(--color-danger-300);
+      color: var(--color-danger-300)
     }
   }
 
   &[data-icon*='start'] {
-    padding-left: 36px;
+    padding-left: 36px
   }
 
   &[data-icon*='end'] {
-    padding-right: 36px;
+    padding-right: 36px
   }
 }
 
-.errorMessageText, 
-.errorLabelText{
-    text-align: left;
+.errorMessageText,
+.errorLabelText {
+  text-align: left
 }

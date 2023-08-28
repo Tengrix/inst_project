@@ -1,29 +1,30 @@
 
 .container {
   position: relative;
-  margin: 0 auto;
-  margin-top: 71px;
-  width: 958px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 958px;
+  margin: 0 auto;
+  margin-top: 71px
 }
 
 .title {
-  text-align: center;
+  text-align: center
 }
 
 .content {
-  text-align: center;
+  text-align: center
 }
 
 .backLink {
-  //display: flex;
-  //flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
 }
+
 .link {
   position: absolute;
   top: -70px;
-  left:-100px
+  left: -100px
 }

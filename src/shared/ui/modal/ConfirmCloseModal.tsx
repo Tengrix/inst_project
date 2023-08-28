@@ -1,24 +1,21 @@
-import {Button} from "@/shared/ui/button";
-import {Typography} from "@/shared/ui/typography";
-import {Modal} from "@/shared/ui/modal/Modal";
-import React, {ReactNode, useState} from "react";
+import React, { ReactNode } from 'react';
+
+import { Modal } from '@/shared/ui/modal/Modal';
 
 type Props = {
-    open: boolean
-    modalHandler: (isOpen: boolean) => void
-    children: ReactNode
-    customButtonsBlock: ReactNode
-}
+    open: boolean;
+    // eslint-disable-next-line no-unused-vars
+    modalHandler: (isOpen: boolean) => void;
+    children: ReactNode;
+    customButtonsBlock: ReactNode;
+};
 const ConfirmCloseModal = (props: Props) => {
-
-
     return (
         <Modal
-            title={"Close"}
+            title={'Close'}
             open={props.open}
             modalHandler={props.modalHandler}
-            customButtonsBlock={props.customButtonsBlock}
-        >
+            customButtonsBlock={props.customButtonsBlock}>
             {props.children}
         </Modal>
     );

@@ -68,371 +68,437 @@ $icon_trashOutline: "\e942";
 $icon_trendingUp: "\e943";
 
 
-
 @font-face {
-  font-family: 'icon';
-  src:
-    url('../../assets/fonts/icon.woff') format('woff'),
-    url('../../assets/fonts/icon.ttf') format('truetype'),
-    url('../../assets/fonts/icon.svg') format('svg');
   font-weight: normal;
+  font-family: icon;
   font-style: normal;
-  font-display: block;
+  src: url('../../assets/fonts/icon.woff') format('woff'),
+  url('../../assets/fonts/icon.ttf') format('truetype'),
+  url('../../assets/fonts/icon.svg') format('svg');
+  font-display: block
 }
 
 [class^="icon_"]::before, [class*=" icon_"]::before {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icon' !important;
-  speak: never;
-  font-style: normal;
   font-weight: normal;
+
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: icon !important;
+  font-style: normal;
   font-variant: normal;
-  text-transform: none;
   line-height: 1;
+  text-transform: none;
+  speak: never;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale
 }
 
 .icon_arrowIosBackLeft {
-  &:before {
-    content: $icon_arrowIosBackLeft; 
+  &::before {
+    content: $icon_arrowIosBackLeft
   }
 }
+
 .icon_arrowIosForwardBottom {
-  &:before {
-    content: $icon_arrowIosForwardBottom; 
+  &::before {
+    content: $icon_arrowIosForwardBottom
   }
 }
+
 .icon_arrowIosForwardRight {
-  &:before {
-    content: $icon_arrowIosForwardRight; 
+  &::before {
+    content: $icon_arrowIosForwardRight
   }
 }
+
 .icon_arrowIosForwardTop {
-  &:before {
-    content: $icon_arrowIosForwardTop; 
+  &::before {
+    content: $icon_arrowIosForwardTop
   }
 }
+
 .icon_bell {
-  &:before {
-    content: $icon_bell; 
+  &::before {
+    content: $icon_bell
   }
 }
+
 .icon_bellOutline {
-  &:before {
-    content: $icon_bellOutline; 
+  &::before {
+    content: $icon_bellOutline
   }
 }
+
 .icon_Block {
-  &:before {
-    content: $icon_Block; 
+  &::before {
+    content: $icon_Block
   }
 }
+
 .icon_bookmark {
-  &:before {
-    content: $icon_bookmark; 
+  &::before {
+    content: $icon_bookmark
   }
 }
+
 .icon_bookmarkOutline {
-  &:before {
-    content: $icon_bookmarkOutline; 
+  &::before {
+    content: $icon_bookmarkOutline
   }
 }
+
 .icon_calendar {
-  &:before {
-    content: $icon_calendar; 
+  &::before {
+    content: $icon_calendar
   }
 }
+
 .icon_calendarOutline {
-  &:before {
-    content: $icon_calendarOutline; 
+  &::before {
+    content: $icon_calendarOutline
   }
 }
+
 .icon_close {
-  &:before {
-    content: $icon_close; 
+  &::before {
+    content: $icon_close
   }
 }
+
 .icon_colorPalette {
-  &:before {
-    content: $icon_colorPalette; 
+  &::before {
+    content: $icon_colorPalette
   }
 }
+
 .icon_copy {
-  &:before {
-    content: $icon_copy; 
+  &::before {
+    content: $icon_copy
   }
 }
+
 .icon_copyOutline {
-  &:before {
-    content: $icon_copyOutline; 
+  &::before {
+    content: $icon_copyOutline
   }
 }
+
 .icon_creditCard {
-  &:before {
-    content: $icon_creditCard; 
+  &::before {
+    content: $icon_creditCard
   }
 }
+
 .icon_creditCardCutline {
-  &:before {
-    content: $icon_creditCardCutline; 
+  &::before {
+    content: $icon_creditCardCutline
   }
 }
+
 .icon_edit {
-  &:before {
-    content: $icon_edit; 
+  &::before {
+    content: $icon_edit
   }
 }
+
 .icon_editOutline {
-  &:before {
-    content: $icon_editOutline; 
+  &::before {
+    content: $icon_editOutline
   }
 }
+
 .icon_email {
-  &:before {
-    content: $icon_email; 
+  &::before {
+    content: $icon_email
   }
 }
+
 .icon_emailOutline {
-  &:before {
-    content: $icon_emailOutline; 
+  &::before {
+    content: $icon_emailOutline
   }
 }
+
 .icon_expand {
-  &:before {
-    content: $icon_expand; 
+  &::before {
+    content: $icon_expand
   }
 }
+
 .icon_eye {
-  &:before {
-    content: $icon_eye; 
+  &::before {
+    content: $icon_eye
   }
 }
+
 .icon_eyeOff {
-  &:before {
-    content: $icon_eyeOff; 
+  &::before {
+    content: $icon_eyeOff
   }
 }
+
 .icon_eyeOffOutline {
-  &:before {
-    content: $icon_eyeOffOutline; 
+  &::before {
+    content: $icon_eyeOffOutline
   }
 }
+
 .icon_eyeOutline {
-  &:before {
-    content: $icon_eyeOutline; 
+  &::before {
+    content: $icon_eyeOutline
   }
 }
+
 .icon_heart {
-  &:before {
-    content: $icon_heart; 
+  &::before {
+    content: $icon_heart
   }
 }
+
 .icon_heartOutline {
-  &:before {
-    content: $icon_heartOutline; 
+  &::before {
+    content: $icon_heartOutline
   }
 }
+
 .icon_home {
-  &:before {
-    content: $icon_home; 
+  &::before {
+    content: $icon_home
   }
 }
+
 .icon_homeOutline {
-  &:before {
-    content: $icon_homeOutline; 
+  &::before {
+    content: $icon_homeOutline
   }
 }
+
 .icon_image {
-  &:before {
-    content: $icon_image; 
+  &::before {
+    content: $icon_image
   }
 }
+
 .icon_imageOutline {
-  &:before {
-    content: $icon_imageOutline; 
+  &::before {
+    content: $icon_imageOutline
   }
 }
+
 .icon_layers {
-  &:before {
-    content: $icon_layers; 
+  &::before {
+    content: $icon_layers
   }
 }
+
 .icon_layersOutline {
-  &:before {
-    content: $icon_layersOutline; 
+  &::before {
+    content: $icon_layersOutline
   }
 }
+
 .icon_logOut {
-  &:before {
-    content: $icon_logOut; 
+  &::before {
+    content: $icon_logOut
   }
 }
+
 .icon_maximize {
-  &:before {
-    content: $icon_maximize; 
+  &::before {
+    content: $icon_maximize
   }
 }
+
 .icon_maximizeOutline {
-  &:before {
-    content: $icon_maximizeOutline; 
+  &::before {
+    content: $icon_maximizeOutline
   }
 }
+
 .icon_menuOutline {
-  &:before {
-    content: $icon_menuOutline; 
+  &::before {
+    content: $icon_menuOutline
   }
 }
+
 .icon_messageCircle {
-  &:before {
-    content: $icon_messageCircle; 
+  &::before {
+    content: $icon_messageCircle
   }
 }
+
 .icon_messageCircleCutline {
-  &:before {
-    content: $icon_messageCircleCutline; 
+  &::before {
+    content: $icon_messageCircleCutline
   }
 }
+
 .icon_mic {
-  &:before {
-    content: $icon_mic; 
+  &::before {
+    content: $icon_mic
   }
 }
+
 .icon_micCutline {
-  &:before {
-    content: $icon_micCutline; 
+  &::before {
+    content: $icon_micCutline
   }
 }
+
 .icon_moreHorizotnal {
-  &:before {
-    content: $icon_moreHorizotnal; 
+  &::before {
+    content: $icon_moreHorizotnal
   }
 }
+
 .icon_paperPlane {
-  &:before {
-    content: $icon_paperPlane; 
+  &::before {
+    content: $icon_paperPlane
   }
 }
+
 .icon_pauseCircle {
-  &:before {
-    content: $icon_pauseCircle; 
+  &::before {
+    content: $icon_pauseCircle
   }
 }
+
 .icon_pauseCircleOutline {
-  &:before {
-    content: $icon_pauseCircleOutline; 
+  &::before {
+    content: $icon_pauseCircleOutline
   }
 }
+
 .icon_person {
-  &:before {
-    content: $icon_person; 
+  &::before {
+    content: $icon_person
   }
 }
+
 .icon_personAdd {
-  &:before {
-    content: $icon_personAdd; 
+  &::before {
+    content: $icon_personAdd
   }
 }
+
 .icon_personAddOutline {
-  &:before {
-    content: $icon_personAddOutline; 
+  &::before {
+    content: $icon_personAddOutline
   }
 }
+
 .icon_personOutline {
-  &:before {
-    content: $icon_personOutline; 
+  &::before {
+    content: $icon_personOutline
   }
 }
+
 .icon_personRemove {
-  &:before {
-    content: $icon_personRemove; 
+  &::before {
+    content: $icon_personRemove
   }
 }
+
 .icon_personRemoveOutline {
-  &:before {
-    content: $icon_personRemoveOutline; 
+  &::before {
+    content: $icon_personRemoveOutline
   }
 }
+
 .icon_pin {
-  &:before {
-    content: $icon_pin; 
+  &::before {
+    content: $icon_pin
   }
 }
+
 .icon_pinOutline {
-  &:before {
-    content: $icon_pinOutline; 
+  &::before {
+    content: $icon_pinOutline
   }
 }
+
 .icon_playCircle {
-  &:before {
-    content: $icon_playCircle; 
+  &::before {
+    content: $icon_playCircle
   }
 }
+
 .icon_playCircleOutline {
-  &:before {
-    content: $icon_playCircleOutline; 
+  &::before {
+    content: $icon_playCircleOutline
   }
 }
+
 .icon_plusCircle {
-  &:before {
-    content: $icon_plusCircle; 
+  &::before {
+    content: $icon_plusCircle
   }
 }
+
 .icon_plusCircleOutline {
-  &:before {
-    content: $icon_plusCircleOutline; 
+  &::before {
+    content: $icon_plusCircleOutline
   }
 }
+
 .icon_plusSquare {
-  &:before {
-    content: $icon_plusSquare; 
+  &::before {
+    content: $icon_plusSquare
   }
 }
+
 .icon_plusSquareOutline {
-  &:before {
-    content: $icon_plusSquareOutline; 
+  &::before {
+    content: $icon_plusSquareOutline
   }
 }
+
 .icon_radioButtonChecked {
-  &:before {
-    content: $icon_radioButtonChecked; 
+  &::before {
+    content: $icon_radioButtonChecked
   }
 }
+
 .icon_radioButtonUnchecked {
-  &:before {
-    content: $icon_radioButtonUnchecked; 
+  &::before {
+    content: $icon_radioButtonUnchecked
   }
 }
+
 .icon_search {
-  &:before {
-    content: $icon_search; 
+  &::before {
+    content: $icon_search
   }
 }
+
 .icon_settings {
-  &:before {
-    content: $icon_settings; 
+  &::before {
+    content: $icon_settings
   }
 }
+
 .icon_settingsOutline {
-  &:before {
-    content: $icon_settingsOutline; 
+  &::before {
+    content: $icon_settingsOutline
   }
 }
+
 .icon_trash {
-  &:before {
-    content: $icon_trash; 
+  &::before {
+    content: $icon_trash
   }
 }
+
 .icon_trashOutline {
-  &:before {
-    content: $icon_trashOutline; 
+  &::before {
+    content: $icon_trashOutline
   }
 }
+
 .icon_trendingUp {
-  &:before {
-    content: $icon_trendingUp; 
+  &::before {
+    content: $icon_trendingUp
   }
 }
 

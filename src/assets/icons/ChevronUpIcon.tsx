@@ -1,13 +1,8 @@
-import * as React from "react"
-import { SVGProps } from "react"
+import * as React from 'react';
+import { SVGProps } from 'react';
+
 const ChevronUpIcon = (props: SVGProps<SVGSVGElement>) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24px"
-        height="24px"
-        fill="none"
-        {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="none" {...props}>
         <g clipPath="url(#a)">
             <path
                 fill="#fff"
@@ -20,5 +15,5 @@ const ChevronUpIcon = (props: SVGProps<SVGSVGElement>) => (
             </clipPath>
         </defs>
     </svg>
-)
-export default ChevronUpIcon
+);
+export default ChevronUpIcon;

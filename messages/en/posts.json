@@ -1,0 +1,24 @@
+{
+    "post": {
+        "filters": "Filters",
+        "cropping": "Cropping",
+        "publication": "Publication",
+        "modal": {
+            "addPhotoModalTitle": "Add Photo",
+            "closeModaltitle": "Close",
+            "closeModalText": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+            "deletePostTitle": "Delete Post",
+            "deletePostText":"Are you sure you want to delete this post?"
+        },
+        "button": {
+            "selectFromComputer": "Select from Computer",
+            "openDraft": "Open Draft",
+            "original": "Original",
+            "next": "Next",
+            "prev": "Prev",
+            "publish": "Publish",
+            "discard": "Discard",
+            "saveDraft": "Save draft"
+        }
+    }
+}

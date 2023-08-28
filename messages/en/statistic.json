@@ -1,0 +1,10 @@
+{
+    "statistic": {
+        "title": "Statistic",
+        "like": "Like",
+        "comments": "Comments",
+        "publicationViews": "Publication views",
+        "week": "Week",
+        "month": "Month"
+    }
+}

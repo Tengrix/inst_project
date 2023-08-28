@@ -1,0 +1,76 @@
+{
+    "profile": {
+        "tab": {
+            "generalInformation": {
+                "generalInformationTitle": "General information"
+            },
+            "devices": {
+                "devicesTitle": "Devices",
+                "thisDevices": "This devices",
+                "activeSessions": "Active sessions"
+            },
+            "accountManagement": {
+                "accountManagementTitle": "Account Management",
+                "accountType": "Account type:",
+                "accountTypePersonal": "Personal",
+                "accountTypeBusiness": "Business",
+                "yourSubscriptionCosts": "Your subscription costs:",
+                "changeYourSubscription": "Change your subscription:",
+                "currentSubscription": "Current Subscription:",
+                "autoRenewal": "Auto-Renewal"
+            },
+            "myPayments": {
+                "myPaymentsTitle": "My payments",
+                "dateOfPayment": "Date of Payment",
+                "endDateOfSubscription": "End date of subscription",
+                "price": "Price",
+                "subscriptionType": "Subscription Type",
+                "paymentType": "Payment Type"
+            }
+        },
+        "sidebar": {
+            "home": "Home",
+            "create": "Create",
+            "myProfile": "My Profile",
+            "messenger": "Messenger",
+            "search": "Search",
+            "statistics": "Statistics",
+            "favorites": "Favorites",
+            "logOut": "Log out"
+        },
+        "myProfilePage": {
+            "following": "Following",
+            "followers": "Followers",
+            "publications": "Publications"
+        },
+        "modal": {
+            "followingModalTitle": "Following",
+            "followersModalTitle": "Followers",
+            "search": "Search",
+            "followingModalDeleteTitle": "Delete Following",
+            "followingModalDeleteDescription": "Do you really want to delete a Following “URLProfiele”?",
+            "followersModalUnfollowTitle": "Unfollow",
+            "followingModalUnfollowDescription": "Do you really want to Unfollow from this user “URLProfiele”?",
+            "errorTransactionModalTitle": "Error",
+            "errorTransactionModalDescription": "Transaction failed, please try again",
+            "uccessTransactionModalTitle": "Success",
+            "successTransactionModalDescription": "Payment was successful!"
+        },
+        "button": {
+            "addAProfilePhoto": "Add a Profile Photo",
+            "selectFromComputer": "Select from Computer",
+            "saveChanges": "Save Changes",
+            "save": "Save",
+            "profileSettings": "Profile Settings",
+            "terminateAllOtherSession": "Terminate all other session",
+            "backToPayment": "Back to payment",
+            "follow": "Follow",
+            "unfollow": "Unfollow",
+            "sendMessage": "Send Message",
+            "delete": "Delete",
+            "yes": "Yes",
+            "no": "No",
+            "ok": "OK"
+        }
+    }
+}
