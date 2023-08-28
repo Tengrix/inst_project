@@ -1,0 +1,12 @@
+{
+  "sidebar": {
+    "news": "News",
+    "publish": "Publish",
+    "myProfile": "My Profile",
+    "messenger": "Messenger",
+    "search": "Search",
+    "statistics": "Statistics",
+    "favourites": "Favourites",
+    "logOut": "Log out"
+  }
+}

@@ -18,21 +18,21 @@ import { Button } from '@/shared/ui/button';
 
 import s from './Sidebar.module.scss';
 
-const Sidebar = () => {
+const Sidebar = ({ messages }: { messages: any }) => {
     const [logout, { isLoading }] = useLogoutMutation();
     const router = useRouter();
     const [createPostModal, setCreatePostModal] = useState(false);
     const routes = [
-        { title: 'Home', icon: <HomeIcon height={60} width={24} />, path: '/home' },
+        { title: messages.sidebar.news, icon: <HomeIcon height={60} width={24} />, path: '/home' },
         {
-            title: 'Create',
+            title: messages.sidebar.publish,
             icon: <PlusCircledIcon height={60} width={24} />,
             path: '/create',
             onClick: () => setCreatePostModal(true)
         },
-        { title: 'My Profile', icon: <PersonIcon height={60} width={24} />, path: '/profile' },
-        { title: 'Messenger', icon: <ChatBubbleIcon height={60} width={24} />, path: '/messenger' },
-        { title: 'Search', icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
+        { title: messages.sidebar.myProfile, icon: <PersonIcon height={60} width={24} />, path: '/profile' },
+        { title: messages.sidebar.messenger, icon: <ChatBubbleIcon height={60} width={24} />, path: '/messenger' },
+        { title: messages.sidebar.search, icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
     ];
 
     const sidebarItems = routes.map(route => {
@@ -73,17 +73,17 @@ const Sidebar = () => {
                 <div className={s.wrapper}>
                     <Link className={s.route} href={'/statistics'}>
                         <BarChartIcon height={60} width={24} />
-                        <span>Statistics</span>
+                        <span>{messages.sidebar.statistics}</span>
                     </Link>
                     <Link className={s.route} href={'/favorites'}>
                         <BookmarkIcon height={60} width={24} />
-                        <span>Favorites</span>
+                        <span>{messages.sidebar.favourites}</span>
                     </Link>
                     <div className={s.footer}>
                         <Link className={s.route} href={'/sign-in'}>
                             <ExitIcon height={60} width={24} />
                             <Button variant={'link'} isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
-                                Log out
+                                {messages.sidebar.logOut}
                             </Button>
                         </Link>
                     </div>

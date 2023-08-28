@@ -1,0 +1,9 @@
+{
+  "myProfile": {
+    "pageTitle": "My profile",
+    "following": "Following",
+    "followers": "Followers",
+    "publications": "Publications",
+    "profileSettings": "Profile settings"
+  }
+}

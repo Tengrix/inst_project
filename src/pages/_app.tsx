@@ -32,13 +32,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
     return (
         <Provider store={store}>
-            {getLayout(
-                <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
-                    <Head>
-                        <title>{title}</title>
-                        <meta name="description" content={metaDescription} />
-                    </Head>
-                    <NextIntlClientProvider messages={messages}>
+            <NextIntlClientProvider messages={messages}>
+                {getLayout(
+                    <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
+                        <Head>
+                            <title>{title}</title>
+                            <meta name="description" content={metaDescription} />
+                        </Head>
                         {/* eslint-disable-next-line react/no-unknown-property */}
                         <style jsx global>
                             {`
@@ -48,9 +48,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
                             `}
                         </style>
                         <Component {...pageProps} />
-                    </NextIntlClientProvider>
-                </ReCaptchaProvider>
-            )}
+                    </ReCaptchaProvider>
+                )}
+            </NextIntlClientProvider>
         </Provider>
     );
 }

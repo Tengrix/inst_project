@@ -19,7 +19,7 @@ import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
-    const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
 
     const t = createTranslator({ locale: locale as string, messages });
 
