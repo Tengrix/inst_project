@@ -92,7 +92,11 @@ export const TextField: FC<TextFieldProps> = ({
                     />
 
                     {type === 'password' && (
-                        <button className={classNames.iconButton} type="button" onClick={onClickShowValue}>
+                        <button
+                            className={classNames.iconButton}
+                            type="button"
+                            onClick={onClickShowValue}
+                            tabIndex={-1}>
                             {!showPassword ? <EyeIcon /> : <EyeOffIcon />}
                         </button>
                     )}

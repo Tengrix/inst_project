@@ -35,7 +35,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 
 const ForgotPassword = () => {
     const { push, pathname } = useRouter();
-    const [forgotPassword, { status, isLoading }] = usePasswordRecoveryMutation();
+    const [passwordRecovery, { status, isLoading }] = usePasswordRecoveryMutation();
     const [, setEmail] = useState('');
     const translationPath = 'auth';
     const t = useTranslations(translationPath);
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
     });
     const onSubmit = handleSubmit(async data => {
         const captcha = await executeRecaptcha('password_recovery');
-        forgotPassword({ email: data.email, recaptchaValue: captcha as string });
+        passwordRecovery({ email: data.email, recaptchaValue: captcha as string });
         setEmail(data.email);
     });
 
@@ -71,7 +71,12 @@ const ForgotPassword = () => {
                         <Typography variant={'regular14'} className={s.subtitle}>
                             {t('forgotPasswordPage.enterYourEmailText')}
                         </Typography>
-                        <Button type={'submit'} fullWidth className={s.registerBtn}>
+                        <Button
+                            type={'submit'}
+                            fullWidth
+                            className={s.registerBtn}
+                            disabled={isLoading}
+                            isLoading={isLoading}>
                             {t('button.sendLink')}
                         </Button>
                     </form>

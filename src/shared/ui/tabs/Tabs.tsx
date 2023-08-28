@@ -13,7 +13,7 @@ type TabsPropsType = {
 };
 const CustomTabs = ({ tabs }: TabsPropsType) => {
     return (
-        <Tabs.Root className={s.TabsRoot} defaultValue="tab1">
+        <Tabs.Root className={s.TabsRoot} defaultValue={tabs[0].title}>
             <Tabs.List className={s.TabsList}>
                 {tabs.map(el => (
                     <Tabs.Trigger key={el.title} className={s.TabsTrigger} value={el.title}>

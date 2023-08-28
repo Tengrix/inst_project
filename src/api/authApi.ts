@@ -91,7 +91,6 @@ export const authApi = createApi({
                         formData.append('files', photo.src);
                     });
                     formData.append('title', data.title);
-                    console.log(formData);
                     return {
                         url: '/post',
                         method: 'POST',
@@ -109,7 +108,6 @@ export const authApi = createApi({
                     formData.append('file', data.file, 'avatar.jpeg');
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
-                    console.log(formData);
                     return {
                         url: '/user',
                         method: 'PATCH',
@@ -164,6 +162,17 @@ export type ErrorDataType = {
 };
 export type CustomerError = {
     data: ErrorDataType;
+    status: number;
+};
+export type FieldError = {
+    field: string;
+    message: string;
+};
+export type SignUpError = {
+    errorsMessages: FieldError[];
+};
+export type SignUpErrorType = {
+    data: SignUpError;
     status: number;
 };
 export type PostFormData = {
