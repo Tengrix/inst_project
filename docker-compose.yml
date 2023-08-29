@@ -14,7 +14,7 @@ services:
             JWT_TOKEN_EXPIRATION_TIME: 7d
             JWT_REFRESH_TOKEN_SECRET: token_secret
             JWT_REFRESH_TOKEN_EXPIRATION_TIME: 1m
-            DATABASE_URL: postgres://user:password@localhost/db
+            DATABASE_URL: postgres://user:password@db/db
             TEST_MAILER_EMAIL: noreply@gmail.com
             FRONTEND_CONFIRM_EMAIL_LINK: http://localhost:3000/sign-up/email-verification
             AWS_ACCESS_KEY_ID: access_key
@@ -29,7 +29,6 @@ services:
         command: ["/bin/bash", "docker-entrypoint.sh"]
         depends_on:
             - db
-        network_mode: host
 
     db:
         image: postgres

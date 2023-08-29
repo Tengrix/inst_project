@@ -29,7 +29,7 @@ if [ $UPDATE -gt 0 ]; then
   yarn install
 
   echo "---== Apply migrations ==---"
-  yarn create prisma migrate deploy && yarn create prisma db push
+  yarn run prisma migrate deploy && yarn run prisma db push
 
 else
   echo "---== Project has already been updated ==---"
@@ -39,7 +39,7 @@ echo "---== Patch project ==---"
 
 AWS=`grep endpoint src/modules/aws/aws.service.ts | wc -l`
 if [ $AWS -eq 0 ]; then
-  sed -i "s/region.*$/&,\n    endpoint: 'http:\/\/localhost:4566',\n    s3ForcePathStyle: true/" src/modules/aws/aws.service.ts
+  sed -i "s/region.*$/&,\n    endpoint: 'http:\/\/localstack:4566',\n    s3ForcePathStyle: true/" src/modules/aws/aws.service.ts
   echo "---== AWS patched ==---"
 fi
 
