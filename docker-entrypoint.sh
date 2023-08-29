@@ -51,4 +51,4 @@ if [ $MAILER -eq 0 ]; then
 fi
 
 echo "---== Run server ==---"
-yarn run start:dev
+yarn run start
