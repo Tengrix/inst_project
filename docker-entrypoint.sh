@@ -45,7 +45,7 @@ fi
 
 MAILER=`grep localhost src/config/mailer.config.ts | wc -l`
 if [ $MAILER -eq 0 ]; then
-  sed -ri "s/(host:)(.*),$/\1 'localhost',/" src/config/mailer.config.ts
+  sed -ri "s/(host:)(.*),$/\1 'mailer',/" src/config/mailer.config.ts
   sed -ri "s/(port:)(.*),$/\1 1025,/" src/config/mailer.config.ts
   sed -ri "s/(secure:)(.*)$/\1 false/" src/config/mailer.config.ts
 fi
