@@ -37,15 +37,16 @@ const CreatePostModal = (props: Props) => {
 
     const [publishPost] = useCreatePostMutation();
 
-    const nextBtnHandler = () => {
+    const nextBtnHandler = async () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters');
         else if (currentStep === 'Filters') setCurrentStep('Publication');
         else if (currentStep === 'Publication') {
-            console.log('publish');
-            publishPost({ title, files: images as any, description });
-            // setEditModal(false)
-            // props.modalHandler(false)
-            // setCurrentStep('Cropping')
+            const imagesBlob = [];
+            for (const image of images) {
+                const blob = await fetch(image.src).then(r => r.blob());
+                imagesBlob.push({blob, filename: image.name});
+            }
+            publishPost({ title, files: imagesBlob, description })
         }
     };
     const prevBtnHandler = () => {

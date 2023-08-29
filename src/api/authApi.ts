@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
 import { GetUserDataResponseType, LoginResponseType } from '@/api/types';
-import { ImageType } from '@/redux/store/imageSlice/types/store';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -87,15 +86,14 @@ export const authApi = createApi({
                 query: data => {
                     const formData = new FormData();
                     formData.append('description', data.description);
-                    data.files.forEach(photo => {
-                        formData.append('files', photo.src);
+                    data.files.forEach( ({blob, filename}) => {
+                        formData.append('files', blob, filename);
                     });
                     formData.append('title', data.title);
                     return {
                         url: '/post',
                         method: 'POST',
                         body: formData,
-                        headers: { 'Content-Type': 'multipart/form-data' }
                     };
                 }
             }),
@@ -177,6 +175,9 @@ export type SignUpErrorType = {
 };
 export type PostFormData = {
     description: string;
-    files: ImageType[];
+    files: Array<{
+        blob: Blob,
+        filename: string
+    }>;
     title: string;
 };
