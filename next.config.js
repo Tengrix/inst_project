@@ -32,6 +32,12 @@ module.exports = {
     images: {
         remotePatterns: [
             {
+                protocol: 'http',
+                hostname: 'localstack',
+                port: '4566',
+                pathname: '/**'
+            },
+            {
                 protocol: 'https',
                 hostname: 'instagramm-profile.s3.eu-north-1.amazonaws.com',
                 port: '',
