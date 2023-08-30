@@ -10,9 +10,9 @@ import {ControlledTextField} from '@/shared/ui/controlled';
 import s from 'src/pages/forgot-password/link-has-been-sent/LinkHasBeenSent.module.css';
 import {useTranslations} from 'next-intl';
 import {GetStaticPropsContext} from 'next';
-import {usePasswordRecoveryMutation} from '@/api/authApi';
 import {ReCaptcha, ReCaptchaProvider, useReCaptcha} from "next-recaptcha-v3";
 import {useState} from "react";
+import {usePasswordRecoveryMutation} from "@/redux/store/Auth/authApiSlice";
 
 export type RegisterFormType = z.infer<typeof registerSchema>;
 type RegisterFormPropsType = {

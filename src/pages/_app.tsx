@@ -1,4 +1,4 @@
-import { store } from "@/redux/store";
+import {store, useAppSelector} from "@/redux/store";
 import '@/styles/variables/index.scss';
 import '@/shared/ui/datePicker/datepicker.css';
 import { NextPage } from 'next';
@@ -6,9 +6,11 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
 import Head from "next/head";
-import { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Provider } from "react-redux";
 import {ReCaptchaProvider} from "next-recaptcha-v3";
+import {redirect} from "next/navigation";
+import {Redirect} from "@/components/Redirect/Redirect";
 
 
 const inter = Inter({
@@ -40,7 +42,9 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
                 <style jsx global>
                     {`:root {--font-family-main: ${inter.style.fontFamily}, sans-serif}`}
                 </style>
-                <Component {...pageProps} />
+                <Redirect>
+                    <Component {...pageProps} />
+                </Redirect>
             </NextIntlClientProvider>
         </Provider>
     );

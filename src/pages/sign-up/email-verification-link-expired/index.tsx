@@ -1,11 +1,11 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 import React from "react";
-import {useResendEmailConfirmationMutation} from "@/api/authApi";
 import s from './index.module.scss'
 import {Button} from "@/shared/ui/button";
 import img from 'public/assets/expiredLink.png'
 import Image from "next/image";
 import {useRouter} from "next/router";
+import {useResendEmailConfirmationMutation} from "@/redux/store/Auth/authApiSlice";
 
 const EmailVerificationLinkExpired = () => {
     const [resendEmailConfirmation] = useResendEmailConfirmationMutation()

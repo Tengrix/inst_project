@@ -1,4 +1,4 @@
-import {CustomerError, useLoginMutation} from "@/api/authApi";
+import {CustomerError, } from "@/api/authApi";
 import classes from "@/pages/sign-in/SignIn.module.scss";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
@@ -16,6 +16,11 @@ import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
 import {authAction} from "@/redux/store/Auth/authSlice";
+import {useLoginMutation} from "@/redux/store/Auth/authApiSlice";
+import {useAppSelector} from "@/redux/store";
+import {Checkbox} from "@/shared/ui/checkbox";
+import {useEffect} from "react";
+import {Routes} from "@/shared/routes/Routes";
 
 
 export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
@@ -34,22 +39,35 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
 
 const SignIn = () => {
     const [signIn, {error,isLoading, data, isError}] = useLoginMutation();
-    const translationPath = 'auth';
     const router = useRouter()
+    const translationPath = 'auth';
+    const {token,trustDevice} = useAppSelector(state=>state.auth)
     const t = useTranslations(translationPath);
     const dispatch = useDispatch()
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
-    const onSubmit = handleSubmit(data => {
-        signIn({ password: data.password, login: data.userName })
-            .unwrap()
-            .then(()=> dispatch(authAction.setAuth(true)))
+
+    useEffect(()=>{
+        if(token!==''){
+            router.push(Routes.PROFILE)
+        }
+        localStorage.setItem('trust',String(trustDevice))
+    },[data,token])
+
+    const onSubmit = handleSubmit(async (data,e) => {
+        e?.preventDefault()
+        try {
+            const userData = await signIn({ password: data.password, login: data.userName }).unwrap()
+            dispatch(authAction.setCredentials(userData))
+            console.log(userData)
+        }catch (e) {
+            console.log(e && error)
+        }
     })
 
-    if(data && data.message==='Success'){
-        router.push('/profile')
-    }
-
     const err = error && 'data' in error ? (error as CustomerError ).data.errorsMessages : 'Something went wrong'
+    const checkDevice = () => {
+        dispatch(authAction.setCheckDevice(!trustDevice))
+    }
 
 
     return (
@@ -82,6 +100,7 @@ const SignIn = () => {
                     </div>
                 </form>
                 <div className={classes.footer}>
+                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice}/>
                     <Typography>
                         {t('signInPage.question')}
                     </Typography>

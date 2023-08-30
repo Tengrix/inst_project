@@ -1,6 +1,5 @@
 import {getLayout} from "src/components/Layout/BaseLayout/BaseLayout";
 import {useForm} from "react-hook-form";
-import {useSignUpMutation} from "src/api/authApi";
 import {useEffect, useState} from "react";
 import {Card} from "@/shared/ui/card";
 import {Typography} from "@/shared/ui/typography";
@@ -16,6 +15,7 @@ import {GetStaticPropsContext} from "next/types";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
 import EmailSentModal from "@/pages/sign-up/email-sent-modal/email-sent-modal";
+import {useSignUpMutation} from "@/redux/store/Auth/authApiSlice";
 
 export type RegisterFormType = z.infer<typeof registerSchema>
 

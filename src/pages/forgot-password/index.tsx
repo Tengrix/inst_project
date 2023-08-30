@@ -7,13 +7,13 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import s from './ForgotPassword.module.css';
-import { usePasswordRecoveryMutation } from '@/api/authApi';
 import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import {ReCaptcha, ReCaptchaProvider, useReCaptcha} from "next-recaptcha-v3";
+import {usePasswordRecoveryMutation} from "@/redux/store/Auth/authApiSlice";
 
 
 export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;

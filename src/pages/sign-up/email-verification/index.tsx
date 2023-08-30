@@ -1,9 +1,9 @@
 import {useRouter} from "next/router";
 import jwtDecode from "jwt-decode";
-import {useSignUpConfirmationMutation} from "@/api/authApi";
 import {getLayout} from "@/components/Layout/BaseLayout/BaseLayout";
 import {useSearchParams} from "next/navigation";
 import {useEffect} from "react";
+import {useSignUpConfirmationMutation} from "@/redux/store/Auth/authApiSlice";
 
 type TokenType = {
     email: string

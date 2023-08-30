@@ -7,7 +7,7 @@ import {imageReducer} from "@/redux/store/imageSlice/imageSlice";
 export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
-        authSlice:authReducer,
+        auth:authReducer,
         images:imageReducer
 
     },

@@ -11,15 +11,18 @@ import {
     ExitIcon,
 } from '@radix-ui/react-icons'
 import Link from "next/link";
-import {useLogoutMutation} from "@/api/authApi";
 import {Button} from "@/shared/ui/button";
 import {useRouter} from "next/router";
 import CreatePostModal from "@/components/CreatePostModal/CreatePostModal";
+import {useAppDispatch} from "@/redux/store";
+import {useLogoutMutation} from "@/redux/store/Auth/authApiSlice";
+import {authAction} from "@/redux/store/Auth/authSlice";
 
 
 const Sidebar = () => {
     const [logout, {isLoading}] = useLogoutMutation()
     const router = useRouter()
+    const dispatch = useAppDispatch()
     const [createPostModal, setCreatePostModal] = useState(false)
     const routes = [
         {title: 'Home', icon: <HomeIcon height={60} width={24}/>, path: '/home'},
@@ -45,7 +48,7 @@ const Sidebar = () => {
         })
     const logoutHandler = async () => {
         try{
-            await logout({}).unwrap()
+            await logout().unwrap()
         }catch (error){
             console.log(error)
         }finally {
@@ -53,6 +56,7 @@ const Sidebar = () => {
                 await router.push('/sign-in')
             }
         }
+        dispatch(authAction.logOut())
     }
 
     return (
@@ -70,14 +74,14 @@ const Sidebar = () => {
                             <BookmarkIcon height={60} width={24}/>
                             <span>Favorites</span>
                         </Link>
-                    <div className={s.footer}>
-                        <Link className={s.route} href={'/sign-in'}>
-                            <ExitIcon height={60} width={24}/>
-                            <Button variant={'link'} isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
-                                Log out
-                            </Button>
-                        </Link>
-                    </div>
+                </div>
+                <div className={s.footer}>
+                    <Link className={s.route} href={'/sign-in'}>
+                        <ExitIcon height={60} width={24}/>
+                        <Button variant={'link'} isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
+                            Log out
+                        </Button>
+                    </Link>
                 </div>
             </div>
             <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal} />
