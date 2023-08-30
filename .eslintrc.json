@@ -34,6 +34,8 @@
     "no-multiple-empty-lines": ["error", {"max": 2, "maxBOF": 1, "maxEOF": 1}],
     "prettier/prettier": "warn",
     "react/react-in-jsx-scope": "off",
+    "jsx-a11y/no-static-element-interactions":"warn",
+    "jsx-a11y/click-events-have-key-events":"warn",
     "import/order": ["warn",
       {
         "groups": [

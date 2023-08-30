@@ -46,7 +46,7 @@ const SignIn = () => {
     });
 
     if (data && data.message === 'Success') {
-        router.push('/profile-settings');
+        router.push('/profile');
     }
 
     const err = error && 'data' in error ? (error as CustomerError).data.errorsMessages : 'Something went wrong';

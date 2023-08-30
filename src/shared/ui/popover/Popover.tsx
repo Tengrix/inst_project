@@ -10,9 +10,9 @@ const CustomPopover = ({ icon, contentChildren }: { icon: ReactNode; contentChil
         <Popover.Portal>
             <Popover.Content className={s.PopoverContent} sideOffset={5}>
                 {contentChildren}
-                <Popover.Close className={s.PopoverClose} aria-label="Close">
-                    <Cross2Icon />
-                </Popover.Close>
+                {/*<Popover.Close className={s.PopoverClose} aria-label="Close">*/}
+                {/*    <Cross2Icon />*/}
+                {/*</Popover.Close>*/}
                 <Popover.Arrow className={s.PopoverArrow} />
             </Popover.Content>
         </Popover.Portal>
