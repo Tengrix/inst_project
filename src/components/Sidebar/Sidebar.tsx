@@ -82,7 +82,12 @@ const Sidebar = ({ messages }: { messages: any }) => {
                     <div className={s.footer}>
                         <Link className={s.route} href={'/sign-in'}>
                             <ExitIcon height={60} width={24} />
-                            <Button variant={'link'} isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
+                            <Button
+                                className={s.btn}
+                                variant={'link'}
+                                isLoading={isLoading}
+                                disabled={isLoading}
+                                onClick={logoutHandler}>
                                 {messages.sidebar.logOut}
                             </Button>
                         </Link>
