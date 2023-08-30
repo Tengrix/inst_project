@@ -1,7 +1,7 @@
-import {Meta, StoryObj} from '@storybook/react'
-import {Pagination, PaginationProps} from "@/shared/ui/pagination/pagination";
-import {useState} from "react";
+import { Meta } from '@storybook/react';
+import { useState } from 'react';
 
+import { Pagination, PaginationProps } from '@/shared/ui/pagination/pagination';
 
 const meta = {
     title: 'Components/Pagination',
@@ -9,16 +9,15 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {
         onPerPageChange: {
-            action: 'changed per page',
+            action: 'changed per page'
         },
         onChange: {
-            action: 'changed page',
-        },
-    },
-} satisfies Meta<typeof Pagination>
+            action: 'changed page'
+        }
+    }
+} satisfies Meta<typeof Pagination>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
 
 // export const Default: Story = {
 //   render: args => {
@@ -27,19 +26,19 @@ type Story = StoryObj<typeof meta>
 //     return <Pagination {...args} totalCount={20} page={page} onChange={setPage} />
 //   },
 // }
-export const WithSelect = (args:PaginationProps) => {
-        const [page, setPage] = useState(1)
-        const [perPage, setPerPage] = useState(10)
+export const WithSelect = (args: PaginationProps) => {
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(10);
 
-        return (
-            <Pagination
-                {...args}
-                totalCount={20}
-                page={page}
-                onChange={setPage}
-                perPage={perPage}
-                onPerPageChange={setPerPage}
-                perPageOptions={[10, 20]}
-            />
-        )
-}
+    return (
+        <Pagination
+            {...args}
+            totalCount={20}
+            page={page}
+            onChange={setPage}
+            perPage={perPage}
+            onPerPageChange={setPerPage}
+            perPageOptions={[10, 20]}
+        />
+    );
+};

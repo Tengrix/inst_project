@@ -1,56 +1,62 @@
-   .header {
-    position: relative;
+.header {
+    /* position: relative; */
     display: flex;
     justify-content: space-between;
-    padding: 30px;
     height: 10px;
+    padding: 30px;
+
     /* background-color: #000000; */
-    background-color:#0D0D0D;
-    border-bottom: 1px solid var(--color-dark-100);
-  }
+    background-color: #0D0D0D;
+    border-bottom: 1px solid var(--color-dark-100)
+}
 
-  .text, .languageSelector, .notificationIcon {
+.text, .languageSelector, .notificationIcon {
     display: flex;
-    align-items: center;
-  }
+    align-items: center
+}
 
-  .text {
+.text {
     justify-content: flex-start;
-    /*flex-grow: 1;*/
-    font-size: 24px;
-  }
+
+    /* flex-grow: 1; */
+    font-size: 24px
+}
 
 
+.languageSelector {
+    justify-content: flex-end
+}
 
-  .languageSelector {
-    justify-content: flex-end;
-  }
+@media screen and (min-width: 425px) {
+    .dots {
+        display: none
+    }
+}
 
-   @media screen and (min-width: 425px) {
-       .dots {
-           display: none;
-       }
-   }
-
-  .notificationIcon {
+.notificationIcon {
     position: relative;
-    right: 35px;
-  }
-  @media screen and (max-width: 425px) {
-      .notificationIcon {
-          display: none;
-      }
-      .header{
-          display: flex;
-      }
-      .dots {
-          margin-left: 20px;
-      }
-  }
-  .dotsIcon{
-      display:flex;
-      align-items:center;
-  }
-   .icon{
-       margin-right: 10px;
-   }
+    right: 35px
+}
+
+@media screen and (max-width: 425px) {
+    .notificationIcon {
+        display: none
+    }
+
+    .header {
+        display: flex
+    }
+
+    .dots {
+        margin-left: 20px
+    }
+}
+
+.dotsIcon {
+    display: flex;
+    align-items: center
+}
+
+.icon {
+    margin-right: 10px
+}

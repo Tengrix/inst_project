@@ -1,30 +1,25 @@
-import {CustomerError, } from "@/api/authApi";
-import classes from "@/pages/sign-in/SignIn.module.scss";
-import { Button } from "@/shared/ui/button";
-import { Card } from "@/shared/ui/card";
-import { ControlledTextField } from "@/shared/ui/controlled";
-import { Typography } from "@/shared/ui/typography";
-import {LoginFormType, loginSchema} from "@/shared/utils/schemas/loginSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
-import Link from "next/link";
-import { GetStaticPropsContext } from "next/types";
-import { Github } from "public/icon/github-logo";
-import { Google } from "public/icon/google-logo";
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
+import { CustomerError, useLoginMutation } from '@/api/authApi';
+import classes from '@/pages/sign-in/SignIn.module.scss';
+import { authAction } from '@/redux/store/Auth/authSlice';
+import { Button } from '@/shared/ui/button';
+import { Card } from '@/shared/ui/card';
+import { ControlledTextField } from '@/shared/ui/controlled';
+import { Typography } from '@/shared/ui/typography';
+import { LoginFormType, loginSchema } from '@/shared/utils/schemas/loginSchema';
+import { Github } from 'public/icon/github-logo';
+import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import {useRouter} from "next/router";
-import {useDispatch} from "react-redux";
-import {authAction} from "@/redux/store/Auth/authSlice";
-import {useLoginMutation} from "@/redux/store/Auth/authApiSlice";
-import {useAppSelector} from "@/redux/store";
-import {Checkbox} from "@/shared/ui/checkbox";
-import {useEffect} from "react";
-import {Routes} from "@/shared/routes/Routes";
 
-
-export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
-    const messages = (await import(`../../../messages/${locale}/auth.json`)).default;
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
 
     const t = createTranslator({ locale: locale as string, messages });
 
@@ -33,22 +28,22 @@ export async function getStaticProps({ locale='en' }: GetStaticPropsContext) {
             messages: messages,
             title: t('auth.signInPage.title'),
             metaDescription: t('auth.signInPage.meta_description')
-        },
+        }
     };
 }
 
 const SignIn = () => {
-    const [signIn, {error,isLoading, data, isError}] = useLoginMutation();
+    const [signIn, { error, isLoading, data, isError }] = useLoginMutation();
     const router = useRouter()
     const translationPath = 'auth';
-    const {token,trustDevice} = useAppSelector(state=>state.auth)
+    const {token,trustDevice} = useAppSelector(state=>state.auth);
     const t = useTranslations(translationPath);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
 
     useEffect(()=>{
         if(token!==''){
-            router.push(Routes.PROFILE)
+            router.push('/profile-settings')
         }
         localStorage.setItem('trust',String(trustDevice))
     },[data,token])
@@ -87,31 +82,43 @@ const SignIn = () => {
                     </div>
                 </div>
                 <form className={classes.form} onSubmit={onSubmit}>
-                    <ControlledTextField control={control} translation={translationPath} name={'userName'} label={'Username'} />
-                    <ControlledTextField control={control} translation={translationPath} name={'password'} label={'Password'} type={'password'} />
+                    <ControlledTextField
+                        control={control}
+                        translation={translationPath}
+                        name={'userName'}
+                        label={t('form.username')}
+                    />
+                    <ControlledTextField
+                        control={control}
+                        translation={translationPath}
+                        name={'password'}
+                        label={t('form.password')}
+                        type={'password'}
+                    />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
                     </Link>
-                    <Button isLoading={isLoading} type={'submit'} disabled={isLoading} className={classes.form__btn} fullWidth>
+                    <Button
+                        isLoading={isLoading}
+                        type={'submit'}
+                        disabled={isLoading}
+                        className={classes.form__btn}
+                        fullWidth>
                         {t('button.signInButton')}
                     </Button>
-                    <div className={classes.form__error}>
-                        {isError && err}
-                    </div>
+                    <div className={classes.form__error}>{isError && err}</div>
                 </form>
                 <div className={classes.footer}>
                     <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice}/>
-                    <Typography>
-                        {t('signInPage.question')}
-                    </Typography>
+                    <Typography>{t('signInPage.question')}</Typography>
                     <Link href={'/sign-up'} className={classes.link}>
                         {t('signUpPage.h1')}
                     </Link>
                 </div>
             </Card>
         </div>
-    )
-}
+    );
+};
 
-SignIn.getLayout = getLayout
+SignIn.getLayout = getLayout;
 export default SignIn;

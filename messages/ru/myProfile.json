@@ -1,0 +1,9 @@
+{
+    "myProfile": {
+      "pageTitle": "Мой профиль",
+      "following": "Подписки",
+      "followers": "Подписчики",
+      "publications": "Публикации",
+      "profileSettings": "Настройки профиля"
+    }
+}

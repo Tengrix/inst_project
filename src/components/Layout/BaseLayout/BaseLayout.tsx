@@ -1,13 +1,15 @@
-import {NextPage} from 'next';
-import {PropsWithChildren, ReactElement} from 'react';
-import {Layout} from '@/components/Layout/Layout';
+import { NextPage } from 'next';
+import { PropsWithChildren, ReactElement } from 'react';
 
-export const BaseLayout: NextPage<PropsWithChildren> = (props) => {
-    const {children} = props
+import { Layout } from '@/components/Layout/Layout';
 
-    return <Layout>{children}</Layout>
-}
+export const BaseLayout: NextPage<PropsWithChildren> = props => {
+    // eslint-disable-next-line react/prop-types
+    const { children } = props;
+
+    return <Layout>{children}</Layout>;
+};
 
 export const getLayout = (page: ReactElement) => {
-    return <BaseLayout>{page}</BaseLayout>
-}
+    return <BaseLayout>{page}</BaseLayout>;
+};
