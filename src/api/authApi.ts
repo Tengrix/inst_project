@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
 import { GetUserDataResponseType, LoginResponseType } from '@/api/types';
-import { ImageType } from '@/redux/store/imageSlice/types/store';
+import { PostType } from '@/components/Post/types';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -10,6 +10,7 @@ export const authApi = createApi({
         baseUrl: baseURL,
         credentials: 'include'
     }),
+    tagTypes: ['Post'],
     endpoints: builder => {
         return {
             checkApp: builder.query<void, void>({
@@ -87,17 +88,35 @@ export const authApi = createApi({
                 query: data => {
                     const formData = new FormData();
                     formData.append('description', data.description);
-                    data.files.forEach(photo => {
-                        formData.append('files', photo.src);
+                    data.files.forEach(({ blob, filename }) => {
+                        formData.append('files', blob, filename);
                     });
                     formData.append('title', data.title);
                     return {
                         url: '/post',
                         method: 'POST',
-                        body: formData,
-                        headers: { 'Content-Type': 'multipart/form-data' }
+                        body: formData
                     };
-                }
+                },
+                invalidatesTags: ['Post']
+            }),
+            getAllPosts: builder.query<PostType[], void>({
+                query: () => {
+                    return {
+                        url: '/post/all'
+                    };
+                },
+                providesTags: ['Post']
+            }),
+            deletePost: builder.mutation<any, { id: string }>({
+                query: data => {
+                    return {
+                        url: '/post',
+                        method: 'DELETE',
+                        body: data
+                    };
+                },
+                invalidatesTags: ['Post']
             }),
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
@@ -105,7 +124,7 @@ export const authApi = createApi({
                     formData.append('aboutMe', data.aboutMe);
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file, 'avatar.jpeg');
+                    formData.append('file', data.file);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
                     return {
@@ -137,6 +156,8 @@ export const {
     usePasswordRecoveryMutation,
     useLogoutMutation,
     useCreatePostMutation,
+    useGetAllPostsQuery,
+    useDeletePostMutation,
     useSubmitUserDataMutation,
     useGetUserDataQuery
 } = authApi;
@@ -177,6 +198,9 @@ export type SignUpErrorType = {
 };
 export type PostFormData = {
     description: string;
-    files: ImageType[];
+    files: Array<{
+        blob: Blob;
+        filename: string;
+    }>;
     title: string;
 };

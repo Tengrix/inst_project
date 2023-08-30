@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  :last-child {
+    margin-left: auto
+  }
+}
+
+.photo {
+
+}
+
+.icons {
+  display: flex;
+  gap: 20px;
+
+  :last-child {
+    margin-left: auto
+  }
+}
+
+.description {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start
+}
+
+.likes {
+
+}
+
+.comments {
+
+}
+
+.newComment {
+  display: flex;
+  justify-content: space-between
+}
+
+.line {
+  height: 1px;
+  background-color: #494545
+}

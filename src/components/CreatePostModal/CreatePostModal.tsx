@@ -1,10 +1,11 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useCreatePostMutation } from '@/api/authApi';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 import { useAppSelector } from '@/redux/store';
-import { addImage } from '@/redux/store/imageSlice/imageSlice';
+import { addImage, resetImageState } from '@/redux/store/imageSlice/imageSlice';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
@@ -26,26 +27,35 @@ type Props = {
 
 const CreatePostModal = (props: Props) => {
     const dispatch = useDispatch();
-    const [preview, setPreview] = useState<string>(''); // Фото-превью
+    const [preview, setPreview] = useState<string>('');
     const [editModal, setEditModal] = useState(false);
     const [error, setError] = useState('');
     const [confirmCloseModal, setConfirmCloseModal] = useState(false);
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping');
+    const router = useRouter();
 
     const { title, images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
 
     const [publishPost] = useCreatePostMutation();
 
-    const nextBtnHandler = () => {
+    const nextBtnHandler = async () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters');
         else if (currentStep === 'Filters') setCurrentStep('Publication');
         else if (currentStep === 'Publication') {
-            console.log('publish');
-            publishPost({ title, files: images as any, description });
-            // setEditModal(false)
-            // props.modalHandler(false)
-            // setCurrentStep('Cropping')
+            const imagesBlob = [];
+            for (const image of images) {
+                const blob = await fetch(image.src).then(r => r.blob());
+                imagesBlob.push({ blob, filename: image.name });
+            }
+            publishPost({ title, files: imagesBlob, description })
+                .unwrap()
+                .then(() => {
+                    setEditModal(false);
+                    props.modalHandler(false);
+                    dispatch(resetImageState());
+                    router.push('/home');
+                });
         }
     };
     const prevBtnHandler = () => {
@@ -71,6 +81,7 @@ const CreatePostModal = (props: Props) => {
         setEditModal(false);
         props.modalHandler(false);
         setCurrentStep('Cropping');
+        dispatch(resetImageState());
     };
     const saveDraftHandler = () => {
         setConfirmCloseModal(false);

@@ -9,20 +9,27 @@ services:
                     cpus: "2"
                     memory: 2048M
         environment:
-            PORT: 3000
+            PORT: 3001
             JWT_SECRET: secret
-            JWT_EXPIRATION_TIME: 100
+            JWT_TOKEN_EXPIRATION_TIME: 7d
             JWT_REFRESH_TOKEN_SECRET: token_secret
-            JWT_REFRESH_TOKEN_EXPIRATION_TIME: 100
+            JWT_REFRESH_TOKEN_EXPIRATION_TIME: 1m
             DATABASE_URL: postgres://user:password@db/db
+            TEST_MAILER_EMAIL: noreply@gmail.com
+            FRONTEND_CONFIRM_EMAIL_LINK: http://localhost:3000/sign-up/email-verification
+            AWS_ACCESS_KEY_ID: access_key
+            AWS_REGION: eu-north-1
+            AWS_SECRET_ACCESS_KEY: secret_key
+            AWS_PROFILE_BUCKET_NAME: inctagram
         ports:
-            - "3001:3000"
+            - "3001:3001"
         volumes:
             - ./backend:/var/www/backend
             - ./docker-entrypoint.sh:/var/www/backend/docker-entrypoint.sh
         command: ["/bin/bash", "docker-entrypoint.sh"]
         depends_on:
             - db
+
     db:
         image: postgres
         environment:
@@ -33,3 +40,33 @@ services:
         ports:
             - "5432:5432"
 
+    pgadmin:
+        image: dpage/pgadmin4
+        user: root
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: password
+            PGADMIN_LISTEN_ADDRESS: 0.0.0.0
+        ports:
+        - "5050:80"
+        volumes:
+            - ./backend/pgadmin:/var/lib/pgadmin
+
+    mailer:
+        image: dockage/mailcatcher
+        ports:
+            - "1025:1025"
+            - "1080:1080"
+
+    localstack:
+        image: localstack/localstack
+        ports:
+        - "4510-4559:4510-4559"
+        - "4566:4566"
+        environment:
+          SERVICES: s3
+          PERSISTENCE: 1
+          DISABLE_CORS_CHECKS: 1
+        volumes:
+            - ./create_bucket.sh:/etc/localstack/init/ready.d/create_bucket.sh
+            - ./backend/localstack:/var/lib/localstack
