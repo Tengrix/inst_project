@@ -10,17 +10,19 @@ import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/authApi';
 import { Canvas } from '@/components/Canvas/Canvas';
 import EditAvatarModal from '@/components/EditAvatarModal/EditAvatarModal';
 import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
-import styles from '@/pages/profile-settings/general-information/styles.module.css';
+import styles from '@/pages/profile-settings/general-information/styles.module.scss';
 import { Button } from '@/shared/ui/button';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { ControlledTextAreaField } from '@/shared/ui/controlled/controlled-text-area';
 import NewDatePicker from '@/shared/ui/newDatePicker/NewDatePicker';
+import { Typography } from '@/shared/ui/typography';
 import { editProfileSchema } from '@/shared/utils/schemas/editProfileSchema';
 import github from 'public/assets/gitHub.png';
 
 export type EditProfileType = z.infer<typeof editProfileSchema>;
 
 const FormPage = () => {
+    const [error, setError] = useState('');
     const [image, setImage] = useState('');
     const [crop, setCrop] = useState<Crop>();
     const [canvas, setCanvas] = useState<HTMLCanvasElement>();
@@ -33,28 +35,30 @@ const FormPage = () => {
         resolver: zodResolver(editProfileSchema)
     });
     useEffect(() => {
-        console.log(userData);
         if (userData) {
             userData.photo && setImage(userData.photo);
             reset({
                 birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
-                aboutMe: userData?.aboutMe,
-                city: userData?.city,
-                firstName: userData?.firstName,
-                lastName: userData?.lastName,
+                aboutMe: userData?.aboutMe ?? '',
+                city: userData?.city ?? '',
+                firstName: userData?.firstName ?? '',
+                lastName: userData?.lastName ?? '',
                 userName: userData?.login
             });
         }
     }, [userData]);
+    useEffect(() => {
+        blob && setError('');
+    }, [blob]);
 
     const getCanvas = (canvas: HTMLCanvasElement) => {
         setCanvas(canvas);
     };
 
     const onSubmit = handleSubmit(async data => {
-        console.log(data);
         const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        blob && editProfile({ ...data, file: blob, birthdayDate: date });
+
+        blob ? editProfile({ ...data, file: blob, birthdayDate: date }) : setError('Please download your photo');
     });
 
     return (
@@ -95,6 +99,9 @@ const FormPage = () => {
                     </div>
                 </div>
                 <div className={styles.line}></div>
+                <Typography variant={'regular14'} color={'error'}>
+                    {error}
+                </Typography>
                 <Button className={styles.btn}>Save changes</Button>
             </form>
         </div>

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -31,6 +32,7 @@ const CreatePostModal = (props: Props) => {
     const [error, setError] = useState('');
     const [confirmCloseModal, setConfirmCloseModal] = useState(false);
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping');
+    const router = useRouter();
 
     const { title, images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
@@ -52,6 +54,7 @@ const CreatePostModal = (props: Props) => {
                     setEditModal(false);
                     props.modalHandler(false);
                     dispatch(resetImageState());
+                    router.push('/home');
                 });
         }
     };

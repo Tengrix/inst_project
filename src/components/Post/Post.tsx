@@ -8,7 +8,7 @@ import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { ShareIcon } from '@/assets/icons/ShareIcon';
 import PostOptions from '@/components/Post/PostOptions/PostOptions';
 import { PostType } from '@/components/Post/types';
-import styles from '@/pages/profile-settings/general-information/styles.module.css';
+import styles from '@/pages/profile-settings/general-information/styles.module.scss';
 import { Button } from '@/shared/ui/button';
 import CustomPopover from '@/shared/ui/popover/Popover';
 import Spinner from '@/shared/ui/spinner/Spinner';
