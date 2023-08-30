@@ -23,7 +23,7 @@ const Sidebar = ({ messages }: { messages: any }) => {
     const router = useRouter();
     const [createPostModal, setCreatePostModal] = useState(false);
     const routes = [
-        { title: messages.sidebar.news, icon: <HomeIcon height={60} width={24} />, path: '/home' },
+        { title: messages.sidebar.home, icon: <HomeIcon height={60} width={24} />, path: '/home' },
         {
             title: messages.sidebar.publish,
             icon: <PlusCircledIcon height={60} width={24} />,

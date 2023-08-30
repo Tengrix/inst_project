@@ -103,7 +103,7 @@ export const authApi = createApi({
                     formData.append('aboutMe', data.aboutMe);
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file, 'avatar.jpeg');
+                    formData.append('file', data.file);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
                     return {
