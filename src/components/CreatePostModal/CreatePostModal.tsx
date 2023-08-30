@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useCreatePostMutation } from '@/api/authApi';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 import { useAppSelector } from '@/redux/store';
-import { addImage } from '@/redux/store/imageSlice/imageSlice';
+import { addImage, resetImageState } from '@/redux/store/imageSlice/imageSlice';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
@@ -26,7 +26,7 @@ type Props = {
 
 const CreatePostModal = (props: Props) => {
     const dispatch = useDispatch();
-    const [preview, setPreview] = useState<string>(''); // Фото-превью
+    const [preview, setPreview] = useState<string>('');
     const [editModal, setEditModal] = useState(false);
     const [error, setError] = useState('');
     const [confirmCloseModal, setConfirmCloseModal] = useState(false);
@@ -44,9 +44,15 @@ const CreatePostModal = (props: Props) => {
             const imagesBlob = [];
             for (const image of images) {
                 const blob = await fetch(image.src).then(r => r.blob());
-                imagesBlob.push({blob, filename: image.name});
+                imagesBlob.push({ blob, filename: image.name });
             }
             publishPost({ title, files: imagesBlob, description })
+                .unwrap()
+                .then(() => {
+                    setEditModal(false);
+                    props.modalHandler(false);
+                    dispatch(resetImageState());
+                });
         }
     };
     const prevBtnHandler = () => {
@@ -72,6 +78,7 @@ const CreatePostModal = (props: Props) => {
         setEditModal(false);
         props.modalHandler(false);
         setCurrentStep('Cropping');
+        dispatch(resetImageState());
     };
     const saveDraftHandler = () => {
         setConfirmCloseModal(false);

@@ -44,5 +44,6 @@ module.exports = {
                 pathname: '/**'
             }
         ]
-    }
+    },
+    exclude: ['backend']
 };
