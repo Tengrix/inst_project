@@ -14,8 +14,10 @@ import { Typography } from '@/shared/ui/typography';
 import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
-import { useSignUpMutation } from 'src/api/authApi';
+import { SignUpErrorType } from 'src/api/authApi';
+import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
+import {useSignUpMutation} from "@/redux/store/Auth/authApiSlice";
 
 import s from './SignUp.module.scss';
 

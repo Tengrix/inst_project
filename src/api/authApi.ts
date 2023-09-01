@@ -1,89 +1,51 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {BaseQueryApi, createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {baseURL} from "@/api/instances";
+import {RootStateType} from "@/redux/store";
+import {BaseQueryFn, FetchArgs, FetchBaseQueryError} from "@reduxjs/toolkit/query";
+import {authAction} from "@/redux/store/Auth/authSlice";
+import {PublicRoutes} from "@/shared/routes/Routes";
+import { GetUserDataResponseType } from '@/api/types';
 
-import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType, LoginResponseType } from '@/api/types';
-import { PostType } from '@/components/Post/types';
+const baseQuery = fetchBaseQuery({
+    baseUrl: baseURL,
+    credentials: 'include',
+    prepareHeaders: (headers, {getState,endpoint}) => {
+        const token = (getState() as RootStateType).auth.token
+        if(token && !PublicRoutes.find(route=>route===`/${endpoint}`)){
+            headers.set('Authorization', `Bearer ${token}`)
+        }
+        return headers
+    }
+})
+
+const baseQueryWithReauth: BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+    let result = await baseQuery(args,api,extraOptions)
+    if(result?.error?.status===403 || result?.error?.status===401){
+        console.log('sending refresh token')
+        //send refresh token to get new access token
+        const refreshResult = await baseQuery('/auth/refresh-token', api, extraOptions)
+        if(refreshResult.data){
+            // store the new token
+            api.dispatch(authAction.setCredentials({...refreshResult.data}))
+            // retry the original query with new access token
+            result = await baseQuery(args,api, extraOptions)
+        }else{
+            api.dispatch(authAction.logOut())
+        }
+    }
+    return result
+}
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: baseURL,
-        credentials: 'include'
-    }),
+    baseQuery: baseQueryWithReauth,
     tagTypes: ['Post'],
-    endpoints: builder => {
+    endpoints: (builder) => {
         return {
-            checkApp: builder.query<void, void>({
-                query: () => {
-                    return {
-                        url: ''
-                    };
-                }
-            }),
-            getMe: builder.query({
-                query: () => ({
-                    url: '/auth/refresh-token'
-                })
-            }),
-            signUp: builder.mutation<void, RegisterParamsType>({
-                query: data => {
-                    return {
-                        method: 'POST',
-                        url: '/auth/registration',
-                        body: {
-                            login: data.userName,
-                            password: data.password,
-                            email: data.email
-                        }
-                    };
-                }
-            }),
-            signUpConfirmation: builder.mutation<void, { code: string }>({
-                query: data => ({
-                    url: '/auth/registration-confirmation',
-                    method: 'POST',
-                    body: data
-                })
-            }),
-            resendEmailConfirmation: builder.mutation<void, { email: string }>({
-                query: data => {
-                    return {
-                        method: 'POST',
-                        url: '/auth/registration-email-resending',
-                        body: {
-                            email: data.email
-                        }
-                    };
-                }
-            }),
-            passwordRecovery: builder.mutation<void, { email: string; recaptchaValue: string }>({
-                query: data => ({
-                    url: '/auth/password-recovery',
-                    method: 'POST',
-                    body: data
-                })
-            }),
-            resetPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
-                query: data => ({
-                    url: '/auth/new-password',
-                    method: 'POST',
-                    body: data
-                })
-            }),
-            login: builder.mutation<LoginResponseType, { login: string; password: string }>({
-                query: data => ({
-                    url: `/auth/login`,
-                    method: 'POST',
-                    body: data
-                })
-            }),
-            logout: builder.mutation<void, unknown>({
-                query: (args = {}) => ({
-                    url: `/auth/logout`,
-                    method: 'POST',
-                    body: args
-                })
-            }),
             createPost: builder.mutation<void, PostFormData>({
                 query: data => {
                     const formData = new FormData();
@@ -146,15 +108,6 @@ export const authApi = createApi({
 });
 
 export const {
-    useCheckAppQuery,
-    useSignUpMutation,
-    useResendEmailConfirmationMutation,
-    useGetMeQuery,
-    useLoginMutation,
-    useSignUpConfirmationMutation,
-    useResetPasswordMutation,
-    usePasswordRecoveryMutation,
-    useLogoutMutation,
     useCreatePostMutation,
     useGetAllPostsQuery,
     useDeletePostMutation,

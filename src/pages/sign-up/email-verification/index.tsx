@@ -2,7 +2,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { useSignUpConfirmationMutation } from '@/api/authApi';
+import {useSignUpConfirmationMutation} from "@/redux/store/Auth/authApiSlice";
 import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 
 const EmailLinkValidationWrapper = () => {

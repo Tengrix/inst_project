@@ -6,9 +6,8 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { CustomerError, useLoginMutation } from '@/api/authApi';
+import { CustomerError } from '@/api/authApi';
 import classes from '@/pages/sign-in/SignIn.module.scss';
-import { authAction } from '@/redux/store/Auth/authSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
@@ -17,6 +16,12 @@ import { LoginFormType, loginSchema } from '@/shared/utils/schemas/loginSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
+import {useLoginMutation} from "@/redux/store/Auth/authApiSlice";
+import {useAppSelector} from "@/redux/store";
+import {useEffect} from "react";
+import {Checkbox} from "@/shared/ui/checkbox";
+import {Routes} from "@/shared/routes/Routes";
+import {authAction} from "@/redux/store/Auth/authSlice";
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`messages/${locale}/auth.json`)).default;
@@ -33,23 +38,35 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    const [signIn, { error, isLoading, data, isError }] = useLoginMutation();
+    const [signIn, { error, isLoading, isError}] = useLoginMutation();
+    const router = useRouter()
     const translationPath = 'auth';
-    const router = useRouter();
+    const {token,trustDevice} = useAppSelector(state=>state.auth);
     const t = useTranslations(translationPath);
     const dispatch = useDispatch();
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
-    const onSubmit = handleSubmit(data => {
-        signIn({ password: data.password, login: data.userName })
-            .unwrap()
-            .then(() => dispatch(authAction.setAuth(true)));
-    });
 
-    if (data && data.message === 'Success') {
-        router.push('/profile');
+    useEffect(()=>{
+        if(token){
+            router.push(Routes.PROFILE)
+        }
+    },[token])
+
+    const onSubmit = handleSubmit(async (data,e) => {
+        e?.preventDefault()
+        try {
+            const userData = await signIn({ password: data.password, login: data.userName }).unwrap()
+            dispatch(authAction.setCredentials(userData))
+            console.log(userData)
+        }catch (e) {
+            console.log(e && error)
+        }
+    })
+
+    const err = error && 'data' in error ? (error as CustomerError ).data.errorsMessages : 'Something went wrong'
+    const checkDevice = () => {
+        dispatch(authAction.setCheckDevice(!trustDevice))
     }
-
-    const err = error && 'data' in error ? (error as CustomerError).data.errorsMessages : 'Something went wrong';
 
     return (
         <div className={classes.container}>
@@ -95,6 +112,7 @@ const SignIn = () => {
                     <div className={classes.form__error}>{isError && err}</div>
                 </form>
                 <div className={classes.footer}>
+                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice}/>
                     <Typography>{t('signInPage.question')}</Typography>
                     <Link href={'/sign-up'} className={classes.link}>
                         {t('signUpPage.h1')}

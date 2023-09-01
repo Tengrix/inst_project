@@ -10,7 +10,7 @@ import { authApi } from 'src/api/authApi';
 export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
-        authSlice: authReducer,
+        auth: authReducer,
         images: imageReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authApi.middleware)

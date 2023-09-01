@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { useResendEmailConfirmationMutation } from '@/api/authApi';
+import {useResendEmailConfirmationMutation} from "@/redux/store/Auth/authApiSlice";
 import { Button } from '@/shared/ui/button';
 import img from 'public/assets/expiredLink.png';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';

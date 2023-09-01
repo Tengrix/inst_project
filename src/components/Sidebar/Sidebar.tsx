@@ -12,14 +12,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
-import { useLogoutMutation } from '@/api/authApi';
+import {useLogoutMutation} from "@/redux/store/Auth/authApiSlice";
 import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
 import { Button } from '@/shared/ui/button';
 
 import s from './Sidebar.module.scss';
+import {useAppDispatch} from "@/redux/store";
+import {authAction} from "@/redux/store/Auth/authSlice";
+import {Routes} from "@/shared/routes/Routes";
 
 const Sidebar = ({ messages }: { messages: any }) => {
-    const [logout, { isLoading }] = useLogoutMutation();
+    const [logout, { isLoading, isSuccess }] = useLogoutMutation();
+    const dispatch = useAppDispatch()
     const router = useRouter();
     const [createPostModal, setCreatePostModal] = useState(false);
     const routes = [
@@ -55,20 +59,18 @@ const Sidebar = ({ messages }: { messages: any }) => {
         }
     });
     const logoutHandler = async () => {
-        try {
-            await logout({}).unwrap();
-        } catch (error) {
-            console.log(error);
-        } finally {
-            if (!isLoading) {
-                await router.push('/sign-in');
-            }
+        try{
+            await logout().unwrap().then(()=>router.push(Routes.LOGIN))
+        }catch (error){
+            console.log(error)
         }
-    };
+        dispatch(authAction.logOut())
+    }
+
 
     return (
         <div className={s.container}>
-            <div>
+            <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
                 <div className={s.wrapper}>
                     <Link className={s.route} href={'/statistics'}>
