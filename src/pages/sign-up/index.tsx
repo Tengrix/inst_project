@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import EmailSentModal from '@/pages/sign-up/email-sent-modal/email-sent-modal';
+import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/controlled';
@@ -15,9 +16,7 @@ import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { SignUpErrorType } from 'src/api/authApi';
-import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import {useSignUpMutation} from "@/redux/store/Auth/authApiSlice";
 
 import s from './SignUp.module.scss';
 
