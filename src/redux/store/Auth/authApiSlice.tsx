@@ -1,22 +1,22 @@
-import {authApi, RegisterParamsType} from '@/api/authApi'
-import {LoginResponseType} from "@/api/types";
+import { authApi, RegisterParamsType } from '@/api/authApi';
+import { LoginResponseType } from '@/api/types';
 
 export const authApiSlice = authApi.injectEndpoints({
     endpoints: builder => ({
-        login: builder.mutation<LoginResponseType, { login: string, password: string }>({
-            query: (data) => ({
+        login: builder.mutation<LoginResponseType, { login: string; password: string }>({
+            query: data => ({
                 url: `/auth/login`,
                 method: 'POST',
-                body: data,
-            }),
+                body: data
+            })
         }),
-        refreshToken: builder.query<void,void>({
+        refreshToken: builder.query<void, void>({
             query: () => ({
-                url:'/auth/refresh-token'
+                url: '/auth/refresh-token'
             })
         }),
         signUp: builder.mutation<void, RegisterParamsType>({
-            query: (data) => {
+            query: data => {
                 return {
                     method: 'POST',
                     url: '/auth/registration',
@@ -25,36 +25,36 @@ export const authApiSlice = authApi.injectEndpoints({
                         password: data.password,
                         email: data.email
                     }
-                }
+                };
             }
         }),
         signUpConfirmation: builder.mutation<void, { code: string }>({
-            query: (data) => ({
+            query: data => ({
                 url: '/auth/registration-confirmation',
                 method: 'POST',
-                body: data,
+                body: data
             })
         }),
         resendEmailConfirmation: builder.mutation<void, { email: string }>({
-            query: (data) => {
+            query: data => {
                 return {
                     method: 'POST',
                     url: '/auth/registration-email-resending',
                     body: {
                         email: data.email
                     }
-                }
+                };
             }
         }),
-        passwordRecovery: builder.mutation<void, { email: string,recaptchaValue:string }>({
-            query: (data) => ({
+        passwordRecovery: builder.mutation<void, { email: string; recaptchaValue: string }>({
+            query: data => ({
                 url: '/auth/password-recovery',
                 method: 'POST',
                 body: data
             })
         }),
-        resetPassword: builder.mutation<void, { newPassword: string, recoveryCode: string }>({
-            query: (data) => ({
+        resetPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
+            query: data => ({
                 url: '/auth/new-password',
                 method: 'POST',
                 body: data
@@ -63,11 +63,11 @@ export const authApiSlice = authApi.injectEndpoints({
         logout: builder.mutation<void, void>({
             query: () => ({
                 url: `/auth/logout`,
-                method: 'POST',
-            }),
-        }),
+                method: 'POST'
+            })
+        })
     })
-})
+});
 
 export const {
     useSignUpMutation,
@@ -79,4 +79,4 @@ export const {
     usePasswordRecoveryMutation,
     useLogoutMutation,
     useLazyRefreshTokenQuery
-} = authApiSlice
+} = authApiSlice;
