@@ -27,7 +27,7 @@ const Sidebar = ({ messages }: { messages: any }) => {
     const router = useRouter();
     const [createPostModal, setCreatePostModal] = useState(false);
     const routes = [
-        { title: messages.sidebar.news, icon: <HomeIcon height={60} width={24} />, path: '/home' },
+        { title: messages.sidebar.home, icon: <HomeIcon height={60} width={24} />, path: '/home' },
         {
             title: messages.sidebar.publish,
             icon: <PlusCircledIcon height={60} width={24} />,
@@ -84,7 +84,12 @@ const Sidebar = ({ messages }: { messages: any }) => {
                     <div className={s.footer}>
                         <Link className={s.route} href={'/sign-in'}>
                             <ExitIcon height={60} width={24} />
-                            <Button variant={'link'} isLoading={isLoading} disabled={isLoading} onClick={logoutHandler}>
+                            <Button
+                                className={s.btn}
+                                variant={'link'}
+                                isLoading={isLoading}
+                                disabled={isLoading}
+                                onClick={logoutHandler}>
                                 {messages.sidebar.logOut}
                             </Button>
                         </Link>
