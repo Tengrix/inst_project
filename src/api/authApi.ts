@@ -1,11 +1,10 @@
 import {BaseQueryApi, createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {baseURL} from "@/api/instances";
-import {CommonServerResponse} from "@/api/types/LoginPropsType";
-import {ImageType} from "@/redux/store/imageSlice/types/store";
 import {RootStateType} from "@/redux/store";
 import {BaseQueryFn, FetchArgs, FetchBaseQueryError} from "@reduxjs/toolkit/query";
 import {authAction} from "@/redux/store/Auth/authSlice";
 import {PublicRoutes} from "@/shared/routes/Routes";
+import { GetUserDataResponseType } from '@/api/types';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: baseURL,
@@ -41,8 +40,6 @@ const baseQueryWithReauth: BaseQueryFn<
     return result
 }
 
-import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType, LoginResponseType } from '@/api/types';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -92,15 +89,6 @@ export const authApi = createApi({
 });
 
 export const {
-    useCheckAppQuery,
-    useSignUpMutation,
-    useResendEmailConfirmationMutation,
-    useGetMeQuery,
-    useLoginMutation,
-    useSignUpConfirmationMutation,
-    useResetPasswordMutation,
-    usePasswordRecoveryMutation,
-    useLogoutMutation,
     useCreatePostMutation,
     useSubmitUserDataMutation,
     useGetUserDataQuery

@@ -1,9 +1,9 @@
 import {authApi, RegisterParamsType} from '@/api/authApi'
-import {CommonServerResponse} from "@/api/types/LoginPropsType";
+import {LoginResponseType} from "@/api/types";
 
 export const authApiSlice = authApi.injectEndpoints({
     endpoints: builder => ({
-        login: builder.mutation<CommonServerResponse, { login: string, password: string }>({
+        login: builder.mutation<LoginResponseType, { login: string, password: string }>({
             query: (data) => ({
                 url: `/auth/login`,
                 method: 'POST',

@@ -1,31 +1,34 @@
-import React, {FC, PropsWithChildren, ReactNode, useEffect, useState} from 'react';
+import React, {FC, PropsWithChildren, useEffect, useState} from 'react';
 import Spinner from "@/shared/ui/spinner/Spinner";
-import {useLazyRefreshTokenQuery, useLoginMutation, useRefreshTokenQuery} from "@/redux/store/Auth/authApiSlice";
+import {useLazyRefreshTokenQuery, useRefreshTokenQuery} from "@/redux/store/Auth/authApiSlice";
 import {useAppDispatch, useAppSelector} from "@/redux/store";
 import {authAction} from "@/redux/store/Auth/authSlice";
 import {useRouter} from "next/router";
-import {PrivateRoutes, PublicRoutes, Routes} from "@/shared/routes/Routes";
+import {Routes} from "@/shared/routes/Routes";
 
 export const Redirect: FC<PropsWithChildren> = ({children}) => {
-    const [refreshToken, {data,isSuccess,isLoading}] = useLazyRefreshTokenQuery()
+    const {data,isSuccess,isError} = useRefreshTokenQuery()
+    const [isLoading,setIsLoading] = useState(true)
     const {token,trustDevice} = useAppSelector(state=> state.auth)
     const dispatch = useAppDispatch()
     const {push} = useRouter()
 
     useEffect(() => {
-        const validateToken = async () => {
-            try {
-                const newToken = await refreshToken()
-                if(isSuccess){
-                    dispatch(authAction.setCredentials(newToken?.data))
-                }
-            }catch (e) {
-                console.log(e)
-            }
+        if(isSuccess){
+            dispatch(authAction.setCredentials(data))
+            setIsLoading(false)
         }
-        token==='' ? validateToken() : null
     }, [data])
 
+    useEffect(()=>{
+        if(isError){
+            push(Routes.LOGIN).then(()=>setIsLoading(false))
+            setIsLoading(false)
+        }
+    },[isError])
+
+
+    console.log('REDIRECT', {token})
 
     return (
         <>

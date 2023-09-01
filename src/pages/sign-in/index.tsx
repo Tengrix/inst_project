@@ -6,9 +6,8 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { CustomerError, useLoginMutation } from '@/api/authApi';
+import { CustomerError } from '@/api/authApi';
 import classes from '@/pages/sign-in/SignIn.module.scss';
-import { authAction } from '@/redux/store/Auth/authSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
@@ -17,6 +16,12 @@ import { LoginFormType, loginSchema } from '@/shared/utils/schemas/loginSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
+import {useLoginMutation} from "@/redux/store/Auth/authApiSlice";
+import {useAppSelector} from "@/redux/store";
+import {useEffect} from "react";
+import {Checkbox} from "@/shared/ui/checkbox";
+import {Routes} from "@/shared/routes/Routes";
+import {authAction} from "@/redux/store/Auth/authSlice";
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`messages/${locale}/auth.json`)).default;
@@ -33,7 +38,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    const [signIn, { error, isLoading, data, isError }] = useLoginMutation();
+    const [signIn, { error, isLoading, isError}] = useLoginMutation();
     const router = useRouter()
     const translationPath = 'auth';
     const {token,trustDevice} = useAppSelector(state=>state.auth);
@@ -42,11 +47,10 @@ const SignIn = () => {
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
 
     useEffect(()=>{
-        if(token!==''){
-            router.push('/profile-settings')
+        if(token){
+            router.push(Routes.PROFILE)
         }
-        localStorage.setItem('trust',String(trustDevice))
-    },[data,token])
+    },[token])
 
     const onSubmit = handleSubmit(async (data,e) => {
         e?.preventDefault()
@@ -63,7 +67,6 @@ const SignIn = () => {
     const checkDevice = () => {
         dispatch(authAction.setCheckDevice(!trustDevice))
     }
-
 
     return (
         <div className={classes.container}>

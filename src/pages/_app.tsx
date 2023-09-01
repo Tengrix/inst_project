@@ -33,6 +33,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
     return (
         <Provider store={store}>
+            <Redirect>
             <NextIntlClientProvider messages={messages}>
                 {getLayout(
                     <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY}>
@@ -48,12 +49,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
                                 }
                             `}
                         </style>
-                        <Redirect>
                             <Component {...pageProps} />
-                        </Redirect>
                     </ReCaptchaProvider>
                 )}
             </NextIntlClientProvider>
+            </Redirect>
         </Provider>
     );
 }
