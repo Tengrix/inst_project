@@ -15,7 +15,6 @@ import { Typography } from '@/shared/ui/typography';
 import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
-import { SignUpErrorType } from 'src/api/authApi';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './SignUp.module.scss';
@@ -42,9 +41,17 @@ const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [signUp, { error, isLoading }] = useSignUpMutation();
 
-    const { control, handleSubmit } = useForm<RegisterFormType>({
-        resolver: zodResolver(registerSchema)
+    const { control, handleSubmit, formState } = useForm<RegisterFormType>({
+        resolver: zodResolver(registerSchema),
+        defaultValues: {
+            email: '',
+            userName: '',
+            password: '',
+            confirmPassword: '',
+            serviceAndPrivacy: false
+        }
     });
+    const privacyError = formState.errors.serviceAndPrivacy?.message;
 
     const onSubmit = handleSubmit(data => {
         signUp(data)
@@ -52,8 +59,10 @@ const SignUp = () => {
             .then(() => {
                 setIsModalOpen(true);
             });
+
         setEmail(data.email);
     });
+
     // const err =
     //     error &&
     //     (error as SignUpErrorType).data.errorsMessages.reduce((acc: { [key: string]: string }, error) => {
@@ -119,17 +128,22 @@ const SignUp = () => {
                             type={'password'}
                         />
                         <div className={s.privacyBlock}>
-                            <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
-                            <Typography variant={'small'} className={s.privacyText}>
-                                I agree to the&nbsp;
-                                <Link href={'/sign-up/terms-of-service'} className={s.link}>
-                                    {' '}
-                                    Terms of Service{' '}
-                                </Link>
-                                &nbsp;and
-                                <Link href={'/sign-up/privacy-policy'} className={s.link}>
-                                    &nbsp;Privacy Policy
-                                </Link>
+                            <div style={{ display: 'flex' }}>
+                                <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
+                                <Typography variant={'small'} className={s.privacyText}>
+                                    I agree to the&nbsp;
+                                    <Link href={'/sign-up/terms-of-service'} className={s.link}>
+                                        {' '}
+                                        Terms of Service{' '}
+                                    </Link>
+                                    &nbsp;and
+                                    <Link href={'/sign-up/privacy-policy'} className={s.link}>
+                                        &nbsp;Privacy Policy
+                                    </Link>
+                                </Typography>
+                            </div>
+                            <Typography variant={'error'} color={'error'}>
+                                {privacyError && t(privacyError)}
                             </Typography>
                         </div>
 

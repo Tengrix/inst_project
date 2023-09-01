@@ -3,25 +3,26 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { CustomerError } from '@/api/authApi';
+import { isFetchBaseQueryError } from '@/api/service/helpers';
+import { CustomerError } from '@/api/types';
 import classes from '@/pages/sign-in/SignIn.module.scss';
+import { useAppSelector } from '@/redux/store';
+import { useLoginMutation } from '@/redux/store/Auth/authApiSlice';
+import { authAction } from '@/redux/store/Auth/authSlice';
+import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
+import { Checkbox } from '@/shared/ui/checkbox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { LoginFormType, loginSchema } from '@/shared/utils/schemas/loginSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import {useLoginMutation} from "@/redux/store/Auth/authApiSlice";
-import {useAppSelector} from "@/redux/store";
-import {useEffect} from "react";
-import {Checkbox} from "@/shared/ui/checkbox";
-import {Routes} from "@/shared/routes/Routes";
-import {authAction} from "@/redux/store/Auth/authSlice";
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`messages/${locale}/auth.json`)).default;
@@ -38,35 +39,40 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const SignIn = () => {
-    const [signIn, { error, isLoading, isError}] = useLoginMutation();
-    const router = useRouter()
+    const [signIn, { isLoading, isError }] = useLoginMutation();
+    const [loginErr, setLoginErr] = useState('');
+    const router = useRouter();
     const translationPath = 'auth';
-    const {token,trustDevice} = useAppSelector(state=>state.auth);
+    const { token, trustDevice } = useAppSelector(state => state.auth);
     const t = useTranslations(translationPath);
     const dispatch = useDispatch();
     const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
 
-    useEffect(()=>{
-        if(token){
-            router.push(Routes.PROFILE)
+    useEffect(() => {
+        if (token) {
+            router.push(Routes.PROFILE);
         }
-    },[token])
+    }, [token]);
 
-    const onSubmit = handleSubmit(async (data,e) => {
-        e?.preventDefault()
+    const onSubmit = handleSubmit(async (data, e) => {
+        e?.preventDefault();
         try {
-            const userData = await signIn({ password: data.password, login: data.userName }).unwrap()
-            dispatch(authAction.setCredentials(userData))
-            console.log(userData)
-        }catch (e) {
-            console.log(e && error)
+            const userData = await signIn({ password: data.password, login: data.userName }).unwrap();
+            dispatch(authAction.setCredentials(userData));
+            console.log(userData);
+        } catch (err) {
+            console.log(err);
+            if (isFetchBaseQueryError(err)) {
+                setLoginErr('Something went wrong');
+            } else {
+                setLoginErr((err as CustomerError).data.errorsMessages);
+            }
         }
-    })
+    });
 
-    const err = error && 'data' in error ? (error as CustomerError ).data.errorsMessages : 'Something went wrong'
     const checkDevice = () => {
-        dispatch(authAction.setCheckDevice(!trustDevice))
-    }
+        dispatch(authAction.setCheckDevice(!trustDevice));
+    };
 
     return (
         <div className={classes.container}>
@@ -109,10 +115,10 @@ const SignIn = () => {
                         fullWidth>
                         {t('button.signInButton')}
                     </Button>
-                    <div className={classes.form__error}>{isError && err}</div>
+                    <div className={classes.form__error}>{isError && loginErr}</div>
                 </form>
                 <div className={classes.footer}>
-                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice}/>
+                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice} />
                     <Typography>{t('signInPage.question')}</Typography>
                     <Link href={'/sign-up'} className={classes.link}>
                         {t('signUpPage.h1')}

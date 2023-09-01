@@ -1,5 +1,10 @@
-import { authApi, RegisterParamsType } from '@/api/authApi';
-import { LoginResponseType } from '@/api/types';
+import { authApi } from '@/api/authApi';
+import {
+    ChangePasswordRequestType,
+    LoginResponseType,
+    PasswordRecoveryRequestType,
+    SignUpRequestType
+} from '@/api/types';
 
 export const authApiSlice = authApi.injectEndpoints({
     endpoints: builder => ({
@@ -10,12 +15,12 @@ export const authApiSlice = authApi.injectEndpoints({
                 body: data
             })
         }),
-        refreshToken: builder.query<void, void>({
+        refreshToken: builder.query<LoginResponseType, void>({
             query: () => ({
                 url: '/auth/refresh-token'
             })
         }),
-        signUp: builder.mutation<void, RegisterParamsType>({
+        signUp: builder.mutation<void, SignUpRequestType>({
             query: data => {
                 return {
                     method: 'POST',
@@ -46,14 +51,14 @@ export const authApiSlice = authApi.injectEndpoints({
                 };
             }
         }),
-        passwordRecovery: builder.mutation<void, { email: string; recaptchaValue: string }>({
+        passwordRecovery: builder.mutation<void, PasswordRecoveryRequestType>({
             query: data => ({
                 url: '/auth/password-recovery',
                 method: 'POST',
                 body: data
             })
         }),
-        resetPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
+        resetPassword: builder.mutation<void, ChangePasswordRequestType>({
             query: data => ({
                 url: '/auth/new-password',
                 method: 'POST',

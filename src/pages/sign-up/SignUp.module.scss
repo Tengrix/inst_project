@@ -69,6 +69,7 @@
 
   .privacyBlock {
     display: flex;
+    flex-direction: column;
     margin-top: 1.38rem;
 
     .privacyText {
