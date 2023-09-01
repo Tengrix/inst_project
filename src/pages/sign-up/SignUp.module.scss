@@ -3,9 +3,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-
-  //  margin-top: 24px;
-
 }
 
 
@@ -70,9 +67,10 @@
   .privacyBlock {
     display: flex;
     margin-top: 1.38rem;
+    align-items: center;
 
     .privacyText {
-      display: flex;
+      //display: flex;
       align-items: center;
       padding-left: 8px
     }
@@ -89,7 +87,12 @@
 
   .link {
     color: var(--color-primary-500);
-    text-decoration: underline
+    text-decoration: none;
+
+     &_underline {
+        color: var(--color-primary-500);
+        text-decoration: underline;
+     }
   }
 
   .sizeText {

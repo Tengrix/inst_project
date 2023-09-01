@@ -72,6 +72,26 @@ const SignUp = () => {
     // };
 
     // if (isLoading) return <h2>...Loading</h2>
+
+    const parseTranslation = (str: any) => {
+        const links: Array<any> = str.split(/<a(.*?)>.*?<\/a>/);
+        const matchLinks = str.matchAll(/<a(.*?)>(.*?)<\/a>/g);
+        for (const link of matchLinks) {
+            const [, attr, value] = link;
+            const href = (attr.match(/href='(.*?)'/) ?? [])[1];
+            const i = links.indexOf(attr);
+            if (i) {
+                links[i] = (
+                    <Link href={href} className={s.link + ' ' + s.link_underline}>
+                        {value}
+                    </Link>
+                );
+            }
+        }
+
+        return links;
+    };
+
     return (
         <div className={s.container}>
             {!isModalOpen && (
@@ -120,16 +140,9 @@ const SignUp = () => {
                         />
                         <div className={s.privacyBlock}>
                             <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
+
                             <Typography variant={'small'} className={s.privacyText}>
-                                I agree to the&nbsp;
-                                <Link href={'/sign-up/terms-of-service'} className={s.link}>
-                                    {' '}
-                                    Terms of Service{' '}
-                                </Link>
-                                &nbsp;and
-                                <Link href={'/sign-up/privacy-policy'} className={s.link}>
-                                    &nbsp;Privacy Policy
-                                </Link>
+                                {parseTranslation(t.raw('signUpPage.privacyTerms'))}
                             </Typography>
                         </div>
 
