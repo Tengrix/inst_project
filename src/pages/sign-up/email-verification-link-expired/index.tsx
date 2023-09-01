@@ -2,9 +2,10 @@ import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
+import { useReCaptcha } from 'next-recaptcha-v3';
 import React from 'react';
 
-import {useResendEmailConfirmationMutation} from "@/redux/store/Auth/authApiSlice";
+import { usePasswordRecoveryMutation } from '@/redux/store/Auth/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import img from 'public/assets/expiredLink.png';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
@@ -20,13 +21,15 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 }
 
 const EmailVerificationLinkExpired = () => {
-    const [resendEmailConfirmation] = useResendEmailConfirmationMutation();
+    const [resendEmailConfirmation] = usePasswordRecoveryMutation();
     const router = useRouter();
     const { email } = router.query;
     const t = useTranslations('auth');
+    const { executeRecaptcha } = useReCaptcha();
 
-    const resendHandler = () => {
-        resendEmailConfirmation({ email: email as string });
+    const resendHandler = async () => {
+        const captcha = await executeRecaptcha('password_recovery');
+        resendEmailConfirmation({ email: email as string, recaptchaValue: captcha });
     };
 
     return (
