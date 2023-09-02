@@ -8,12 +8,10 @@ services:
                 limits:
                     cpus: "2"
                     memory: 2048M
+        env_file:
+            - .env.local
         environment:
             PORT: 3001
-            JWT_SECRET: secret
-            JWT_TOKEN_EXPIRATION_TIME: 7d
-            JWT_REFRESH_TOKEN_SECRET: token_secret
-            JWT_REFRESH_TOKEN_EXPIRATION_TIME: 1m
             DATABASE_URL: postgres://user:password@db/db
             TEST_MAILER_EMAIL: noreply@gmail.com
             FRONTEND_CONFIRM_EMAIL_LINK: http://localhost:3000/sign-up/email-verification
@@ -32,6 +30,8 @@ services:
 
     db:
         image: postgres
+        env_file:
+            - .env.local
         environment:
             POSTGRES_USER: user
             POSTGRES_DB: db
@@ -48,7 +48,7 @@ services:
             PGADMIN_DEFAULT_PASSWORD: password
             PGADMIN_LISTEN_ADDRESS: 0.0.0.0
         ports:
-        - "5050:80"
+            - "5050:80"
         volumes:
             - ./backend/pgadmin:/var/lib/pgadmin
 
@@ -61,8 +61,10 @@ services:
     localstack:
         image: localstack/localstack
         ports:
-        - "4510-4559:4510-4559"
-        - "4566:4566"
+            - "4510-4559:4510-4559"
+            - "4566:4566"
+        env_file:
+            - .env.local
         environment:
           SERVICES: s3
           PERSISTENCE: 1

@@ -15,6 +15,7 @@ import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { SignUpErrorType } from 'src/api/authApi';
+import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import {useSignUpMutation} from "@/redux/store/Auth/authApiSlice";
 
@@ -54,22 +55,22 @@ const SignUp = () => {
             });
         setEmail(data.email);
     });
-    const err =
-        error &&
-        (error as SignUpErrorType).data.errorsMessages.reduce((acc: { [key: string]: string }, error) => {
-            acc[error.field] = error.message;
-            return acc;
-        }, {});
-    const errorHandler = (error: string) => {
-        return (
-            err &&
-            err[error] && (
-                <Typography variant={'error'} color={'error'} style={{ textAlign: 'start' }}>
-                    {err[error]}
-                </Typography>
-            )
-        );
-    };
+    // const err =
+    //     error &&
+    //     (error as SignUpErrorType).data.errorsMessages.reduce((acc: { [key: string]: string }, error) => {
+    //         acc[error.field] = error.message;
+    //         return acc;
+    //     }, {});
+    // const errorHandler = (error: string) => {
+    //     return (
+    //         err &&
+    //         err[error] && (
+    //             <Typography variant={'error'} color={'error'} style={{ textAlign: 'start' }}>
+    //                 {err[error]}
+    //             </Typography>
+    //         )
+    //     );
+    // };
 
     // if (isLoading) return <h2>...Loading</h2>
     return (
@@ -93,7 +94,7 @@ const SignUp = () => {
                             label={t('form.username')}
                             className={s.email}
                         />
-                        {errorHandler('login')}
+                        {/*{errorHandler('login')}*/}
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
@@ -101,7 +102,7 @@ const SignUp = () => {
                             label={t('form.email')}
                             className={s.email}
                         />
-                        {errorHandler('email')}
+                        {/*{errorHandler('email')}*/}
                         <ControlledTextField
                             control={control}
                             translation={translationPath}

@@ -64,7 +64,7 @@ const Profile = ({ sidebarMessages }: InferGetStaticPropsType<typeof getStaticPr
                     <div className={s.profileInfo}>
                         <div className={s.username}>
                             <Typography variant={'h1'}>{`${userData.firstName} ${userData.lastName}`}</Typography>
-                            <Link href={'/profile-settings/general-information'}>
+                            <Link href={'/profile-settings'}>
                                 <Button variant={'secondary'}>{t('profileSettings')}</Button>
                             </Link>
                         </div>

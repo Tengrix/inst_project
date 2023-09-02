@@ -40,26 +40,45 @@ const baseQueryWithReauth: BaseQueryFn<
     return result
 }
 
-
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
+    tagTypes: ['Post'],
     endpoints: (builder) => {
         return {
             createPost: builder.mutation<void, PostFormData>({
                 query: data => {
                     const formData = new FormData();
                     formData.append('description', data.description);
-                    data.files.forEach( ({blob, filename}) => {
+                    data.files.forEach(({ blob, filename }) => {
                         formData.append('files', blob, filename);
                     });
                     formData.append('title', data.title);
                     return {
                         url: '/post',
                         method: 'POST',
-                        body: formData,
+                        body: formData
                     };
-                }
+                },
+                invalidatesTags: ['Post']
+            }),
+            getAllPosts: builder.query<PostType[], void>({
+                query: () => {
+                    return {
+                        url: '/post/all'
+                    };
+                },
+                providesTags: ['Post']
+            }),
+            deletePost: builder.mutation<any, { id: string }>({
+                query: data => {
+                    return {
+                        url: '/post',
+                        method: 'DELETE',
+                        body: data
+                    };
+                },
+                invalidatesTags: ['Post']
             }),
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
@@ -67,7 +86,7 @@ export const authApi = createApi({
                     formData.append('aboutMe', data.aboutMe);
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file, 'avatar.jpeg');
+                    formData.append('file', data.file);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
                     return {
@@ -90,6 +109,8 @@ export const authApi = createApi({
 
 export const {
     useCreatePostMutation,
+    useGetAllPostsQuery,
+    useDeletePostMutation,
     useSubmitUserDataMutation,
     useGetUserDataQuery
 } = authApi;
@@ -131,8 +152,8 @@ export type SignUpErrorType = {
 export type PostFormData = {
     description: string;
     files: Array<{
-        blob: Blob,
-        filename: string
+        blob: Blob;
+        filename: string;
     }>;
     title: string;
 };
