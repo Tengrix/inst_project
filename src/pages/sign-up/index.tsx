@@ -42,7 +42,7 @@ const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [signUp, { error, isLoading }] = useSignUpMutation();
 
-    const { control, handleSubmit } = useForm<RegisterFormType>({
+    const { control, handleSubmit, formState } = useForm<RegisterFormType>({
         resolver: zodResolver(registerSchema)
     });
 
@@ -150,7 +150,7 @@ const SignUp = () => {
                             type={'submit'}
                             fullWidth
                             className={s.registerBtn}
-                            disabled={isLoading}
+                            disabled={!formState.isValid || isLoading}
                             isLoading={isLoading}>
                             {t('button.signUpButton')}
                         </Button>
