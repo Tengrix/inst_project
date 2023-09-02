@@ -1,44 +1,23 @@
-/* import { z } from 'zod';
-
-export const registerSchema = z
-    .object({
-        userName: z
-            .string()
-            .trim()
-            .min(6, 'Username must be at least 6 characters long')
-            .max(30, "Username can't be longer than 30 characters"),
-        email: z.string().trim().nonempty('Enter email').email('Invalid email address'),
-        password: z
-            .string()
-            .nonempty('Enter password')
-            .min(6, 'Password must be at least 6 characters')
-            .max(20, 'Password can not be longer than 20 characters'),
-        confirmPassword: z.string(),
-        serviceAndPrivacy: z.boolean().optional()
-    })
-    .refine(data => data.password === data.confirmPassword, {
-        message: "Passwords don't match",
-        path: ['confirmPassword']
-    }); */
-
 import { z } from 'zod';
 
 export const registerSchema = z
     .object({
-        userName: z.string().trim().min(6, 'error.userNameMin').max(30, 'error.userNameMax'),
-        email: z
-            .string()
+        userName: z
+            .string({ required_error: 'error.userNameIsRequiredError' })
             .trim()
-            .nonempty('error.emailIsRequiredError')
+            .min(6, 'error.userNameMin')
+            .max(30, 'error.userNameMax'),
+        email: z
+            .string({ required_error: 'error.emailIsRequiredError' })
+            .trim()
             .email('error.invalidEmailAddress')
             .toLowerCase(),
         password: z
-            .string()
-            .nonempty('error.passwordIsRequiredError')
+            .string({ required_error: 'error.passwordIsRequiredError' })
             .min(6, 'error.passwordMin')
             .max(20, 'error.passwordMax'),
         confirmPassword: z.string(),
-        serviceAndPrivacy: z.boolean().optional()
+        serviceAndPrivacy: z.boolean().refine(Boolean)
     })
     .refine(data => data.password === data.confirmPassword, {
         message: 'error.passwordsDontMatch',
