@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import EmailSentModal from '@/pages/sign-up/email-sent-modal/email-sent-modal';
+import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/controlled';
@@ -15,9 +16,7 @@ import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { SignUpErrorType } from 'src/api/authApi';
-import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import {useSignUpMutation} from "@/redux/store/Auth/authApiSlice";
 
 import s from './SignUp.module.scss';
 
@@ -43,7 +42,7 @@ const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [signUp, { error, isLoading }] = useSignUpMutation();
 
-    const { control, handleSubmit } = useForm<RegisterFormType>({
+    const { control, handleSubmit, formState } = useForm<RegisterFormType>({
         resolver: zodResolver(registerSchema)
     });
 
@@ -73,6 +72,26 @@ const SignUp = () => {
     // };
 
     // if (isLoading) return <h2>...Loading</h2>
+
+    const parseTranslation = (str: any) => {
+        const links: Array<any> = str.split(/<a(.*?)>.*?<\/a>/);
+        const matchLinks = str.matchAll(/<a(.*?)>(.*?)<\/a>/g);
+        for (const link of matchLinks) {
+            const [, attr, value] = link;
+            const href = (attr.match(/href='(.*?)'/) ?? [])[1];
+            const i = links.indexOf(attr);
+            if (i) {
+                links[i] = (
+                    <Link href={href} className={s.link + ' ' + s.link_underline}>
+                        {value}
+                    </Link>
+                );
+            }
+        }
+
+        return links;
+    };
+
     return (
         <div className={s.container}>
             {!isModalOpen && (
@@ -121,16 +140,9 @@ const SignUp = () => {
                         />
                         <div className={s.privacyBlock}>
                             <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
+
                             <Typography variant={'small'} className={s.privacyText}>
-                                I agree to the&nbsp;
-                                <Link href={'/sign-up/terms-of-service'} className={s.link}>
-                                    {' '}
-                                    Terms of Service{' '}
-                                </Link>
-                                &nbsp;and
-                                <Link href={'/sign-up/privacy-policy'} className={s.link}>
-                                    &nbsp;Privacy Policy
-                                </Link>
+                                {parseTranslation(t.raw('signUpPage.privacyTerms'))}
                             </Typography>
                         </div>
 
@@ -138,7 +150,7 @@ const SignUp = () => {
                             type={'submit'}
                             fullWidth
                             className={s.registerBtn}
-                            disabled={isLoading}
+                            disabled={!formState.isValid || isLoading}
                             isLoading={isLoading}>
                             {t('button.signUpButton')}
                         </Button>

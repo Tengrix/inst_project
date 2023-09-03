@@ -1,50 +1,52 @@
-import {BaseQueryApi, createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {baseURL} from "@/api/instances";
-import {RootStateType} from "@/redux/store";
-import {BaseQueryFn, FetchArgs, FetchBaseQueryError} from "@reduxjs/toolkit/query";
-import {authAction} from "@/redux/store/Auth/authSlice";
-import {PublicRoutes} from "@/shared/routes/Routes";
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import { baseURL } from '@/api/instances';
 import { GetUserDataResponseType } from '@/api/types';
+import { PostType } from '@/components/Post/types';
+import { RootStateType } from '@/redux/store';
+import { authAction } from '@/redux/store/Auth/authSlice';
+import { PublicRoutes } from '@/shared/routes/Routes';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: baseURL,
     credentials: 'include',
-    prepareHeaders: (headers, {getState,endpoint}) => {
-        const token = (getState() as RootStateType).auth.token
-        if(token && !PublicRoutes.find(route=>route===`/${endpoint}`)){
-            headers.set('Authorization', `Bearer ${token}`)
+    prepareHeaders: (headers, { getState, endpoint }) => {
+        const token = (getState() as RootStateType).auth.token;
+        if (token && !PublicRoutes.find(route => route === `/${endpoint}`)) {
+            headers.set('Authorization', `Bearer ${token}`);
         }
-        return headers
+        return headers;
     }
-})
+});
 
-const baseQueryWithReauth: BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-    let result = await baseQuery(args,api,extraOptions)
-    if(result?.error?.status===403 || result?.error?.status===401){
-        console.log('sending refresh token')
+const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+    args,
+    api,
+    extraOptions
+) => {
+    let result = await baseQuery(args, api, extraOptions);
+    if (result?.error?.status === 403 || result?.error?.status === 401) {
+        console.log('sending refresh token');
         //send refresh token to get new access token
-        const refreshResult = await baseQuery('/auth/refresh-token', api, extraOptions)
-        if(refreshResult.data){
+        const refreshResult = await baseQuery('/auth/refresh-token', api, extraOptions);
+        if (refreshResult.data) {
             // store the new token
-            api.dispatch(authAction.setCredentials({...refreshResult.data}))
+            api.dispatch(authAction.setCredentials({ ...refreshResult.data }));
             // retry the original query with new access token
-            result = await baseQuery(args,api, extraOptions)
-        }else{
-            api.dispatch(authAction.logOut())
+            result = await baseQuery(args, api, extraOptions);
+        } else {
+            api.dispatch(authAction.logOut());
         }
     }
-    return result
-}
+    return result;
+};
 
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Post'],
-    endpoints: (builder) => {
+    endpoints: builder => {
         return {
             createPost: builder.mutation<void, PostFormData>({
                 query: data => {

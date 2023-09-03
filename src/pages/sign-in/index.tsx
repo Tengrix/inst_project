@@ -44,7 +44,7 @@ const SignIn = () => {
     const {token,trustDevice} = useAppSelector(state=>state.auth);
     const t = useTranslations(translationPath);
     const dispatch = useDispatch();
-    const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
+    const { control, formState, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
 
     useEffect(()=>{
         if(token){
@@ -104,7 +104,7 @@ const SignIn = () => {
                     <Button
                         isLoading={isLoading}
                         type={'submit'}
-                        disabled={isLoading}
+                        disabled={!formState.isValid || isLoading}
                         className={classes.form__btn}
                         fullWidth>
                         {t('button.signInButton')}
