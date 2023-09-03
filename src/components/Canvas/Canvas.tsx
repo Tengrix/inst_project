@@ -51,15 +51,15 @@ export const Canvas = ({ imageSRC, filters, step, crop, defWidth, defHeight, get
 
                 const imageAspectRatio = crop.width / crop.height;
 
-                if (effects) {
-                    ctx!.filter = effects;
-                }
-
                 if (step === 'Cropping') {
                     const canvasWidth = imageRatio >= 1 ? defWidth : defWidth * imageRatio;
                     const canvasHeight = imageRatio >= 1 ? defHeight / imageRatio : defHeight;
                     ctx!.canvas.width = canvasWidth;
                     ctx!.canvas.height = canvasHeight;
+                    // TODO: need refactor
+                    if (effects) {
+                        ctx!.filter = effects;
+                    }
 
                     ctx!.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasWidth, canvasHeight);
                 } else {
@@ -67,6 +67,10 @@ export const Canvas = ({ imageSRC, filters, step, crop, defWidth, defHeight, get
                     const canvasHeight = imageAspectRatio >= 1 ? defWidth / imageAspectRatio : defHeight;
                     ctx!.canvas.width = canvasWidth;
                     ctx!.canvas.height = canvasHeight;
+                    // TODO: need refactor
+                    if (effects) {
+                        ctx!.filter = effects;
+                    }
 
                     ctx!.drawImage(
                         img,
