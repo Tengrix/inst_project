@@ -1,5 +1,4 @@
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
-import * as LabelRadix from '@radix-ui/react-checkbox';
 import clsx from 'clsx';
 import { FC } from 'react';
 
@@ -28,22 +27,19 @@ export const Checkbox: FC<CheckboxPropsType> = ({ checked, onChange, disabled, r
     };
 
     return (
-        <>
-            <LabelRadix.Root className={classNames.label}>{label}</LabelRadix.Root>
-            <div className={classNames.buttonWrapper}>
-                <CheckboxRadix.Root
-                    className={classNames.root}
-                    checked={Boolean(checked)}
-                    onCheckedChange={onChange}
-                    disabled={disabled}
-                    required={required}>
-                    {checked && (
-                        <CheckboxRadix.Indicator className={classNames.indicator}>
-                            <CheckIcon color={disabled ? 'var(--color-light-700' : 'black'} />
-                        </CheckboxRadix.Indicator>
-                    )}
-                </CheckboxRadix.Root>
-            </div>
-        </>
+        <div className={classNames.buttonWrapper}>
+            <CheckboxRadix.Root
+                className={classNames.root}
+                checked={Boolean(checked)}
+                onCheckedChange={onChange}
+                disabled={disabled}
+                required={required}>
+                {checked && (
+                    <CheckboxRadix.Indicator className={classNames.indicator}>
+                        <CheckIcon color={disabled ? 'var(--color-light-700' : 'black'} />
+                    </CheckboxRadix.Indicator>
+                )}
+            </CheckboxRadix.Root>
+        </div>
     );
 };
