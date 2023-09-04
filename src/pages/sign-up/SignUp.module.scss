@@ -3,6 +3,9 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+
+  //  margin-top: 24px;
+
 }
 
 
@@ -87,12 +90,7 @@
 
   .link {
     color: var(--color-primary-500);
-    text-decoration: none;
-
-     &_underline {
-        color: var(--color-primary-500);
-        text-decoration: underline;
-     }
+    text-decoration: underline
   }
 
   .sizeText {

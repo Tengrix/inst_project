@@ -2,7 +2,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType } from '@/api/types';
+import { GetUserDataResponseType, PostFormData, ProfileData } from '@/api/types';
 import { PostType } from '@/components/Post/types';
 import { RootStateType } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -116,46 +116,3 @@ export const {
     useSubmitUserDataMutation,
     useGetUserDataQuery
 } = authApi;
-
-//types
-export type ProfileData = {
-    aboutMe: string;
-    birthdayDate: string;
-    city: string;
-    file: Blob;
-    firstName: string;
-    lastName: string;
-};
-
-export type RegisterParamsType = {
-    userName: string;
-    email: string;
-    password: string;
-};
-
-export type ErrorDataType = {
-    errorsMessages: string;
-};
-export type CustomerError = {
-    data: ErrorDataType;
-    status: number;
-};
-export type FieldError = {
-    field: string;
-    message: string;
-};
-export type SignUpError = {
-    errorsMessages: FieldError[];
-};
-export type SignUpErrorType = {
-    data: SignUpError;
-    status: number;
-};
-export type PostFormData = {
-    description: string;
-    files: Array<{
-        blob: Blob;
-        filename: string;
-    }>;
-    title: string;
-};

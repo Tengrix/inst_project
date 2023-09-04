@@ -23,3 +23,7 @@ export const registerSchema = z
         message: 'error.passwordsDontMatch',
         path: ['confirmPassword']
     });
+// serviceAndPrivacy: z.literal<boolean>(true, {
+//   errorMap: () => ({ message: 'error.privacyConfirmation' })
+// })
+// })
