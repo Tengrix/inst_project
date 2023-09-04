@@ -23,7 +23,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const Home = ({ sidebarMessages }: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const { data } = useGetAllPostsQuery();
+    const { data } = useGetAllPostsQuery(2);
     const posts = data && [...data].reverse();
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>

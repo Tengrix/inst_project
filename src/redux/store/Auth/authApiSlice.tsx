@@ -13,7 +13,8 @@ export const authApiSlice = authApi.injectEndpoints({
                 url: `/auth/login`,
                 method: 'POST',
                 body: data
-            })
+            }),
+            invalidatesTags: ['Profile']
         }),
         refreshToken: builder.query<LoginResponseType, void>({
             query: () => ({
