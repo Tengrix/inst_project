@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { centerCrop, Crop, makeAspectCrop, ReactCrop } from 'react-image-crop';
 import 'react-image-crop/src/ReactCrop.scss';
 
@@ -10,7 +10,6 @@ type PropsType = {
     children?: ReactNode;
     src: string;
     isCircular?: boolean;
-    // eslint-disable-next-line no-unused-vars
     onCrop?: (crop: Crop) => void;
 };
 
@@ -18,7 +17,7 @@ const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: numbe
     centerCrop(
         makeAspectCrop(
             {
-                unit: 'px',
+                unit: '%',
                 width: mediaWidth
             },
             aspect,
@@ -52,6 +51,7 @@ const ImageCropper = ({ isCircular = false, ...props }: PropsType) => {
             const newCrop = centerAspectCrop(curCrop.width, curCrop.height, isCircular ? 1 : cropRatio);
             setCompletedCrop(newCrop);
             setCurCrop(newCrop);
+            console.log(newCrop);
         }
     }, [cropRatio]);
 
@@ -67,19 +67,18 @@ const ImageCropper = ({ isCircular = false, ...props }: PropsType) => {
                   );
         }
     }, [debouncedCrop]);
-
     return (
         <ReactCrop
             circularCrop={isCircular}
             aspect={isCircular ? 1 : cropRatio}
             crop={curCrop}
-            onChange={c => {
-                setCurCrop(c);
+            onChange={(crop, percentageCrop) => {
+                setCurCrop(percentageCrop);
             }}
-            onComplete={c => {
-                setCompletedCrop(c);
+            onComplete={(crop, percentageCrop) => {
+                setCompletedCrop(percentageCrop);
             }}>
-            {props.children}
+            <div>{props.children}</div>
         </ReactCrop>
     );
 };

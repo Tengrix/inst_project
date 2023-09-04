@@ -24,7 +24,7 @@ export type EditProfileType = z.infer<typeof editProfileSchema>;
 const FormPage = () => {
     const [error, setError] = useState('');
     const [image, setImage] = useState('');
-    const [crop, setCrop] = useState<Crop>();
+    const [crop, setCrop] = useState<Crop>(); // текущий кроп
     const [canvas, setCanvas] = useState<HTMLCanvasElement>();
     const [blob, setBlob] = useState<Blob>();
 
@@ -36,31 +36,35 @@ const FormPage = () => {
     });
     useEffect(() => {
         if (userData) {
-            userData.photo && setImage(userData.photo);
-            reset({
-                birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
-                aboutMe: userData?.aboutMe ?? '',
-                city: userData?.city ?? '',
-                firstName: userData?.firstName ?? '',
-                lastName: userData?.lastName ?? '',
-                userName: userData?.login
-            });
+            if (userData.photo) {
+                setImage(userData.photo);
+                const getBlob = async () => {
+                    const response = await fetch(userData.photo!).then(r => r.blob());
+                    return response;
+                };
+                getBlob().then(blobData => {
+                    setBlob(blobData);
+                });
+                reset({
+                    birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
+                    aboutMe: userData?.aboutMe ?? '',
+                    city: userData?.city ?? '',
+                    firstName: userData?.firstName ?? '',
+                    lastName: userData?.lastName ?? '',
+                    userName: userData?.login
+                });
+            }
         }
     }, [userData]);
     useEffect(() => {
         blob && setError('');
     }, [blob]);
 
-    const getCanvas = (canvas: HTMLCanvasElement) => {
-        setCanvas(canvas);
-    };
-
     const onSubmit = handleSubmit(async data => {
         const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         blob ? editProfile({ ...data, file: blob, birthdayDate: date }) : setError('Please download your photo');
     });
-
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={onSubmit}>
@@ -73,9 +77,9 @@ const FormPage = () => {
                                     step={'Publication'}
                                     filters={{}}
                                     imageSRC={image}
-                                    defHeight={192}
-                                    defWidth={192}
-                                    getCanvas={getCanvas}
+                                    destHeight={192}
+                                    destWidth={192}
+                                    getCanvas={setCanvas}
                                 />
                             ) : (
                                 <Image src={github} alt={'Avatar'} height={192} width={192} />
