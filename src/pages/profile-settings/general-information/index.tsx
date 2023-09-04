@@ -38,13 +38,13 @@ const FormPage = () => {
         if (userData) {
             if (userData.photo) {
                 setImage(userData.photo);
-                const getBlob = async () => {
-                    const response = await fetch(userData.photo!).then(r => r.blob());
-                    return response;
-                };
-                getBlob().then(blobData => {
-                    setBlob(blobData);
-                });
+                // const getBlob = async () => {
+                //     const response = await fetch(userData.photo!).then(r => r.blob());
+                //     return response;
+                // };
+                // getBlob().then(blobData => {
+                //     setBlob(blobData);
+                // });
                 reset({
                     birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
                     aboutMe: userData?.aboutMe ?? '',
@@ -62,7 +62,6 @@ const FormPage = () => {
 
     const onSubmit = handleSubmit(async data => {
         const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-
         blob ? editProfile({ ...data, file: blob, birthdayDate: date }) : setError('Please download your photo');
     });
     return (

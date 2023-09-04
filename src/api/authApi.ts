@@ -45,7 +45,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Post'],
+    tagTypes: ['Post', 'Profile'],
     endpoints: builder => {
         return {
             createPost: builder.mutation<void, PostFormData>({
@@ -88,22 +88,25 @@ export const authApi = createApi({
                     formData.append('aboutMe', data.aboutMe);
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file);
+                    formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
+                    console.log(formData);
                     return {
                         url: '/user',
                         method: 'PATCH',
                         body: formData
                     };
-                }
+                },
+                invalidatesTags: ['Profile']
             }),
             getUserData: builder.query<GetUserDataResponseType, void>({
                 query: () => {
                     return {
                         url: '/user/profile'
                     };
-                }
+                },
+                providesTags: ['Profile']
             })
         };
     }

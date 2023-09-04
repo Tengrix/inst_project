@@ -98,6 +98,7 @@ export const Canvas = ({ imageSRC, filters, step, crop, destWidth, destHeight, g
         if (canvas) {
             fn(canvas);
             getCanvas && getCanvas(canvas);
+            console.log(canvas, 'newcanvas');
         }
     }, [fn, canvas]);
     return step === 'Cropping' ? (

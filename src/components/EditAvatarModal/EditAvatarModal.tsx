@@ -20,24 +20,22 @@ type Props = {
 
 const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) => {
     const [modalState, setModalState] = useState(false);
-    const [tempImg, setTempImg] = useState(image);
     const [tempCrop, setTempCrop] = useState<Crop>();
     const onImageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const img = e.target.files && e.target.files[0];
         if (img) {
             const imageURL = URL.createObjectURL(img);
-            setTempImg(imageURL);
+            setImage(imageURL);
         }
     };
 
     const saveImageHandler = async () => {
         if (canvas) {
+            tempCrop && onCrop(tempCrop);
             const blob = await canvasToBlob(canvas);
             console.log(blob);
             setBlob(blob);
-            tempCrop && onCrop(tempCrop);
             setModalState(false);
-            setImage(tempImg);
         }
     };
 
@@ -50,8 +48,8 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) =>
             customButtonsBlock={<></>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {image ? (
-                    <ImageCropper src={tempImg} isCircular onCrop={setTempCrop}>
-                        <img src={tempImg} alt={'Avatar'} width={340} height={340} />
+                    <ImageCropper src={image} isCircular onCrop={setTempCrop}>
+                        <img src={image} alt={'Avatar'} width={340} height={340} />
                     </ImageCropper>
                 ) : (
                     <Image src={github} alt={'Avatar'} height={340} width={340} />
