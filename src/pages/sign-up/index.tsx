@@ -15,6 +15,7 @@ import { Typography } from '@/shared/ui/typography';
 import { registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
+import { SignUpErrorType } from 'src/api/authApi';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './SignUp.module.scss';
@@ -51,7 +52,7 @@ const SignUp = () => {
             serviceAndPrivacy: false
         }
     });
-    const privacyError = formState.errors.serviceAndPrivacy?.message;
+    // const privacyError = formState.errors.serviceAndPrivacy?.message;
 
     const onSubmit = handleSubmit(data => {
         signUp(data)
@@ -59,10 +60,8 @@ const SignUp = () => {
             .then(() => {
                 setIsModalOpen(true);
             });
-
         setEmail(data.email);
     });
-
     // const err =
     //     error &&
     //     (error as SignUpErrorType).data.errorsMessages.reduce((acc: { [key: string]: string }, error) => {
@@ -81,6 +80,26 @@ const SignUp = () => {
     // };
 
     // if (isLoading) return <h2>...Loading</h2>
+
+    const parseTranslation = (str: any) => {
+        const links: Array<any> = str.split(/<a(.*?)>.*?<\/a>/);
+        const matchLinks = str.matchAll(/<a(.*?)>(.*?)<\/a>/g);
+        for (const link of matchLinks) {
+            const [, attr, value] = link;
+            const href = (attr.match(/href='(.*?)'/) ?? [])[1];
+            const i = links.indexOf(attr);
+            if (i) {
+                links[i] = (
+                    <Link href={href} className={s.link + ' ' + s.link_underline}>
+                        {value}
+                    </Link>
+                );
+            }
+        }
+
+        return links;
+    };
+
     return (
         <div className={s.container}>
             {!isModalOpen && (
@@ -128,30 +147,21 @@ const SignUp = () => {
                             type={'password'}
                         />
                         <div className={s.privacyBlock}>
-                            <div style={{ display: 'flex' }}>
-                                <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
-                                <Typography variant={'small'} className={s.privacyText}>
-                                    I agree to the&nbsp;
-                                    <Link href={'/sign-up/terms-of-service'} className={s.link}>
-                                        {' '}
-                                        Terms of Service{' '}
-                                    </Link>
-                                    &nbsp;and
-                                    <Link href={'/sign-up/privacy-policy'} className={s.link}>
-                                        &nbsp;Privacy Policy
-                                    </Link>
-                                </Typography>
-                            </div>
-                            <Typography variant={'error'} color={'error'}>
-                                {privacyError && t(privacyError)}
+                            <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
+
+                            <Typography variant={'small'} className={s.privacyText}>
+                                {parseTranslation(t.raw('signUpPage.privacyTerms'))}
                             </Typography>
+                            {/*<Typography variant={'error'} color={'error'}>*/}
+                            {/*    {privacyError && t(privacyError)}*/}
+                            {/*</Typography>*/}
                         </div>
 
                         <Button
                             type={'submit'}
                             fullWidth
                             className={s.registerBtn}
-                            disabled={isLoading}
+                            disabled={!formState.isValid || isLoading}
                             isLoading={isLoading}>
                             {t('button.signUpButton')}
                         </Button>

@@ -23,14 +23,15 @@ export const ImageGallery = () => {
     };
 
     const imagePreview = images.map(({ originalSRC }) => (
-        <li key={originalSRC} className={s.image}>
+        <li key={originalSRC}>
             <div
+                className={s.image}
                 role="button"
                 aria-hidden
                 onClick={() => {
                     dispatch(setCurrentImage(originalSRC));
                 }}>
-                <img src={originalSRC} alt="" />
+                <img src={originalSRC} alt="" className={s.img} />
             </div>
 
             <button className={s.image_close} onClick={removeImageFromGallery} value={originalSRC}>

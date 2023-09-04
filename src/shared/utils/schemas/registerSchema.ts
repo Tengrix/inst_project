@@ -2,24 +2,28 @@ import { z } from 'zod';
 
 export const registerSchema = z
     .object({
-        userName: z.string().trim().min(6, 'error.userNameMin').max(30, 'error.userNameMax'),
-        email: z
-            .string()
+        userName: z
+            .string({ required_error: 'error.userNameIsRequiredError' })
             .trim()
-            .nonempty('error.emailIsRequiredError')
+            .min(6, 'error.userNameMin')
+            .max(30, 'error.userNameMax'),
+        email: z
+            .string({ required_error: 'error.emailIsRequiredError' })
+            .trim()
             .email('error.invalidEmailAddress')
             .toLowerCase(),
         password: z
-            .string()
-            .nonempty('error.passwordIsRequiredError')
+            .string({ required_error: 'error.passwordIsRequiredError' })
             .min(6, 'error.passwordMin')
             .max(20, 'error.passwordMax'),
-        confirmPassword: z.string().nonempty('error.passwordIsRequiredError'),
-        serviceAndPrivacy: z.literal<boolean>(true, {
-            errorMap: () => ({ message: 'error.privacyConfirmation' })
-        })
+        confirmPassword: z.string(),
+        serviceAndPrivacy: z.boolean().refine(Boolean)
     })
     .refine(data => data.password === data.confirmPassword, {
         message: 'error.passwordsDontMatch',
         path: ['confirmPassword']
     });
+// serviceAndPrivacy: z.literal<boolean>(true, {
+//   errorMap: () => ({ message: 'error.privacyConfirmation' })
+// })
+// })
