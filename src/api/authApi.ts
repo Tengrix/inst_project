@@ -64,10 +64,14 @@ export const authApi = createApi({
                 },
                 invalidatesTags: ['Post']
             }),
-            getAllPosts: builder.query<PostType[], void>({
-                query: () => {
+            getAllPosts: builder.query<PostType[], number>({
+                query: (page: number) => {
                     return {
-                        url: '/post/all'
+                        url: '/post/all',
+                        params: {
+                            page: page,
+                            itemsPerPage: 9
+                        }
                     };
                 },
                 providesTags: ['Post']

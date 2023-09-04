@@ -16,9 +16,10 @@ type Props = {
     canvas: HTMLCanvasElement | undefined;
     // eslint-disable-next-line no-unused-vars
     setBlob: (blob: Blob) => void;
+    blob?: Blob;
 };
 
-const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) => {
+const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob, blob }: Props) => {
     const [modalState, setModalState] = useState(false);
     const [tempCrop, setTempCrop] = useState<Crop>();
     const onImageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +33,8 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) =>
     const saveImageHandler = async () => {
         if (canvas) {
             tempCrop && onCrop(tempCrop);
-            const blob = await canvasToBlob(canvas);
-            console.log(blob);
-            setBlob(blob);
+            const newBlob = blob || (await canvasToBlob(canvas));
+            setBlob(newBlob);
             setModalState(false);
         }
     };

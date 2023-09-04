@@ -99,6 +99,7 @@ const FormPage = () => {
                             onCrop={setCrop}
                             canvas={canvas}
                             setBlob={setBlob}
+                            blob={blob}
                         />
                     </div>
                     <div className={styles.profileInfo}>
