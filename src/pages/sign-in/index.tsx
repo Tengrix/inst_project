@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { AppProps } from 'next/app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
@@ -37,14 +38,14 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
         }
     };
 }
-
-const SignIn = () => {
+const SignIn = ({ messages }: { messages: {} }) => {
     const [signIn, { isLoading, isError }] = useLoginMutation();
-    const [loginErr, setLoginErr] = useState('');
-    const router = useRouter();
     const translationPath = 'auth';
-    const { token, trustDevice } = useAppSelector(state => state.auth);
     const t = useTranslations(translationPath);
+    const [loginErr, setLoginErr] = useState(t('error.incorrectUsernameOrPasswordError'));
+    const router = useRouter();
+
+    const { token, trustDevice } = useAppSelector(state => state.auth);
     const dispatch = useDispatch();
     const { control, formState, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
 
@@ -52,7 +53,8 @@ const SignIn = () => {
         if (token) {
             router.push(Routes.PROFILE);
         }
-    }, [token]);
+        setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+    }, [token, messages, t]);
 
     const onSubmit = handleSubmit(async (data, e) => {
         e?.preventDefault();
@@ -61,12 +63,13 @@ const SignIn = () => {
             dispatch(authAction.setCredentials(userData));
             console.log(userData);
         } catch (err) {
-            console.log(err);
+            /*  console.log(err);
             if (isFetchBaseQueryError(err)) {
-                setLoginErr('Something went wrong');
+                setLoginErr(t('error.incorrectUsernameOrPasswordError'));
             } else {
-                setLoginErr((err as CustomerError).data.errorsMessages);
-            }
+                 setLoginErr((err as CustomerError).data.errorsMessages); 
+            } */
+            setLoginErr(t('error.incorrectUsernameOrPasswordError'));
         }
     });
 
