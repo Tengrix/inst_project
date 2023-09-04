@@ -16,7 +16,7 @@ export const registerSchema = z
             .string({ required_error: 'error.passwordIsRequiredError' })
             .min(6, 'error.passwordMin')
             .max(20, 'error.passwordMax'),
-        confirmPassword: z.string(),
+        confirmPassword: z.string({ required_error: 'error.passwordIsRequiredError' }),
         serviceAndPrivacy: z.boolean().refine(Boolean)
     })
     .refine(data => data.password === data.confirmPassword, {
