@@ -22,13 +22,13 @@ import github from 'public/assets/gitHub.png';
 export type EditProfileType = z.infer<typeof editProfileSchema>;
 
 const FormPage = () => {
-    const [error, setError] = useState('');
+    const [isSuccess, setIsSuccess] = useState<'error' | 'success' | null>(null);
     const [image, setImage] = useState('');
     const [crop, setCrop] = useState<Crop>(); // текущий кроп
     const [canvas, setCanvas] = useState<HTMLCanvasElement>();
     const [blob, setBlob] = useState<Blob>();
 
-    const [editProfile] = useSubmitUserDataMutation();
+    const [editProfile, { isLoading }] = useSubmitUserDataMutation();
     const { data: userData } = useGetUserDataQuery();
 
     const { control, handleSubmit, reset } = useForm<EditProfileType>({
@@ -38,13 +38,13 @@ const FormPage = () => {
         if (userData) {
             if (userData.photo) {
                 setImage(userData.photo);
-                // const getBlob = async () => {
-                //     const response = await fetch(userData.photo!).then(r => r.blob());
-                //     return response;
-                // };
-                // getBlob().then(blobData => {
-                //     setBlob(blobData);
-                // });
+                const getBlob = async () => {
+                    const response = await fetch(userData.photo!).then(r => r.blob());
+                    return response;
+                };
+                getBlob().then(blobData => {
+                    setBlob(blobData);
+                });
                 reset({
                     birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
                     aboutMe: userData?.aboutMe ?? '',
@@ -57,12 +57,21 @@ const FormPage = () => {
         }
     }, [userData]);
     useEffect(() => {
-        blob && setError('');
+        blob && setIsSuccess(null);
     }, [blob]);
 
     const onSubmit = handleSubmit(async data => {
+        setIsSuccess(null);
         const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        blob ? editProfile({ ...data, file: blob, birthdayDate: date }) : setError('Please download your photo');
+        blob
+            ? editProfile({
+                  ...data,
+                  file: blob,
+                  birthdayDate: date
+              })
+                  .unwrap()
+                  .then(() => setIsSuccess('success'))
+            : setIsSuccess('error');
     });
     return (
         <div className={styles.container}>
@@ -102,10 +111,20 @@ const FormPage = () => {
                     </div>
                 </div>
                 <div className={styles.line}></div>
-                <Typography variant={'regular14'} color={'error'}>
-                    {error}
-                </Typography>
-                <Button className={styles.btn}>Save changes</Button>
+                <div className={styles.footer}>
+                    <div>
+                        {isSuccess !== null && (
+                            <Typography variant={'regular14'} color={isSuccess === 'error' ? 'error' : 'success'}>
+                                {isSuccess === 'error'
+                                    ? 'Please upload your photo first'
+                                    : 'The information was successfully updated'}
+                            </Typography>
+                        )}
+                    </div>
+                    <Button disabled={isLoading} isLoading={isLoading} className={styles.btn}>
+                        Save changes
+                    </Button>
+                </div>
             </form>
         </div>
     );

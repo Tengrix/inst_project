@@ -60,8 +60,14 @@
   background-color: #494545
 }
 
-.btn {
-  align-self: flex-end;
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-top: 24px
+}
+
+.btn {
+  align-self: flex-end
 }
 
