@@ -29,7 +29,7 @@ const Home = () => {
     }, [page]);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className={s.container}>
             <div className={s.feed}>
                 {data?.map((post, i, arr) => (
                     <Post
