@@ -15,7 +15,7 @@ export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
         setCurrentImageIndex(currentImageIndex);
         const image = images[currentImageIndex];
         //@ts-ignore
-        itemsRef.current[image]?.scrollIntoView({ block: 'center' });
+        itemsRef.current[image]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, [setCurrentImageIndex, currentImageIndex, images]);
 
     const bulletHandler = (e: MouseEvent<HTMLButtonElement>) => {
@@ -73,17 +73,15 @@ export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
     ));
 
     return (
-        <div className={s.wrapper}>
-            <div className={s.slider}>
-                {images.length > 1 && (
-                    <>
-                        {currentImageIndex > 0 && prevBtn}
-                        {currentImageIndex + 1 < images.length && nextBtn}
-                    </>
-                )}
-                {images.length > 0 && <ul className={s.slider__list}>{imagePreview}</ul>}
-                {images.length > 1 && <ul className={s.bullets}>{bullets}</ul>}
-            </div>
+        <div className={s.slider}>
+            {images.length > 1 && (
+                <>
+                    {currentImageIndex > 0 && prevBtn}
+                    {currentImageIndex + 1 < images.length && nextBtn}
+                </>
+            )}
+            {images.length > 0 && <ul className={s.slider__list}>{imagePreview}</ul>}
+            {images.length > 1 && <ul className={s.bullets}>{bullets}</ul>}
         </div>
     );
 };
