@@ -135,7 +135,7 @@ const SignUp = () => {
                             name={'userName'}
                             label={t('form.username')}
                             className={s.email}
-                            onKeyDown={triggerKeyHandler}
+                            onKeyUp={triggerKeyHandler}
                             onBlurCapture={triggerHandler}
                         />
                         {/*{errorHandler('login')}*/}
@@ -145,7 +145,7 @@ const SignUp = () => {
                             name={'email'}
                             label={t('form.email')}
                             className={s.email}
-                            onKeyDown={triggerKeyHandler}
+                            onKeyUp={triggerKeyHandler}
                             onBlurCapture={triggerHandler}
                         />
                         {/*{errorHandler('email')}*/}
@@ -156,7 +156,7 @@ const SignUp = () => {
                             label={t('form.password')}
                             className={s.password}
                             type={'password'}
-                            onKeyDown={triggerKeyHandler}
+                            onKeyUp={triggerKeyHandler}
                             onBlurCapture={triggerHandler}
                         />
                         <ControlledTextField
@@ -166,7 +166,7 @@ const SignUp = () => {
                             label={t('form.confirmPassword')}
                             className={s.confirmPassword}
                             type={'password'}
-                            onKeyDown={triggerKeyHandler}
+                            onKeyUp={triggerKeyHandler}
                             onBlurCapture={triggerHandler}
                         />
                         <div className={s.privacyBlock}>
