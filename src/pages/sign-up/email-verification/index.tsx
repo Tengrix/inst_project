@@ -21,8 +21,7 @@ const EmailLinkValidationWrapper = () => {
                 .then(() => {
                     router.push('/sign-up/email-confirmed');
                 })
-                .catch(e => {
-                    console.log(email);
+                .catch(() => {
                     router.push(`/sign-up/email-verification-link-expired?email=${email}`);
                 });
     }, [code, email]);

@@ -1,7 +1,8 @@
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator } from 'next-intl';
+import { useEffect, useState } from 'react';
 
-import { useGetAllPostsQuery } from '@/api/authApi';
+import { useLazyGetAllPostsQuery } from '@/api/authApi';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import Post from '@/components/Post/Post';
 
@@ -21,11 +22,25 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const Home = () => {
-    const { data } = useGetAllPostsQuery(2);
-    const posts = data && [...data].reverse();
+    const [page, setPage] = useState(1);
+    const [getPosts, { data, isLoading }] = useLazyGetAllPostsQuery();
+    useEffect(() => {
+        getPosts(page);
+    }, [page]);
+
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div className={s.feed}>{posts?.map(post => <Post key={post.id} post={post} />)}</div>
+            <div className={s.feed}>
+                {data?.map((post, i, arr) => (
+                    <Post
+                        key={post.id}
+                        post={post}
+                        isLast={arr.length - 1 === i}
+                        setNewPage={() => setPage(prev => prev + 1)}
+                        isLoading={isLoading}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
