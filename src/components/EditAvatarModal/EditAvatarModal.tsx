@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import React, { ChangeEvent, useState } from 'react';
 import { Crop } from 'react-image-crop';
 
@@ -14,12 +15,12 @@ type Props = {
     setImage: (src: string) => void;
     onCrop: (crop: Crop) => void;
     canvas: HTMLCanvasElement | undefined;
-    // eslint-disable-next-line no-unused-vars
     setBlob: (blob: Blob) => void;
     blob?: Blob;
 };
 
 const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob, blob }: Props) => {
+    const t = useTranslations();
     const [modalState, setModalState] = useState(false);
     const [tempCrop, setTempCrop] = useState<Crop>();
     const onImageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,8 +44,8 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob, blob }: Pro
         <Modal
             open={modalState}
             modalHandler={setModalState}
-            modalTrigger={<Button variant={'outlined'}>Add a Profile Photo</Button>}
-            title={'Add a Profile Photo'}
+            modalTrigger={<Button variant={'outlined'}>{t('button.addAProfilePhoto')}</Button>}
+            title={t('button.addAProfilePhoto')}
             customButtonsBlock={<></>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {image ? (
@@ -55,12 +56,12 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob, blob }: Pro
                     <Image src={github} alt={'Avatar'} height={340} width={340} />
                 )}
                 <ImageUploader
-                    label="Add a Profile Photo"
+                    label={t('button.addAProfilePhoto')}
                     btnVariant={'outlined'}
                     onImageChangeHandler={onImageChangeHandler}
                 />
                 <Button fullWidth onClick={saveImageHandler}>
-                    Save image
+                    {t('button.save')}
                 </Button>
             </div>
         </Modal>

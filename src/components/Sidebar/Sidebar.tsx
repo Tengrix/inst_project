@@ -10,6 +10,7 @@ import {
 } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
@@ -21,22 +22,23 @@ import { Button } from '@/shared/ui/button';
 
 import s from './Sidebar.module.scss';
 
-const Sidebar = ({ messages }: { messages: any }) => {
+const Sidebar = () => {
     const [logout, { isLoading, isSuccess }] = useLogoutMutation();
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const t = useTranslations('sidebar');
     const [createPostModal, setCreatePostModal] = useState(false);
     const routes = [
-        { title: messages.sidebar.home, icon: <HomeIcon height={60} width={24} />, path: '/home' },
+        { title: t('home'), icon: <HomeIcon height={60} width={24} />, path: '/home' },
         {
-            title: messages.sidebar.publish,
+            title: t('publish'),
             icon: <PlusCircledIcon height={60} width={24} />,
             path: '/create',
             onClick: () => setCreatePostModal(true)
         },
-        { title: messages.sidebar.myProfile, icon: <PersonIcon height={60} width={24} />, path: '/profile' },
-        { title: messages.sidebar.messenger, icon: <ChatBubbleIcon height={60} width={24} />, path: '/messenger' },
-        { title: messages.sidebar.search, icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
+        { title: t('myProfile'), icon: <PersonIcon height={60} width={24} />, path: '/profile' },
+        { title: t('messenger'), icon: <ChatBubbleIcon height={60} width={24} />, path: '/messenger' },
+        { title: t('search'), icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
     ];
 
     const sidebarItems = routes.map(route => {
@@ -76,11 +78,11 @@ const Sidebar = ({ messages }: { messages: any }) => {
                 <div className={s.wrapper}>
                     <Link className={s.route} href={'/statistics'}>
                         <BarChartIcon height={60} width={24} />
-                        <span>{messages.sidebar.statistics}</span>
+                        <span>{t('statistics')}</span>
                     </Link>
                     <Link className={s.route} href={'/favorites'}>
                         <BookmarkIcon height={60} width={24} />
-                        <span>{messages.sidebar.favourites}</span>
+                        <span>{t('favourites')}</span>
                     </Link>
                     <div className={s.footer}>
                         <Link className={s.route} href={'/sign-in'}>
@@ -91,7 +93,7 @@ const Sidebar = ({ messages }: { messages: any }) => {
                                 isLoading={isLoading}
                                 disabled={isLoading}
                                 onClick={logoutHandler}>
-                                {messages.sidebar.logOut}
+                                {t('logOut')}
                             </Button>
                         </Link>
                     </div>

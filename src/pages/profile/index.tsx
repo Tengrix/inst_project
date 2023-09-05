@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { GetStaticPropsContext, InferGetStaticPropsType } from 'next/types';
+import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
 import { useGetUserDataQuery } from '@/api/authApi';
-import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import { useAppSelector } from '@/redux/store';
 import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';
@@ -18,20 +17,18 @@ import s from './styles.module.scss';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`messages/${locale}/myProfile.json`)).default;
-    const sidebarMessages = (await import(`messages/${locale}/sidebar.json`)).default;
 
     const t = createTranslator({ locale: locale as string, messages });
 
     return {
         props: {
             messages: messages,
-            title: t('myProfile.pageTitle'),
-            sidebarMessages: sidebarMessages
+            title: t('myProfile.pageTitle')
         }
     };
 }
 
-const Profile = ({ sidebarMessages }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Profile = () => {
     const translationPath = 'myProfile';
     const t = useTranslations(translationPath);
     const router = useRouter();
@@ -56,7 +53,6 @@ const Profile = ({ sidebarMessages }: InferGetStaticPropsType<typeof getStaticPr
 
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <Sidebar messages={sidebarMessages} />
             <div className={s.container}>
                 <div className={s.profileHeader}>
                     <Image
@@ -95,6 +91,6 @@ const Profile = ({ sidebarMessages }: InferGetStaticPropsType<typeof getStaticPr
     );
 };
 
-Profile.getLayout = getLayout;
+Profile.getLayout = getLayoutWithSidebar;
 
 export default Profile;

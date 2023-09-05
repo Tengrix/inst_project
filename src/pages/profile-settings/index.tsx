@@ -1,10 +1,25 @@
+import { GetStaticPropsContext } from 'next/types';
+import { createTranslator } from 'next-intl';
 import React from 'react';
 
-import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
+import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import GeneralInformation from '@/pages/profile-settings/general-information';
 import CustomTabs from '@/shared/ui/tabs/Tabs';
 
 import s from './styles.module.scss';
+
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
+
+    const t = createTranslator({ locale: locale as string, messages });
+
+    return {
+        props: {
+            messages: messages,
+            title: t('profileSettings.pageTitle')
+        }
+    };
+}
 
 const ProfileSettings = () => {
     const ProfileTab = { title: 'General information', children: <GeneralInformation /> };
@@ -20,5 +35,5 @@ const ProfileSettings = () => {
         </div>
     );
 };
-ProfileSettings.getLayout = getLayout;
+ProfileSettings.getLayout = getLayoutWithSidebar;
 export default ProfileSettings;
