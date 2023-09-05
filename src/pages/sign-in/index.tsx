@@ -3,14 +3,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { CustomerError, useLoginMutation } from '@/api/authApi';
+import { isFetchBaseQueryError } from '@/api/service/helpers';
+import { CustomerError } from '@/api/types';
 import classes from '@/pages/sign-in/SignIn.module.scss';
+import { useAppSelector } from '@/redux/store';
+import { useLoginMutation } from '@/redux/store/Auth/authApiSlice';
 import { authAction } from '@/redux/store/Auth/authSlice';
+import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
+import { Checkbox } from '@/shared/ui/checkbox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { LoginFormType, loginSchema } from '@/shared/utils/schemas/loginSchema';
@@ -32,24 +38,60 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-const SignIn = () => {
-    const [signIn, { error, isLoading, data, isError }] = useLoginMutation();
+type inputNameType = 'userName' | 'password';
+
+const SignIn = ({ messages }: { messages: {} }) => {
+    const [signIn, { isLoading, isError }] = useLoginMutation();
     const translationPath = 'auth';
-    const router = useRouter();
     const t = useTranslations(translationPath);
+    const [loginErr, setLoginErr] = useState(t('error.incorrectUsernameOrPasswordError'));
+    const router = useRouter();
+
+    const { token, trustDevice } = useAppSelector(state => state.auth);
     const dispatch = useDispatch();
-    const { control, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
-    const onSubmit = handleSubmit(data => {
-        signIn({ password: data.password, login: data.userName })
-            .unwrap()
-            .then(() => dispatch(authAction.setAuth(true)));
+    const { control, formState, handleSubmit, trigger } = useForm<LoginFormType>({
+        resolver: zodResolver(loginSchema)
     });
 
-    if (data && data.message === 'Success') {
-        router.push('/profile');
-    }
+    useEffect(() => {
+        if (token) {
+            router.push(Routes.PROFILE);
+        }
+        setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+    }, [token, messages, t]);
 
-    const err = error && 'data' in error ? (error as CustomerError).data.errorsMessages : 'Something went wrong';
+    const onSubmit = handleSubmit(async (data, e) => {
+        e?.preventDefault();
+        try {
+            const userData = await signIn({ password: data.password, login: data.userName }).unwrap();
+            dispatch(authAction.setCredentials(userData));
+            console.log(userData);
+        } catch (err) {
+            /*  console.log(err);
+            if (isFetchBaseQueryError(err)) {
+                setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+            } else {
+                 setLoginErr((err as CustomerError).data.errorsMessages); 
+            } */
+            setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+        }
+    });
+
+    const triggerHandler = (e: React.FocusEvent<HTMLInputElement>) => {
+        const arg = e.currentTarget?.name as inputNameType;
+        trigger(arg);
+    };
+
+    const triggerKeyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const arg = e.currentTarget?.name as inputNameType;
+        if (formState?.errors[arg]) {
+            trigger(arg);
+        }
+    };
+
+    const checkDevice = () => {
+        dispatch(authAction.setCheckDevice(!trustDevice));
+    };
 
     return (
         <div className={classes.container}>
@@ -73,6 +115,8 @@ const SignIn = () => {
                         translation={translationPath}
                         name={'userName'}
                         label={t('form.username')}
+                        onKeyUp={triggerKeyHandler}
+                        onBlurCapture={triggerHandler}
                     />
                     <ControlledTextField
                         control={control}
@@ -80,6 +124,8 @@ const SignIn = () => {
                         name={'password'}
                         label={t('form.password')}
                         type={'password'}
+                        onKeyUp={triggerKeyHandler}
+                        onBlurCapture={triggerHandler}
                     />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
@@ -87,14 +133,15 @@ const SignIn = () => {
                     <Button
                         isLoading={isLoading}
                         type={'submit'}
-                        disabled={isLoading}
+                        disabled={!formState.isValid || isLoading}
                         className={classes.form__btn}
                         fullWidth>
                         {t('button.signInButton')}
                     </Button>
-                    <div className={classes.form__error}>{isError && err}</div>
+                    <div className={classes.form__error}>{isError && loginErr}</div>
                 </form>
                 <div className={classes.footer}>
+                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice} />
                     <Typography>{t('signInPage.question')}</Typography>
                     <Link href={'/sign-up'} className={classes.link}>
                         {t('signUpPage.h1')}

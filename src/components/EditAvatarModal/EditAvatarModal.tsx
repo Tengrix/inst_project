@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React, { ChangeEvent, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import React, { ChangeEvent, useState } from 'react';
 import { Crop } from 'react-image-crop';
 
 import ImageCropper from '@/components/ImageCropper/ImageCropper';
@@ -14,13 +15,14 @@ type Props = {
     setImage: (src: string) => void;
     onCrop: (crop: Crop) => void;
     canvas: HTMLCanvasElement | undefined;
-    // eslint-disable-next-line no-unused-vars
     setBlob: (blob: Blob) => void;
+    blob?: Blob;
 };
 
-const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) => {
+const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob, blob }: Props) => {
+    const t = useTranslations();
     const [modalState, setModalState] = useState(false);
-    const imgRef = useRef<HTMLImageElement>(null);
+    const [tempCrop, setTempCrop] = useState<Crop>();
     const onImageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const img = e.target.files && e.target.files[0];
         if (img) {
@@ -31,8 +33,9 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) =>
 
     const saveImageHandler = async () => {
         if (canvas) {
-            const blob = await canvasToBlob(canvas);
-            setBlob(blob);
+            tempCrop && onCrop(tempCrop);
+            const newBlob = blob || (await canvasToBlob(canvas));
+            setBlob(newBlob);
             setModalState(false);
         }
     };
@@ -41,24 +44,24 @@ const EditAvatarModal = ({ image, setImage, onCrop, canvas, setBlob }: Props) =>
         <Modal
             open={modalState}
             modalHandler={setModalState}
-            modalTrigger={<Button variant={'outlined'}>Add a Profile Photo</Button>}
-            title={'Add a Profile Photo'}
+            modalTrigger={<Button variant={'outlined'}>{t('button.addAProfilePhoto')}</Button>}
+            title={t('button.addAProfilePhoto')}
             customButtonsBlock={<></>}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {image ? (
-                    <ImageCropper src={image} isCircular onCrop={onCrop}>
-                        <img src={image} alt={'Avatar'} ref={imgRef} height={340} width={340} />
+                    <ImageCropper src={image} isCircular onCrop={setTempCrop}>
+                        <img src={image} alt={'Avatar'} width={340} height={340} />
                     </ImageCropper>
                 ) : (
                     <Image src={github} alt={'Avatar'} height={340} width={340} />
                 )}
                 <ImageUploader
-                    label="Add a Profile Photo"
+                    label={t('button.addAProfilePhoto')}
                     btnVariant={'outlined'}
                     onImageChangeHandler={onImageChangeHandler}
                 />
                 <Button fullWidth onClick={saveImageHandler}>
-                    Save image
+                    {t('button.save')}
                 </Button>
             </div>
         </Modal>

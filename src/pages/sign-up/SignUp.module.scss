@@ -70,9 +70,10 @@
   .privacyBlock {
     display: flex;
     margin-top: 1.38rem;
+    align-items: center;
 
     .privacyText {
-      display: flex;
+      //display: flex;
       align-items: center;
       padding-left: 8px
     }

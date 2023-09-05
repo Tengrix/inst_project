@@ -9,7 +9,7 @@ import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { createNewPasswordSchema } from '@/shared/utils/schemas/createNewPasswordSchema';
-import { useResetPasswordMutation } from 'src/api/authApi';
+import {useResetPasswordMutation} from "@/redux/store/Auth/authApiSlice";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import s from 'src/pages/forgot-password/create-new-password/CreateNewPassword.module.scss';
 

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { usePasswordRecoveryMutation } from '@/api/authApi';
+import { usePasswordRecoveryMutation } from "@/redux/store/Auth/authApiSlice";
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
