@@ -16,7 +16,7 @@ import { Typography } from '@/shared/ui/typography';
 import s from './styles.module.scss';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
-    const messages = (await import(`messages/${locale}/myProfile.json`)).default;
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
 
     const t = createTranslator({ locale: locale as string, messages });
 

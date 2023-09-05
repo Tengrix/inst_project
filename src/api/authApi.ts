@@ -74,6 +74,15 @@ export const authApi = createApi({
                         }
                     };
                 },
+                serializeQueryArgs: ({ endpointName }) => {
+                    return endpointName;
+                },
+                merge: (currentCacheData, newItems) => {
+                    currentCacheData.push(...newItems);
+                },
+                forceRefetch: ({ currentArg, previousArg }) => {
+                    return currentArg !== previousArg;
+                },
                 providesTags: ['Post']
             }),
             deletePost: builder.mutation<any, { id: string }>({
@@ -119,6 +128,7 @@ export const authApi = createApi({
 export const {
     useCreatePostMutation,
     useGetAllPostsQuery,
+    useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,
     useGetUserDataQuery
