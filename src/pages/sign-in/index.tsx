@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { AppProps } from 'next/app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -38,6 +37,9 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
         }
     };
 }
+
+type inputNameType = 'userName' | 'password';
+
 const SignIn = ({ messages }: { messages: {} }) => {
     const [signIn, { isLoading, isError }] = useLoginMutation();
     const translationPath = 'auth';
@@ -47,7 +49,9 @@ const SignIn = ({ messages }: { messages: {} }) => {
 
     const { token, trustDevice } = useAppSelector(state => state.auth);
     const dispatch = useDispatch();
-    const { control, formState, handleSubmit } = useForm<LoginFormType>({ resolver: zodResolver(loginSchema) });
+    const { control, formState, handleSubmit, trigger } = useForm<LoginFormType>({
+        resolver: zodResolver(loginSchema)
+    });
 
     useEffect(() => {
         if (token) {
@@ -72,6 +76,18 @@ const SignIn = ({ messages }: { messages: {} }) => {
             setLoginErr(t('error.incorrectUsernameOrPasswordError'));
         }
     });
+
+    const triggerHandler = (e: React.FocusEvent<HTMLInputElement>) => {
+        const arg = e.currentTarget?.name as inputNameType;
+        trigger(arg);
+    };
+
+    const triggerKeyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const arg = e.currentTarget?.name as inputNameType;
+        if (formState?.errors[arg]) {
+            trigger(arg);
+        }
+    };
 
     const checkDevice = () => {
         dispatch(authAction.setCheckDevice(!trustDevice));
@@ -99,6 +115,8 @@ const SignIn = ({ messages }: { messages: {} }) => {
                         translation={translationPath}
                         name={'userName'}
                         label={t('form.username')}
+                        onKeyUp={triggerKeyHandler}
+                        onBlurCapture={triggerHandler}
                     />
                     <ControlledTextField
                         control={control}
@@ -106,6 +124,8 @@ const SignIn = ({ messages }: { messages: {} }) => {
                         name={'password'}
                         label={t('form.password')}
                         type={'password'}
+                        onKeyUp={triggerKeyHandler}
+                        onBlurCapture={triggerHandler}
                     />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
