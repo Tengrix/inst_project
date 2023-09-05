@@ -1,11 +1,12 @@
+.wrapper{
+    position: relative;
+}
 .slider {
-  position: relative;
+  position: absolute;
   width: 100%;
 
   &__list {
     display: flex;
-
-    // width: 560px;
     gap: 2px;
     align-items: center;
     overflow: hidden;
