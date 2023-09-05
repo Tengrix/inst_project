@@ -89,10 +89,10 @@ export const authApi = createApi({
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
                     const formData = new FormData();
-                    formData.append('aboutMe', data.aboutMe);
+                    formData.append('aboutMe', data.aboutMe ?? '');
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file, data.firstName + data.lastName);
+                    data.file && formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
                     console.log(formData);

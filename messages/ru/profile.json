@@ -53,7 +53,7 @@
             "followingModalUnfollowDescription": "Вы действительно хотите отписаться от этого пользователя “URLProfiele”?",
             "errorTransactionModalTitle": "Ошибка",
             "errorTransactionModalDescription": "Транзакция завершилась неудачей, пожалуйста, повторите попытку",
-            "uccessTransactionModalTitle": "Успех",
+            "successTransactionModalTitle": "Успех",
             "successTransactionModalDescription": "Оплата прошла успешно!"
         },
         "button": {

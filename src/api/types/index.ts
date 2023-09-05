@@ -17,10 +17,10 @@ export type GetUserDataResponseType = {
     updatedAt: string;
 };
 export type ProfileData = {
-    aboutMe: string;
+    aboutMe?: string;
     birthdayDate: string;
     city: string;
-    file: Blob;
+    file?: Blob;
     firstName: string;
     lastName: string;
 };
