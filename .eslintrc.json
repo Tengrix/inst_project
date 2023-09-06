@@ -25,6 +25,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "import/namespace": "off",
     "no-console": "warn",
     "no-nested-ternary": "error",
     "import/named": "warn",

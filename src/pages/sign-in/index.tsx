@@ -7,8 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { isFetchBaseQueryError } from '@/api/service/helpers';
-import { CustomerError } from '@/api/types';
 import classes from '@/pages/sign-in/SignIn.module.scss';
 import { useAppSelector } from '@/redux/store';
 import { useLoginMutation } from '@/redux/store/Auth/authApiSlice';
@@ -38,8 +36,6 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-type inputNameType = 'userName' | 'password';
-
 const SignIn = ({ messages }: { messages: {} }) => {
     const [signIn, { isLoading, isError }] = useLoginMutation();
     const translationPath = 'auth';
@@ -49,8 +45,9 @@ const SignIn = ({ messages }: { messages: {} }) => {
 
     const { token, trustDevice } = useAppSelector(state => state.auth);
     const dispatch = useDispatch();
-    const { control, formState, handleSubmit, trigger } = useForm<LoginFormType>({
-        resolver: zodResolver(loginSchema)
+    const { control, formState, handleSubmit } = useForm<LoginFormType>({
+        resolver: zodResolver(loginSchema),
+        mode: 'onTouched'
     });
 
     useEffect(() => {
@@ -65,29 +62,16 @@ const SignIn = ({ messages }: { messages: {} }) => {
         try {
             const userData = await signIn({ password: data.password, login: data.userName }).unwrap();
             dispatch(authAction.setCredentials(userData));
-            console.log(userData);
         } catch (err) {
             /*  console.log(err);
-            if (isFetchBaseQueryError(err)) {
-                setLoginErr(t('error.incorrectUsernameOrPasswordError'));
-            } else {
-                 setLoginErr((err as CustomerError).data.errorsMessages); 
-            } */
+      if (isFetchBaseQueryError(err)) {
+          setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+      } else {
+           setLoginErr((err as CustomerError).data.errorsMessages); 
+      } */
             setLoginErr(t('error.incorrectUsernameOrPasswordError'));
         }
     });
-
-    const triggerHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-        const arg = e.currentTarget?.name as inputNameType;
-        trigger(arg);
-    };
-
-    const triggerKeyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const arg = e.currentTarget?.name as inputNameType;
-        if (formState?.errors[arg]) {
-            trigger(arg);
-        }
-    };
 
     const checkDevice = () => {
         dispatch(authAction.setCheckDevice(!trustDevice));
@@ -115,8 +99,6 @@ const SignIn = ({ messages }: { messages: {} }) => {
                         translation={translationPath}
                         name={'userName'}
                         label={t('form.username')}
-                        onKeyUp={triggerKeyHandler}
-                        onBlurCapture={triggerHandler}
                     />
                     <ControlledTextField
                         control={control}
@@ -124,8 +106,6 @@ const SignIn = ({ messages }: { messages: {} }) => {
                         name={'password'}
                         label={t('form.password')}
                         type={'password'}
-                        onKeyUp={triggerKeyHandler}
-                        onBlurCapture={triggerHandler}
                     />
                     <Link href={'/forgot-password'} className={classes.form__forgot}>
                         {t('signInPage.forgotPassword')}?
