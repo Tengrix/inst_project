@@ -120,6 +120,16 @@ export const authApi = createApi({
                     };
                 },
                 providesTags: ['Profile']
+            }),
+            editPost: builder.mutation({
+                query: post => {
+                    return {
+                        url: '/post',
+                        method: 'PATCH',
+                        body: post
+                    };
+                },
+                invalidatesTags: ['Post']
             })
         };
     }
@@ -127,6 +137,7 @@ export const authApi = createApi({
 
 export const {
     useCreatePostMutation,
+    useEditPostMutation,
     useGetAllPostsQuery,
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
