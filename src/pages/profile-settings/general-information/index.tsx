@@ -33,7 +33,7 @@ const FormPage = () => {
     const [editProfile, { isLoading }] = useSubmitUserDataMutation();
     const { data: userData } = useGetUserDataQuery();
 
-    const { control, handleSubmit } = useForm<EditProfileType>({
+    const { control, handleSubmit, reset } = useForm<EditProfileType>({
         resolver: zodResolver(editProfileSchema)
     });
     useEffect(() => {
@@ -47,6 +47,13 @@ const FormPage = () => {
                 // getBlob().then(blobData => {
                 //     setBlob(blobData);
                 // });
+                reset({
+                    birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
+                    aboutMe: userData?.aboutMe,
+                    city: userData?.city,
+                    firstName: userData?.firstName,
+                    lastName: userData?.lastName
+                });
             }
         }
     }, [userData]);
