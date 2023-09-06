@@ -53,6 +53,7 @@ const CreatePostModal = (props: Props) => {
                 .then(() => {
                     setEditModal(false);
                     props.modalHandler(false);
+                    setCurrentStep('Cropping');
                     dispatch(resetImageState());
                     router.push('/home');
                 });

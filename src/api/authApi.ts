@@ -2,7 +2,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType } from '@/api/types';
+import { GetUserDataResponseType, PostFormData, ProfileData } from '@/api/types';
 import { PostType } from '@/components/Post/types';
 import { RootStateType } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -45,7 +45,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Post'],
+    tagTypes: ['Post', 'Profile'],
     endpoints: builder => {
         return {
             createPost: builder.mutation<void, PostFormData>({
@@ -64,11 +64,24 @@ export const authApi = createApi({
                 },
                 invalidatesTags: ['Post']
             }),
-            getAllPosts: builder.query<PostType[], void>({
-                query: () => {
+            getAllPosts: builder.query<PostType[], number>({
+                query: (page: number) => {
                     return {
-                        url: '/post/all'
+                        url: '/post/all',
+                        params: {
+                            page: page,
+                            itemsPerPage: 9
+                        }
                     };
+                },
+                serializeQueryArgs: ({ endpointName }) => {
+                    return endpointName;
+                },
+                merge: (currentCacheData, newItems) => {
+                    currentCacheData.push(...newItems);
+                },
+                forceRefetch: ({ currentArg, previousArg }) => {
+                    return currentArg !== previousArg;
                 },
                 providesTags: ['Post']
             }),
@@ -85,25 +98,28 @@ export const authApi = createApi({
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
                     const formData = new FormData();
-                    formData.append('aboutMe', data.aboutMe);
+                    formData.append('aboutMe', data.aboutMe ?? '');
                     formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
-                    formData.append('file', data.file);
+                    data.file && formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
+                    console.log(formData);
                     return {
                         url: '/user',
                         method: 'PATCH',
                         body: formData
                     };
-                }
+                },
+                invalidatesTags: ['Profile']
             }),
             getUserData: builder.query<GetUserDataResponseType, void>({
                 query: () => {
                     return {
                         url: '/user/profile'
                     };
-                }
+                },
+                providesTags: ['Profile']
             })
         };
     }
@@ -112,50 +128,8 @@ export const authApi = createApi({
 export const {
     useCreatePostMutation,
     useGetAllPostsQuery,
+    useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,
     useGetUserDataQuery
 } = authApi;
-
-//types
-export type ProfileData = {
-    aboutMe: string;
-    birthdayDate: string;
-    city: string;
-    file: Blob;
-    firstName: string;
-    lastName: string;
-};
-
-export type RegisterParamsType = {
-    userName: string;
-    email: string;
-    password: string;
-};
-
-export type ErrorDataType = {
-    errorsMessages: string;
-};
-export type CustomerError = {
-    data: ErrorDataType;
-    status: number;
-};
-export type FieldError = {
-    field: string;
-    message: string;
-};
-export type SignUpError = {
-    errorsMessages: FieldError[];
-};
-export type SignUpErrorType = {
-    data: SignUpError;
-    status: number;
-};
-export type PostFormData = {
-    description: string;
-    files: Array<{
-        blob: Blob;
-        filename: string;
-    }>;
-    title: string;
-};

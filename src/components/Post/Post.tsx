@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { useGetUserDataQuery } from '@/api/authApi';
 import { AddToFavIcon } from '@/assets/icons/AddToFavIcon';
@@ -16,21 +16,44 @@ import { Typography } from '@/shared/ui/typography';
 import { HorizontalDotsIcon } from 'public/assets/icons/HorizontalDotsIcon';
 import s from 'src/components/Post/styles.module.scss';
 
+import { ImagePostSlider } from '../ImageSlider/ImagePostSlider';
+
 const noAvatarUrl =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXGxsb////JycnDw8Pv7+/8/Pza2trNzc3g4ODy8vLm5ub4+PjV1dXj4+Pr6+vp6ekuEkSCAAADOElEQVR4nO3cW3OrIBSGYXSpeIr+/3+7RZumnaSpix2Di75PLzqdyQVfOQgIcQ4AAAAAAAAAAAAAAAAAAAAAAAA4Tpm6AEeTq9QFOYRIOTZtX1XTpR29yy2kiG+7urgZpjGnkOKarrhTzz6XjNIMa6L7kFMWGcU/qL/PerxsnzE7xi41JO2DuvuiM1+N89N8oRpHyxHFPWmhnxqrEUPf2hPQbkRxUu0KaDZiKfPDR8QjPnVho0izswYXQ+rCRil31t9qNthOZVIELIoxdXn1RlXAYjBXibvHUauVKF4ZsOiMVaKyFwbWJqiagXTT20qoHGcCW2ON9PqEhalFogwRCZvUpVbRd0NjHdHHJKwsJYwYaIwNNYplxU1tKKFm4UTCc/oDCbMfafQri8DU0yL/J37crM1Uwuxn3jGTGktD6UL0CS/GEv76zumOtV0Mv3dD/8raTlT+u4nqaU2XusB62l19a43UKdf5k8GAqgVGbfP40P52WpsbZlay9zW+sRnpTZhm7puAtzYDbvZENB3QuV8f/LXRJroJDbV9Em75GcIxDMsZF/5ZS+1Tl+4lpB3uD9asf1fW1hM/EdcM9/nqPE6XfhDxl28Px7pqSsns6L5I6Zt+mqpp7jM8yf5BxOV7GeGvyKvjAQCAh+Tbr8zI7YpsHlPTLwnWPH5s+7nq6mAYumoOV2VNJ90moEuAcmynH7dN625ufOk+c9qatoabzW21YzdxjemM1ebS+pZ0u97M1Nunhn5Z85sJKW6cYs7TdK3fQp64sa5dKi7eZriGPKuw4RRzVmiz/WO6sEV1UiKPrt1HJO23bcazBb3fFP0PYav4bFfY5YX5rhnPRMbX5itCWz1RM5Xfb91HZRzPMq4eUIEfpnMMq3I5KN9iOENvjLhpqJD6OyVCI9KeX9MKEVM+N6TSnkFUqhMfRYk67azNmPQLF6LuVWil/MIF1dcmxEt3TeHI58Q3ydrpm6qwTlaJcfe3YhKm6onqo9zxUp3OPGo6ei/R4b43dcMgUUcs3xYw1cW9/BO67BPmX4ckJCEJSUhCEpKQhC+V6hp0+T6nfrkPAAAAAAAAAAAAAAAAAAAAAAAAvNc/BaMjNJZwCScAAAAASUVORK5CYII=';
 type Props = {
     post: PostType;
+    isLast: boolean;
+    setNewPage: () => void;
+    isLoading: boolean;
 };
 const Post = (props: Props) => {
     const { data: userData } = useGetUserDataQuery();
     const { title, image, likes, description, id } = props.post;
+    const postRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (!postRef?.current || props.isLoading) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (props.isLast && entry.isIntersecting) {
+                props.setNewPage();
+                observer.unobserve(entry.target);
+            }
+        });
+
+        observer.observe(postRef.current);
+        return () => {
+            if (postRef.current) {
+                observer.unobserve(postRef.current);
+            }
+        };
+    }, [props.isLast, userData]);
 
     if (!userData) {
         return <Spinner />;
     }
-
     return (
-        <div className={s.container}>
+        <div className={s.container} ref={postRef}>
             <div className={s.header}>
                 <Image src={userData.photo ? userData.photo : noAvatarUrl} alt="userAva" width={50} height={50} />
                 <Typography variant={'h1'}>{`${userData.firstName} ${userData.lastName}`}</Typography>
@@ -44,7 +67,8 @@ const Post = (props: Props) => {
                 />
             </div>
             <div className={s.photo}>
-                <Image src={image[0]} alt="userAva" width={400} height={400} />
+                <ImagePostSlider images={image} />
+                {/* <Image src={image[0]} alt="userAva" width={400} height={400} /> */}
             </div>
             <div className={s.icons}>
                 <HeartIcon />

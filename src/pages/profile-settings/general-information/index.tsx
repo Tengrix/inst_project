@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Crop } from 'react-image-crop';
@@ -9,12 +10,12 @@ import { z } from 'zod';
 import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/authApi';
 import { Canvas } from '@/components/Canvas/Canvas';
 import EditAvatarModal from '@/components/EditAvatarModal/EditAvatarModal';
-import { getLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 import styles from '@/pages/profile-settings/general-information/styles.module.scss';
 import { Button } from '@/shared/ui/button';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { ControlledTextAreaField } from '@/shared/ui/controlled/controlled-text-area';
 import NewDatePicker from '@/shared/ui/newDatePicker/NewDatePicker';
+import { TextField } from '@/shared/ui/text-field';
 import { Typography } from '@/shared/ui/typography';
 import { editProfileSchema } from '@/shared/utils/schemas/editProfileSchema';
 import github from 'public/assets/gitHub.png';
@@ -22,45 +23,48 @@ import github from 'public/assets/gitHub.png';
 export type EditProfileType = z.infer<typeof editProfileSchema>;
 
 const FormPage = () => {
-    const [error, setError] = useState('');
+    const t = useTranslations();
+    const [isSuccess, setIsSuccess] = useState<'error' | 'success' | null>(null);
     const [image, setImage] = useState('');
     const [crop, setCrop] = useState<Crop>();
     const [canvas, setCanvas] = useState<HTMLCanvasElement>();
     const [blob, setBlob] = useState<Blob>();
 
-    const [editProfile] = useSubmitUserDataMutation();
+    const [editProfile, { isLoading }] = useSubmitUserDataMutation();
     const { data: userData } = useGetUserDataQuery();
 
-    const { control, handleSubmit, reset } = useForm<EditProfileType>({
+    const { control, handleSubmit } = useForm<EditProfileType>({
         resolver: zodResolver(editProfileSchema)
     });
     useEffect(() => {
         if (userData) {
-            userData.photo && setImage(userData.photo);
-            reset({
-                birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
-                aboutMe: userData?.aboutMe ?? '',
-                city: userData?.city ?? '',
-                firstName: userData?.firstName ?? '',
-                lastName: userData?.lastName ?? '',
-                userName: userData?.login
-            });
+            if (userData.photo) {
+                setImage(userData.photo);
+                // const getBlob = async () => {
+                //     const response = await fetch(userData.photo!).then(r => r.blob());
+                //     return response;
+                // };
+                // getBlob().then(blobData => {
+                //     setBlob(blobData);
+                // });
+            }
         }
     }, [userData]);
     useEffect(() => {
-        blob && setError('');
+        blob && setIsSuccess(null);
     }, [blob]);
 
-    const getCanvas = (canvas: HTMLCanvasElement) => {
-        setCanvas(canvas);
-    };
-
     const onSubmit = handleSubmit(async data => {
+        setIsSuccess(null);
         const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-        blob ? editProfile({ ...data, file: blob, birthdayDate: date }) : setError('Please download your photo');
+        editProfile({
+            ...data,
+            file: blob,
+            birthdayDate: date
+        })
+            .unwrap()
+            .then(() => setIsSuccess('success'));
     });
-
     return (
         <div className={styles.container}>
             <form className={styles.form} onSubmit={onSubmit}>
@@ -73,9 +77,9 @@ const FormPage = () => {
                                     step={'Publication'}
                                     filters={{}}
                                     imageSRC={image}
-                                    defHeight={192}
-                                    defWidth={192}
-                                    getCanvas={getCanvas}
+                                    destHeight={192}
+                                    destWidth={192}
+                                    getCanvas={setCanvas}
                                 />
                             ) : (
                                 <Image src={github} alt={'Avatar'} height={192} width={192} />
@@ -87,10 +91,11 @@ const FormPage = () => {
                             onCrop={setCrop}
                             canvas={canvas}
                             setBlob={setBlob}
+                            blob={blob}
                         />
                     </div>
                     <div className={styles.profileInfo}>
-                        <ControlledTextField name="userName" label="Username" control={control} />
+                        <TextField label="Username" value={userData?.login} readOnly />
                         <ControlledTextField name="firstName" label="Firstname" control={control} />
                         <ControlledTextField name="lastName" label="Lastname" control={control} />
                         <NewDatePicker name="birthdayDate" label="Date of Birthday" control={control} />
@@ -99,14 +104,23 @@ const FormPage = () => {
                     </div>
                 </div>
                 <div className={styles.line}></div>
-                <Typography variant={'regular14'} color={'error'}>
-                    {error}
-                </Typography>
-                <Button className={styles.btn}>Save changes</Button>
+                <div className={styles.footer}>
+                    <div>
+                        {isSuccess !== null && (
+                            <Typography variant={'regular14'} color={isSuccess === 'error' ? 'error' : 'success'}>
+                                {isSuccess === 'error'
+                                    ? 'Please upload your photo first'
+                                    : 'The information was successfully updated'}
+                            </Typography>
+                        )}
+                    </div>
+                    <Button disabled={isLoading} isLoading={isLoading} className={styles.btn}>
+                        {t('button.saveChanges')}
+                    </Button>
+                </div>
             </form>
         </div>
     );
 };
 
-FormPage.getLayout = getLayout;
 export default FormPage;
