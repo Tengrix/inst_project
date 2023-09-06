@@ -1,5 +1,5 @@
 import { GetStaticPropsContext } from 'next/types';
-import { createTranslator } from 'next-intl';
+import { createTranslator, useTranslations } from 'next-intl';
 import React from 'react';
 
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
@@ -22,10 +22,27 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const ProfileSettings = () => {
-    const ProfileTab = { title: 'General information', children: <GeneralInformation /> };
-    const Devices = { title: 'Devices', children: <div>Devices</div> };
-    const AccountManagement = { title: 'Account Management', children: <div>Account Management</div> };
-    const MyPayments = { title: 'My Payments', children: <div>My Payments</div> };
+    const t = useTranslations('profileSettings');
+    const ProfileTab = {
+        value: 'profile',
+        title: t('tab.generalInformation.generalInformationTitle'),
+        children: <GeneralInformation />
+    };
+    const Devices = {
+        value: 'devices',
+        title: t('tab.devices.devicesTitle'),
+        children: <div>{t('tab.devices.devicesTitle')}</div>
+    };
+    const AccountManagement = {
+        value: 'account',
+        title: t('tab.accountManagement.accountManagementTitle'),
+        children: <div>{t('tab.accountManagement.accountManagementTitle')}</div>
+    };
+    const MyPayments = {
+        value: 'payments',
+        title: t('tab.myPayments.myPaymentsTitle'),
+        children: <div>{t('tab.myPayments.myPaymentsTitle')}</div>
+    };
 
     const Tabs = [ProfileTab, Devices, AccountManagement, MyPayments];
 
