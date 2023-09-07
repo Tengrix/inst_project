@@ -12,10 +12,11 @@ import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { ImagePlaceholder } from '@/shared/ui/placeholder/placeholder';
 import { Typography } from '@/shared/ui/typography';
-import { parseImageBlob } from '@/shared/utils/parseImageBlob';
+import { canvasCreator } from '@/shared/utils/canvas/canvasCreator';
+import { canvasToBlob } from '@/shared/utils/canvas/canvasToBlob';
+import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 
 import s from './CreatePostModal.module.scss';
-
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
 
 type Props = {
@@ -45,7 +46,10 @@ const CreatePostModal = (props: Props) => {
         else if (currentStep === 'Publication') {
             const imagesBlob = [];
             for (const image of images) {
-                const blob = await fetch(image.src).then(r => r.blob());
+                /* const blob = await fetch(image.src).then(r => r.blob()); */
+                const canvas = canvasCreator(image.src, image.filters);
+                const blob = await canvasToBlob(canvas, image.type);
+
                 imagesBlob.push({ blob, filename: image.name });
             }
             publishPost({ title, files: imagesBlob, description })
