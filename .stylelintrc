@@ -24,7 +24,7 @@
     "block-no-empty": false,
     "selector-max-compound-selectors": 4,
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true,
+    "scss/at-rule-no-unknown": false,
     "scss/dollar-variable-pattern": false,
     "scss/at-use-no-unnamespaced": true,
     "selector-class-pattern": null,

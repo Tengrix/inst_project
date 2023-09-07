@@ -5,6 +5,7 @@ import {
     PasswordRecoveryRequestType,
     SignUpRequestType
 } from '@/api/types';
+import { RegisterFormType } from '@/pages/sign-up';
 
 export const authApiSlice = authApi.injectEndpoints({
     endpoints: builder => ({
@@ -21,14 +22,14 @@ export const authApiSlice = authApi.injectEndpoints({
                 url: '/auth/refresh-token'
             })
         }),
-        signUp: builder.mutation<void, SignUpRequestType>({
+        signUp: builder.mutation<void, RegisterFormType>({
             query: data => {
                 return {
                     method: 'POST',
                     url: '/auth/registration',
                     body: {
                         login: data.userName,
-                        password: data.password,
+                        password: data.password.password,
                         email: data.email
                     }
                 };

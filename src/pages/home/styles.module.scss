@@ -1,3 +1,10 @@
+.container {
+  inset: 0;
+  height: 100vh;
+  margin: 0;
+  overflow-y: auto
+}
+
 .feed {
   display: flex;
   flex-direction: column;

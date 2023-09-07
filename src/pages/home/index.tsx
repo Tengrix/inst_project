@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useLazyGetAllPostsQuery } from '@/api/authApi';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import Post from '@/components/Post/Post';
+import { useAppDispatch } from '@/redux/store';
 
 import s from './styles.module.scss';
 
@@ -22,6 +23,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const Home = () => {
+    const dispatch = useAppDispatch();
     const [page, setPage] = useState(1);
     const [getPosts, { data, isLoading }] = useLazyGetAllPostsQuery();
     useEffect(() => {
@@ -29,7 +31,7 @@ const Home = () => {
     }, [page]);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className={s.container}>
             <div className={s.feed}>
                 {data?.map((post, i, arr) => (
                     <Post

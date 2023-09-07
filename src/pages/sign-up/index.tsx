@@ -34,8 +34,6 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-type inputNameType = 'userName' | 'email' | 'password' | 'confirmPassword';
-
 const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const translationPath = 'auth';
@@ -43,15 +41,9 @@ const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [signUp, { error, isLoading }] = useSignUpMutation();
 
-    const { control, handleSubmit, formState, trigger } = useForm<RegisterFormType>({
-        resolver: zodResolver(registerSchema)
-        // defaultValues: {
-        //     email: '',
-        //     userName: '',
-        //     password: '',
-        //     confirmPassword: '',
-        //     serviceAndPrivacy: false
-        // }
+    const { control, handleSubmit, formState } = useForm<RegisterFormType>({
+        resolver: zodResolver(registerSchema),
+        mode: 'onTouched'
     });
     // const privacyError = formState.errors.serviceAndPrivacy?.message;
 
@@ -64,19 +56,6 @@ const SignUp = () => {
         setEmail(data.email);
     });
 
-    const triggerHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-        const arg = e.currentTarget?.name as inputNameType;
-        trigger(arg);
-    };
-
-    const triggerKeyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const arg = e.currentTarget?.name as inputNameType;
-        if (formState?.errors[arg]) {
-            trigger(arg);
-        }
-    };
-
-    // include type check against field path with the name you have supplied.
     // const err =
     //     error &&
     //     (error as SignUpErrorType).data.errorsMessages.reduce((acc: { [key: string]: string }, error) => {
@@ -135,8 +114,6 @@ const SignUp = () => {
                             name={'userName'}
                             label={t('form.username')}
                             className={s.email}
-                            onKeyUp={triggerKeyHandler}
-                            onBlurCapture={triggerHandler}
                         />
                         {/*{errorHandler('login')}*/}
                         <ControlledTextField
@@ -145,29 +122,23 @@ const SignUp = () => {
                             name={'email'}
                             label={t('form.email')}
                             className={s.email}
-                            onKeyUp={triggerKeyHandler}
-                            onBlurCapture={triggerHandler}
                         />
                         {/*{errorHandler('email')}*/}
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
-                            name={'password'}
+                            name={'password.password'}
                             label={t('form.password')}
                             className={s.password}
                             type={'password'}
-                            onKeyUp={triggerKeyHandler}
-                            onBlurCapture={triggerHandler}
                         />
                         <ControlledTextField
                             control={control}
                             translation={translationPath}
-                            name={'confirmPassword'}
+                            name={'password.confirmPassword'}
                             label={t('form.confirmPassword')}
                             className={s.confirmPassword}
                             type={'password'}
-                            onKeyUp={triggerKeyHandler}
-                            onBlurCapture={triggerHandler}
                         />
                         <div className={s.privacyBlock}>
                             <ControlledCheckbox name={'serviceAndPrivacy'} control={control} label={``} />
