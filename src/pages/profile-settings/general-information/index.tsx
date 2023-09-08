@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
+import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { createTranslator, useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Crop } from 'react-image-crop';
@@ -22,13 +23,27 @@ import github from 'public/assets/gitHub.png';
 
 export type EditProfileType = z.infer<typeof editProfileSchema>;
 
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
+
+    const t = createTranslator({ locale: locale as string, messages });
+
+    return {
+        props: {
+            messages: messages,
+            title: t('profileSettings.pageTitle')
+        }
+    };
+}
+
 const FormPage = () => {
-    const t = useTranslations();
     const [isSuccess, setIsSuccess] = useState<'error' | 'success' | null>(null);
     const [image, setImage] = useState('');
     const [crop, setCrop] = useState<Crop>();
     const [canvas, setCanvas] = useState<HTMLCanvasElement>();
     const [blob, setBlob] = useState<Blob>();
+    const translationPath = 'auth';
+    const t = useTranslations(translationPath);
 
     const [editProfile, { isLoading }] = useSubmitUserDataMutation();
     const { data: userData } = useGetUserDataQuery();
@@ -103,12 +118,32 @@ const FormPage = () => {
                         />
                     </div>
                     <div className={styles.profileInfo}>
-                        <TextField label="Username" value={userData?.login} readOnly />
-                        <ControlledTextField name="firstName" label="Firstname" control={control} />
-                        <ControlledTextField name="lastName" label="Lastname" control={control} />
-                        <NewDatePicker name="birthdayDate" label="Date of Birthday" control={control} />
-                        <ControlledTextField name="city" label="City" control={control} />
-                        <ControlledTextAreaField name="aboutMe" label="About me" control={control} />
+                        <TextField label={t('form.username')} value={userData?.login} readOnly />
+                        <ControlledTextField
+                            name="firstName"
+                            translation={translationPath}
+                            label={t('form.firstname')}
+                            control={control}
+                        />
+                        <ControlledTextField
+                            name="lastName"
+                            translation={translationPath}
+                            label={t('form.lastname')}
+                            control={control}
+                        />
+                        <NewDatePicker name="birthdayDate" label={t('form.dateOfBirthday')} control={control} />
+                        <ControlledTextField
+                            name="city"
+                            translation={translationPath}
+                            label={t('form.city')}
+                            control={control}
+                        />
+                        <ControlledTextAreaField
+                            name="aboutMe"
+                            translation={translationPath}
+                            label={t('form.aboutMe')}
+                            control={control}
+                        />
                     </div>
                 </div>
                 <div className={styles.line}></div>
