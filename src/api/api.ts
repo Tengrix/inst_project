@@ -129,6 +129,25 @@ export const api = createApi({
                     };
                 },
                 providesTags: ['Profile']
+            }),
+            editPost: builder.mutation({
+                query: post => {
+                    return {
+                        url: '/post',
+                        method: 'PATCH',
+                        body: post
+                    };
+                },
+                invalidatesTags: ['Post']
+            }),
+            getPostById: builder.query({
+                query: postId => {
+                    return {
+                        url: '/post',
+                        body: postId
+                    };
+                },
+                providesTags: ['Post']
             })
         };
     }
@@ -136,7 +155,9 @@ export const api = createApi({
 
 export const {
     useCreatePostMutation,
+    useEditPostMutation,
     useGetAllPostsQuery,
+    useLazyGetPostByIdQuery,
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,

@@ -6,7 +6,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useGetAllPostsQuery } from '@/api/api';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import Post from '@/components/Post/Post';
-import { useAppDispatch } from '@/redux/store';
 
 import s from './styles.module.scss';
 

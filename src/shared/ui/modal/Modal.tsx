@@ -8,7 +8,7 @@ import { Button } from '@/shared/ui/button';
 import s from 'src/shared/ui/modal/Modal.module.scss';
 
 type ModalPropsType = {
-    title: string;
+    title?: string;
     children: ReactNode;
     previousStepBtn?: ReactNode;
     nextStepBtn?: ReactNode;
@@ -20,6 +20,8 @@ type ModalPropsType = {
     className?: string;
     onPointerOutsideClickHandler?: () => void;
     customButtonsBlock?: ReactNode;
+    onSubmit?: () => void;
+    editPost?: boolean;
 } & ComponentPropsWithoutRef<'div'>;
 
 export const Modal = ({
@@ -32,7 +34,9 @@ export const Modal = ({
     previousStepBtn = false,
     isPostModal = false,
     onPointerOutsideClickHandler,
-    customButtonsBlock = false
+    customButtonsBlock = false,
+    onSubmit,
+    editPost
 }: ModalPropsType) => {
     const modalContentClassName = clsx({
         [s.DialogDescription]: true,
@@ -83,9 +87,13 @@ export const Modal = ({
                             </div>
                         ) : (
                             <div style={{ display: 'flex', marginTop: 'auto', justifyContent: 'flex-end' }}>
-                                <Dialog.Close asChild>
-                                    <Button>OK</Button>
-                                </Dialog.Close>
+                                {editPost ? (
+                                    <Button onClick={onSubmit}>Save changes</Button>
+                                ) : (
+                                    <Dialog.Close asChild>
+                                        <Button>OK</Button>
+                                    </Dialog.Close>
+                                )}
                             </div>
                         )}
                     </Dialog.Description>

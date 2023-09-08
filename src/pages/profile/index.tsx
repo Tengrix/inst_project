@@ -6,8 +6,10 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useGetAllPostsQuery, useGetUserDataQuery } from '@/api/api';
+import { useGetUserDataQuery, useGetAllPostsQuery } from '@/api/api';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
+import EditPost from '@/components/Post/EditPost/EditPost';
+import { PostType } from '@/components/Post/types';
 import { Button } from '@/shared/ui/button';
 import Spinner from '@/shared/ui/spinner/Spinner';
 import { Typography } from '@/shared/ui/typography';
@@ -34,6 +36,8 @@ const Profile = () => {
     const t = useTranslations(translationPath);
     const router = useRouter();
     const { data: userData } = useGetUserDataQuery();
+    const [editPostMode, setEditPostMode] = useState<boolean>(false);
+    const [post, setPost] = useState<PostType | null>(null);
 
     const [page, setPage] = useState(1);
     const { data: postsData, isLoading } = useGetAllPostsQuery(page, { refetchOnMountOrArgChange: true });
@@ -42,13 +46,28 @@ const Profile = () => {
         setPage(prev => prev + 1);
     }, []);
 
+    const editPostModeHandler = () => setEditPostMode(!editPostMode);
+    const getPost = (post: PostType) => setPost(post);
+
     const photoGallery =
         postsData &&
         postsData.items.map(post => {
             return (
                 <>
                     {post.image.map((image, i) => {
-                        return <Image key={post.id + i} src={image} alt={post.id} width={500} height={500} />;
+                        return (
+                            <Image
+                                onClick={() => {
+                                    editPostModeHandler();
+                                    getPost(post);
+                                }}
+                                key={post.id + i}
+                                src={image}
+                                alt={post.id}
+                                width={500}
+                                height={500}
+                            />
+                        );
                     })}
                 </>
             );
@@ -103,6 +122,15 @@ const Profile = () => {
                     scrollThreshold={0.9}>
                     <div className={s.photoGallery}>{photoGallery}</div>
                 </InfiniteScroll>
+                {editPostMode ? (
+                    <EditPost
+                        key={post?.id}
+                        edit={editPostMode}
+                        editPostModeHandler={editPostModeHandler}
+                        post={post as PostType}
+                        user={userData}
+                    />
+                ) : null}
             </div>
         </div>
     );
