@@ -21,7 +21,7 @@ type ModalPropsType = {
     onPointerOutsideClickHandler?: () => void;
     customButtonsBlock?: ReactNode;
     onSubmit?: () => void;
-    editPost: boolean;
+    editPost?: boolean;
 } & ComponentPropsWithoutRef<'div'>;
 
 export const Modal = ({
