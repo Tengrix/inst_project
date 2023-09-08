@@ -6,18 +6,20 @@ import s from './styles.module.scss';
 
 type Props = {
     id: string;
+    editModeHandler: () => void;
 };
 
 type MyPostOptionsType = {
     title: string;
     icon: ReactNode;
     onClick?: () => void;
+    editModeHandler?: () => void;
 };
 const PostOptions = (props: Props) => {
     const [deletePost] = useDeletePostMutation();
 
     const myPostOptions: MyPostOptionsType[] = [
-        { title: 'Edit Post', icon: <></> },
+        { title: 'Edit Post', icon: <></>, onClick: () => props.editModeHandler() },
         { title: 'Delete Post', icon: <></>, onClick: () => deletePost({ id: props.id }) },
         { title: 'Copy Link', icon: <></> }
     ];

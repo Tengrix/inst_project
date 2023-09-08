@@ -130,6 +130,15 @@ export const authApi = createApi({
                     };
                 },
                 invalidatesTags: ['Post']
+            }),
+            getPostById: builder.query({
+                query: postId => {
+                    return {
+                        url: '/post',
+                        body: postId
+                    };
+                },
+                providesTags: ['Post']
             })
         };
     }
@@ -139,6 +148,7 @@ export const {
     useCreatePostMutation,
     useEditPostMutation,
     useGetAllPostsQuery,
+    useLazyGetPostByIdQuery,
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,
