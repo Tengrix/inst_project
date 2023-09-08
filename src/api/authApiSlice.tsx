@@ -1,4 +1,4 @@
-import { authApi } from '@/api/authApi';
+import { api } from '@/api/api';
 import {
     ChangePasswordRequestType,
     LoginResponseType,
@@ -7,7 +7,7 @@ import {
 } from '@/api/types';
 import { RegisterFormType } from '@/pages/sign-up';
 
-export const authApiSlice = authApi.injectEndpoints({
+export const authApiSlice = api.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation<LoginResponseType, { login: string; password: string }>({
             query: data => ({
