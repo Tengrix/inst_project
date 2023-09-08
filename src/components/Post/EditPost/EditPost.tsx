@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import { useEditPostMutation } from '@/api/authApi';
+import { useEditPostMutation } from '@/api/api';
 import { EditPostTypes } from '@/components/Post/EditPost/types';
 import PostOptions from '@/components/Post/PostOptions/PostOptions';
 import { Modal } from '@/shared/ui/modal/Modal';
