@@ -1,42 +1,46 @@
 .container {
   width: 220px;
+  height: 100%;
   border-right: 1px solid var(--color-dark-100);
-  min-height: 100vh;
 
-  .sidebarRoutes{
+  .sidebarRoutes {
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
     align-content: space-around;
-    flex-wrap: wrap;
     align-items: flex-start;
-    .wrapper{
+
+    .wrapper {
       display: flex;
-      flex-direction: column;
+      flex-flow: column wrap;
       align-content: space-around;
-      flex-wrap: wrap;
       padding-top: 120px;
-        span{
-          margin-left: 15px;
+
+        span {
+          margin-left: 15px
         }
     }
-    .route{
+
+    .route {
       display: flex;
-      align-items: center;
       flex-direction: row;
+      align-items: center
     }
-    .footer{
-      margin-top: 150px;
+
+    .footer {
       position: fixed;
       bottom: 0;
       left: 50px;
+      margin-top: 150px
     }
   }
 }
+
 @media screen and (max-width: 425px) {
   .container {
-    display: none;
+    display: none
   }
 }
+
 .btn {
   color:var(--color-light-100)
 }

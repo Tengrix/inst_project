@@ -7,7 +7,6 @@ import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal/Modal';
 import img from 'public/assets/expiredLink.png';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
-import {usePasswordRecoveryMutation} from "@/redux/store/Auth/authApiSlice";
 
 import s from './index.module.scss';
 

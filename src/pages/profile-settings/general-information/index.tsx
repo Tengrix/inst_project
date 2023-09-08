@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Crop } from 'react-image-crop';
 import { z } from 'zod';
 
-import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/authApi';
+import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/api';
 import { Canvas } from '@/components/Canvas/Canvas';
 import EditAvatarModal from '@/components/EditAvatarModal/EditAvatarModal';
 import styles from '@/pages/profile-settings/general-information/styles.module.scss';
@@ -51,6 +51,7 @@ const FormPage = () => {
     const { control, handleSubmit, reset } = useForm<EditProfileType>({
         resolver: zodResolver(editProfileSchema)
     });
+
     useEffect(() => {
         if (userData) {
             if (userData.photo) {
@@ -64,10 +65,10 @@ const FormPage = () => {
                 // });
                 reset({
                     birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
-                    aboutMe: userData?.aboutMe,
-                    city: userData?.city,
-                    firstName: userData?.firstName,
-                    lastName: userData?.lastName
+                    aboutMe: userData?.aboutMe ?? '',
+                    city: userData?.city ?? '',
+                    firstName: userData?.firstName ?? '',
+                    lastName: userData?.lastName ?? ''
                 });
             }
         }
@@ -78,7 +79,7 @@ const FormPage = () => {
 
     const onSubmit = handleSubmit(async data => {
         setIsSuccess(null);
-        const date = format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+        const date = data.birthdayDate ? format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'") : '';
         editProfile({
             ...data,
             file: blob,

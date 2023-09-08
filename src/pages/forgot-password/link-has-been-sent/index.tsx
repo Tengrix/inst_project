@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ReCaptchaProvider, useReCaptcha } from 'next-recaptcha-v3';
 import { useForm } from 'react-hook-form';
 
-import { usePasswordRecoveryMutation } from "@/redux/store/Auth/authApiSlice";
+import { usePasswordRecoveryMutation } from '@/api/authApiSlice';
 import { ForgotPasswordFormType } from '@/pages/forgot-password';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
