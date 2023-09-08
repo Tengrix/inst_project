@@ -6,8 +6,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useSignUpMutation } from '@/api/authApiSlice';
 import EmailSentModal from '@/pages/sign-up/email-sent-modal/email-sent-modal';
-import { useSignUpMutation } from '@/redux/store/Auth/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/controlled';

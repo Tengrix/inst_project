@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useCreatePostMutation } from '@/api/authApi';
+import { useCreatePostMutation } from '@/api/api';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 import { useAppSelector } from '@/redux/store';
 import { addImage, resetImageState } from '@/redux/store/imageSlice/imageSlice';

@@ -42,7 +42,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     return result;
 };
 
-export const authApi = createApi({
+export const api = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Post', 'Profile'],
@@ -64,7 +64,7 @@ export const authApi = createApi({
                 },
                 invalidatesTags: ['Post']
             }),
-            getAllPosts: builder.query<PostType[], number>({
+            getAllPosts: builder.query<GetPostsResponseType, number>({
                 query: (page: number) => {
                     return {
                         url: '/post/all',
@@ -77,8 +77,18 @@ export const authApi = createApi({
                 serializeQueryArgs: ({ endpointName }) => {
                     return endpointName;
                 },
+                transformResponse: (response: PostType[], meta, arg) => {
+                    return { items: response, page: arg };
+                },
                 merge: (currentCacheData, newItems) => {
-                    currentCacheData.push(...newItems);
+                    if (newItems.page === 1) {
+                        currentCacheData.page = newItems.page;
+                        currentCacheData.items = newItems.items;
+                    }
+                    if (currentCacheData.page !== newItems.page) {
+                        currentCacheData.page = newItems.page;
+                        currentCacheData.items.push(...newItems.items);
+                    }
                 },
                 forceRefetch: ({ currentArg, previousArg }) => {
                     return currentArg !== previousArg;
@@ -104,7 +114,6 @@ export const authApi = createApi({
                     data.file && formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
-                    console.log(formData);
                     return {
                         url: '/user',
                         method: 'PATCH',
@@ -153,4 +162,9 @@ export const {
     useDeletePostMutation,
     useSubmitUserDataMutation,
     useGetUserDataQuery
-} = authApi;
+} = api;
+
+type GetPostsResponseType = {
+    items: PostType[];
+    page: number;
+};

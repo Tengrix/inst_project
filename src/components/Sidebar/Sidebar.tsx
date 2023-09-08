@@ -13,9 +13,9 @@ import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
+import { useLogoutMutation } from '@/api/authApiSlice';
 import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
 import { useAppDispatch } from '@/redux/store';
-import { useLogoutMutation } from '@/redux/store/Auth/authApiSlice';
 import { authAction } from '@/redux/store/Auth/authSlice';
 import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';

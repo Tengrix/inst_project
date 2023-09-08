@@ -4,12 +4,12 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useResetPasswordMutation } from '@/api/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { createNewPasswordSchema } from '@/shared/utils/schemas/createNewPasswordSchema';
-import {useResetPasswordMutation} from "@/redux/store/Auth/authApiSlice";
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import s from 'src/pages/forgot-password/create-new-password/CreateNewPassword.module.scss';
 

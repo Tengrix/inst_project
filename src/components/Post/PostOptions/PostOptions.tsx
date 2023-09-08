@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { useDeletePostMutation } from '@/api/authApi';
+import { useDeletePostMutation } from '@/api/api';
 
 import s from './styles.module.scss';
 

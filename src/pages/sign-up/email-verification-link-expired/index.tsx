@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import React from 'react';
 
-import { usePasswordRecoveryMutation } from '@/redux/store/Auth/authApiSlice';
+import { usePasswordRecoveryMutation } from '@/api/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import img from 'public/assets/expiredLink.png';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';

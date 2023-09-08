@@ -28,7 +28,7 @@
     "import/namespace": "off",
     "no-console": "warn",
     "no-nested-ternary": "error",
-    "import/named": "warn",
+    "import/named": "off",
     "no-debugger": "warn",
     "no-unused-vars": "warn",
     "arrow-parens": ["error", "as-needed"],
