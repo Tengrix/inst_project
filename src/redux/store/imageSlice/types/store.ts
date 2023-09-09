@@ -15,11 +15,12 @@ export type ImageStoreStateType = {
     title: string;
     description: string;
 };
+export type MimeType = 'image/jpeg' | 'image/jpg' | 'image/png';
 
 export type ImageType = {
     src: string;
     originalSRC: string;
-    type: string;
+    type: MimeType;
     name: string;
     hash?: string;
     size: number;
