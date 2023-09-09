@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React, { ReactNode } from 'react';
 
 import { Modal } from '@/shared/ui/modal/Modal';
@@ -10,9 +11,11 @@ type Props = {
     customButtonsBlock: ReactNode;
 };
 const ConfirmCloseModal = (props: Props) => {
+    const t = useTranslations('');
+
     return (
         <Modal
-            title={'Close'}
+            title={t('modal.closeModalTitle')}
             open={props.open}
             modalHandler={props.modalHandler}
             customButtonsBlock={props.customButtonsBlock}>
