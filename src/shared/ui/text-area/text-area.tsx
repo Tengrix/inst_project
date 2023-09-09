@@ -34,6 +34,7 @@ export const TextArea: FC<TextAreaFieldProps> = ({
     onKeyDown,
     // onClearValue,
     className,
+    maxLength = 501,
     ...rest
 }) => {
     const showError = errorMessage && errorMessage.length > 0;
@@ -56,7 +57,7 @@ export const TextArea: FC<TextAreaFieldProps> = ({
                         disabled={disabled}
                         className={classNames.textarea}
                         onKeyDown={onKeyDown}
-                        maxLength={500}
+                        maxLength={maxLength}
                         {...rest}
                     />
                 </div>
