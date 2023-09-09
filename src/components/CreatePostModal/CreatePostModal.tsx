@@ -46,10 +46,8 @@ const CreatePostModal = (props: Props) => {
         else if (currentStep === 'Publication') {
             const imagesBlob = [];
             for (const image of images) {
-                /* const blob = await fetch(image.src).then(r => r.blob()); */
-                const canvas = canvasCreator(image.src, image.filters);
+                const canvas = await canvasCreator(image.src, image.filters, image.crop, currentStep);
                 const blob = await canvasToBlob(canvas, image.type);
-
                 imagesBlob.push({ blob, filename: image.name });
             }
             publishPost({ title, files: imagesBlob, description })

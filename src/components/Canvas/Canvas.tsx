@@ -23,9 +23,9 @@ export const Canvas = ({ imageSRC, filters, step, crop, destWidth, destHeight, g
 
     const fn = useCallback(
         (canvas: HTMLCanvasElement) => {
-            canvasCreator(imageSRC, filters, step, destWidth, destHeight, crop, canvas, getCanvas);
+            canvasCreator(imageSRC, filters, crop, step, destWidth, destHeight, canvas);
         },
-        [imageSRC, filters, step, destWidth, destHeight, crop, getCanvas]
+        [imageSRC, filters, crop, step, destWidth, destHeight]
     );
 
     useEffect(() => {
