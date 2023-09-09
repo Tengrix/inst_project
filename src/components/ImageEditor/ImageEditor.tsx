@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
+import { createTranslator, useTranslations } from 'next-intl';
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -21,10 +23,25 @@ type ImageEditorPropsType = {
     step: StepType;
 };
 
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
+
+    const t = createTranslator({ locale: locale as string, messages });
+
+    return {
+        props: {
+            messages: messages,
+            title: t('myProfile.pageTitle')
+        }
+    };
+}
+
 export const ImageEditor = (props: ImageEditorPropsType) => {
     const dispatch = useAppDispatch();
     const currentImage = useAppSelector(state => state.images.currentImage);
     const images = useAppSelector(state => state.images.images);
+    const translationPath = 'auth';
+    const t = useTranslations(translationPath);
 
     const [descriptionSymbols, setDescriptionSymbols] = useState('');
 
@@ -67,13 +84,15 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
                         <form className={s.form}>
                             <ControlledTextField
                                 name={'title'}
-                                label={'Post title'}
+                                label={t('form.postTitle')}
+                                translation={translationPath}
                                 control={control}
                                 onKeyDown={e => handleChange('title', e.currentTarget.value)}
                             />
                             <ControlledTextAreaField
                                 name={'description'}
-                                label={'Add publication descriptions'}
+                                label={t('form.addPublicationDescription')}
+                                translation={translationPath}
                                 control={control}
                                 onKeyUp={e => {
                                     handleChange('description', e.currentTarget.value);
