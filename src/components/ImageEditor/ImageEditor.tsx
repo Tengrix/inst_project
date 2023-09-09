@@ -5,6 +5,7 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useGetUserDataQuery } from '@/api/api';
 import { StepType } from '@/components/CreatePostModal/CreatePostModal';
 import { ImageNavbar } from '@/components/ImageEditor/Navbar/ImageNavbar';
 import { ImageFilter } from '@/components/ImageEditor/NavbarItems/Filter/ImageFilter';
@@ -48,7 +49,9 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
     const { control, setValue, trigger, watch, formState } = useForm<CreatePostFormType>({
         resolver: zodResolver(createPostSchema)
     });
-
+    /* TODO : FFFIIIXXX  */
+    const { data: userData } = useGetUserDataQuery();
+    /* TODO : FFFIIIXXX  */
     const handleChange = (name: keyof CreatePostFormType, value: string) => {
         setValue(name, value);
         trigger(name);
@@ -78,8 +81,13 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
                 <div className={s.right}>
                     <div className={s.publicationDescriptionBlock}>
                         <div className={s.user}>
-                            <Image src={Person} alt="Person avatar" />
-                            <Typography variant="regular16">User name</Typography>
+                            <Image
+                                src={userData ? userData.photo : Person}
+                                alt="Person avatar"
+                                width={50}
+                                height={50}
+                            />
+                            <Typography variant="regular16">{`${userData?.firstName} ${userData?.lastName}`}</Typography>
                         </div>
                         <form className={s.form}>
                             <ControlledTextField
