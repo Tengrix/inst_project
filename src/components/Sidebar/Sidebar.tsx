@@ -84,19 +84,18 @@ const Sidebar = () => {
                         <BookmarkIcon height={60} width={24} />
                         <span>{t('favourites')}</span>
                     </Link>
-                    <div className={s.footer}>
-                        <Link className={s.route} href={'/sign-in'}>
-                            <ExitIcon height={60} width={24} />
-                            <Button
-                                className={s.btn}
-                                variant={'link'}
-                                isLoading={isLoading}
-                                disabled={isLoading}
-                                onClick={logoutHandler}>
-                                {t('logOut')}
-                            </Button>
-                        </Link>
-                    </div>
+                    {/* <div className={s.footer}></div> */}
+                    <Link className={s.route} href={'/sign-in'}>
+                        <ExitIcon height={60} width={24} />
+                        <Button
+                            className={s.btn}
+                            variant={'link'}
+                            isLoading={isLoading}
+                            disabled={isLoading}
+                            onClick={logoutHandler}>
+                            <span>{t('logOut')}</span>
+                        </Button>
+                    </Link>
                 </div>
             </div>
             <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal} />

@@ -81,57 +81,55 @@ const Profile = () => {
     const publications: number = 7821238;
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div className={s.container}>
-                <div className={s.profileHeader}>
-                    <Image
-                        src={userData.photo ? `${userData.photo}?v=${Date.now()}` : noAvatar}
-                        alt="userAva"
-                        width={250}
-                        height={250}
-                    />
-                    <div className={s.profileInfo}>
-                        <div className={s.username}>
-                            <Typography variant={'h1'}>{`${userData.firstName} ${userData.lastName}`}</Typography>
-                            <Link href={'/profile-settings'}>
-                                <Button variant={'secondary'}>{t('profileSettings')}</Button>
-                            </Link>
-                        </div>
-                        <div className={s.profileStats}>
-                            <div className={s.stats}>
-                                <Typography variant={'bold14'}>{following.toLocaleString('ru-RU')}</Typography>
-                                <Typography variant={'regular14'}>{t('following')}</Typography>
-                            </div>
-                            <div className={s.stats}>
-                                <Typography variant={'bold14'}>{followers.toLocaleString('ru-RU')}</Typography>
-                                <Typography variant={'regular14'}>{t('followers')}</Typography>
-                            </div>
-                            <div className={s.stats}>
-                                <Typography variant={'bold14'}>{publications.toLocaleString('ru-RU')}</Typography>
-                                <Typography variant={'regular14'}>{t('publications')}</Typography>
-                            </div>
-                        </div>
-                        <div className={s.aboutMe}>{userData.aboutMe}</div>
+        <div className={s.container}>
+            <div className={s.profileHeader}>
+                <Image
+                    src={userData.photo ? `${userData.photo}?v=${Date.now()}` : noAvatar}
+                    alt="userAva"
+                    width={250}
+                    height={250}
+                />
+                <div className={s.profileInfo}>
+                    <div className={s.username}>
+                        <Typography variant={'h1'}>{`${userData.firstName} ${userData.lastName}`}</Typography>
+                        <Link href={'/profile-settings'}>
+                            <Button variant={'secondary'}>{t('profileSettings')}</Button>
+                        </Link>
                     </div>
+                    <div className={s.profileStats}>
+                        <div className={s.stats}>
+                            <Typography variant={'bold14'}>{following.toLocaleString('ru-RU')}</Typography>
+                            <Typography variant={'regular14'}>{t('following')}</Typography>
+                        </div>
+                        <div className={s.stats}>
+                            <Typography variant={'bold14'}>{followers.toLocaleString('ru-RU')}</Typography>
+                            <Typography variant={'regular14'}>{t('followers')}</Typography>
+                        </div>
+                        <div className={s.stats}>
+                            <Typography variant={'bold14'}>{publications.toLocaleString('ru-RU')}</Typography>
+                            <Typography variant={'regular14'}>{t('publications')}</Typography>
+                        </div>
+                    </div>
+                    <div className={s.aboutMe}>{userData.aboutMe}</div>
                 </div>
-                <InfiniteScroll
-                    next={fetchNextPage}
-                    hasMore={true}
-                    loader={isLoading}
-                    dataLength={postsData?.items.length ?? 0}
-                    scrollThreshold={0.9}>
-                    <div className={s.photoGallery}>{photoGallery}</div>
-                </InfiniteScroll>
-                {editPostMode ? (
-                    <EditPost
-                        key={post?.id}
-                        edit={editPostMode}
-                        editPostModeHandler={editPostModeHandler}
-                        post={post as PostType}
-                        user={userData}
-                    />
-                ) : null}
             </div>
+            <InfiniteScroll
+                next={fetchNextPage}
+                hasMore={true}
+                loader={isLoading}
+                dataLength={postsData?.items.length ?? 0}
+                scrollThreshold={0.9}>
+                <div className={s.photoGallery}>{photoGallery}</div>
+            </InfiniteScroll>
+            {editPostMode ? (
+                <EditPost
+                    key={post?.id}
+                    edit={editPostMode}
+                    editPostModeHandler={editPostModeHandler}
+                    post={post as PostType}
+                    user={userData}
+                />
+            ) : null}
         </div>
     );
 };

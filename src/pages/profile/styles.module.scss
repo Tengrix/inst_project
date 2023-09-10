@@ -2,14 +2,27 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 24px 64px;
+  padding: 24px;
+  gap: 48px;
   background-color: var(--color-dark-700)
 }
 
 .profileHeader {
   display: flex;
   flex-direction: row;
-  height: 261px
+  gap: 38px;
+
+  img {
+    border-radius: 100%;
+    width: 220px;
+    height: 220px;
+  }
+
+  @media (max-width: 767.98px) {
+    & {
+      flex-wrap: wrap
+    }
+  }
 }
 
 .profileInfo {
@@ -17,18 +30,20 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  margin-left: 38px;
 
   .username {
     display: flex;
     flex-direction: row;
-    justify-content: space-between
+    justify-content: space-between;
+    gap: 16px;
   }
 
   .profileStats {
     display: flex;
     flex-direction: row;
-    gap: 100px;
+    max-width: 400px;
+    gap: 16px;
+    justify-content: space-between;
 
     .stats {
       display: flex;
@@ -43,7 +58,22 @@
 
 .photoGallery {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(234px, 1fr));
   gap: 12px;
-  margin-top: 53px
+  margin-top: 53px;
+
+  img {
+    height: 228px;
+    object-fit: cover
+  }
+
+  @media (max-width: 479.98px) {
+    & {
+      grid-template-columns: 1fr;
+
+      img {
+        height: auto
+      }
+    }
+  }
 }
