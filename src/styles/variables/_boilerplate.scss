@@ -86,4 +86,8 @@ body {
   font: var(--font-regular-14);
   background-color: var(--color-dark-700)
 }
+
+[data-radix-popper-content-wrapper] {
+    z-index: 110 !important
+}
   

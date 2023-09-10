@@ -1,36 +1,59 @@
 .container {
-  width: 220px;
-  height: 100%;
+  max-width: 220px;
+  padding: 0 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 60px;
   border-right: 1px solid var(--color-dark-100);
 
   .sidebarRoutes {
     display: flex;
     flex-flow: column wrap;
-    align-content: space-around;
-    align-items: flex-start;
+    align-content: flex-start;
 
     .wrapper {
       display: flex;
       flex-flow: column wrap;
-      align-content: space-around;
+      align-items: flex-start;
       padding-top: 120px;
-
-        span {
-          margin-left: 15px
+      @media (max-width: 991.98px) {
+        & {
+          align-items: center
         }
+      }
+
+      span {
+        margin-left: 15px;
+
+        @media (max-width: 991.98px) {
+          & {
+            display: none
+          }
+        }
+      }
     }
 
     .route {
       display: flex;
       flex-direction: row;
-      align-items: center
+      align-items: center;
+      justify-content: center;
     }
-
+    /*
     .footer {
       position: fixed;
       bottom: 0;
       left: 50px;
       margin-top: 150px
+    }
+    */
+  }
+
+  @media (max-width: 991.98px) {
+    & {
+      padding: 0 16px;
+      align-items: center;
     }
   }
 }

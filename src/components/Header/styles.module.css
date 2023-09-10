@@ -2,12 +2,19 @@
     /* position: relative; */
     display: flex;
     justify-content: space-between;
-    height: 10px;
+    height: 60px;
     padding: 30px;
-
-    /* background-color: #000000; */
+    position: sticky;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    /* background-color: #000000;
     background-color: #0D0D0D;
-    border-bottom: 1px solid var(--color-dark-100)
+    background-color: rgba(0, 0, 0, .45)*/
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-dark-100);
+    z-index: 100
 }
 
 .text, .languageSelector, .notificationIcon {

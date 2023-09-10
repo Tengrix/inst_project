@@ -27,9 +27,10 @@
 
 @media screen and (max-width: 425px) {
   .SelectTrigger {
-    width: 75px
+    width: auto
   }
 }
+
 
 .SelectTrigger:hover {
   border-color: var(--color-primary-500)
