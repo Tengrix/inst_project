@@ -16,6 +16,7 @@ import { Typography } from '@/shared/ui/typography';
 import { canvasCreator } from '@/shared/utils/canvas/canvasCreator';
 import { canvasToBlob } from '@/shared/utils/canvas/canvasToBlob';
 import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
+import { getUniqFileName } from '@/shared/utils/generateFileName/generateFileName';
 
 import s from './CreatePostModal.module.scss';
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
@@ -57,7 +58,9 @@ const CreatePostModal = (props: Props) => {
             for (const image of images) {
                 const canvas = await canvasCreator(image.src, image.filters, image.crop, currentStep);
                 const blob = await canvasToBlob(canvas, image.type);
-                imagesBlob.push({ blob, filename: image.name });
+                /* FIXME: temp solution must be realized on backend  */
+                const uniqFileName = getUniqFileName(image.name);
+                imagesBlob.push({ blob, filename: uniqFileName });
             }
             publishPost({ title, files: imagesBlob, description })
                 .unwrap()
