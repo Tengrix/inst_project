@@ -65,6 +65,10 @@
   background-color: rgb(var(--color-dark-500) .8);
   border-radius: 2px;
 
+  li {
+    position: relative;
+  }
+
   .icon__close {
     position: relative;
     display: flex;
