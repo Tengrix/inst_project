@@ -7,7 +7,7 @@ import ImageCropper from '@/components/ImageCropper/ImageCropper';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import { Modal } from '@/shared/ui/modal/Modal';
-import { canvasToBlob } from '@/shared/utils/canvasToBlob';
+import { canvasToBlob } from '@/shared/utils/canvas/canvasToBlob';
 import github from 'public/assets/gitHub.png';
 
 type Props = {

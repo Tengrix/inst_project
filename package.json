@@ -41,9 +41,11 @@
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.45.2",
     "react-image-crop": "^10.1.5",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^8.1.1",
     "styled-components": "^6.0.5",
     "tailwindcss": "3.3.3",
+    "uuid": "^9.0.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -57,6 +59,7 @@
     "@storybook/testing-library": "^0.2.0",
     "@types/react-datepicker": "^4.15.0",
     "@types/react-google-recaptcha": "^2.1.5",
+    "@types/uuid": "^9.0.3",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.45.0",
@@ -87,7 +90,7 @@
     "stylelint-selector-bem-pattern": "^3.0.1",
     "typescript": "^5.1.6"
   },
-  "lint-staged":{
-    "*.{js,ts,tsx,jsx}":"env FORCE_COLOR=1 eslint --fix"
+  "lint-staged": {
+    "*.{js,ts,tsx,jsx}": "env FORCE_COLOR=1 eslint --fix"
   }
 }

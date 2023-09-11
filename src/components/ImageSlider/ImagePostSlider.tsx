@@ -15,7 +15,7 @@ export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
         setCurrentImageIndex(currentImageIndex);
         const image = images[currentImageIndex];
         //@ts-ignore
-        itemsRef.current[image]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        //itemsRef.current[image]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     }, [setCurrentImageIndex, currentImageIndex, images]);
 
     const bulletHandler = (e: MouseEvent<HTMLButtonElement>) => {

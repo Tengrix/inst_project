@@ -2,7 +2,7 @@ import s from '@/components/ImageEditor/NavbarItems/Gallery/ImageGallery.module.
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { addImage, removeImage, setCurrentImage } from '@/redux/store/imageSlice/imageSlice';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
-import { parseImageBlob } from '@/shared/utils/parseImageBlob';
+import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 
 export const ImageGallery = () => {
     const dispatch = useAppDispatch();

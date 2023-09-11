@@ -7,9 +7,9 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
+import { useLoginMutation } from '@/api/authApiSlice';
 import classes from '@/pages/sign-in/SignIn.module.scss';
 import { useAppSelector } from '@/redux/store';
-import { useLoginMutation } from '@/redux/store/Auth/authApiSlice';
 import { authAction } from '@/redux/store/Auth/authSlice';
 import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';

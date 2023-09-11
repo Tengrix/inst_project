@@ -13,7 +13,7 @@ export const editProfileSchema = z.object({
         .min(1, 'error.lastNameMin')
         .max(50, 'error.lastNameMax')
         .refine(lastname => /^[\p{L}]+$/u.test(lastname), 'error.invalidUsername'),
-    birthdayDate: z.date({ required_error: 'Please select your birthday' }),
-    city: z.string({ required_error: 'Enter your city' }).trim(),
+    birthdayDate: z.date().nullish(),
+    city: z.string().trim(),
     aboutMe: z.string().trim().max(200, 'error.aboutMeValueMax').optional()
 });

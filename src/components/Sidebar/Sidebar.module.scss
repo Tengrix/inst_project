@@ -1,42 +1,69 @@
 .container {
-  width: 220px;
+  max-width: 220px;
+  padding: 0 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 60px;
   border-right: 1px solid var(--color-dark-100);
-  min-height: 100vh;
 
-  .sidebarRoutes{
+  .sidebarRoutes {
     display: flex;
-    flex-direction: column;
-    align-content: space-around;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    .wrapper{
+    flex-flow: column wrap;
+    align-content: flex-start;
+
+    .wrapper {
       display: flex;
-      flex-direction: column;
-      align-content: space-around;
-      flex-wrap: wrap;
+      flex-flow: column wrap;
+      align-items: flex-start;
       padding-top: 120px;
-        span{
-          margin-left: 15px;
+      @media (max-width: 991.98px) {
+        & {
+          align-items: center
         }
+      }
+
+      span {
+        margin-left: 15px;
+
+        @media (max-width: 991.98px) {
+          & {
+            display: none
+          }
+        }
+      }
     }
-    .route{
+
+    .route {
       display: flex;
-      align-items: center;
       flex-direction: row;
+      align-items: center;
+      justify-content: center;
     }
-    .footer{
-      margin-top: 150px;
+    /*
+    .footer {
       position: fixed;
       bottom: 0;
       left: 50px;
+      margin-top: 150px
+    }
+    */
+  }
+
+  @media (max-width: 991.98px) {
+    & {
+      padding: 0 16px;
+      align-items: center;
     }
   }
 }
+
 @media screen and (max-width: 425px) {
   .container {
-    display: none;
+    display: none
   }
 }
+
 .btn {
   color:var(--color-light-100)
 }
