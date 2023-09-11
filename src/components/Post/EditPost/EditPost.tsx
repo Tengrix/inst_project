@@ -31,7 +31,6 @@ const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
         confirmPostEditing(editedPost);
     };
     const editModeHandler = () => setEditPost(true);
-    console.log(editPost);
     const content = (
         <div className={s.wrapper}>
             <div>
