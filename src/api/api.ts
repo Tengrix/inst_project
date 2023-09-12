@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 };
 
 export const api = createApi({
-    reducerPath: 'authApi',
+    reducerPath: 'baseApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Post', 'Profile'],
     endpoints: builder => {
@@ -62,23 +62,35 @@ export const api = createApi({
                         body: formData
                     };
                 },
-                invalidatesTags: ['Post']
+                onQueryStarted: async ({ ...patch }, { dispatch, queryFulfilled }) => {
+                    try {
+                        const { data } = await queryFulfilled;
+                        dispatch(
+                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                                // draftPosts.items.unshift(data)
+                            })
+                        );
+                    } catch {
+                        console.log('error');
+                    }
+                }
             }),
-            getAllPosts: builder.query<GetPostsResponseType, number>({
-                query: (page: number) => {
+            getAllPosts: builder.query<GetPostsResponseType, number | void>({
+                query: (page = 1) => {
                     return {
                         url: '/post/all',
                         params: {
                             page: page,
-                            itemsPerPage: 9
+                            itemsPerPage: 9,
+                            order: 'desc'
                         }
                     };
                 },
-                serializeQueryArgs: ({ endpointName }) => {
+                serializeQueryArgs: ({ endpointName, queryArgs }) => {
                     return endpointName;
                 },
                 transformResponse: (response: PostType[], meta, arg) => {
-                    return { items: response, page: arg };
+                    return { items: response, page: arg ?? 1 };
                 },
                 merge: (currentCacheData, newItems) => {
                     if (newItems.page === 1) {
@@ -93,7 +105,8 @@ export const api = createApi({
                 forceRefetch: ({ currentArg, previousArg }) => {
                     return currentArg !== previousArg;
                 },
-                providesTags: ['Post']
+                providesTags: (result, error, arg) =>
+                    result ? [...result.items.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post']
             }),
             deletePost: builder.mutation<any, { id: string }>({
                 query: data => {
@@ -103,13 +116,29 @@ export const api = createApi({
                         body: data
                     };
                 },
-                invalidatesTags: ['Post']
+                onQueryStarted: async ({ id }, { dispatch, queryFulfilled }) => {
+                    try {
+                        const { data } = await queryFulfilled;
+                        console.log('onQueryStarted fullfield');
+                        dispatch(
+                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                                const index = draftPosts.items.findIndex(post => post.id === id);
+                                if (index !== -1) {
+                                    draftPosts.items.splice(index, 1);
+                                }
+                            })
+                        );
+                    } catch {
+                        console.log('error');
+                    }
+                }
+                // invalidatesTags: ['Post']
             }),
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
                     const formData = new FormData();
                     formData.append('aboutMe', data.aboutMe ?? '');
-                    formData.append('birthdayDate', data.birthdayDate);
+                    data.birthdayDate && formData.append('birthdayDate', data.birthdayDate);
                     formData.append('city', data.city);
                     data.file && formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);

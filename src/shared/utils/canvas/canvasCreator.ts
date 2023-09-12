@@ -37,8 +37,8 @@ export const canvasCreator = (
                     unit: '%',
                     x: 0,
                     y: 0,
-                    width: 50,
-                    height: 50
+                    width: 100,
+                    height: 100
                 };
             }
             const cropAspectRatio =
@@ -53,7 +53,6 @@ export const canvasCreator = (
                 if (effects) {
                     ctx!.filter = effects;
                 }
-
                 ctx!.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasWidth, canvasHeight);
             } else {
                 const canvasWidth = cropAspectRatio >= destRatio ? destWidth : destHeight * cropAspectRatio;
