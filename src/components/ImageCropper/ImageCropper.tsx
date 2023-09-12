@@ -11,6 +11,8 @@ type PropsType = {
     src: string;
     isCircular?: boolean;
     onCrop?: (crop: Crop) => void;
+    destWidth: number;
+    destHeight: number;
 };
 
 const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: number = 1) =>
@@ -18,7 +20,7 @@ const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: numbe
         makeAspectCrop(
             {
                 unit: '%',
-                width: mediaWidth
+                width: 100
             },
             aspect,
             mediaWidth,
@@ -47,11 +49,10 @@ const ImageCropper = ({ isCircular = false, ...props }: PropsType) => {
     const debouncedCrop = useDebounce(completedCrop, 500);
 
     useEffect(() => {
-        if (props.src) {
-            const newCrop = centerAspectCrop(curCrop.width, curCrop.height, isCircular ? 1 : cropRatio);
+        if (props.src && cropRatio) {
+            const newCrop = centerAspectCrop(props.destWidth, props.destHeight, isCircular ? 1 : cropRatio);
             setCompletedCrop(newCrop);
             setCurCrop(newCrop);
-            console.log(newCrop);
         }
     }, [cropRatio]);
 

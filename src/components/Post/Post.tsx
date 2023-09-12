@@ -46,7 +46,6 @@ const Post = (props: Props) => {
             </div>
             <div className={s.photo}>
                 <ImagePostSlider images={image} />
-                {/* <Image src={image[0]} alt="userAva" width={400} height={400} /> */}
             </div>
             <div className={s.icons}>
                 <HeartIcon />
