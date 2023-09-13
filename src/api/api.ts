@@ -64,9 +64,35 @@ export const api = createApi({
                 onQueryStarted: async ({ ...patch }, { dispatch, queryFulfilled }) => {
                     try {
                         const { data } = await queryFulfilled;
+                        console.log(data);
                         dispatch(
                             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
                                 draftPosts.items.unshift(data);
+                            })
+                        );
+                    } catch {
+                        console.log('error');
+                    }
+                }
+            }),
+            getPostById: builder.query<PostType, string>({
+                query: id => {
+                    return {
+                        url: '/post',
+                        params: {
+                            id: id
+                        }
+                    };
+                },
+                onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+                    try {
+                        const { data } = await queryFulfilled;
+                        dispatch(
+                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                                const index = draftPosts.items.findIndex(post => post.id === id);
+                                if (index !== -1) {
+                                    draftPosts.items[index] = data;
+                                }
                             })
                         );
                     } catch {
@@ -169,28 +195,7 @@ export const api = createApi({
                         body: formData
                     };
                 }
-                // onQueryStarted: async ({ ...patch }, { dispatch, queryFulfilled }) => {
-                //     try {
-                //         const { data } = await queryFulfilled;
-                //         dispatch(
-                //           api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
-                //               draftPosts.items.unshift(data)
-                //           })
-                //         );
-                //     } catch {
-                //         console.log('error');
-                //     }
-                // }
                 // invalidatesTags: ['Post']
-            }),
-            getPostById: builder.query({
-                query: postId => {
-                    return {
-                        url: '/post',
-                        body: postId
-                    };
-                },
-                providesTags: ['Post']
             })
         };
     }
@@ -204,7 +209,8 @@ export const {
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,
-    useGetUserDataQuery
+    useGetUserDataQuery,
+    useGetPostByIdQuery
 } = api;
 
 type GetPostsResponseType = {

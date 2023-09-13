@@ -1,7 +1,8 @@
+import { skipToken } from '@reduxjs/toolkit/query';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import { useEditPostMutation } from '@/api/api';
+import { useEditPostMutation, useGetPostByIdQuery } from '@/api/api';
 import { EditPostTypes } from '@/components/Post/EditPost/types';
 import PostOptions from '@/components/Post/PostOptions/PostOptions';
 import { Modal } from '@/shared/ui/modal/Modal';
@@ -16,6 +17,7 @@ import s from './styles.module.css';
 
 const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
     const [confirmPostEditing, { isSuccess, isError, isLoading: editPostLoading }] = useEditPostMutation();
+    const { data } = useGetPostByIdQuery(isSuccess ? post.id : skipToken);
     const [editPost, setEditPost] = useState<boolean>(false);
     const [newPost, setNewPost] = useState<string>(post.description);
 
