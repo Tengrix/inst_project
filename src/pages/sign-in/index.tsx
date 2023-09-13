@@ -121,7 +121,7 @@ const SignIn = ({ messages }: { messages: {} }) => {
                     <div className={classes.form__error}>{isError && loginErr}</div>
                 </form>
                 <div className={classes.footer}>
-                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice} />
+                    {/*<Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice} />*/}
                     <Typography>{t('signInPage.question')}</Typography>
                     <Link href={'/sign-up'} className={classes.link}>
                         {t('signUpPage.h1')}
