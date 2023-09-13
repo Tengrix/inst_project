@@ -48,14 +48,13 @@ export const api = createApi({
     tagTypes: ['Post', 'Profile'],
     endpoints: builder => {
         return {
-            createPost: builder.mutation<void, PostFormData>({
+            createPost: builder.mutation<PostType, PostFormData>({
                 query: data => {
                     const formData = new FormData();
                     formData.append('description', data.description);
                     data.files.forEach(({ blob, filename }) => {
                         formData.append('files', blob, filename);
                     });
-                    formData.append('title', data.title);
                     return {
                         url: '/post',
                         method: 'POST',
@@ -65,9 +64,35 @@ export const api = createApi({
                 onQueryStarted: async ({ ...patch }, { dispatch, queryFulfilled }) => {
                     try {
                         const { data } = await queryFulfilled;
+                        console.log(data);
                         dispatch(
                             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
-                                // draftPosts.items.unshift(data)
+                                draftPosts.items.unshift(data);
+                            })
+                        );
+                    } catch {
+                        console.log('error');
+                    }
+                }
+            }),
+            getPostById: builder.query<PostType, string>({
+                query: id => {
+                    return {
+                        url: '/post',
+                        params: {
+                            id: id
+                        }
+                    };
+                },
+                onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+                    try {
+                        const { data } = await queryFulfilled;
+                        dispatch(
+                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                                const index = draftPosts.items.findIndex(post => post.id === id);
+                                if (index !== -1) {
+                                    draftPosts.items[index] = data;
+                                }
                             })
                         );
                     } catch {
@@ -132,17 +157,16 @@ export const api = createApi({
                         console.log('error');
                     }
                 }
-                // invalidatesTags: ['Post']
             }),
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
                     const formData = new FormData();
-                    formData.append('aboutMe', data.aboutMe ?? '');
-                    data.birthdayDate && formData.append('birthdayDate', data.birthdayDate);
-                    formData.append('city', data.city);
-                    data.file && formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
+                    data.birthdayDate && formData.append('birthdayDate', data.birthdayDate);
+                    data.city && formData.append('city', data.city);
+                    data.file && formData.append('file', data.file, data.firstName + data.lastName);
+                    formData.append('aboutMe', data.aboutMe ?? '');
                     return {
                         url: '/user',
                         method: 'PATCH',
@@ -170,17 +194,8 @@ export const api = createApi({
                         method: 'PATCH',
                         body: formData
                     };
-                },
-                invalidatesTags: ['Post']
-            }),
-            getPostById: builder.query({
-                query: postId => {
-                    return {
-                        url: '/post',
-                        body: postId
-                    };
-                },
-                providesTags: ['Post']
+                }
+                // invalidatesTags: ['Post']
             })
         };
     }
@@ -194,7 +209,8 @@ export const {
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,
-    useGetUserDataQuery
+    useGetUserDataQuery,
+    useGetPostByIdQuery
 } = api;
 
 type GetPostsResponseType = {

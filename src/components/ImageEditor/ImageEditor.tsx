@@ -12,7 +12,6 @@ import { ImageFilter } from '@/components/ImageEditor/NavbarItems/Filter/ImageFi
 import { ImageSlider } from '@/components/ImageSlider/ImageSlider';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setDescription } from '@/redux/store/imageSlice/imageSlice';
-import { ControlledTextField } from '@/shared/ui/controlled';
 import { ControlledTextAreaField } from '@/shared/ui/controlled/controlled-text-area';
 import { Typography } from '@/shared/ui/typography';
 import { CreatePostFormType, createPostSchema } from '@/shared/utils/schemas/createPostSchema';
@@ -56,11 +55,11 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
         setValue(name, value);
         trigger(name);
     };
-    const [title, description] = watch(['title', 'description']);
+    const [description] = watch(['description']);
 
     useEffect(() => {
-        formState.isValid && dispatch(setDescription({ title, description }));
-    }, [title, description, dispatch, formState.isValid]);
+        formState.isValid && dispatch(setDescription({ description }));
+    }, [description, dispatch, formState.isValid]);
 
     const calculateSymbols = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         setDescriptionSymbols(e.currentTarget.value);
@@ -82,7 +81,7 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
                     <div className={s.publicationDescriptionBlock}>
                         <div className={s.user}>
                             <Image
-                                src={userData ? userData.photo : Person}
+                                src={userData?.photo ? userData.photo : Person}
                                 alt="Person avatar"
                                 width={50}
                                 height={50}
@@ -90,13 +89,6 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
                             <Typography variant="regular16">{`${userData?.firstName} ${userData?.lastName}`}</Typography>
                         </div>
                         <form className={s.form}>
-                            <ControlledTextField
-                                name={'title'}
-                                label={t('form.postTitle')}
-                                translation={translationPath}
-                                control={control}
-                                onKeyDown={e => handleChange('title', e.currentTarget.value)}
-                            />
                             <ControlledTextAreaField
                                 name={'description'}
                                 label={t('form.addPublicationDescription')}

@@ -1,13 +1,15 @@
+import { skipToken } from '@reduxjs/toolkit/query';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import { useEditPostMutation } from '@/api/api';
+import { useEditPostMutation, useGetPostByIdQuery } from '@/api/api';
 import { EditPostTypes } from '@/components/Post/EditPost/types';
 import PostOptions from '@/components/Post/PostOptions/PostOptions';
 import { Modal } from '@/shared/ui/modal/Modal';
 import CustomPopover from '@/shared/ui/popover/Popover';
 import { TextArea } from '@/shared/ui/text-area';
 import { Typography } from '@/shared/ui/typography';
+import noAvatar from 'public/assets/noAvatar.png';
 
 import { HorizontalDotsIcon } from '../../../../public/assets/icons/HorizontalDotsIcon';
 
@@ -15,6 +17,7 @@ import s from './styles.module.css';
 
 const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
     const [confirmPostEditing, { isSuccess, isError, isLoading: editPostLoading }] = useEditPostMutation();
+    const { data } = useGetPostByIdQuery(isSuccess ? post.id : skipToken);
     const [editPost, setEditPost] = useState<boolean>(false);
     const [newPost, setNewPost] = useState<string>(post.description);
 
@@ -25,8 +28,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
         const editedPost = {
             description: newPost,
             files: post.image[0],
-            id: post.id,
-            title: post.title
+            id: post.id
         };
         confirmPostEditing(editedPost);
     };
@@ -43,7 +45,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
                             <Image
                                 className={s.userAvatar}
                                 alt={''}
-                                src={user.photo as string}
+                                src={user.photo ? user.photo : noAvatar}
                                 width={40}
                                 height={40}
                             />
