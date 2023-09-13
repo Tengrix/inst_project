@@ -59,3 +59,9 @@ export type ChangePasswordRequestType = {
     newPassword: string;
     recoveryCode: string;
 };
+
+export type EditPostFormDataType = {
+    description: string;
+    id: string;
+    files: string;
+};
