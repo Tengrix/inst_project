@@ -8,6 +8,7 @@ import { Modal } from '@/shared/ui/modal/Modal';
 import CustomPopover from '@/shared/ui/popover/Popover';
 import { TextArea } from '@/shared/ui/text-area';
 import { Typography } from '@/shared/ui/typography';
+import noAvatar from 'public/assets/noAvatar.png';
 
 import { HorizontalDotsIcon } from '../../../../public/assets/icons/HorizontalDotsIcon';
 
@@ -25,8 +26,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
         const editedPost = {
             description: newPost,
             files: post.image[0],
-            id: post.id,
-            title: post.title
+            id: post.id
         };
         confirmPostEditing(editedPost);
     };
@@ -43,7 +43,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
                             <Image
                                 className={s.userAvatar}
                                 alt={''}
-                                src={user.photo as string}
+                                src={user.photo ? user.photo : noAvatar}
                                 width={40}
                                 height={40}
                             />
