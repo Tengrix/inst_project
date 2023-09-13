@@ -2,7 +2,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType, PostFormData, ProfileData } from '@/api/types';
+import { EditPostFormDataType, GetUserDataResponseType, PostFormData, ProfileData } from '@/api/types';
 import { PostType } from '@/components/Post/types';
 import { RootStateType } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -159,12 +159,16 @@ export const api = createApi({
                 },
                 providesTags: ['Profile']
             }),
-            editPost: builder.mutation({
+            editPost: builder.mutation<void, EditPostFormDataType>({
                 query: post => {
+                    const formData = new FormData();
+                    formData.append('description', post.description);
+                    formData.append('id', post.id);
+                    formData.append('files', post.files);
                     return {
                         url: '/post',
                         method: 'PATCH',
-                        body: post
+                        body: formData
                     };
                 },
                 invalidatesTags: ['Post']
