@@ -64,7 +64,6 @@ export const api = createApi({
                 onQueryStarted: async ({ ...patch }, { dispatch, queryFulfilled }) => {
                     try {
                         const { data } = await queryFulfilled;
-                        console.log(data);
                         dispatch(
                             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
                                 draftPosts.items.unshift(data);
@@ -75,6 +74,30 @@ export const api = createApi({
                     }
                 }
             }),
+            editPost: builder.mutation<void, EditPostFormDataType>({
+                query: post => {
+                    const formData = new FormData();
+                    formData.append('description', post.description);
+                    formData.append('id', post.id);
+                    formData.append('files', post.files);
+                    return {
+                        url: '/post',
+                        method: 'PATCH',
+                        body: formData
+                    };
+                }
+                // invalidatesTags: ['Post']
+            }),
+            // getPostById: builder.query<PostType, string>({
+            //     query: postId => {
+            //         return {
+            //             url: '/post',
+            //             body: {
+            //                 id: postId
+            //             }
+            //         };
+            //     },
+            // }),
             getPostById: builder.query<PostType, string>({
                 query: id => {
                     return {
@@ -182,31 +205,6 @@ export const api = createApi({
                     };
                 },
                 providesTags: ['Profile']
-            }),
-            editPost: builder.mutation<void, EditPostFormDataType>({
-                query: post => {
-                    const formData = new FormData();
-                    formData.append('description', post.description);
-                    formData.append('id', post.id);
-                    formData.append('files', post.files);
-                    return {
-                        url: '/post',
-                        method: 'PATCH',
-                        body: formData
-                    };
-                },
-                invalidatesTags: ['Post']
-            }),
-            getPostById: builder.query<PostType, string>({
-                query: postId => {
-                    return {
-                        url: '/post',
-                        params: {
-                            id: postId
-                        }
-                    };
-                },
-                providesTags: ['Post']
             })
         };
     }

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -23,11 +24,12 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     };
 }
 
-const SignUp = () => {
+const CreateNewPassword = () => {
+    const router = useRouter();
     const [setNewPassword] = useResetPasswordMutation();
     const { control, handleSubmit } = useForm<RegisterFormType>({ resolver: zodResolver(createNewPasswordSchema) });
     const onSubmit = handleSubmit(data => {
-        setNewPassword({ newPassword: data.password, recoveryCode: '' });
+        setNewPassword({ newPassword: data.password, recoveryCode: router.query.recoveryCode as string });
     });
     const t = useTranslations('auth');
 
@@ -63,5 +65,5 @@ const SignUp = () => {
     );
 };
 
-SignUp.getLayout = getLayout;
-export default SignUp;
+CreateNewPassword.getLayout = getLayout;
+export default CreateNewPassword;

@@ -6,7 +6,7 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useGetUserDataQuery, useGetAllPostsQuery, useLazyGetPostByIdQuery } from '@/api/api';
+import { useGetAllPostsQuery, useGetUserDataQuery } from '@/api/api';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import EditPost from '@/components/Post/EditPost/EditPost';
 import { PostType } from '@/components/Post/types';
@@ -37,18 +37,22 @@ const Profile = () => {
     const router = useRouter();
     const { data: userData } = useGetUserDataQuery();
     const [editPostMode, setEditPostMode] = useState<boolean>(false);
-    const [getPostById, { data: post, isLoading: postIsLoading, isSuccess }] = useLazyGetPostByIdQuery();
+    // const [post, setPost] = useState<PostType | null>(null);
+    const [postId, setPostId] = useState('');
+    // const [getPostById, { data: post, isLoading: postIsLoading, isSuccess }] = useLazyGetPostByIdQuery();
 
     const [page, setPage] = useState(1);
     const { data: postsData, isLoading } = useGetAllPostsQuery(page, { refetchOnMountOrArgChange: true });
     const fetchNextPage = useCallback(() => {
         setPage(prev => prev + 1);
     }, []);
+    const curPost = postsData && postsData.items.filter(post => post.id === postId)[0];
 
     const editPostModeHandler = () => {
         setEditPostMode(!editPostMode);
     };
-    const getPost = (id: string) => getPostById(id);
+    // const getPost = (post: PostType) => setPost(post);
+    // const getPost = (id: string) => getPostById(id);
 
     const photoGallery =
         postsData &&
@@ -60,7 +64,9 @@ const Profile = () => {
                             <Image
                                 onClick={() => {
                                     editPostModeHandler();
-                                    getPost(post.id);
+                                    // getPost(post);
+                                    setPostId(post.id);
+                                    // getPost(post.id);
                                 }}
                                 key={post.id + i}
                                 src={image}
@@ -123,13 +129,13 @@ const Profile = () => {
             </InfiniteScroll>
             {editPostMode ? (
                 <EditPost
-                    key={post?.id}
+                    key={curPost!.id}
                     edit={editPostMode}
                     editPostModeHandler={editPostModeHandler}
-                    post={post as PostType}
+                    post={curPost!}
                     user={userData}
-                    isSuccess={isSuccess}
-                    isLoading={postIsLoading}
+                    // isSuccess={isSuccess}
+                    // isLoading={postIsLoading}
                 />
             ) : null}
         </div>

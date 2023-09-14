@@ -16,9 +16,12 @@ import { HorizontalDotsIcon } from '../../../../public/assets/icons/HorizontalDo
 
 import s from './styles.module.css';
 
-const EditPost = ({ edit, editPostModeHandler, post, user, isLoading, isSuccess }: EditPostTypes) => {
-    const [confirmPostEditing, { isSuccess: isEditPostSuccess, isLoading: editPostLoading }] = useEditPostMutation();
-    const [newPost, setNewPost] = useState<string>('');
+const EditPost = ({ edit, editPostModeHandler, post, user }: EditPostTypes) => {
+    const [confirmPostEditing, { isSuccess, isLoading: editPostLoading }] = useEditPostMutation();
+    const { data, isLoading } = useGetPostByIdQuery(isSuccess ? post.id : skipToken, {
+        refetchOnMountOrArgChange: true
+    });
+    const [newPost, setNewPost] = useState<string>(post.description);
     const [editPost, setEditPost] = useState<boolean>(false);
 
     useEffect(() => {
@@ -47,7 +50,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user, isLoading, isSuccess 
                                     <Image
                                         className={s.userAvatar}
                                         alt={''}
-                                        src={user.photo as string}
+                                        src={user.photo ? user.photo : noAvatar}
                                         width={40}
                                         height={40}
                                     />
