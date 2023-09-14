@@ -9,14 +9,21 @@
 
   .sidebarRoutes {
     display: flex;
-    flex-flow: column wrap;
-    align-content: flex-start;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
+    padding: 16px 0;
 
     .wrapper {
       display: flex;
-      flex-flow: column wrap;
+      flex-direction: column;
       align-items: flex-start;
-      padding-top: 120px;
+      margin: auto 0;
+
+      &:last-child {
+        margin: auto 0 0
+      }
+
       @media (max-width: 991.98px) {
         & {
           align-items: center

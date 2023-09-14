@@ -1,7 +1,8 @@
+import { skipToken } from '@reduxjs/toolkit/query';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import { useEditPostMutation } from '@/api/api';
+import { useEditPostMutation, useGetPostByIdQuery } from '@/api/api';
 import { EditPostTypes } from '@/components/Post/EditPost/types';
 import PostOptions from '@/components/Post/PostOptions/PostOptions';
 import { Modal } from '@/shared/ui/modal/Modal';
@@ -9,6 +10,7 @@ import CustomPopover from '@/shared/ui/popover/Popover';
 import Spinner from '@/shared/ui/spinner/Spinner';
 import { TextArea } from '@/shared/ui/text-area';
 import { Typography } from '@/shared/ui/typography';
+import noAvatar from 'public/assets/noAvatar.png';
 
 import { HorizontalDotsIcon } from '../../../../public/assets/icons/HorizontalDotsIcon';
 
@@ -26,8 +28,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user, isLoading, isSuccess 
         const editedPost = {
             description: newPost,
             files: post.image[0],
-            id: post.id,
-            title: post.title
+            id: post.id
         };
         confirmPostEditing(editedPost);
     };

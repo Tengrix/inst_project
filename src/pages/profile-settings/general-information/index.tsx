@@ -35,14 +35,15 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const FormPage = () => {
-    const [isSuccess, setIsSuccess] = useState<'error' | 'success' | null>(null);
+    const [isSaved, setIsSaved] = useState<'error' | 'success' | null>(null);
     const [image, setImage] = useState('');
     const [blob, setBlob] = useState<Blob>();
-    const translationPath = 'auth';
+    const translationPath = 'profileSettings.tab.generalInformation';
     const t = useTranslations(translationPath);
+    const tDefault = useTranslations();
 
     const [editProfile, { isLoading }] = useSubmitUserDataMutation();
-    const { data: userData } = useGetUserDataQuery();
+    const { data: userData, isSuccess } = useGetUserDataQuery();
 
     const { control, handleSubmit, reset } = useForm<EditProfileType>({
         resolver: zodResolver(editProfileSchema)
@@ -51,7 +52,7 @@ const FormPage = () => {
     const setCroppedImg = (img: string) => setImage(img);
 
     useEffect(() => {
-        if (userData) {
+        if (isSuccess) {
             if (userData.photo) {
                 setImage(userData.photo);
                 // const getBlob = async () => {
@@ -61,22 +62,22 @@ const FormPage = () => {
                 // getBlob().then(blobData => {
                 //     setBlob(blobData);
                 // });
-                reset({
-                    birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
-                    aboutMe: userData?.aboutMe ?? '',
-                    city: userData?.city ?? '',
-                    firstName: userData?.firstName ?? '',
-                    lastName: userData?.lastName ?? ''
-                });
             }
+            reset({
+                birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
+                aboutMe: userData?.aboutMe ?? '',
+                city: userData?.city ?? '',
+                firstName: userData?.firstName ?? '',
+                lastName: userData?.lastName ?? ''
+            });
         }
-    }, [userData]);
+    }, [isSuccess]);
     useEffect(() => {
-        blob && setIsSuccess(null);
+        blob && setIsSaved(null);
     }, [blob]);
 
     const onSubmit = handleSubmit(async data => {
-        setIsSuccess(null);
+        setIsSaved(null);
         const date = data.birthdayDate ? format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'") : '';
         editProfile({
             ...data,
@@ -84,7 +85,7 @@ const FormPage = () => {
             birthdayDate: date
         })
             .unwrap()
-            .then(() => setIsSuccess('success'));
+            .then(() => setIsSaved('success'));
     });
     return (
         <div className={styles.container}>
@@ -142,15 +143,15 @@ const FormPage = () => {
                 <div className={styles.footer}>
                     <div>
                         {isSuccess !== null && (
-                            <Typography variant={'regular14'} color={isSuccess === 'error' ? 'error' : 'success'}>
-                                {isSuccess === 'error'
+                            <Typography variant={'regular14'} color={isSaved === 'error' ? 'error' : 'success'}>
+                                {isSaved === 'error'
                                     ? 'Please upload your photo first'
                                     : 'The information was successfully updated'}
                             </Typography>
                         )}
                     </div>
                     <Button disabled={isLoading} isLoading={isLoading} className={styles.btn}>
-                        {t('button.saveChanges')}
+                        {tDefault('button.saveChanges')}
                     </Button>
                 </div>
             </form>

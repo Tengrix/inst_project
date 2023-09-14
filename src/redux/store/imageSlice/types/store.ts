@@ -12,7 +12,6 @@ export type ImageStoreStateType = {
     images: Array<ImageType>;
     error: string;
     currentImage: CurrentImageType;
-    title: string;
     description: string;
 };
 export type MimeType = 'image/jpeg' | 'image/jpg' | 'image/png';
