@@ -21,40 +21,41 @@ export const Redirect: FC<PropsWithChildren> = ({ children }) => {
         return PrivateRoutes.some(route => path.startsWith(route));
     };
 
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         dispatch(authAction.setCredentials(data));
-    //         if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
-    //             push(pathname).then(() => setIsLoading(false));
-    //         }
-    //         setIsLoading(false);
-    //     }
-    // }, [data]);
-    // useEffect(() => {
-    //     if (isError) {
-    //         if (PublicRoutes.includes(pathname as PublicRoutesType)) {
-    //             push(pathname).then(() => setIsLoading(false));
-    //         } else {
-    //             push(Routes.LOGIN).then(() => setIsLoading(false));
-    //         }
-    //     }
-    // }, [isError, data]);
-
     useEffect(() => {
-        setIsLoading(true);
-        if (isPublicRoute(pathname)) {
+        if (isSuccess) {
+            dispatch(authAction.setCredentials(data));
+            if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
+                push(pathname).then(() => setIsLoading(false));
+            }
             setIsLoading(false);
-        } else {
-            if (isSuccess) {
-                dispatch(authAction.setCredentials(data));
-                // if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
+        }
+    }, [data]);
+    useEffect(() => {
+        if (isError) {
+            if (PublicRoutes.includes(pathname as PublicRoutesType)) {
                 // push(pathname).then(() => setIsLoading(false));
                 setIsLoading(false);
             } else {
                 push(Routes.LOGIN).then(() => setIsLoading(false));
             }
         }
-    }, [data, pathname]);
+    }, [isError, data]);
+
+    // useEffect(() => {
+    //     setIsLoading(true);
+    //     if (isPublicRoute(pathname)) {
+    //         setIsLoading(false);
+    //     } else {
+    //         if (isSuccess) {
+    //             dispatch(authAction.setCredentials(data));
+    //             // if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
+    //             // push(pathname).then(() => setIsLoading(false));
+    //             setIsLoading(false);
+    //         } else {
+    //             push(Routes.LOGIN).then(() => setIsLoading(false));
+    //         }
+    //     }
+    // }, [data, pathname]);
 
     return <>{isLoading ? <Spinner /> : children}</>;
 };
