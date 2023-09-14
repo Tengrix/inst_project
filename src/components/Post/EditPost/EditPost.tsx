@@ -17,7 +17,7 @@ import s from './styles.module.css';
 
 const EditPost = ({ edit, editPostModeHandler, post, user, isLoading, isSuccess }: EditPostTypes) => {
     const [confirmPostEditing, { isSuccess: isEditPostSuccess, isLoading: editPostLoading }] = useEditPostMutation();
-    const [newPost, setNewPost] = useState<string>('');
+    const [newPost, setNewPost] = useState<string>(post?.description);
     const [editPost, setEditPost] = useState<boolean>(false);
 
     useEffect(() => {

@@ -85,8 +85,8 @@ export const api = createApi({
                         method: 'PATCH',
                         body: formData
                     };
-                }
-                // invalidatesTags: ['Post']
+                },
+                invalidatesTags: ['Post']
             }),
             // getPostById: builder.query<PostType, string>({
             //     query: postId => {
@@ -106,7 +106,8 @@ export const api = createApi({
                             id: id
                         }
                     };
-                }
+                },
+                providesTags: ['Post']
                 // onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
                 //     try {
                 //         const { data } = await queryFulfilled;
@@ -152,9 +153,9 @@ export const api = createApi({
                 },
                 forceRefetch: ({ currentArg, previousArg }) => {
                     return currentArg !== previousArg;
-                },
-                providesTags: (result, error, arg) =>
-                    result ? [...result.items.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post']
+                }
+                // providesTags: (result, error, arg) =>
+                //     result ? [...result.items.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post']
             }),
             deletePost: builder.mutation<any, { id: string }>({
                 query: data => {
