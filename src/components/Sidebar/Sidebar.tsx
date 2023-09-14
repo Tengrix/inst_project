@@ -62,13 +62,12 @@ const Sidebar = () => {
     });
     const logoutHandler = async () => {
         try {
-            await logout()
-                .unwrap()
-                .then(() => router.push(Routes.LOGIN));
+            await logout().unwrap();
+            dispatch(authAction.logOut());
+            router.push(Routes.LOGIN);
         } catch (error) {
             console.log(error);
         }
-        dispatch(authAction.logOut());
     };
 
     return (

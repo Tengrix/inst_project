@@ -11,7 +11,6 @@ const initialState: ImageStoreStateType = {
         src: '',
         hash: ''
     },
-    title: '',
     description: ''
 };
 
@@ -66,8 +65,7 @@ export const imageSlice = createSlice({
                 return image;
             });
         },
-        setDescription: (state, action: PayloadAction<{ title: string; description: string }>) => {
-            state.title = action.payload.title;
+        setDescription: (state, action: PayloadAction<{ description: string }>) => {
             state.description = action.payload.description;
         },
         resetImageState: () => initialState

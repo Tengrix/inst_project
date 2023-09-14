@@ -2,7 +2,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '@/api/instances';
-import { GetUserDataResponseType, PostFormData, ProfileData } from '@/api/types';
+import { EditPostFormDataType, GetUserDataResponseType, PostFormData, ProfileData } from '@/api/types';
 import { PostType } from '@/components/Post/types';
 import { RootStateType } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -43,42 +43,103 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 };
 
 export const api = createApi({
-    reducerPath: 'authApi',
+    reducerPath: 'baseApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Post', 'Profile'],
     endpoints: builder => {
         return {
-            createPost: builder.mutation<void, PostFormData>({
+            createPost: builder.mutation<PostType, PostFormData>({
                 query: data => {
                     const formData = new FormData();
                     formData.append('description', data.description);
                     data.files.forEach(({ blob, filename }) => {
                         formData.append('files', blob, filename);
                     });
-                    formData.append('title', data.title);
                     return {
                         url: '/post',
                         method: 'POST',
                         body: formData
                     };
                 },
+                onQueryStarted: async ({ ...patch }, { dispatch, queryFulfilled }) => {
+                    try {
+                        const { data } = await queryFulfilled;
+                        dispatch(
+                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                                draftPosts.items.unshift(data);
+                            })
+                        );
+                    } catch {
+                        console.log('error');
+                    }
+                }
+            }),
+            editPost: builder.mutation<void, EditPostFormDataType>({
+                query: post => {
+                    const formData = new FormData();
+                    formData.append('description', post.description);
+                    formData.append('id', post.id);
+                    formData.append('files', post.files);
+                    return {
+                        url: '/post',
+                        method: 'PATCH',
+                        body: formData
+                    };
+                },
                 invalidatesTags: ['Post']
             }),
-            getAllPosts: builder.query<GetPostsResponseType, number>({
-                query: (page: number) => {
+            // getPostById: builder.query<PostType, string>({
+            //     query: postId => {
+            //         return {
+            //             url: '/post',
+            //             body: {
+            //                 id: postId
+            //             }
+            //         };
+            //     },
+            // }),
+            getPostById: builder.query<PostType, string>({
+                query: id => {
+                    return {
+                        url: '/post',
+                        params: {
+                            id: id
+                        }
+                    };
+                },
+                providesTags: ['Post']
+                // onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+                //     try {
+                //         const { data } = await queryFulfilled;
+                //         dispatch(
+                //             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                //                 const index = draftPosts.items.findIndex(post => post.id === id);
+                //                 if (index !== -1) {
+                //                     draftPosts.items[index] = data;
+                //                 }
+                //             })
+                //         );
+                //     } catch {
+                //         console.log('error');
+                //     }
+                // }
+            }),
+            getAllPosts: builder.query<GetPostsResponseType, number | void>({
+                query: (page = 1) => {
                     return {
                         url: '/post/all',
                         params: {
                             page: page,
-                            itemsPerPage: 9
+                            itemsPerPage: 9,
+                            order: 'desc'
                         }
                     };
                 },
-                serializeQueryArgs: ({ endpointName }) => {
+                serializeQueryArgs: ({ endpointName, queryArgs }) => {
                     return endpointName;
                 },
                 transformResponse: (response: PostType[], meta, arg) => {
-                    return { items: response, page: arg };
+                    return { items: response, page: arg ?? 1 };
                 },
                 merge: (currentCacheData, newItems) => {
                     if (newItems.page === 1) {
@@ -92,8 +153,9 @@ export const api = createApi({
                 },
                 forceRefetch: ({ currentArg, previousArg }) => {
                     return currentArg !== previousArg;
-                },
-                providesTags: ['Post']
+                }
+                // providesTags: (result, error, arg) =>
+                //     result ? [...result.items.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post']
             }),
             deletePost: builder.mutation<any, { id: string }>({
                 query: data => {
@@ -103,17 +165,32 @@ export const api = createApi({
                         body: data
                     };
                 },
-                invalidatesTags: ['Post']
+                onQueryStarted: async ({ id }, { dispatch, queryFulfilled }) => {
+                    try {
+                        const { data } = await queryFulfilled;
+                        console.log('onQueryStarted fullfield');
+                        dispatch(
+                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                                const index = draftPosts.items.findIndex(post => post.id === id);
+                                if (index !== -1) {
+                                    draftPosts.items.splice(index, 1);
+                                }
+                            })
+                        );
+                    } catch {
+                        console.log('error');
+                    }
+                }
             }),
             submitUserData: builder.mutation<void, ProfileData>({
                 query: data => {
                     const formData = new FormData();
-                    formData.append('aboutMe', data.aboutMe ?? '');
-                    formData.append('birthdayDate', data.birthdayDate);
-                    formData.append('city', data.city);
-                    data.file && formData.append('file', data.file, data.firstName + data.lastName);
                     formData.append('firstName', data.firstName);
                     formData.append('lastName', data.lastName);
+                    data.birthdayDate && formData.append('birthdayDate', data.birthdayDate);
+                    data.city && formData.append('city', data.city);
+                    data.file && formData.append('file', data.file, data.firstName + data.lastName);
+                    formData.append('aboutMe', data.aboutMe ?? '');
                     return {
                         url: '/user',
                         method: 'PATCH',
@@ -129,25 +206,6 @@ export const api = createApi({
                     };
                 },
                 providesTags: ['Profile']
-            }),
-            editPost: builder.mutation({
-                query: post => {
-                    return {
-                        url: '/post',
-                        method: 'PATCH',
-                        body: post
-                    };
-                },
-                invalidatesTags: ['Post']
-            }),
-            getPostById: builder.query({
-                query: postId => {
-                    return {
-                        url: '/post',
-                        body: postId
-                    };
-                },
-                providesTags: ['Post']
             })
         };
     }
@@ -161,7 +219,8 @@ export const {
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useSubmitUserDataMutation,
-    useGetUserDataQuery
+    useGetUserDataQuery,
+    useGetPostByIdQuery
 } = api;
 
 type GetPostsResponseType = {

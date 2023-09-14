@@ -5,11 +5,9 @@ import Image from 'next/image';
 import { createTranslator, useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Crop } from 'react-image-crop';
 import { z } from 'zod';
 
 import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/api';
-import { Canvas } from '@/components/Canvas/Canvas';
 import EditAvatarModal from '@/components/EditAvatarModal/EditAvatarModal';
 import styles from '@/pages/profile-settings/general-information/styles.module.scss';
 import { Button } from '@/shared/ui/button';
@@ -37,23 +35,24 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const FormPage = () => {
-    const [isSuccess, setIsSuccess] = useState<'error' | 'success' | null>(null);
+    const [isSaved, setIsSaved] = useState<'error' | 'success' | null>(null);
     const [image, setImage] = useState('');
-    const [crop, setCrop] = useState<Crop>();
-    const [canvas, setCanvas] = useState<HTMLCanvasElement>();
     const [blob, setBlob] = useState<Blob>();
-    const translationPath = 'auth';
+    const translationPath = 'profileSettings.tab.generalInformation';
     const t = useTranslations(translationPath);
+    const tDefault = useTranslations();
 
     const [editProfile, { isLoading }] = useSubmitUserDataMutation();
-    const { data: userData } = useGetUserDataQuery();
+    const { data: userData, isSuccess } = useGetUserDataQuery();
 
     const { control, handleSubmit, reset } = useForm<EditProfileType>({
         resolver: zodResolver(editProfileSchema)
     });
+    const getBlob = (blob: Blob) => setBlob(blob);
+    const setCroppedImg = (img: string) => setImage(img);
 
     useEffect(() => {
-        if (userData) {
+        if (isSuccess) {
             if (userData.photo) {
                 setImage(userData.photo);
                 // const getBlob = async () => {
@@ -63,22 +62,22 @@ const FormPage = () => {
                 // getBlob().then(blobData => {
                 //     setBlob(blobData);
                 // });
-                reset({
-                    birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
-                    aboutMe: userData?.aboutMe ?? '',
-                    city: userData?.city ?? '',
-                    firstName: userData?.firstName ?? '',
-                    lastName: userData?.lastName ?? ''
-                });
             }
+            reset({
+                birthdayDate: userData?.birthdayDate ? new Date(userData?.birthdayDate) : undefined,
+                aboutMe: userData?.aboutMe ?? '',
+                city: userData?.city ?? '',
+                firstName: userData?.firstName ?? '',
+                lastName: userData?.lastName ?? ''
+            });
         }
-    }, [userData]);
+    }, [isSuccess]);
     useEffect(() => {
-        blob && setIsSuccess(null);
+        blob && setIsSaved(null);
     }, [blob]);
 
     const onSubmit = handleSubmit(async data => {
-        setIsSuccess(null);
+        setIsSaved(null);
         const date = data.birthdayDate ? format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'") : '';
         editProfile({
             ...data,
@@ -86,7 +85,7 @@ const FormPage = () => {
             birthdayDate: date
         })
             .unwrap()
-            .then(() => setIsSuccess('success'));
+            .then(() => setIsSaved('success'));
     });
     return (
         <div className={styles.container}>
@@ -95,27 +94,21 @@ const FormPage = () => {
                     <div className={styles.imageUpload}>
                         <div className={styles.avatar}>
                             {image ? (
-                                <Canvas
-                                    crop={crop}
-                                    step={'Publication'}
-                                    filters={{}}
-                                    imageSRC={image}
-                                    destHeight={192}
-                                    destWidth={192}
-                                    getCanvas={setCanvas}
-                                />
+                                <Image key={'UserAva'} alt={'UserAva'} src={image} width={192} height={192} />
                             ) : (
+                                // <Canvas
+                                //     crop={crop}
+                                //     step={'Publication'}
+                                //     filters={{}}
+                                //     imageSRC={image}
+                                //     destHeight={192}
+                                //     destWidth={192}
+                                //     getCanvas={setCanvas}
+                                // />
                                 <Image src={github} alt={'Avatar'} height={192} width={192} />
                             )}
                         </div>
-                        <EditAvatarModal
-                            image={image}
-                            setImage={setImage}
-                            onCrop={setCrop}
-                            canvas={canvas}
-                            setBlob={setBlob}
-                            blob={blob}
-                        />
+                        <EditAvatarModal getBlob={getBlob} setCroppedImg={setCroppedImg} />
                     </div>
                     <div className={styles.profileInfo}>
                         <TextField label={t('form.username')} value={userData?.login} readOnly />
@@ -150,15 +143,15 @@ const FormPage = () => {
                 <div className={styles.footer}>
                     <div>
                         {isSuccess !== null && (
-                            <Typography variant={'regular14'} color={isSuccess === 'error' ? 'error' : 'success'}>
-                                {isSuccess === 'error'
+                            <Typography variant={'regular14'} color={isSaved === 'error' ? 'error' : 'success'}>
+                                {isSaved === 'error'
                                     ? 'Please upload your photo first'
                                     : 'The information was successfully updated'}
                             </Typography>
                         )}
                     </div>
                     <Button disabled={isLoading} isLoading={isLoading} className={styles.btn}>
-                        {t('button.saveChanges')}
+                        {tDefault('button.saveChanges')}
                     </Button>
                 </div>
             </form>

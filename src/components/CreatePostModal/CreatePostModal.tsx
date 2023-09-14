@@ -44,7 +44,7 @@ const CreatePostModal = (props: Props) => {
         Filters: t('post.filters')
     };
 
-    const { title, images, description } = useAppSelector(state => state.images);
+    const { images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
 
     const [publishPost] = useCreatePostMutation();
@@ -62,7 +62,7 @@ const CreatePostModal = (props: Props) => {
                 const uniqFileName = getUniqFileName(image.name);
                 imagesBlob.push({ blob, filename: uniqFileName });
             }
-            publishPost({ title, files: imagesBlob, description })
+            publishPost({ files: imagesBlob, description })
                 .unwrap()
                 .then(() => {
                     setEditModal(false);

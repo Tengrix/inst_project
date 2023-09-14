@@ -18,8 +18,8 @@ export type GetUserDataResponseType = {
 };
 export type ProfileData = {
     aboutMe?: string;
-    birthdayDate: string;
-    city: string;
+    birthdayDate?: string;
+    city?: string;
     file?: Blob;
     firstName: string;
     lastName: string;
@@ -50,7 +50,6 @@ export type PostFormData = {
         blob: Blob;
         filename: string;
     }>;
-    title: string;
 };
 export type PasswordRecoveryRequestType = {
     email: string;
@@ -59,4 +58,10 @@ export type PasswordRecoveryRequestType = {
 export type ChangePasswordRequestType = {
     newPassword: string;
     recoveryCode: string;
+};
+
+export type EditPostFormDataType = {
+    description: string;
+    id: string;
+    files: string;
 };

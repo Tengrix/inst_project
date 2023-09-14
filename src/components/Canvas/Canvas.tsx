@@ -36,7 +36,7 @@ export const Canvas = ({ imageSRC, filters, step, crop, destWidth, destHeight, g
         }
     }, [fn, canvas]);
     return step === 'Cropping' ? (
-        <ImageCropper src={imageSRC}>
+        <ImageCropper src={imageSRC} destWidth={destWidth} destHeight={destHeight}>
             <canvas ref={htmlElement => setCanvas(htmlElement)} />
         </ImageCropper>
     ) : (
