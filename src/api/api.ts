@@ -194,8 +194,19 @@ export const api = createApi({
                         method: 'PATCH',
                         body: formData
                     };
-                }
-                // invalidatesTags: ['Post']
+                },
+                invalidatesTags: ['Post']
+            }),
+            getPostById: builder.query<PostType, string>({
+                query: postId => {
+                    return {
+                        url: '/post',
+                        params: {
+                            id: postId
+                        }
+                    };
+                },
+                providesTags: ['Post']
             })
         };
     }

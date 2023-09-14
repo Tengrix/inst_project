@@ -6,7 +6,7 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useGetUserDataQuery, useGetAllPostsQuery } from '@/api/api';
+import { useGetUserDataQuery, useGetAllPostsQuery, useLazyGetPostByIdQuery } from '@/api/api';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import EditPost from '@/components/Post/EditPost/EditPost';
 import { PostType } from '@/components/Post/types';
@@ -37,17 +37,18 @@ const Profile = () => {
     const router = useRouter();
     const { data: userData } = useGetUserDataQuery();
     const [editPostMode, setEditPostMode] = useState<boolean>(false);
-    const [post, setPost] = useState<PostType | null>(null);
+    const [getPostById, { data: post, isLoading: postIsLoading, isSuccess }] = useLazyGetPostByIdQuery();
 
     const [page, setPage] = useState(1);
     const { data: postsData, isLoading } = useGetAllPostsQuery(page, { refetchOnMountOrArgChange: true });
-
     const fetchNextPage = useCallback(() => {
         setPage(prev => prev + 1);
     }, []);
 
-    const editPostModeHandler = () => setEditPostMode(!editPostMode);
-    const getPost = (post: PostType) => setPost(post);
+    const editPostModeHandler = () => {
+        setEditPostMode(!editPostMode);
+    };
+    const getPost = (id: string) => getPostById(id);
 
     const photoGallery =
         postsData &&
@@ -59,7 +60,7 @@ const Profile = () => {
                             <Image
                                 onClick={() => {
                                     editPostModeHandler();
-                                    getPost(post);
+                                    getPost(post.id);
                                 }}
                                 key={post.id + i}
                                 src={image}
@@ -79,7 +80,6 @@ const Profile = () => {
     const following: number = 512356123;
     const followers: number = 8656456132;
     const publications: number = 7821238;
-
     return (
         <div className={s.container}>
             <div className={s.profileHeader}>
@@ -128,6 +128,8 @@ const Profile = () => {
                     editPostModeHandler={editPostModeHandler}
                     post={post as PostType}
                     user={userData}
+                    isSuccess={isSuccess}
+                    isLoading={postIsLoading}
                 />
             ) : null}
         </div>

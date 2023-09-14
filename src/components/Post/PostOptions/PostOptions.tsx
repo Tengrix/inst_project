@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { useDeletePostMutation } from '@/api/api';
 import { useAppDispatch } from '@/redux/store';
@@ -8,18 +8,18 @@ import s from './styles.module.scss';
 type Props = {
     id: string;
     editModeHandler?: () => void;
+    editPostModeHandler?: () => void;
 };
 
 type MyPostOptionsType = {
     title: string;
     icon: ReactNode;
     onClick?: () => void;
-    editModeHandler?: () => void;
 };
 const PostOptions = (props: Props) => {
-    const [deletePost] = useDeletePostMutation();
+    const [deletePost, { isSuccess }] = useDeletePostMutation();
     const myPostOptions: MyPostOptionsType[] = [
-        { title: 'Edit Post', icon: <></>, onClick: () => (props.editModeHandler ? props?.editModeHandler() : null) },
+        { title: 'Edit Post', icon: <></>, onClick: () => (props.editModeHandler ? props.editModeHandler() : null) },
         {
             title: 'Delete Post',
             icon: <></>,
@@ -27,6 +27,12 @@ const PostOptions = (props: Props) => {
         },
         { title: 'Copy Link', icon: <></> }
     ];
+
+    useEffect(() => {
+        if (isSuccess) {
+            props.editPostModeHandler ? props.editPostModeHandler() : null;
+        }
+    }, [isSuccess]);
 
     return (
         <div className={s.container}>
