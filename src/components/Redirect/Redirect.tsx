@@ -42,7 +42,6 @@ export const Redirect: FC<PropsWithChildren> = ({ children }) => {
 
     useEffect(() => {
         setIsLoading(true);
-        debugger;
         if (isPublicRoute(pathname)) {
             setIsLoading(false);
         } else {

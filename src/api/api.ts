@@ -106,22 +106,22 @@ export const api = createApi({
                             id: id
                         }
                     };
-                },
-                onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
-                    try {
-                        const { data } = await queryFulfilled;
-                        dispatch(
-                            api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
-                                const index = draftPosts.items.findIndex(post => post.id === id);
-                                if (index !== -1) {
-                                    draftPosts.items[index] = data;
-                                }
-                            })
-                        );
-                    } catch {
-                        console.log('error');
-                    }
                 }
+                // onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+                //     try {
+                //         const { data } = await queryFulfilled;
+                //         dispatch(
+                //             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
+                //                 const index = draftPosts.items.findIndex(post => post.id === id);
+                //                 if (index !== -1) {
+                //                     draftPosts.items[index] = data;
+                //                 }
+                //             })
+                //         );
+                //     } catch {
+                //         console.log('error');
+                //     }
+                // }
             }),
             getAllPosts: builder.query<GetPostsResponseType, number | void>({
                 query: (page = 1) => {
