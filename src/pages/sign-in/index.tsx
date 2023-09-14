@@ -14,7 +14,6 @@ import { authAction } from '@/redux/store/Auth/authSlice';
 import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
-import { Checkbox } from '@/shared/ui/checkbox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { LoginFormType, loginSchema } from '@/shared/utils/schemas/loginSchema';
@@ -43,7 +42,7 @@ const SignIn = ({ messages }: { messages: {} }) => {
     const [loginErr, setLoginErr] = useState(t('error.incorrectUsernameOrPasswordError'));
     const router = useRouter();
 
-    const { token, trustDevice } = useAppSelector(state => state.auth);
+    const { token } = useAppSelector(state => state.auth);
     const dispatch = useDispatch();
     const { control, formState, handleSubmit } = useForm<LoginFormType>({
         resolver: zodResolver(loginSchema),
@@ -67,15 +66,11 @@ const SignIn = ({ messages }: { messages: {} }) => {
       if (isFetchBaseQueryError(err)) {
           setLoginErr(t('error.incorrectUsernameOrPasswordError'));
       } else {
-           setLoginErr((err as CustomerError).data.errorsMessages); 
+           setLoginErr((err as CustomerError).data.errorsMessages);
       } */
             setLoginErr(t('error.incorrectUsernameOrPasswordError'));
         }
     });
-
-    const checkDevice = () => {
-        dispatch(authAction.setCheckDevice(!trustDevice));
-    };
 
     return (
         <div className={classes.container}>
@@ -121,7 +116,6 @@ const SignIn = ({ messages }: { messages: {} }) => {
                     <div className={classes.form__error}>{isError && loginErr}</div>
                 </form>
                 <div className={classes.footer}>
-                    <Checkbox label={'Trust This Device'} checked={trustDevice} onChange={checkDevice} />
                     <Typography>{t('signInPage.question')}</Typography>
                     <Link href={'/sign-up'} className={classes.link}>
                         {t('signUpPage.h1')}
