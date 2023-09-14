@@ -1,8 +1,7 @@
-import { skipToken } from '@reduxjs/toolkit/query';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import { useEditPostMutation, useGetPostByIdQuery } from '@/api/api';
+import { useEditPostMutation } from '@/api/api';
 import { EditPostTypes } from '@/components/Post/EditPost/types';
 import PostOptions from '@/components/Post/PostOptions/PostOptions';
 import { Modal } from '@/shared/ui/modal/Modal';
@@ -47,7 +46,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user, isLoading, isSuccess 
                                     <Image
                                         className={s.userAvatar}
                                         alt={''}
-                                        src={user.photo as string}
+                                        src={user.photo ? user.photo : noAvatar}
                                         width={40}
                                         height={40}
                                     />
@@ -70,7 +69,7 @@ const EditPost = ({ edit, editPostModeHandler, post, user, isLoading, isSuccess 
                             </div>
                             {!editPost ? (
                                 <div className={s.contentComments}>
-                                    <span style={{ fontWeight: 'bold' }}>{user.login}</span>
+                                    <span style={{ fontWeight: 'bold', marginRight: '12px' }}>{user.login}</span>
                                     <span>{post.description}</span>
                                 </div>
                             ) : (

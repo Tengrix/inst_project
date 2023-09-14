@@ -13,25 +13,48 @@ export const Redirect: FC<PropsWithChildren> = ({ children }) => {
     const dispatch = useAppDispatch();
     const { push, pathname } = useRouter();
 
-    useEffect(() => {
-        if (isSuccess) {
-            dispatch(authAction.setCredentials(data));
-            if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
-                push(pathname).then(() => setIsLoading(false));
-            }
-            setIsLoading(false);
-        }
-    }, [data]);
+    const isPublicRoute = (path: string): boolean => {
+        return PublicRoutes.some(route => path.startsWith(route));
+    };
+
+    const isPrivateRoute = (path: string): boolean => {
+        return PrivateRoutes.some(route => path.startsWith(route));
+    };
+
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         dispatch(authAction.setCredentials(data));
+    //         if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
+    //             push(pathname).then(() => setIsLoading(false));
+    //         }
+    //         setIsLoading(false);
+    //     }
+    // }, [data]);
+    // useEffect(() => {
+    //     if (isError) {
+    //         if (PublicRoutes.includes(pathname as PublicRoutesType)) {
+    //             push(pathname).then(() => setIsLoading(false));
+    //         } else {
+    //             push(Routes.LOGIN).then(() => setIsLoading(false));
+    //         }
+    //     }
+    // }, [isError, data]);
 
     useEffect(() => {
-        if (isError) {
-            if (PublicRoutes.includes(pathname as PublicRoutesType)) {
-                push(pathname).then(() => setIsLoading(false));
+        setIsLoading(true);
+        if (isPublicRoute(pathname)) {
+            setIsLoading(false);
+        } else {
+            if (isSuccess) {
+                dispatch(authAction.setCredentials(data));
+                // if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
+                // push(pathname).then(() => setIsLoading(false));
+                setIsLoading(false);
             } else {
                 push(Routes.LOGIN).then(() => setIsLoading(false));
             }
         }
-    }, [isError, data]);
+    }, [data, pathname]);
 
     return <>{isLoading ? <Spinner /> : children}</>;
 };
