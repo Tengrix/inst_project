@@ -6,4 +6,6 @@ export interface EditPostTypes {
     editPostModeHandler: () => void;
     post: PostType;
     user: GetUserDataResponseType;
+    isSuccess: boolean;
+    isLoading: boolean;
 }

@@ -173,11 +173,13 @@ export const api = createApi({
                 },
                 invalidatesTags: ['Post']
             }),
-            getPostById: builder.query({
+            getPostById: builder.query<PostType, string>({
                 query: postId => {
                     return {
                         url: '/post',
-                        body: postId
+                        params: {
+                            id: postId
+                        }
                     };
                 },
                 providesTags: ['Post']
