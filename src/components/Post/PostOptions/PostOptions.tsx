@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React, { ReactNode, useEffect } from 'react';
 
 import { useDeletePostMutation } from '@/api/api';
@@ -17,15 +18,20 @@ type MyPostOptionsType = {
     onClick?: () => void;
 };
 const PostOptions = (props: Props) => {
+    const t = useTranslations('');
     const [deletePost, { isSuccess }] = useDeletePostMutation();
     const myPostOptions: MyPostOptionsType[] = [
-        { title: 'Edit Post', icon: <></>, onClick: () => (props.editModeHandler ? props.editModeHandler() : null) },
         {
-            title: 'Delete Post',
-            icon: <></>,
+            title: t('button.editPost'),
+            icon: <span className="icon_editOutline"></span>,
+            onClick: () => (props.editModeHandler ? props.editModeHandler() : null)
+        },
+        {
+            title: t('button.deletePost'),
+            icon: <span className="icon_trashOutline"></span>,
             onClick: () => deletePost({ id: props.id })
         },
-        { title: 'Copy Link', icon: <></> }
+        { title: t('button.copyLink'), icon: <span className="icon_copyOutline"></span> }
     ];
 
     useEffect(() => {

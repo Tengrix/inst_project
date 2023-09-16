@@ -1,4 +1,6 @@
+import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
+import { createTranslator, useTranslations } from 'next-intl';
 import React from 'react';
 
 import { useGetUserDataQuery } from '@/api/api';
@@ -25,6 +27,7 @@ type Props = {
     post: PostType;
 };
 const Post = (props: Props) => {
+    const t = useTranslations('');
     const { data: userData } = useGetUserDataQuery();
     const { image, likes, description, id, updatedAt } = props.post;
 
@@ -69,14 +72,15 @@ const Post = (props: Props) => {
             <Typography variant={'regular14'}>
                 {likes}{' '}
                 <Typography as={'span'} variant={'bold14'}>
-                    Like
+                    {t('post.like')}
                 </Typography>
             </Typography>
             <Typography variant={'bold14'} color={'form'}>
-                View All Comments (1223123)
+                {t('post.viewAllcomments')}
             </Typography>
             <div className={s.newComment}>
-                New comment component? <Button variant={'link'}>Publish</Button>
+                {t('post.addComment')}
+                <Button variant={'link'}>{t('button.publish')}</Button>
             </div>
             <div className={styles.line}></div>
         </div>
