@@ -85,17 +85,15 @@ const Sidebar = () => {
                         <span>{t('favourites')}</span>
                     </Link>
                     {/* <div className={s.footer}></div> */}
-                    <Link className={s.route} href={'/sign-in'}>
+                    <Button
+                        className={s.route}
+                        variant={'link'}
+                        isLoading={isLoading}
+                        disabled={isLoading}
+                        onClick={logoutHandler}>
                         <ExitIcon height={60} width={24} />
-                        <Button
-                            className={s.btn}
-                            variant={'link'}
-                            isLoading={isLoading}
-                            disabled={isLoading}
-                            onClick={logoutHandler}>
-                            <span>{t('logOut')}</span>
-                        </Button>
-                    </Link>
+                        <span>{t('logOut')}</span>
+                    </Button>
                 </div>
             </div>
             <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal} />
