@@ -46,7 +46,12 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+
+      &_active {
+        color: var(--color-primary-500);
     }
+    }
+    
     /*
     .footer {
       position: fixed;
