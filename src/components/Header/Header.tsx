@@ -1,10 +1,13 @@
 import { BarChartIcon, BellIcon, BookmarkIcon, DotsHorizontalIcon, ExitIcon, GearIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { ReactNode } from 'react';
 
 import LangSwitcher from '@/components/LangSwitcher/LangSwitcher';
 import { SideBarRoutesType } from '@/shared/types/CommonTypes';
 import CustomPopover from '@/shared/ui/popover/Popover';
+
+import Logo from "public/logo.svg";
 
 import styles from './styles.module.css';
 
@@ -35,7 +38,7 @@ const Header = (props: HeaderProps) => {
         <div className={styles.header}>
             <div className={styles.text}>
                 <Link href={'/profile'}>
-                    <h1 className={styles.inctagramTitle}> {title} </h1>
+                    <Image src={Logo} width="134" height="36" alt="Inctagram logo" />
                 </Link>
             </div>
             <div className={styles.languageSelector}>
