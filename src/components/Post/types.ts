@@ -6,4 +6,6 @@ export type PostType = {
     share: any[];
     image: string[];
     userId: string;
+    createdAt: string;
+    updatedAt: string;
 };
