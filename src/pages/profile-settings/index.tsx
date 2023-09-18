@@ -6,6 +6,7 @@ import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/With
 import GeneralInformation from '@/pages/profile-settings/general-information';
 import CustomTabs from '@/shared/ui/tabs/Tabs';
 
+import Payments from './payments';
 import s from './styles.module.scss';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
@@ -41,7 +42,7 @@ const ProfileSettings = () => {
     const MyPayments = {
         value: 'payments',
         title: t('tab.myPayments.myPaymentsTitle'),
-        children: <div>{t('tab.myPayments.myPaymentsTitle')}</div>
+        children: <Payments />
     };
 
     const Tabs = [ProfileTab, Devices, AccountManagement, MyPayments];
