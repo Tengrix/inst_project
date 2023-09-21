@@ -3,6 +3,7 @@ import { createTranslator, useTranslations } from 'next-intl';
 import React from 'react';
 
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
+import CheckoutForm from '@/components/payments/stripe/CheckoutForm';
 import GeneralInformation from '@/pages/profile-settings/general-information';
 import CustomTabs from '@/shared/ui/tabs/Tabs';
 
@@ -37,7 +38,7 @@ const ProfileSettings = () => {
     const AccountManagement = {
         value: 'account',
         title: t('tab.accountManagement.accountManagementTitle'),
-        children: <div>{t('tab.accountManagement.accountManagementTitle')}</div>
+        children: <CheckoutForm />
     };
     const MyPayments = {
         value: 'payments',

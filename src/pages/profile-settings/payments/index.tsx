@@ -69,6 +69,7 @@ const payments = [
 ];
 
 const Payments = () => {
-    return <Table data={payments} header={header} />;
+    /* return <Table data={payments} header={header} />; */
+    return <div>TABLE</div>;
 };
 export default Payments;
