@@ -1,6 +1,7 @@
+import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import CheckoutForm from '@/components/payments/stripe/CheckoutForm';
@@ -25,6 +26,20 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 
 const ProfileSettings = () => {
     const t = useTranslations('profileSettings');
+
+    let defaultTab = 'profile';
+    let isSuccess: boolean | undefined = undefined;
+    const { query } = useRouter();
+
+    if ('success' in query) {
+        defaultTab = 'account';
+        isSuccess = query.success === 'true';
+        console.log('RESULT :', isSuccess);
+    } else {
+        console.log('RESULT SECOND :', isSuccess);
+        console.log('NSDJFSJLGNLSJGN', query);
+    }
+
     const ProfileTab = {
         value: 'profile',
         title: t('tab.generalInformation.generalInformationTitle'),
@@ -38,7 +53,7 @@ const ProfileSettings = () => {
     const AccountManagement = {
         value: 'account',
         title: t('tab.accountManagement.accountManagementTitle'),
-        children: <CheckoutForm />
+        children: <CheckoutForm success={isSuccess} />
     };
     const MyPayments = {
         value: 'payments',
@@ -50,7 +65,7 @@ const ProfileSettings = () => {
 
     return (
         <div className={s.container}>
-            <CustomTabs tabs={Tabs} />
+            <CustomTabs tabs={Tabs} defaultTab={defaultTab} />
         </div>
     );
 };

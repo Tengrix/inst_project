@@ -11,10 +11,11 @@ type TabType = {
 
 type TabsPropsType = {
     tabs: TabType[];
+    defaultTab?: string;
 };
-const CustomTabs = ({ tabs }: TabsPropsType) => {
+const CustomTabs = ({ tabs, defaultTab }: TabsPropsType) => {
     return (
-        <Tabs.Root className={s.TabsRoot} defaultValue={tabs[0].value}>
+        <Tabs.Root className={s.TabsRoot} defaultValue={defaultTab === undefined ? tabs[0].value : defaultTab}>
             <Tabs.List className={s.TabsList}>
                 {tabs.map(el => (
                     <Tabs.Trigger key={el.title} className={s.TabsTrigger} value={el.value}>
