@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { AccountManagement } from '@/pages/profile-settings/account-management/AccountManagement';
+import { Button } from '@/shared/ui/button';
+import { Modal } from '@/shared/ui/modal/Modal';
 import { fetchPostJSON } from '@/shared/utils/stripe/api-helpers';
 import getStripe from '@/shared/utils/stripe/get-stripejs';
 import PaypalLogo from 'public/assets/icons/paypal-logo.svg';
@@ -16,10 +18,19 @@ type CheckoutFormPropsType = {
 
 const CheckoutForm = ({ success }: CheckoutFormPropsType) => {
     const [loading, setLoading] = useState(false);
+    //const [isModalOpen, setIsOpenModal] = useState(false);
     const [isShowPaymentAndCosts, setIsShowPaymentAndCosts] = useState(false);
     const [subscriptionCost, setSubscriptionCost] = useState('1000');
     const t = useTranslations();
+    ///////todo
+    let isModalOpen = false;
+    const test = success;
 
+    console.log('MODAL USEEFF', success);
+    if (success !== undefined) {
+        isModalOpen = true;
+    }
+    //////todo
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         setLoading(true);
 
@@ -72,6 +83,27 @@ const CheckoutForm = ({ success }: CheckoutFormPropsType) => {
                     </button>
                     {'SUCCESS : ' + success}
                 </div>
+            )}
+            {test !== undefined && (
+                <Modal
+                    open={isModalOpen}
+                    modalHandler={() => (isModalOpen = false)}
+                    customButtonsBlock={
+                        success ? (
+                            <Button variant="primary" onClick={() => {}}>
+                                {t('button.ok')}
+                            </Button>
+                        ) : (
+                            <Button variant="primary" onClick={() => {}}>
+                                {t('button.backToPayment')}
+                            </Button>
+                        )
+                    }
+                    title={success ? t('modal.successTransactionModalTitle') : t('modal.errorTransactionModalTitle')}>
+                    {success
+                        ? t('modal.successTransactionModalDescription')
+                        : t('modal.errorTransactionModalDescription')}
+                </Modal>
             )}
         </div>
     );

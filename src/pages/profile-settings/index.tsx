@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React from 'react';
 
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import CheckoutForm from '@/components/payments/stripe/CheckoutForm';
@@ -24,20 +24,18 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-const ProfileSettings = () => {
+const ProfileSettings = (props: any) => {
     const t = useTranslations('profileSettings');
+    const { query } = useRouter();
 
     let defaultTab = 'profile';
-    let isSuccess: boolean | undefined = undefined;
-    const { query } = useRouter();
+    let isSuccess: boolean | undefined;
+
+    console.log('QUERY :', query);
 
     if ('success' in query) {
         defaultTab = 'account';
         isSuccess = query.success === 'true';
-        console.log('RESULT :', isSuccess);
-    } else {
-        console.log('RESULT SECOND :', isSuccess);
-        console.log('NSDJFSJLGNLSJGN', query);
     }
 
     const ProfileTab = {

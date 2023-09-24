@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 name: 'TEST PRODUCT',
                                 description: 'TEST PRODUCT DESC'
                             },
-                            unit_amount: 1000 // передать subscriptionCost
+                            unit_amount: req.body.amount
                         },
 
                         quantity: 1
