@@ -19,15 +19,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 name: 'TEST PRODUCT',
                                 description: 'TEST PRODUCT DESC'
                             },
-                            unit_amount: 1000
+                            unit_amount: req.body.amount
                         },
 
                         quantity: 1
                     }
                 ],
                 customer_email: 'ppolskasim@gmail.com',
-                success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: `${req.headers.origin}/donate-with-checkout`
+                /* success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`, 
+                cancel_url: `${req.headers.origin}/donate-with-checkout` */
+                success_url: `${req.headers.origin}/profile-settings?success=true`,
+                cancel_url: `${req.headers.origin}/profile-settings?success=false`
             };
             const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(params);
 

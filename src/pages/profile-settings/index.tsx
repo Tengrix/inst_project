@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
 import React from 'react';
@@ -23,8 +24,20 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-const ProfileSettings = () => {
+const ProfileSettings = (props: any) => {
     const t = useTranslations('profileSettings');
+    const { query } = useRouter();
+
+    let defaultTab = 'profile';
+    let isSuccess: boolean | undefined;
+
+    console.log('QUERY :', query);
+
+    if ('success' in query) {
+        defaultTab = 'account';
+        isSuccess = query.success === 'true';
+    }
+
     const ProfileTab = {
         value: 'profile',
         title: t('tab.generalInformation.generalInformationTitle'),
@@ -38,7 +51,7 @@ const ProfileSettings = () => {
     const AccountManagement = {
         value: 'account',
         title: t('tab.accountManagement.accountManagementTitle'),
-        children: <CheckoutForm />
+        children: <CheckoutForm success={isSuccess} />
     };
     const MyPayments = {
         value: 'payments',
@@ -50,7 +63,7 @@ const ProfileSettings = () => {
 
     return (
         <div className={s.container}>
-            <CustomTabs tabs={Tabs} />
+            <CustomTabs tabs={Tabs} defaultTab={defaultTab} />
         </div>
     );
 };
