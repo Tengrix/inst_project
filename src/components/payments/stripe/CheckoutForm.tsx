@@ -58,7 +58,7 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
         }
         setLoading(false);
     };
-    const func1 = () => {
+    const clearQueryString = () => {
         setIsModalOpen(false);
         /* activateAccountTab(); */
         router.push(router.pathname);
@@ -95,7 +95,7 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
             )}
             <Modal
                 open={isModalOpen}
-                modalHandler={func1}
+                modalHandler={clearQueryString}
                 customButtonsBlock={
                     success ? (
                         <Button variant="primary" onClick={() => {}}>
