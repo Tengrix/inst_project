@@ -4,11 +4,11 @@ import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { useRefreshTokenQuery } from '@/api/authApiSlice';
 import { useAppDispatch } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
-import { PrivateRoutes, PrivateRoutesType, PublicRoutes, PublicRoutesType, Routes } from '@/shared/routes/Routes';
+import { PrivateRoutes, PublicRoutes, Routes } from '@/shared/routes/Routes';
 import Spinner from '@/shared/ui/spinner/Spinner';
 
 export const Redirect: FC<PropsWithChildren> = ({ children }) => {
-    const { data, isSuccess, isError } = useRefreshTokenQuery();
+    const { data, isSuccess, isError } = useRefreshTokenQuery(undefined, { pollingInterval: 5 * 60 * 1000 });
     const [isLoading, setIsLoading] = useState(true);
     const dispatch = useAppDispatch();
     const { push, pathname } = useRouter();
@@ -24,38 +24,31 @@ export const Redirect: FC<PropsWithChildren> = ({ children }) => {
     useEffect(() => {
         if (isSuccess) {
             dispatch(authAction.setCredentials(data));
-            if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
-                push(pathname).then(() => setIsLoading(false));
-            }
             setIsLoading(false);
         }
     }, [data]);
     useEffect(() => {
-        if (isError) {
-            if (PublicRoutes.includes(pathname as PublicRoutesType)) {
-                // push(pathname).then(() => setIsLoading(false));
-                setIsLoading(false);
-            } else {
-                push(Routes.LOGIN).then(() => setIsLoading(false));
-            }
+        if (isPublicRoute(pathname)) {
+            setIsLoading(false);
+        } else {
+            isError && push(Routes.LOGIN).then(() => setIsLoading(false));
         }
     }, [isError, data]);
 
     // useEffect(() => {
     //     setIsLoading(true);
+    //     debugger
     //     if (isPublicRoute(pathname)) {
     //         setIsLoading(false);
     //     } else {
     //         if (isSuccess) {
     //             dispatch(authAction.setCredentials(data));
-    //             // if (PrivateRoutes.includes(pathname as PrivateRoutesType)) {
-    //             // push(pathname).then(() => setIsLoading(false));
     //             setIsLoading(false);
     //         } else {
     //             push(Routes.LOGIN).then(() => setIsLoading(false));
     //         }
     //     }
-    // }, [data, pathname]);
+    // }, [data]);
 
     return <>{isLoading ? <Spinner /> : children}</>;
 };
