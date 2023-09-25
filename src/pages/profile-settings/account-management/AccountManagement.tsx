@@ -6,11 +6,17 @@ import s from './AccountManagement.module.scss';
 type AccountManagementPropsType = {
     setIsShowPaymentAndCosts: (value: boolean) => void;
     setSubscriptionCost: (cost: string) => void;
+    setPaymentIntervalCS: (interval: 'day' | 'week' | 'month') => void;
 };
 
-export const AccountManagement = ({ setIsShowPaymentAndCosts, setSubscriptionCost }: AccountManagementPropsType) => {
+export const AccountManagement = ({
+    setIsShowPaymentAndCosts,
+    setSubscriptionCost,
+    setPaymentIntervalCS
+}: AccountManagementPropsType) => {
     const [currentRadioValue, setCurrentRadioValue] = useState('personal');
     const [currentBusinessAcountCost, setCurrentBusinessAcountCost] = useState('1000');
+    const [paymentInterval, setPaymentInterval] = useState<'day' | 'week' | 'month'>('day');
     const t = useTranslations();
 
     const accountTypeRadioBts = [
@@ -32,19 +38,22 @@ export const AccountManagement = ({ setIsShowPaymentAndCosts, setSubscriptionCos
             id: '10$-per-1-day',
             name: '10$-per-1-day',
             value: '1000',
-            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perDay')
+            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perDay'),
+            interval: 'day'
         },
         {
             id: '50$-per-7-day',
             name: '50$-per-7-day',
             value: '5000',
-            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perWeek')
+            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perWeek'),
+            interval: 'week'
         },
         {
             id: '100$-per-month',
             name: '100$-per-month',
             value: '10000',
-            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perMonth')
+            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perMonth'),
+            interval: 'month'
         }
     ];
 
@@ -59,6 +68,7 @@ export const AccountManagement = ({ setIsShowPaymentAndCosts, setSubscriptionCos
     const businessAcountCostChange = (e: any) => {
         setCurrentBusinessAcountCost(e.target.value);
         setSubscriptionCost(e.target.value);
+        setPaymentIntervalCS(e.target.getAttribute('data-interval'));
     };
     return (
         <div>
@@ -95,6 +105,7 @@ export const AccountManagement = ({ setIsShowPaymentAndCosts, setSubscriptionCos
                                         id={businessCosts.id}
                                         name={businessCosts.name}
                                         type="radio"
+                                        data-interval={businessCosts.interval}
                                         value={businessCosts.value}
                                         onChange={businessAcountCostChange}
                                         checked={currentBusinessAcountCost === businessCosts.value}
@@ -107,6 +118,7 @@ export const AccountManagement = ({ setIsShowPaymentAndCosts, setSubscriptionCos
                 </fieldset>
             )}
             {currentBusinessAcountCost}
+            {paymentInterval}
         </div>
     );
 };

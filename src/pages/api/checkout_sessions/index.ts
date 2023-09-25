@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
         try {
             const params: Stripe.Checkout.SessionCreateParams = {
-                mode: 'payment',
+                mode: 'subscription',
                 payment_method_types: ['card'],
                 line_items: [
                     {
@@ -19,12 +19,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 name: 'TEST PRODUCT',
                                 description: 'TEST PRODUCT DESC'
                             },
-                            unit_amount: req.body.amount
+                            unit_amount: req.body.amount,
+                            recurring: {
+                                interval: req.body.interval
+                            }
                         },
 
                         quantity: 1
                     }
                 ],
+
                 customer_email: 'ppolskasim@gmail.com',
                 /* success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`, 
                 cancel_url: `${req.headers.origin}/donate-with-checkout` */

@@ -23,20 +23,26 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
         }
     };
 }
+type ProfileTabValue = 'profile' | 'devices' | 'account' | 'payments';
 
 const ProfileSettings = (props: any) => {
     const t = useTranslations('profileSettings');
-    const { query } = useRouter();
 
-    let defaultTab = 'profile';
-    let isSuccess: boolean | undefined;
+    const { query, isReady } = useRouter();
+    //const router = useRouter();
 
-    console.log('QUERY :', query);
-
-    if ('success' in query) {
-        defaultTab = 'account';
+    let isSuccess = undefined;
+    let defaultTab: ProfileTabValue = 'profile';
+    if (isReady && 'success' in query) {
         isSuccess = query.success === 'true';
+        defaultTab = 'account';
     }
+
+    /* const activateAccountTab = () => {
+          defaultTab = 'account';
+        isSuccess = undefined;
+        router.push('/profile-settings'); 
+    }; */
 
     const ProfileTab = {
         value: 'profile',
@@ -51,7 +57,7 @@ const ProfileSettings = (props: any) => {
     const AccountManagement = {
         value: 'account',
         title: t('tab.accountManagement.accountManagementTitle'),
-        children: <CheckoutForm success={isSuccess} />
+        children: <CheckoutForm success={isSuccess} /* activateAccountTab={activateAccountTab} */ />
     };
     const MyPayments = {
         value: 'payments',

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
@@ -14,29 +15,31 @@ import s from './CheckoutForm.module.scss';
 
 type CheckoutFormPropsType = {
     success: boolean | undefined;
+    //activateAccountTab: () => void;
 };
 
-const CheckoutForm = ({ success }: CheckoutFormPropsType) => {
+const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsType) => {
     const [loading, setLoading] = useState(false);
-    //const [isModalOpen, setIsOpenModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isShowPaymentAndCosts, setIsShowPaymentAndCosts] = useState(false);
     const [subscriptionCost, setSubscriptionCost] = useState('1000');
+    const [paymentInterval, setPaymentIntervalCS] = useState('day');
     const t = useTranslations();
-    ///////todo
-    let isModalOpen = false;
-    const test = success;
+    const router = useRouter();
 
-    console.log('MODAL USEEFF', success);
-    if (success !== undefined) {
-        isModalOpen = true;
-    }
-    //////todo
+    useEffect(() => {
+        if (success !== undefined) {
+            setIsModalOpen(true);
+        }
+    }, []);
+
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         setLoading(true);
 
         if (e.currentTarget.value === 'stripe') {
             const response = await fetchPostJSON('/api/checkout_sessions', {
-                amount: subscriptionCost
+                amount: subscriptionCost,
+                interval: paymentInterval
             });
 
             if (response.statusCode === 500) {
@@ -55,12 +58,18 @@ const CheckoutForm = ({ success }: CheckoutFormPropsType) => {
         }
         setLoading(false);
     };
+    const func1 = () => {
+        setIsModalOpen(false);
+        /* activateAccountTab(); */
+        router.push(router.pathname);
+    };
 
     return (
         <div>
             <AccountManagement
                 setIsShowPaymentAndCosts={setIsShowPaymentAndCosts}
                 setSubscriptionCost={setSubscriptionCost}
+                setPaymentIntervalCS={setPaymentIntervalCS}
             />
             {isShowPaymentAndCosts && (
                 <div className={s.checkoutFormButtons}>
@@ -84,27 +93,23 @@ const CheckoutForm = ({ success }: CheckoutFormPropsType) => {
                     {'SUCCESS : ' + success}
                 </div>
             )}
-            {test !== undefined && (
-                <Modal
-                    open={isModalOpen}
-                    modalHandler={() => (isModalOpen = false)}
-                    customButtonsBlock={
-                        success ? (
-                            <Button variant="primary" onClick={() => {}}>
-                                {t('button.ok')}
-                            </Button>
-                        ) : (
-                            <Button variant="primary" onClick={() => {}}>
-                                {t('button.backToPayment')}
-                            </Button>
-                        )
-                    }
-                    title={success ? t('modal.successTransactionModalTitle') : t('modal.errorTransactionModalTitle')}>
-                    {success
-                        ? t('modal.successTransactionModalDescription')
-                        : t('modal.errorTransactionModalDescription')}
-                </Modal>
-            )}
+            <Modal
+                open={isModalOpen}
+                modalHandler={func1}
+                customButtonsBlock={
+                    success ? (
+                        <Button variant="primary" onClick={() => {}}>
+                            {t('button.ok')}
+                        </Button>
+                    ) : (
+                        <Button variant="primary" onClick={() => {}}>
+                            {t('button.backToPayment')}
+                        </Button>
+                    )
+                }
+                title={success ? t('modal.successTransactionModalTitle') : t('modal.errorTransactionModalTitle')}>
+                {success ? t('modal.successTransactionModalDescription') : t('modal.errorTransactionModalDescription')}
+            </Modal>
         </div>
     );
 };
