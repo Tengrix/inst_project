@@ -58,7 +58,7 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
         }
         setLoading(false);
     };
-    const func1 = () => {
+    const clearQueryString = () => {
         setIsModalOpen(false);
         /* activateAccountTab(); */
         router.push(router.pathname);
@@ -90,12 +90,11 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
                         disabled={loading}>
                         <Image src={StripeLogo} width={70} height={29} alt="Stripe logo" />
                     </button>
-                    {'SUCCESS : ' + success}
                 </div>
             )}
             <Modal
                 open={isModalOpen}
-                modalHandler={func1}
+                modalHandler={clearQueryString}
                 customButtonsBlock={
                     success ? (
                         <Button variant="primary" onClick={() => {}}>
