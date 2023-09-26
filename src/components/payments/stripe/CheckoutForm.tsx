@@ -3,7 +3,9 @@ import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
+import { useGetUserDataQuery } from '@/api/api';
 import { AccountManagement } from '@/pages/profile-settings/account-management/AccountManagement';
+import { useAppSelector } from '@/redux/store';
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { fetchPostJSON } from '@/shared/utils/stripe/api-helpers';
@@ -19,27 +21,34 @@ type CheckoutFormPropsType = {
 };
 
 const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsType) => {
+    const t = useTranslations();
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isShowPaymentAndCosts, setIsShowPaymentAndCosts] = useState(false);
     const [subscriptionCost, setSubscriptionCost] = useState('1000');
     const [paymentInterval, setPaymentIntervalCS] = useState('day');
-    const t = useTranslations();
-    const router = useRouter();
+    const [customerEmail, setCustomerEmail] = useState('');
+    const { data, isSuccess } = useGetUserDataQuery();
 
     useEffect(() => {
         if (success !== undefined) {
             setIsModalOpen(true);
         }
-    }, []);
+        if (isSuccess && data.email) {
+            setCustomerEmail(data.email);
+        }
+    }, [isSuccess, data, success]);
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         setLoading(true);
 
         if (e.currentTarget.value === 'stripe') {
+            console.log('CUSTOMER_EMAIL : ', customerEmail);
             const response = await fetchPostJSON('/api/checkout_sessions', {
                 amount: subscriptionCost,
-                interval: paymentInterval
+                interval: paymentInterval,
+                customer_email: customerEmail
             });
 
             if (response.statusCode === 500) {
@@ -57,6 +66,7 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
             console.log('PAYPAL');
         }
         setLoading(false);
+        console.log('CUSTOMER EAMIL : ', customerEmail);
     };
     const clearQueryString = () => {
         setIsModalOpen(false);
