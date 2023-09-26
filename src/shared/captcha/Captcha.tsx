@@ -13,11 +13,9 @@ export const Captcha = ({ setCaptchaValue }: CaptchaPropsType) => {
         value && setCaptchaValue(value);
     };
 
-    const ReCaptchaComponent = ReCAPTCHA as any;
-
     return (
         <div className={s.captcha}>
-            <ReCaptchaComponent theme={'dark'} sitekey={key} onChange={onChange} />
+            <ReCAPTCHA theme={'dark'} sitekey={key} onChange={onChange} />
         </div>
     );
 };
