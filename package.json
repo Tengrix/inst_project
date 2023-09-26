@@ -34,6 +34,7 @@
     "next": "13.4.12",
     "next-intl": "^2.19.1",
     "next-recaptcha-v3": "^1.2.0",
+    "npm-force-resolutions": "^0.0.10",
     "react": "18.2.0",
     "react-country-flag": "^3.1.0",
     "react-datepicker": "^4.16.0",
