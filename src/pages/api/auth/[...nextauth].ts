@@ -24,13 +24,22 @@ export default NextAuth({
                 profile: profile
             });
             if (account) {
-                token.accessToken = account.id_token;
+                token.provider = account.provider;
+                switch (account.provider) {
+                    case 'google':
+                        token.accessToken = account.id_token;
+                        break;
+                    case 'github':
+                        token.accessToken = account.access_token;
+                        break;
+                }
             }
             return token;
         },
         async session({ session, token, user }) {
             // Send properties to the client, like an access_token from a provider.
             session.accessToken = token.accessToken;
+            session.provider = token.provider;
             return session;
         }
     }

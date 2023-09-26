@@ -6,6 +6,7 @@ declare module 'next-auth' {
      */
     interface Session {
         accessToken?: string;
+        provider: string;
     }
 }
 
@@ -14,5 +15,6 @@ declare module 'next-auth/jwt' {
     interface JWT {
         /** OpenID ID Token */
         accessToken?: string;
+        provider: string;
     }
 }
