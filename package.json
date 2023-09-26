@@ -98,6 +98,6 @@
     "*.{js,ts,tsx,jsx}": "env FORCE_COLOR=1 eslint --fix"
   },
   "resolutions": {
-    "@types/react": "17.0.30"
+    "@types/react": "^17.0.30"
   }
 }
