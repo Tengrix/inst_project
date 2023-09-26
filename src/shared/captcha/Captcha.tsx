@@ -9,14 +9,15 @@ type CaptchaPropsType = {
 
 export const Captcha = ({ setCaptchaValue }: CaptchaPropsType) => {
     const key = process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY as string;
-
     const onChange = (value: string | null) => {
         value && setCaptchaValue(value);
     };
 
+    const ReCaptchaComponent = ReCAPTCHA as any;
+
     return (
         <div className={s.captcha}>
-            <ReCAPTCHA theme={'dark'} sitekey={key} onChange={onChange} />
+            <ReCaptchaComponent theme={'dark'} sitekey={key} onChange={onChange} />
         </div>
     );
 };
