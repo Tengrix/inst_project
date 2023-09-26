@@ -17,9 +17,12 @@ export const authApiSlice = api.injectEndpoints({
                 url: '/auth/refresh-token'
             })
         }),
-        googleAuth: builder.query<void, void>({
-            query: () => ({
-                url: '/auth/google'
+        googleAuth: builder.query<LoginResponseType, string>({
+            query: token => ({
+                url: '/auth/google-auth',
+                params: {
+                    token: token
+                }
             })
         }),
         signUp: builder.mutation<void, RegisterFormType>({
@@ -86,5 +89,5 @@ export const {
     usePasswordRecoveryMutation,
     useLogoutMutation,
     useLazyRefreshTokenQuery,
-    useGoogleAuthQuery
+    useLazyGoogleAuthQuery
 } = authApiSlice;

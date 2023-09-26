@@ -1,8 +1,8 @@
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--color-light-100)
 }
 
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 4px;
   background-color: var(--color-dark-300)
 }

@@ -2,13 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
-import { signIn as googleSignIn, signOut, useSession } from 'next-auth/react';
+import { signIn as signInWithProvider, useSession } from 'next-auth/react';
 import { createTranslator, useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { useLoginMutation } from '@/api/authApiSlice';
+import { useLazyGoogleAuthQuery, useLoginMutation } from '@/api/authApiSlice';
 import classes from '@/pages/sign-in/SignIn.module.scss';
 import { useAppSelector } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -43,13 +43,21 @@ const SignIn = ({ messages }: { messages: {} }) => {
     const dispatch = useDispatch();
     const { token } = useAppSelector(state => state.auth);
     const [signIn, { isLoading, isError }] = useLoginMutation();
+    const [googleSignIn] = useLazyGoogleAuthQuery();
     const t = useTranslations(translationPath);
     const [loginErr, setLoginErr] = useState(t('error.incorrectUsernameOrPasswordError'));
     const { data: session } = useSession();
 
     useEffect(() => {
         if (session?.accessToken) {
-            console.log(session.accessToken);
+            googleSignIn(session.accessToken)
+                .unwrap()
+                .then(res => {
+                    dispatch(authAction.setCredentials(res));
+                })
+                .catch(() => {
+                    setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+                });
         }
     }, [session]);
 
@@ -72,28 +80,27 @@ const SignIn = ({ messages }: { messages: {} }) => {
             dispatch(authAction.setCredentials(userData));
         } catch (err) {
             /*  console.log(err);
-if (isFetchBaseQueryError(err)) {
-setLoginErr(t('error.incorrectUsernameOrPasswordError'));
-} else {
-setLoginErr((err as CustomerError).data.errorsMessages);
-} */
+            if (isFetchBaseQueryError(err)) {
+            setLoginErr(t('error.incorrectUsernameOrPasswordError'));
+            } else {
+            setLoginErr((err as CustomerError).data.errorsMessages);
+            } */
             setLoginErr(t('error.incorrectUsernameOrPasswordError'));
         }
     });
 
     return (
         <div className={classes.container}>
-            <Button onClick={() => signOut()}>Sign out from google</Button>
             <Card className={classes.signInForm}>
                 <div className={classes.header}>
                     <Typography variant="h1" as="h1" className={classes.header__title}>
                         {t('signInPage.h1')}
                     </Typography>
                     <div className={classes.header__icons}>
-                        <Button as={'a'} variant={'link'} onClick={() => googleSignIn()}>
+                        <Button as={'a'} variant={'link'} onClick={() => signInWithProvider('google')}>
                             <Google width={36} height={36} />
                         </Button>
-                        <Button as={'a'} variant={'link'}>
+                        <Button as={'a'} variant={'link'} onClick={() => signInWithProvider('github')}>
                             <Github width={36} height={36} />
                         </Button>
                     </div>
