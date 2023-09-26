@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Table from '@/components/Table/Table';
-
 const header = {
     billingDate: 'Date of Payment',
     subscriptionEnd: 'End date of subscription',
@@ -69,7 +68,7 @@ const payments = [
 ];
 
 const Payments = () => {
-    /* return <Table data={payments} header={header} />; */
-    return <div>TABLE</div>;
+    return <Table data={payments} header={header} />;
+    /* return <div>TABLE</div>; */
 };
 export default Payments;
