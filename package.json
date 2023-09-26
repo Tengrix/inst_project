@@ -9,8 +9,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install",
-    "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
@@ -97,8 +96,5 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx,jsx}": "env FORCE_COLOR=1 eslint --fix"
-  },
-  "resolutions": {
-    "@types/react": "^17.0.38"
   }
 }
