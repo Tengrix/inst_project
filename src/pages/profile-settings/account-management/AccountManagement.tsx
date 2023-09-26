@@ -16,7 +16,6 @@ export const AccountManagement = ({
 }: AccountManagementPropsType) => {
     const [currentRadioValue, setCurrentRadioValue] = useState('personal');
     const [currentBusinessAcountCost, setCurrentBusinessAcountCost] = useState('1000');
-    const [paymentInterval, setPaymentInterval] = useState<'day' | 'week' | 'month'>('day');
     const t = useTranslations();
 
     const accountTypeRadioBts = [
@@ -117,8 +116,6 @@ export const AccountManagement = ({
                     </div>
                 </fieldset>
             )}
-            {currentBusinessAcountCost}
-            {paymentInterval}
         </div>
     );
 };

@@ -90,7 +90,6 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
                         disabled={loading}>
                         <Image src={StripeLogo} width={70} height={29} alt="Stripe logo" />
                     </button>
-                    {'SUCCESS : ' + success}
                 </div>
             )}
             <Modal
