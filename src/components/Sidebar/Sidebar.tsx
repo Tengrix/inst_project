@@ -10,6 +10,7 @@ import {
 } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { signOut as googleSignOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
@@ -17,7 +18,6 @@ import { useLogoutMutation } from '@/api/authApiSlice';
 import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
 import { useAppDispatch } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
-import { Routes } from '@/shared/routes/Routes';
 import { Button } from '@/shared/ui/button';
 
 import s from './Sidebar.module.scss';
@@ -64,8 +64,9 @@ const Sidebar = () => {
     const logoutHandler = async () => {
         try {
             await logout().unwrap();
+            googleSignOut();
             dispatch(authAction.logOut());
-            router.push(Routes.LOGIN);
+            // router.push(Routes.LOGIN);
         } catch (error) {
             console.log(error);
         }

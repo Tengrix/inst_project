@@ -88,16 +88,6 @@ export const api = createApi({
                 },
                 invalidatesTags: ['Post']
             }),
-            // getPostById: builder.query<PostType, string>({
-            //     query: postId => {
-            //         return {
-            //             url: '/post',
-            //             body: {
-            //                 id: postId
-            //             }
-            //         };
-            //     },
-            // }),
             getPostById: builder.query<PostType, string>({
                 query: id => {
                     return {
@@ -108,21 +98,6 @@ export const api = createApi({
                     };
                 },
                 providesTags: ['Post']
-                // onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
-                //     try {
-                //         const { data } = await queryFulfilled;
-                //         dispatch(
-                //             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
-                //                 const index = draftPosts.items.findIndex(post => post.id === id);
-                //                 if (index !== -1) {
-                //                     draftPosts.items[index] = data;
-                //                 }
-                //             })
-                //         );
-                //     } catch {
-                //         console.log('error');
-                //     }
-                // }
             }),
             getAllPosts: builder.query<GetPostsResponseType, number | void>({
                 query: (page = 1) => {

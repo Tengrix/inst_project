@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
-import { AccountManagement } from '@/pages/profile-settings/account-management/AccountManagement';
+import AccountManagement from '@/pages/profile-settings/account-management/AccountManagement';
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { fetchPostJSON } from '@/shared/utils/stripe/api-helpers';
