@@ -49,11 +49,12 @@ export const Modal = ({
             onPointerOutsideClickHandler();
         }
     };
-
+    const DialogTriger = Dialog.Trigger as any;
+    const DialogPortal = Dialog.Portal as any;
     return (
         <Dialog.Root open={open} onOpenChange={modalHandler}>
-            {modalTrigger && <Dialog.Trigger asChild>{modalTrigger}</Dialog.Trigger>}
-            <Dialog.Portal>
+            {modalTrigger && <DialogTriger asChild>{modalTrigger}</DialogTriger>}
+            <DialogPortal>
                 <div className={s.DialogOverlay} />
                 <Dialog.Content
                     className={s.DialogContent}
@@ -98,7 +99,7 @@ export const Modal = ({
                         )}
                     </Dialog.Description>
                 </Dialog.Content>
-            </Dialog.Portal>
+            </DialogPortal>
         </Dialog.Root>
     );
 };
