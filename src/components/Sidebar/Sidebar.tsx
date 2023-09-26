@@ -28,6 +28,7 @@ const Sidebar = () => {
     const router = useRouter();
     const t = useTranslations('sidebar');
     const [createPostModal, setCreatePostModal] = useState(false);
+    const currentURL = useRouter();
     const routes = [
         { title: t('home'), icon: <HomeIcon height={60} width={24} />, path: '/home' },
         {
@@ -46,7 +47,7 @@ const Sidebar = () => {
             return (
                 <Link
                     href={route.path}
-                    className={s.route}
+                    className={route.path === currentURL.asPath ? `${s.route} ${s.route_active}` : s.route}
                     key={route.title}
                     onClick={e => {
                         if (route.onClick) {
@@ -84,17 +85,15 @@ const Sidebar = () => {
                         <span>{t('favourites')}</span>
                     </Link>
                     {/* <div className={s.footer}></div> */}
-                    <Link className={s.route} href={'/sign-in'}>
+                    <Button
+                        className={s.route}
+                        variant={'link'}
+                        isLoading={isLoading}
+                        disabled={isLoading}
+                        onClick={logoutHandler}>
                         <ExitIcon height={60} width={24} />
-                        <Button
-                            className={s.btn}
-                            variant={'link'}
-                            isLoading={isLoading}
-                            disabled={isLoading}
-                            onClick={logoutHandler}>
-                            <span>{t('logOut')}</span>
-                        </Button>
-                    </Link>
+                        <span>{t('logOut')}</span>
+                    </Button>
                 </div>
             </div>
             <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal} />

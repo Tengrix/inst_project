@@ -1,25 +1,27 @@
 import { useRouter } from 'next/router';
 
 import Select from '@/shared/ui/select/Select';
+import RussiaFlag from 'public/icon/ru.png';
+import UnitedKingdomFlag from 'public/icon/uk.png';
 
 type LanguageType = {
-    [language: string]: string;
+    [locale: string]: { language: string; icon: any };
 };
 
 const languages: LanguageType = {
-    Русский: 'ru',
-    English: 'en'
+    ru: { language: 'Русский', icon: RussiaFlag },
+    en: { language: 'English', icon: UnitedKingdomFlag }
 };
 
 const LangSwitcher = () => {
     const { locale, push, pathname, query, asPath } = useRouter();
 
     const changeLangHandler = (item: string) => {
-        push({ pathname, query }, asPath, { locale: languages[item] });
+        push({ pathname, query }, asPath, { locale: item });
     };
 
-    const items = Object.keys(languages).map(lang => ({ title: lang, icon: '' }));
-    const curItem = items.filter(item => languages[item.title] === locale)[0];
+    const items = Object.entries(languages).map(([locale, values]) => ({ locale, ...values }));
+    const curItem = languages[locale ?? 'en'];
 
     return <Select defaultValue={curItem} items={items} onValueChange={changeLangHandler} />;
 };
