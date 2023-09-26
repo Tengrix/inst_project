@@ -1,0 +1,37 @@
+.paymentButton {
+    width:96px;
+    height: 64px;
+    border: 1px solid var(--color-dark-300);
+    border-radius: 5px;
+    background-color: var(--color-dark-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s linear all;
+
+    &_stripe {
+        &:hover{
+            border: 1px solid #6461FC;
+            box-shadow: 0px 0px 25px 0px rgba(100, 97, 252, 0.2) inset;
+        }
+    }  
+
+    &_paypal {
+        &:hover{
+            border: 1px solid #298FC2;
+            box-shadow: 0px 0px 25px 0px rgba(41, 143, 194, 0.2) inset;
+        }
+    }
+}
+.checkoutFormButtons{
+    font:var(--font-regular-14);
+    display: flex;
+    gap: 54px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+
+
+

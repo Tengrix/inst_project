@@ -11,12 +11,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const SelectExample: Story = {
-    args: {
-        selectLabel: 'Language',
-        placeHolder: 'Choose language',
-        // onValueChange: (item:string)=>console.log(item),
-        items: [{ title: 'rus' }, { title: 'eng' }]
-        // disabled:true
-    }
-};
+// export const SelectExample: Story = {
+//     args: {
+//         selectLabel: 'Language',
+//         placeHolder: 'Choose language',
+//         // onValueChange: (item:string)=>console.log(item),
+//         items: [{ title: 'rus' }, { title: 'eng' }]
+//         // disabled:true
+//     }
+// };

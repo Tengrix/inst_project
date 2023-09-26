@@ -1,15 +1,17 @@
 import { CheckIcon } from '@radix-ui/react-icons';
 import { Label } from '@radix-ui/react-label';
 import * as SelectComponent from '@radix-ui/react-select';
-import React, { ReactNode, useState } from 'react';
+import Image from 'next/image';
+import React, { useState } from 'react';
 
 import ChevronDownIcon from '@/assets/icons/ChevronDownIcon';
 import ChevronUpIcon from '@/assets/icons/ChevronUpIcon';
 import s from 'src/shared/ui/select/Select.module.scss';
 
 type ItemType = {
-    title: string;
-    icon?: ReactNode;
+    language: string;
+    icon?: any;
+    locale?: string;
 };
 type SelectPropsType = {
     selectLabel?: string;
@@ -29,18 +31,23 @@ const Select = ({
     disabled = false,
     defaultValue
 }: SelectPropsType) => {
-    const [value, setValue] = useState('');
-    const curValueIcon = value ? items.filter(item => item.title === value)[0].icon : defaultValue?.icon;
-
     const onValueChangeHandler = (e: string) => {
         onValueChange(e);
-        setValue(e);
     };
 
     const renderingItems = items.map(item => (
-        <SelectComponent.Item key={item.title.toLowerCase()} className={s.SelectItem} value={item.title}>
-            {item.icon && <SelectComponent.Icon className={s.SelectIcon}>{item.icon}</SelectComponent.Icon>}
-            <SelectComponent.ItemText>{item.title}</SelectComponent.ItemText>
+        <SelectComponent.Item key={item.language.toLowerCase()} className={s.SelectItem} value={item.locale || 'en'}>
+            {item.icon && (
+                <SelectComponent.Icon className={s.SelectIcon}>
+                    <Image
+                        src={item.icon.src}
+                        width={item.icon.width}
+                        height={item.icon.height}
+                        alt={`Language ${item.language}`}
+                    />
+                </SelectComponent.Icon>
+            )}
+            <SelectComponent.ItemText>{item.language}</SelectComponent.ItemText>
             <SelectComponent.ItemIndicator className={s.SelectComponentItemIndicator}>
                 <CheckIcon />
             </SelectComponent.ItemIndicator>
@@ -56,8 +63,12 @@ const Select = ({
             )}
             <SelectComponent.Root disabled={disabled} onValueChange={onValueChangeHandler}>
                 <SelectComponent.Trigger id={selectLabel ? selectLabel.toLowerCase() : ''} className={s.SelectTrigger}>
-                    {curValueIcon}
-                    <SelectComponent.Value placeholder={placeHolder ? placeHolder : defaultValue?.title} />
+                    {defaultValue && (
+                        <SelectComponent.Icon className={s.SelectIcon}>
+                            <Image src={defaultValue?.icon.src} width={30} height={30} alt="language icon" />
+                        </SelectComponent.Icon>
+                    )}
+                    <SelectComponent.Value placeholder={placeHolder ? placeHolder : defaultValue?.language} />
                     <SelectComponent.Icon className={s.SelectIcon}>
                         <ChevronDownIcon />
                     </SelectComponent.Icon>
@@ -68,10 +79,7 @@ const Select = ({
                         <SelectComponent.ScrollUpButton className={s.SelectScrollButton}>
                             <ChevronUpIcon />
                         </SelectComponent.ScrollUpButton>
-                        <SelectComponent.Viewport>
-                            {renderingItems}
-                            {/*<SelectComponent.Separator/>*/}
-                        </SelectComponent.Viewport>
+                        <SelectComponent.Viewport>{renderingItems}</SelectComponent.Viewport>
                         <SelectComponent.ScrollDownButton className={s.SelectScrollButton} />
                         <SelectComponent.Arrow />
                     </SelectComponent.Content>

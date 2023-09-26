@@ -1,10 +1,5 @@
 import { api } from '@/api/api';
-import {
-    ChangePasswordRequestType,
-    LoginResponseType,
-    PasswordRecoveryRequestType,
-    SignUpRequestType
-} from '@/api/types';
+import { ChangePasswordRequestType, LoginResponseType, PasswordRecoveryRequestType } from '@/api/types';
 import { RegisterFormType } from '@/pages/sign-up';
 
 export const authApiSlice = api.injectEndpoints({
@@ -20,6 +15,14 @@ export const authApiSlice = api.injectEndpoints({
         refreshToken: builder.query<LoginResponseType, void>({
             query: () => ({
                 url: '/auth/refresh-token'
+            })
+        }),
+        authWithProvider: builder.query<LoginResponseType, { provider: string; token: string }>({
+            query: data => ({
+                url: '/auth/' + data.provider,
+                params: {
+                    token: data.token
+                }
             })
         }),
         signUp: builder.mutation<void, RegisterFormType>({
@@ -85,5 +88,6 @@ export const {
     useResetPasswordMutation,
     usePasswordRecoveryMutation,
     useLogoutMutation,
-    useLazyRefreshTokenQuery
+    useLazyRefreshTokenQuery,
+    useLazyAuthWithProviderQuery
 } = authApiSlice;

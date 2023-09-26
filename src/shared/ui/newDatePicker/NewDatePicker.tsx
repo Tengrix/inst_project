@@ -16,7 +16,6 @@ const NewDatePicker = <TFieldValues extends FieldValues>(props: Props<TFieldValu
         name: props.name,
         control: props.control
     });
-
     return (
         <div>
             <Typography variant={'regular14'} color={'form'}>
@@ -24,7 +23,7 @@ const NewDatePicker = <TFieldValues extends FieldValues>(props: Props<TFieldValu
             </Typography>
             <DatePicker
                 selected={field.value}
-                onChange={date => field.onChange(date)}
+                onChange={(date: any) => field.onChange(date)}
                 customInput={<TextField value={field.value} readOnly={true} />}
             />
         </div>
