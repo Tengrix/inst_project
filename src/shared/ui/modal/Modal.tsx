@@ -53,6 +53,8 @@ export const Modal = ({
     const DialogPortal = Dialog.Portal as any;
     const DialogContent = Dialog.Content as any;
     const DialogTitle = Dialog.Title as any;
+    const DialogClose = Dialog.Close as any;
+    const DialogDescription = Dialog.Description as any;
     return (
         <Dialog.Root open={open} onOpenChange={modalHandler}>
             {modalTrigger && <DialogTriger asChild>{modalTrigger}</DialogTriger>}
@@ -68,15 +70,15 @@ export const Modal = ({
                         {nextStepBtn ? (
                             nextStepBtn
                         ) : (
-                            <Dialog.Close asChild>
+                            <DialogClose asChild>
                                 <Button className={s.closeBtn}>
                                     <Cross />
                                 </Button>
-                            </Dialog.Close>
+                            </DialogClose>
                         )}
                     </div>
                     <hr className={s.border} />
-                    <Dialog.Description className={modalContentClassName}>
+                    <DialogDescription className={modalContentClassName}>
                         {children}
                         {customButtonsBlock ? (
                             <div
@@ -93,13 +95,13 @@ export const Modal = ({
                                 {editPost ? (
                                     <Button onClick={onSubmit}>Save changes</Button>
                                 ) : (
-                                    <Dialog.Close asChild>
+                                    <DialogClose asChild>
                                         <Button>OK</Button>
-                                    </Dialog.Close>
+                                    </DialogClose>
                                 )}
                             </div>
                         )}
-                    </Dialog.Description>
+                    </DialogDescription>
                 </DialogContent>
             </DialogPortal>
         </Dialog.Root>
