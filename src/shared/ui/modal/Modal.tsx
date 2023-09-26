@@ -51,18 +51,20 @@ export const Modal = ({
     };
     const DialogTriger = Dialog.Trigger as any;
     const DialogPortal = Dialog.Portal as any;
+    const DialogContent = Dialog.Content as any;
+    const DialogTitle = Dialog.Title as any;
     return (
         <Dialog.Root open={open} onOpenChange={modalHandler}>
             {modalTrigger && <DialogTriger asChild>{modalTrigger}</DialogTriger>}
             <DialogPortal>
                 <div className={s.DialogOverlay} />
-                <Dialog.Content
+                <DialogContent
                     className={s.DialogContent}
-                    onOpenAutoFocus={e => e.preventDefault()}
+                    onOpenAutoFocus={(e: any) => e.preventDefault()}
                     onPointerDownOutside={onPointerDownOutside}>
                     <div className={s.modalHeader}>
                         {previousStepBtn}
-                        <Dialog.Title className={s.DialogTitle}>{title}</Dialog.Title>
+                        <DialogTitle className={s.DialogTitle}>{title}</DialogTitle>
                         {nextStepBtn ? (
                             nextStepBtn
                         ) : (
@@ -98,7 +100,7 @@ export const Modal = ({
                             </div>
                         )}
                     </Dialog.Description>
-                </Dialog.Content>
+                </DialogContent>
             </DialogPortal>
         </Dialog.Root>
     );
