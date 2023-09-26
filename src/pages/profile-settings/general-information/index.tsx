@@ -35,7 +35,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 
 const FormPage = () => {
-    const [isSaved, setIsSaved] = useState<'error' | 'success' | null>(null);
+    const [isSaved, setIsSaved] = useState(false);
     const [image, setImage] = useState('');
     const [blob, setBlob] = useState<Blob>();
     const translationPath = 'profileSettings.tab.generalInformation';
@@ -72,12 +72,9 @@ const FormPage = () => {
             });
         }
     }, [isSuccess]);
-    useEffect(() => {
-        blob && setIsSaved(null);
-    }, [blob]);
 
     const onSubmit = handleSubmit(async data => {
-        setIsSaved(null);
+        setIsSaved(false);
         const date = data.birthdayDate ? format(data.birthdayDate, "yyyy-MM-dd'T'HH:mm:ss'Z'") : '';
         editProfile({
             ...data,
@@ -85,7 +82,7 @@ const FormPage = () => {
             birthdayDate: date
         })
             .unwrap()
-            .then(() => setIsSaved('success'));
+            .then(() => setIsSaved(true));
     });
     return (
         <div className={styles.container}>
@@ -96,15 +93,6 @@ const FormPage = () => {
                             {image ? (
                                 <Image key={'UserAva'} alt={'UserAva'} src={image} width={192} height={192} />
                             ) : (
-                                // <Canvas
-                                //     crop={crop}
-                                //     step={'Publication'}
-                                //     filters={{}}
-                                //     imageSRC={image}
-                                //     destHeight={192}
-                                //     destWidth={192}
-                                //     getCanvas={setCanvas}
-                                // />
                                 <Image src={github} alt={'Avatar'} height={192} width={192} />
                             )}
                         </div>
@@ -143,10 +131,8 @@ const FormPage = () => {
                 <div className={styles.footer}>
                     <div>
                         {isSuccess !== null && (
-                            <Typography variant={'regular14'} color={isSaved === 'error' ? 'error' : 'success'}>
-                                {isSaved === 'error'
-                                    ? 'Please upload your photo first'
-                                    : 'The information was successfully updated'}
+                            <Typography variant={'regular14'} color={isSaved ? 'success' : 'error'}>
+                                {isSaved && 'The information was successfully updated'}
                             </Typography>
                         )}
                     </div>
