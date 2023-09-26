@@ -25,10 +25,11 @@ export const Checkbox: FC<CheckboxPropsType> = ({ checked, onChange, disabled, r
         indicator: clsx(s.indicator, disabled && s.disabled),
         label: clsx(s.label, disabled && s.disabled)
     };
+    const CheckboxRoot = CheckboxRadix.Root as any;
 
     return (
         <div className={classNames.buttonWrapper}>
-            <CheckboxRadix.Root
+            <CheckboxRoot
                 className={classNames.root}
                 checked={Boolean(checked)}
                 onCheckedChange={onChange}
@@ -39,7 +40,7 @@ export const Checkbox: FC<CheckboxPropsType> = ({ checked, onChange, disabled, r
                         <CheckIcon color={disabled ? 'var(--color-light-700' : 'black'} />
                     </CheckboxRadix.Indicator>
                 )}
-            </CheckboxRadix.Root>
+            </CheckboxRoot>
         </div>
     );
 };
