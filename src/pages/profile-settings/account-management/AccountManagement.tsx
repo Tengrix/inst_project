@@ -9,7 +9,7 @@ type AccountManagementPropsType = {
     setPaymentIntervalCS: (interval: 'day' | 'week' | 'month') => void;
 };
 
-export const AccountManagement = ({
+const AccountManagement = ({
     setIsShowPaymentAndCosts,
     setSubscriptionCost,
     setPaymentIntervalCS
@@ -122,3 +122,4 @@ export const AccountManagement = ({
         </div>
     );
 };
+export default AccountManagement;
