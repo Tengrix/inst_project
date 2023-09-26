@@ -1,4 +1,4 @@
-import ReCAPTCHA from 'react-google-recaptcha';
+import { ReCAPTCHA } from 'react-google-recaptcha';
 
 import s from './Captcha.module.scss';
 
