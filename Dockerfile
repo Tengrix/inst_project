@@ -5,7 +5,7 @@ RUN npm install
 
 FROM node:18.15 as builder
 WORKDIR /app
-COPY ../../../System%20Folders/Новая%20папка .
+COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 RUN npm build:production
 
