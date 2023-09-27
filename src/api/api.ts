@@ -45,7 +45,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const api = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Post', 'Profile'],
+    tagTypes: ['Post', 'Profile', 'Auth'],
     endpoints: builder => {
         return {
             createPost: builder.mutation<PostType, PostFormData>({
@@ -143,7 +143,6 @@ export const api = createApi({
                 onQueryStarted: async ({ id }, { dispatch, queryFulfilled }) => {
                     try {
                         const { data } = await queryFulfilled;
-                        console.log('onQueryStarted fullfield');
                         dispatch(
                             api.util.updateQueryData('getAllPosts', undefined, draftPosts => {
                                 const index = draftPosts.items.findIndex(post => post.id === id);
