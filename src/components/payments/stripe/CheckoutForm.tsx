@@ -40,6 +40,7 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
     }, [isSuccess, data, success]);
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        debugger;
         setLoading(true);
 
         if (e.currentTarget.value === 'stripe') {
