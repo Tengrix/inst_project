@@ -12,7 +12,7 @@ RUN npm build:production
 FROM node:18.15 as runner
 WORKDIR /app
 ENV NODE_ENV production
-# If you are using a custom next.config.js file, uncomment this line.
+ If you are using a custom next.config.js file, uncomment this line.
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
