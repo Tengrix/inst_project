@@ -34,7 +34,6 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 const Profile = () => {
     const translationPath = 'myProfile';
     const t = useTranslations(translationPath);
-    const router = useRouter();
     const { data: userData } = useGetUserDataQuery();
     const [editPostMode, setEditPostMode] = useState<boolean>(false);
     const [getPostById, { data: post, isLoading: postIsLoading, isSuccess }] = useLazyGetPostByIdQuery();

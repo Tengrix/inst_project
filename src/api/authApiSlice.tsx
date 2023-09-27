@@ -10,12 +10,13 @@ export const authApiSlice = api.injectEndpoints({
                 method: 'POST',
                 body: data
             }),
-            invalidatesTags: ['Profile']
+            invalidatesTags: ['Profile', 'Auth']
         }),
         refreshToken: builder.query<LoginResponseType, void>({
             query: () => ({
                 url: '/auth/refresh-token'
-            })
+            }),
+            providesTags: ['Auth']
         }),
         authWithProvider: builder.query<LoginResponseType, { provider: string; token: string }>({
             query: data => ({
@@ -74,7 +75,8 @@ export const authApiSlice = api.injectEndpoints({
             query: () => ({
                 url: `/auth/logout`,
                 method: 'POST'
-            })
+            }),
+            invalidatesTags: ['Auth']
         })
     })
 });
