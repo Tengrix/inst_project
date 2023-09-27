@@ -7,7 +7,7 @@ import { useGetUserDataQuery } from '@/api/api';
 import AccountManagement from '@/pages/profile-settings/account-management/AccountManagement';
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal/Modal';
-import { fetchPostJSON } from '@/shared/utils/stripe/api-helpers';
+import { fetchGetJSON, fetchPostJSON } from '@/shared/utils/stripe/api-helpers';
 import getStripe from '@/shared/utils/stripe/get-stripejs';
 import PaypalLogo from 'public/assets/icons/paypal-logo.svg';
 import StripeLogo from 'public/assets/icons/stripe-logo.svg';
@@ -42,13 +42,25 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         debugger;
         setLoading(true);
+        async function fetchCustomer() {
+            const URL = `/api/get-customer?email=${encodeURIComponent(customerEmail as string)}`;
+            const response = await fetchGetJSON(URL);
+            if (response.statusCode === 500) {
+                console.error(response.message);
+                return;
+            }
+
+            return response.data[0]?.id;
+        }
 
         if (e.currentTarget.value === 'stripe') {
             console.log('CUSTOMER_EMAIL : ', customerEmail);
-            const response = await fetchPostJSON('/api/checkout_sessions', {
+            const customerId = await fetchCustomer();
+            const response = await fetchPostJSON('/api/checkout-sessions', {
                 amount: subscriptionCost,
                 interval: paymentInterval,
-                customer_email: customerEmail
+                customer_email: customerEmail,
+                customer: customerId
             });
 
             if (response.statusCode === 500) {
