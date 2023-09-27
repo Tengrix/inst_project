@@ -49,36 +49,31 @@ export const Modal = ({
             onPointerOutsideClickHandler();
         }
     };
-    const DialogTriger = Dialog.Trigger as any;
-    const DialogPortal = Dialog.Portal as any;
-    const DialogContent = Dialog.Content as any;
-    const DialogTitle = Dialog.Title as any;
-    const DialogClose = Dialog.Close as any;
-    const DialogDescription = Dialog.Description as any;
+
     return (
         <Dialog.Root open={open} onOpenChange={modalHandler}>
-            {modalTrigger && <DialogTriger asChild>{modalTrigger}</DialogTriger>}
-            <DialogPortal>
+            {modalTrigger && <Dialog.Trigger asChild>{modalTrigger}</Dialog.Trigger>}
+            <Dialog.Portal>
                 <div className={s.DialogOverlay} />
-                <DialogContent
+                <Dialog.Content
                     className={s.DialogContent}
-                    onOpenAutoFocus={(e: any) => e.preventDefault()}
+                    onOpenAutoFocus={e => e.preventDefault()}
                     onPointerDownOutside={onPointerDownOutside}>
                     <div className={s.modalHeader}>
                         {previousStepBtn}
-                        <DialogTitle className={s.DialogTitle}>{title}</DialogTitle>
+                        <Dialog.Title className={s.DialogTitle}>{title}</Dialog.Title>
                         {nextStepBtn ? (
                             nextStepBtn
                         ) : (
-                            <DialogClose asChild>
+                            <Dialog.Close asChild>
                                 <Button className={s.closeBtn}>
                                     <Cross />
                                 </Button>
-                            </DialogClose>
+                            </Dialog.Close>
                         )}
                     </div>
                     <hr className={s.border} />
-                    <DialogDescription className={modalContentClassName}>
+                    <Dialog.Description className={modalContentClassName}>
                         {children}
                         {customButtonsBlock ? (
                             <div
@@ -95,15 +90,15 @@ export const Modal = ({
                                 {editPost ? (
                                     <Button onClick={onSubmit}>Save changes</Button>
                                 ) : (
-                                    <DialogClose asChild>
+                                    <Dialog.Close asChild>
                                         <Button>OK</Button>
-                                    </DialogClose>
+                                    </Dialog.Close>
                                 )}
                             </div>
                         )}
-                    </DialogDescription>
-                </DialogContent>
-            </DialogPortal>
+                    </Dialog.Description>
+                </Dialog.Content>
+            </Dialog.Portal>
         </Dialog.Root>
     );
 };

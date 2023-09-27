@@ -28,10 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         quantity: 1
                     }
                 ],
-
-                customer_email: 'ppolskasim@gmail.com',
-                /* success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`, 
-                cancel_url: `${req.headers.origin}/donate-with-checkout` */
+                customer_email: req.body.customer_email,
                 success_url: `${req.headers.origin}/profile-settings?success=true`,
                 cancel_url: `${req.headers.origin}/profile-settings?success=false`
             };

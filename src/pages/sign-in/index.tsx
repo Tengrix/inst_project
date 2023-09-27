@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { useLazyGoogleAuthQuery, useLoginMutation } from '@/api/authApiSlice';
+import { useLazyAuthWithProviderQuery, useLoginMutation } from '@/api/authApiSlice';
 import classes from '@/pages/sign-in/SignIn.module.scss';
 import { useAppSelector } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -43,14 +43,15 @@ const SignIn = ({ messages }: { messages: {} }) => {
     const dispatch = useDispatch();
     const { token } = useAppSelector(state => state.auth);
     const [signIn, { isLoading, isError }] = useLoginMutation();
-    const [googleSignIn] = useLazyGoogleAuthQuery();
+    const [authWithProvider] = useLazyAuthWithProviderQuery();
     const t = useTranslations(translationPath);
     const [loginErr, setLoginErr] = useState(t('error.incorrectUsernameOrPasswordError'));
     const { data: session } = useSession();
 
     useEffect(() => {
+        console.log(session);
         if (session?.accessToken) {
-            googleSignIn(session.accessToken)
+            authWithProvider({ provider: session.provider, token: session.accessToken })
                 .unwrap()
                 .then(res => {
                     dispatch(authAction.setCredentials(res));
