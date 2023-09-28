@@ -18,15 +18,15 @@ export const authApiSlice = api.injectEndpoints({
             }),
             providesTags: ['Auth']
         }),
-        loginWithProvider: builder.query<LoginResponseType, { provider: string; token: string }>({
+        loginWithProvider: builder.mutation<LoginResponseType, { provider: string; token: string }>({
             query: data => ({
                 url: '/auth/' + data.provider,
+                method: 'POST',
                 params: {
                     token: data.token
                 }
-            })
-            // TODO Переделать запрос в POST запрос(аналогично обычному логину) чтобы установить инвалидирующий тэг auth
-            // invalidatesTagredires: ['Auth']
+            }),
+            invalidatesTags: ['Auth']
         }),
         signUp: builder.mutation<void, RegisterFormType>({
             query: data => {
@@ -93,5 +93,5 @@ export const {
     usePasswordRecoveryMutation,
     useLogoutMutation,
     useLazyRefreshTokenQuery,
-    useLazyLoginWithProviderQuery
+    useLoginWithProviderMutation
 } = authApiSlice;
