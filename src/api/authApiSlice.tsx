@@ -10,20 +10,23 @@ export const authApiSlice = api.injectEndpoints({
                 method: 'POST',
                 body: data
             }),
-            invalidatesTags: ['Profile']
+            invalidatesTags: ['Profile', 'Auth']
         }),
         refreshToken: builder.query<LoginResponseType, void>({
             query: () => ({
                 url: '/auth/refresh-token'
-            })
+            }),
+            providesTags: ['Auth']
         }),
-        authWithProvider: builder.query<LoginResponseType, { provider: string; token: string }>({
+        loginWithProvider: builder.query<LoginResponseType, { provider: string; token: string }>({
             query: data => ({
                 url: '/auth/' + data.provider,
                 params: {
                     token: data.token
                 }
             })
+            // TODO Переделать запрос в POST запрос(аналогично обычному логину) чтобы установить инвалидирующий тэг auth
+            // invalidatesTagredires: ['Auth']
         }),
         signUp: builder.mutation<void, RegisterFormType>({
             query: data => {
@@ -74,7 +77,8 @@ export const authApiSlice = api.injectEndpoints({
             query: () => ({
                 url: `/auth/logout`,
                 method: 'POST'
-            })
+            }),
+            invalidatesTags: ['Auth']
         })
     })
 });
@@ -89,5 +93,5 @@ export const {
     usePasswordRecoveryMutation,
     useLogoutMutation,
     useLazyRefreshTokenQuery,
-    useLazyAuthWithProviderQuery
+    useLazyLoginWithProviderQuery
 } = authApiSlice;

@@ -28,10 +28,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         quantity: 1
                     }
                 ],
-                customer_email: req.body.customer_email,
+
                 success_url: `${req.headers.origin}/profile-settings?success=true`,
                 cancel_url: `${req.headers.origin}/profile-settings?success=false`
             };
+            if (req.body.customer) {
+                Object.assign(params, { customer: req.body.customer });
+            } else {
+                Object.assign(params, { customer_email: req.body.customer_email });
+            }
             const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(params);
 
             res.status(200).json(checkoutSession);

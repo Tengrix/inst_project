@@ -15,7 +15,7 @@ const AccountManagement = ({
     setPaymentIntervalCS
 }: AccountManagementPropsType) => {
     const [currentRadioValue, setCurrentRadioValue] = useState('personal');
-    const [currentBusinessAcountCost, setCurrentBusinessAcountCost] = useState('1000');
+    const [currentBusinessAccountCost, setCurrentBusinessAccountCost] = useState('1000');
     const t = useTranslations();
 
     const accountTypeRadioBts = [
@@ -64,8 +64,8 @@ const AccountManagement = ({
             setIsShowPaymentAndCosts(false);
         }
     };
-    const businessAcountCostChange = (e: any) => {
-        setCurrentBusinessAcountCost(e.target.value);
+    const businessAccountCostChange = (e: any) => {
+        setCurrentBusinessAccountCost(e.target.value);
         setSubscriptionCost(e.target.value);
         setPaymentIntervalCS(e.target.getAttribute('data-interval'));
     };
@@ -106,8 +106,8 @@ const AccountManagement = ({
                                         type="radio"
                                         data-interval={businessCosts.interval}
                                         value={businessCosts.value}
-                                        onChange={businessAcountCostChange}
-                                        checked={currentBusinessAcountCost === businessCosts.value}
+                                        onChange={businessAccountCostChange}
+                                        checked={currentBusinessAccountCost === businessCosts.value}
                                     />
                                     <label htmlFor={businessCosts.id}>{businessCosts.title}</label>
                                 </div>
