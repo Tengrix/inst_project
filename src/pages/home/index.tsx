@@ -2,10 +2,12 @@ import { GetStaticPropsContext } from 'next/types';
 import { createTranslator } from 'next-intl';
 import { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { List } from 'react-virtualized';
 
 import { useGetAllPostsQuery } from '@/api/api';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
 import Post from '@/components/Post/Post';
+import { PostType } from '@/components/Post/types';
 
 import s from './styles.module.scss';
 
@@ -35,14 +37,30 @@ const Home = () => {
 
     return (
         <div className={s.container}>
-            <InfiniteScroll
-                next={fetchNextPage}
-                hasMore={true}
-                loader={isLoading}
-                dataLength={countPhotos ?? 0}
-                scrollThreshold={0.9}>
-                <div className={s.feed}>{postsData?.items.map(post => <Post key={post.id} post={post} />)}</div>
-            </InfiniteScroll>
+            <List
+                width={600}
+                height={600}
+                rowHeight={400}
+                rowCount={postsData?.items.length as number}
+                rowRenderer={({ key, index, style, parent }) => {
+                    const post = postsData?.items[index];
+                    return (
+                        <div key={key} style={style}>
+                            {post?.image}
+                            {/*<Post key={post?.id} post={post as PostType} />*/}
+                        </div>
+                    );
+                }}
+            />
+            {/*<InfiniteScroll*/}
+            {/*    next={fetchNextPage}*/}
+            {/*    hasMore={true}*/}
+            {/*    loader={isLoading}*/}
+            {/*    dataLength={countPhotos ?? 0}*/}
+            {/*    scrollThreshold={0.9}>*/}
+            {/*   */}
+            {/*    /!*<div className={s.feed}>{postsData?.items.map(post => <Post key={post.id} post={post} />)}</div>*!/*/}
+            {/*</InfiniteScroll>*/}
         </div>
     );
 };
