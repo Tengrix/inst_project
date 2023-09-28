@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { useLazyLoginWithProviderQuery, useLoginMutation } from '@/api/authApiSlice';
+import { useLoginWithProviderMutation, useLoginMutation } from '@/api/authApiSlice';
 import classes from '@/pages/sign-in/SignIn.module.scss';
 import { useAppSelector } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -43,7 +43,7 @@ const SignIn = ({ messages }: { messages: {} }) => {
     const dispatch = useDispatch();
     const { token } = useAppSelector(state => state.auth);
     const [signIn, { isLoading, isError }] = useLoginMutation();
-    const [authWithProvider] = useLazyLoginWithProviderQuery();
+    const [authWithProvider] = useLoginWithProviderMutation();
     const t = useTranslations(translationPath);
     const [loginErr, setLoginErr] = useState(t('error.incorrectUsernameOrPasswordError'));
     const { data: session } = useSession();
