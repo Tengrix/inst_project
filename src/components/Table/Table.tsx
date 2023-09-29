@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import s from './Table.module.scss';
@@ -8,10 +9,11 @@ type TableProps = {
 };
 
 const Table = ({ data, header }: TableProps) => {
+    const t = useTranslations();
     const getRow = (key: string, value: string) => {
         return (
             <td className={`${s.table__cell} ${s.cell}`}>
-                <div className={s.cell__th}>{header[key]}</div>
+                <div className={s.cell__th}>{t(header[key])}</div>
                 <div className={s.cell__td}>{value}</div>
             </td>
         );
@@ -22,7 +24,7 @@ const Table = ({ data, header }: TableProps) => {
             <thead className={s.table__head}>
                 {Object.entries(header).map(([key, value]) => (
                     <th key={key} className={s.table__th}>
-                        {value}
+                        {t(value)}
                     </th>
                 ))}
             </thead>

@@ -27,8 +27,12 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
     const [isShowPaymentAndCosts, setIsShowPaymentAndCosts] = useState(false);
     const [subscriptionCost, setSubscriptionCost] = useState('1000');
     const [paymentInterval, setPaymentIntervalCS] = useState('day');
+    const [isShowActiveSubscriptions, setIsShowActiveSubscriptions] = useState(true);
+
     const [customerEmail, setCustomerEmail] = useState('');
     const { data, isSuccess } = useGetUserDataQuery();
+    const [subscriptions, setSubscriptions] = useState([]);
+    const [isShowLoader, setIsShowLoader] = useState(true);
 
     useEffect(() => {
         if (success !== undefined) {
@@ -37,6 +41,42 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
         if (isSuccess && data.email) {
             setCustomerEmail(data.email);
         }
+        const URL = `/api/get-customer?email=${encodeURIComponent(data?.email as string)}`;
+
+        async function fetchData() {
+            const response = await fetchGetJSON(URL);
+            if (response.statusCode === 500) {
+                console.error(response.message);
+                return;
+            }
+
+            return response.data[0].id;
+        }
+
+        async function fetchSubscriptions() {
+            const customer = await fetchData();
+            setIsShowLoader(true);
+            const URL = `/api/get-subscriptions?customer=${customer}`;
+            const response = await fetchGetJSON(URL);
+            if (response.statusCode === 500) {
+                console.error(response.message);
+                setIsShowLoader(false);
+                return;
+            }
+
+            const subscriptions = response.data
+                .filter((sub: any) => sub.status === 'active')
+                .map((sub: any) => ({
+                    billingDate: new Date(sub.current_period_start * 1000).toLocaleDateString(),
+                    subscriptionEnd: new Date(sub.current_period_end * 1000).toLocaleDateString(),
+                    id: sub.id,
+                    status: sub.status
+                }));
+            setIsShowLoader(false);
+            setSubscriptions(subscriptions);
+            console.log(subscriptions);
+        }
+        fetchSubscriptions();
     }, [isSuccess, data, success]);
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -85,13 +125,37 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
         /* activateAccountTab(); */
         router.push(router.pathname);
     };
-
     return (
         <div>
+            {isShowActiveSubscriptions && (
+                <div>
+                    <h1 className={s.activeSubscriptionsTitle}>
+                        {t('profileSettings.tab.accountManagement.currentSubscription')}
+                    </h1>
+                    {subscriptions.map((subscription: any) => (
+                        <ul key={subscription.id} className={s.activeSubscriptionsList}>
+                            <li>
+                                <p className={s.activeSubscriptionHeader}>
+                                    {t('profileSettings.tab.accountManagement.expireAt')}
+                                </p>
+                                <p className={s.activeSubscriptionValue}>{subscription.billingDate}</p>
+                            </li>
+                            <li>
+                                <p className={s.activeSubscriptionHeader}>
+                                    {t('profileSettings.tab.accountManagement.nextPayment')}
+                                </p>
+                                <p className={s.activeSubscriptionValue}>{subscription.subscriptionEnd}</p>
+                            </li>
+                        </ul>
+                    ))}
+                </div>
+            )}
+
             <AccountManagement
                 setIsShowPaymentAndCosts={setIsShowPaymentAndCosts}
                 setSubscriptionCost={setSubscriptionCost}
                 setPaymentIntervalCS={setPaymentIntervalCS}
+                isSubscriptions={subscriptions.length > 0}
             />
             {isShowPaymentAndCosts && (
                 <div className={s.checkoutFormButtons}>
