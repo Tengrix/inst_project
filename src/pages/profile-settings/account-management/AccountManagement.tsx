@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useLayoutEffect, useState } from 'react';
 
 import s from './AccountManagement.module.scss';
 
@@ -61,10 +61,11 @@ const AccountManagement = ({
     useEffect(() => {
         if (isSubscriptions) {
             setCurrentRadioValue('business');
+            setIsShowPaymentAndCosts(true);
         }
-    }, [isSubscriptions]);
+    }, [isSubscriptions, setIsShowPaymentAndCosts]);
 
-    const accountTypeChange = (e: any) => {
+    const accountTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setCurrentRadioValue(e.target.value);
         if (e.target.value === 'business') {
             setIsShowPaymentAndCosts(true);
