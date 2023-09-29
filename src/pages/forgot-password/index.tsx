@@ -6,19 +6,16 @@ import { createTranslator, useTranslations } from 'next-intl';
 import { ReCaptchaProvider, useReCaptcha } from 'next-recaptcha-v3';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import { usePasswordRecoveryMutation } from '@/api/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
-import { forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
+import { ForgotPasswordFormType, forgotPasswordSchema } from '@/shared/utils/schemas/forgotPasswordSchema';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './ForgotPassword.module.css';
-
-export type ForgotPasswordFormType = z.infer<typeof forgotPasswordSchema>;
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;

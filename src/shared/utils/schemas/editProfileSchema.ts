@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export type EditProfileType = z.infer<typeof editProfileSchema>;
+
 export const editProfileSchema = z.object({
     firstName: z
         .string({ required_error: 'Enter your first name' })

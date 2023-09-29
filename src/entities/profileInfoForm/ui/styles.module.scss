@@ -1,0 +1,8 @@
+.profileInfo {
+  width: 70%;
+  margin-left: 40px
+}
+
+.profileInfo > *:not(:first-child) {
+  margin-top: 24px
+}

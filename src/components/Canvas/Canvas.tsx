@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Crop } from 'react-image-crop';
 
 import { StepType } from '@/components/CreatePostModal/CreatePostModal';
-import ImageCropper from '@/components/ImageCropper/ImageCropper';
+import ImageCropper from '@/features/ImageCropper/ImageCropper';
 import { canvasCreator } from '@/shared/utils/canvas/canvasCreator';
 
 type CanvasPropsType = {

@@ -1,28 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { GetStaticPropsContext } from 'next';
-import Image from 'next/image';
 import { createTranslator, useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/api';
+import { Avatar } from '@/entities/avatar';
+import { ProfileInfoForm } from '@/entities/profileInfoForm';
 import EditAvatarModal from '@/features/EditAvatarModal/EditAvatarModal';
 import styles from '@/pages/profile-settings/general-information/styles.module.scss';
 import { Button } from '@/shared/ui/button';
-import { ControlledTextField } from '@/shared/ui/controlled';
-import { ControlledTextAreaField } from '@/shared/ui/controlled/controlled-text-area';
-import NewDatePicker from '@/shared/ui/newDatePicker/NewDatePicker';
-import { TextField } from '@/shared/ui/text-field';
 import { Typography } from '@/shared/ui/typography';
 import { editProfileSchema, EditProfileType } from '@/shared/utils/schemas/editProfileSchema';
-import github from 'public/assets/gitHub.png';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`messages/${locale}/auth.json`)).default;
-
     const t = createTranslator({ locale: locale as string, messages });
-
     return {
         props: {
             messages: messages,
@@ -31,7 +25,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-const FormPage = () => {
+export const GeneralInformation = () => {
     const [image, setImage] = useState('');
     const [blob, setBlob] = useState<Blob>();
     const translationPath = 'profileSettings.tab.generalInformation';
@@ -45,7 +39,7 @@ const FormPage = () => {
         resolver: zodResolver(editProfileSchema)
     });
     const getBlob = (blob: Blob) => setBlob(blob);
-    const getCroppedImg = (img: string) => setImage(img);
+    const setCroppedImg = (img: string) => setImage(img);
 
     useEffect(() => {
         if (isSuccess) {
@@ -82,43 +76,10 @@ const FormPage = () => {
             <form className={styles.form} onSubmit={onSubmit}>
                 <div className={styles.formContent}>
                     <div className={styles.imageUpload}>
-                        <div className={styles.avatar}>
-                            {image ? (
-                                <Image key={'UserAva'} alt={'UserAva'} src={image} width={192} height={192} />
-                            ) : (
-                                <Image src={github} alt={'Avatar'} height={192} width={192} />
-                            )}
-                        </div>
-                        <EditAvatarModal getBlob={getBlob} getCroppedImg={getCroppedImg} />
+                        <Avatar image={image} width={192} height={192} />
+                        <EditAvatarModal getBlob={getBlob} getCroppedImg={setCroppedImg} />
                     </div>
-                    <div className={styles.profileInfo}>
-                        <TextField label={t('form.username')} value={userData?.login} readOnly />
-                        <ControlledTextField
-                            name="firstName"
-                            translation={translationPath}
-                            label={t('form.firstname')}
-                            control={control}
-                        />
-                        <ControlledTextField
-                            name="lastName"
-                            translation={translationPath}
-                            label={t('form.lastname')}
-                            control={control}
-                        />
-                        <NewDatePicker name="birthdayDate" label={t('form.dateOfBirthday')} control={control} />
-                        <ControlledTextField
-                            name="city"
-                            translation={translationPath}
-                            label={t('form.city')}
-                            control={control}
-                        />
-                        <ControlledTextAreaField
-                            name="aboutMe"
-                            translation={translationPath}
-                            label={t('form.aboutMe')}
-                            control={control}
-                        />
-                    </div>
+                    <ProfileInfoForm userData={userData} control={control} />
                 </div>
                 <div className={styles.line}></div>
                 <div className={styles.footer}>
@@ -137,5 +98,3 @@ const FormPage = () => {
         </div>
     );
 };
-
-export default FormPage;

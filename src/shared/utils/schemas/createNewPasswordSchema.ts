@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+export type CreateNewPasswordFormType = z.infer<typeof createNewPasswordSchema>;
 export const createNewPasswordSchema = z
     .object({
         password: z

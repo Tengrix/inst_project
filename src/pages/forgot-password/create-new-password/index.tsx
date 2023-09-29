@@ -3,18 +3,15 @@ import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import { useResetPasswordMutation } from '@/api/authApiSlice';
 import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
-import { createNewPasswordSchema } from '@/shared/utils/schemas/createNewPasswordSchema';
+import { CreateNewPasswordFormType, createNewPasswordSchema } from '@/shared/utils/schemas/createNewPasswordSchema';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 import s from 'src/pages/forgot-password/create-new-password/CreateNewPassword.module.scss';
-
-export type RegisterFormType = z.infer<typeof createNewPasswordSchema>;
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
     return {
@@ -27,7 +24,9 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
 const CreateNewPassword = () => {
     const router = useRouter();
     const [setNewPassword] = useResetPasswordMutation();
-    const { control, handleSubmit } = useForm<RegisterFormType>({ resolver: zodResolver(createNewPasswordSchema) });
+    const { control, handleSubmit } = useForm<CreateNewPasswordFormType>({
+        resolver: zodResolver(createNewPasswordSchema)
+    });
     const onSubmit = handleSubmit(data => {
         setNewPassword({ newPassword: data.password, recoveryCode: router.query.recoveryCode as string });
     });

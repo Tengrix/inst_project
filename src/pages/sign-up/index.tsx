@@ -4,7 +4,6 @@ import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import { useSignUpMutation } from '@/api/authApiSlice';
 import EmailSentModal from '@/pages/sign-up/email-sent-modal/email-sent-modal';
@@ -12,14 +11,12 @@ import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
-import { registerSchema } from '@/shared/utils/schemas/registerSchema';
+import { RegisterFormType, registerSchema } from '@/shared/utils/schemas/registerSchema';
 import { Github } from 'public/icon/github-logo';
 import { Google } from 'public/icon/google-logo';
 import { getLayout } from 'src/components/Layout/BaseLayout/BaseLayout';
 
 import s from './SignUp.module.scss';
-
-export type RegisterFormType = z.infer<typeof registerSchema>;
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     const messages = (await import(`../../../messages/${locale}/auth.json`)).default;

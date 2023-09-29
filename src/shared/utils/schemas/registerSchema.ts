@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+export type RegisterFormType = z.infer<typeof registerSchema>;
 export const registerSchema = z.object({
     userName: z
         .string({ required_error: 'error.userNameIsRequiredError' })
