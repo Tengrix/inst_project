@@ -5,7 +5,7 @@ export async function handlerWrapper(
     req: NextApiRequest,
     res: NextApiResponse,
     method: string,
-    callback: (req: NextApiRequest, stripe: any) => Promise<object>
+    callback: (req: NextApiRequest, stripe: Stripe) => Promise<object>
 ) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
         apiVersion: '2023-08-16'
