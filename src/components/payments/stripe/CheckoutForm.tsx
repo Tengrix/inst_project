@@ -50,7 +50,7 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
                 return;
             }
 
-            return response.data[0].id;
+            return response.data[0]?.id;
         }
 
         async function fetchSubscriptions() {
