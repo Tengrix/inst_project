@@ -1,7 +1,7 @@
 import { NextApiRequest } from 'next';
-import Stripe from 'stripe';
+import type { Stripe } from 'stripe';
 
-export async function createCheckoutSession(req: NextApiRequest, stripe) {
+export async function createCheckoutSession(req: NextApiRequest, stripe: Stripe) {
     const params: Stripe.Checkout.SessionCreateParams = {
         mode: 'subscription',
         payment_method_types: ['card'],
