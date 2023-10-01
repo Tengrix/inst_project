@@ -9,7 +9,7 @@ type ImagePostSliderPropsType = {
 
 export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const itemsRef = useRef({});
+    const itemsRef = useRef<any>();
 
     useEffect(() => {
         setCurrentImageIndex(currentImageIndex);
@@ -54,12 +54,8 @@ export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
     );
 
     const imagePreview = images.map(image => (
-        <li
-            key={image}
-            className={s.slider__item}
-            //@ts-ignore
-            ref={el => (itemsRef.current[image] = el)}>
-            <Image src={image} alt="" width={400} height={400} />
+        <li key={image} className={s.slider__item} ref={(el: any) => (itemsRef.current[image] = el)}>
+            <Image style={{ height: 600 }} src={image} alt="" width={400} height={400} />
         </li>
     ));
 
