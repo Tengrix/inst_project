@@ -1,61 +1,37 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import { PaymentIntervalType } from '../AccountManagement';
+import { SubscriptionType, SubscriptionsType } from '@/components/payments/stripe/CheckoutForm';
 
 import s from './SubscriptionRadio.module.scss';
 
 export type SubscriptionRadioType = {
-    setSubscriptionCost: (cost: string) => void;
-    setPaymentInterval: (interval: PaymentIntervalType) => void;
+    subscriptions: SubscriptionsType;
+    setSubscription: (subscription: SubscriptionType) => void;
 };
 
-export const SubscriptionRadio = ({ setSubscriptionCost, setPaymentInterval }: SubscriptionRadioType) => {
+export const SubscriptionRadio = ({ subscriptions, setSubscription }: SubscriptionRadioType) => {
     const t = useTranslations();
-    const [currentBusinessAccountCost, setCurrentBusinessAccountCost] = useState('1000');
+    const [currentBusinessAccountCost, setCurrentBusinessAccountCost] = useState(0);
 
     const businessAccountCostChange = (e: any) => {
-        setCurrentBusinessAccountCost(e.target.value);
-        setSubscriptionCost(e.target.value);
-        setPaymentInterval(e.target.getAttribute('data-interval'));
+        const i = +e.target.value;
+        setCurrentBusinessAccountCost(i);
+        setSubscription(subscriptions[i]);
     };
-    const businessTypeRadioBts = [
-        {
-            id: '10$-per-1-day',
-            name: '10$-per-1-day',
-            value: '1000',
-            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perDay'),
-            interval: 'day'
-        },
-        {
-            id: '50$-per-7-day',
-            name: '50$-per-7-day',
-            value: '5000',
-            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perWeek'),
-            interval: 'week'
-        },
-        {
-            id: '100$-per-month',
-            name: '100$-per-month',
-            value: '10000',
-            title: t('profileSettings.tab.accountManagement.accountTypeBusinessPrice.perMonth'),
-            interval: 'month'
-        }
-    ];
 
-    const subscriptionsTypeCosts = businessTypeRadioBts.map(businessCosts => {
+    const subscriptionsTypeCosts = subscriptions.map((subscription, i) => {
         return (
-            <div className={s.radioBtns} key={businessCosts.id}>
+            <div className={s.radioBtns} key={subscription.id}>
                 <input
-                    id={businessCosts.id}
-                    name={businessCosts.name}
+                    id={subscription.id}
+                    name={subscription.name}
                     type="radio"
-                    data-interval={businessCosts.interval}
-                    value={businessCosts.value}
+                    value={i}
                     onChange={businessAccountCostChange}
-                    checked={currentBusinessAccountCost === businessCosts.value}
+                    checked={currentBusinessAccountCost === i}
                 />
-                <label htmlFor={businessCosts.id}>{businessCosts.title}</label>
+                <label htmlFor={subscription.id}>{t(subscription.title)}</label>
             </div>
         );
     });
