@@ -1,18 +1,14 @@
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
 import { useGetUserDataQuery } from '@/api/api';
-import AccountManagement from '@/pages/profile-settings/account-management/AccountManagement';
-import { Button } from '@/shared/ui/button';
-import { Modal } from '@/shared/ui/modal/Modal';
+import AccountManagement, { PaymentIntervalType } from '@/pages/profile-settings/account-management/AccountManagement';
+import { ActiveSubscriptions } from '@/pages/profile-settings/account-management/activeSubscriptions/ActiveSubscriptions';
+import { CustomPaymentBtn } from '@/pages/profile-settings/account-management/customPaymentBtn/CustomPaymentBtn';
 import { fetchGetJSON, fetchPostJSON } from '@/shared/utils/stripe/api-helpers';
 import getStripe from '@/shared/utils/stripe/get-stripejs';
-import PaypalLogo from 'public/assets/icons/paypal-logo.svg';
-import StripeLogo from 'public/assets/icons/stripe-logo.svg';
 
-import s from './CheckoutForm.module.scss';
+import { CheckoutFormModal } from './checkoutFormModal/CheckoutFormModal';
 
 type CheckoutFormPropsType = {
     success: boolean | undefined;
@@ -21,18 +17,17 @@ type CheckoutFormPropsType = {
 
 const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsType) => {
     const t = useTranslations();
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isShowPaymentAndCosts, setIsShowPaymentAndCosts] = useState(false);
-    const [subscriptionCost, setSubscriptionCost] = useState('1000');
-    const [paymentInterval, setPaymentIntervalCS] = useState('day');
-    const [isShowActiveSubscriptions, setIsShowActiveSubscriptions] = useState(true);
+    const [isShowLoader, setIsShowLoader] = useState(true); //loader
 
     const [customerEmail, setCustomerEmail] = useState('');
+    const [subscriptionCost, setSubscriptionCost] = useState('1000'); //callback for radio buttons
+    const [paymentInterval, setPaymentInterval] = useState<PaymentIntervalType>('day'); //callback for radio buttons
+    const [isShowPaymentAndCosts, setIsShowPaymentAndCosts] = useState(false); //callback for radio buttons
+    const [isModalOpen, setIsModalOpen] = useState(false); //modal for stripe request, callback for CheckoutFormModal
+    const [subscriptions, setSubscriptions] = useState([]); //subscriptions for render 'active' payments and for disable type 'personal' in radio accountManagement(radio buttons)
+
     const { data, isSuccess } = useGetUserDataQuery();
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [isShowLoader, setIsShowLoader] = useState(true);
 
     useEffect(() => {
         if (success !== undefined) {
@@ -46,7 +41,6 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
         async function fetchData() {
             const response = await fetchGetJSON(URL);
             if (response.statusCode === 500) {
-                console.error(response.message);
                 return;
             }
 
@@ -59,7 +53,6 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
             const URL = `/api/get-subscriptions?customer=${customer}`;
             const response = await fetchGetJSON(URL);
             if (response.statusCode === 500) {
-                console.error(response.message);
                 setIsShowLoader(false);
                 return;
             }
@@ -120,81 +113,21 @@ const CheckoutForm = ({ success /* activateAccountTab */ }: CheckoutFormPropsTyp
         setLoading(false);
         console.log('CUSTOMER EAMIL : ', customerEmail);
     };
-    const clearQueryString = () => {
-        setIsModalOpen(false);
-        /* activateAccountTab(); */
-        router.push(router.pathname);
-    };
+
+    const activeSubscriptions = subscriptions.length > 0 && <ActiveSubscriptions subscriptions={subscriptions} />;
+    const paymentType = isShowPaymentAndCosts && <CustomPaymentBtn callback={handleSubmit} loading={loading} />;
+
     return (
         <div>
-            {isShowActiveSubscriptions && (
-                <div>
-                    <h1 className={s.activeSubscriptionsTitle}>
-                        {t('profileSettings.tab.accountManagement.currentSubscription')}
-                    </h1>
-                    {subscriptions.map((subscription: any) => (
-                        <ul key={subscription.id} className={s.activeSubscriptionsList}>
-                            <li>
-                                <p className={s.activeSubscriptionHeader}>
-                                    {t('profileSettings.tab.accountManagement.expireAt')}
-                                </p>
-                                <p className={s.activeSubscriptionValue}>{subscription.billingDate}</p>
-                            </li>
-                            <li>
-                                <p className={s.activeSubscriptionHeader}>
-                                    {t('profileSettings.tab.accountManagement.nextPayment')}
-                                </p>
-                                <p className={s.activeSubscriptionValue}>{subscription.subscriptionEnd}</p>
-                            </li>
-                        </ul>
-                    ))}
-                </div>
-            )}
-
+            {activeSubscriptions}
             <AccountManagement
-                setIsShowPaymentAndCosts={setIsShowPaymentAndCosts}
-                setSubscriptionCost={setSubscriptionCost}
-                setPaymentIntervalCS={setPaymentIntervalCS}
-                isSubscriptions={subscriptions.length > 0}
+                setIsShowPaymentAndCosts={setIsShowPaymentAndCosts} //callback for radio buttons
+                setSubscriptionCost={setSubscriptionCost} //callback for radio buttons
+                setPaymentInterval={setPaymentInterval} //callback for radio buttons
+                isSubscriptions={subscriptions.length > 0} //subscriptions for render 'active' payments and for disable type 'personal' in radio accountManagement(radio buttons)
             />
-            {isShowPaymentAndCosts && (
-                <div className={s.checkoutFormButtons}>
-                    <button
-                        onClick={handleSubmit}
-                        className={`${s.paymentButton} ${s.paymentButton_paypal}`}
-                        value={'paypal'}
-                        type="submit"
-                        disabled={loading}>
-                        <Image src={PaypalLogo} width={70} height={29} alt="Paypal logo" />
-                    </button>
-                    {t('profileSettings.tab.accountManagement.paymentChoice')}
-                    <button
-                        onClick={handleSubmit}
-                        className={`${s.paymentButton} ${s.paymentButton_stripe}`}
-                        value={'stripe'}
-                        type="submit"
-                        disabled={loading}>
-                        <Image src={StripeLogo} width={70} height={29} alt="Stripe logo" />
-                    </button>
-                </div>
-            )}
-            <Modal
-                open={isModalOpen}
-                modalHandler={clearQueryString}
-                customButtonsBlock={
-                    success ? (
-                        <Button variant="primary" onClick={() => {}}>
-                            {t('button.ok')}
-                        </Button>
-                    ) : (
-                        <Button variant="primary" onClick={() => {}}>
-                            {t('button.backToPayment')}
-                        </Button>
-                    )
-                }
-                title={success ? t('modal.successTransactionModalTitle') : t('modal.errorTransactionModalTitle')}>
-                {success ? t('modal.successTransactionModalDescription') : t('modal.errorTransactionModalDescription')}
-            </Modal>
+            {paymentType}
+            <CheckoutFormModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} success={success} />
         </div>
     );
 };

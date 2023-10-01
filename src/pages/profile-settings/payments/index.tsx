@@ -28,7 +28,6 @@ const Payments = () => {
         async function fetchData() {
             const response = await fetchGetJSON(URL);
             if (response.statusCode === 500) {
-                console.error(response.message);
                 return;
             }
 
@@ -41,7 +40,6 @@ const Payments = () => {
             const URL = `/api/get-subscriptions?customer=${customer}&status=all`;
             const response = await fetchGetJSON(URL);
             if (response.statusCode === 500) {
-                console.error(response.message);
                 setIsShowLoader(false);
                 return;
             }
