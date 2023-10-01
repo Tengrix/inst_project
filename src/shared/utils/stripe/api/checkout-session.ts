@@ -4,18 +4,18 @@ import type { Stripe } from 'stripe';
 export async function createCheckoutSession(req: NextApiRequest, stripe: Stripe) {
     const params: Stripe.Checkout.SessionCreateParams = {
         mode: 'subscription',
-        payment_method_types: ['card'],
+        payment_method_types: req.body.payment_method_types,
         line_items: [
             {
                 price_data: {
                     currency: 'usd',
                     product_data: {
-                        name: 'TEST PRODUCT',
-                        description: 'TEST PRODUCT DESC'
+                        name: req.body.subscription.name,
+                        description: req.body.subscription.name
                     },
-                    unit_amount: req.body.amount,
+                    unit_amount: req.body.subscription.value,
                     recurring: {
-                        interval: req.body.interval
+                        interval: req.body.subscription.interval
                     }
                 },
 
