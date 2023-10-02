@@ -19,12 +19,16 @@ const DevicesTab = () => {
     ];
     return (
         <div>
-            <h1>This devices</h1>
+            <p>This device</p>
+            <br />
             <div>
                 <CurrentDevice device={testDataThisDevice} />
             </div>
+            <br />
             <Button variant={'outlined'}>Terminate all other session</Button>
-            <div>Active sessions</div>
+            <br />
+            <br />
+            <p>Active sessions</p>
             <div>{/*<ActiveDevices activeDevices={activeDevices} />*/}</div>
         </div>
     );
