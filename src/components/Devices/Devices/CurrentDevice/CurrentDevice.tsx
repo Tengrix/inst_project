@@ -3,6 +3,8 @@ import React from 'react';
 
 import { Card } from '@/shared/ui/card';
 
+import s from './currentDevice.module.css';
+
 interface DevicesProps {
     device: {
         name: string;
@@ -10,19 +12,23 @@ interface DevicesProps {
     };
 }
 
-const Devices = ({ device }: DevicesProps) => {
+const CurrentDevice = ({ device }: DevicesProps) => {
     return (
         <div>
             <Card>
-                <div>
+                <div className={s.container}>
                     <div>
-                        <GlobeIcon />
+                        <GlobeIcon className={s.deviceIcon} />
                     </div>
-                    <div></div>
+                    <div className={s.deviceDesc}>
+                        <div className={s.deviceName}>{device.name}</div>
+                        <div>{device.ip}</div>
+                        <div style={{ color: 'lightgreen' }}>{device.ip && device.name && 'Online'}</div>
+                    </div>
                 </div>
             </Card>
         </div>
     );
 };
 
-export default Devices;
+export default CurrentDevice;
