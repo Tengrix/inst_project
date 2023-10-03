@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 import { useGetUserDataQuery, useSubmitUserDataMutation } from '@/api/api';
 import EditAvatarModal from '@/components/EditAvatarModal/EditAvatarModal';
-import styles from '@/pages/profile-settings/general-information/styles.module.scss';
+import styles from '@/components/profileSettings/general-information/styles.module.scss';
 import { Button } from '@/shared/ui/button';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { ControlledTextAreaField } from '@/shared/ui/controlled/controlled-text-area';

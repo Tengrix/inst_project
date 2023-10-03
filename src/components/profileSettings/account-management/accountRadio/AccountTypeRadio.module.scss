@@ -1,0 +1,28 @@
+.radioBtnFieldset {
+  margin: 6px 0 42px;
+
+  legend {
+    margin-bottom: 18px
+  }
+}
+
+.radioBtnLegend {
+  margin: 30px 0 19px;
+  font: var(--font-regular-16)
+}
+
+.radioBtns {
+  display: flex;
+  padding: 12px 22px;
+
+  label {
+    margin-left: 12px
+  }
+}
+
+.businessCostsRadioBtnsBlock,
+.accountTypesBtnsBlock {
+  margin-bottom: 25px;
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300)
+}
