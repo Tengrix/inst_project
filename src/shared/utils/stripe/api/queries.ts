@@ -30,7 +30,16 @@ export async function fetchSubscriptions(email: string) {
         .map((sub: any) => ({
             billingDate: new Date(sub.current_period_start * 1000).toLocaleDateString(),
             subscriptionEnd: new Date(sub.current_period_end * 1000).toLocaleDateString(),
+            collection_method: sub.collection_method,
             id: sub.id,
             status: sub.status
         }));
+}
+
+export async function fetchSubscription(id: string, collection_method: string) {
+    const response = await fetchPostJSON('/api/update-subscription', {
+        id,
+        collection_method
+    });
+    return response;
 }
