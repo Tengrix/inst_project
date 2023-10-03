@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
 import { useGetUserDataQuery } from '@/api/api';
@@ -25,6 +24,7 @@ const Payments = () => {
         if (isSuccess && data.email) {
             setCustomerEmail(data.email);
         }
+
         async function fetchData() {
             const response = await fetchGetJSON(URL);
             if (response.statusCode === 500) {
@@ -54,6 +54,7 @@ const Payments = () => {
             setIsShowLoader(false);
             setSubscriptions(subscriptions);
         }
+
         fetchSubscriptions();
     }, [isSuccess, data]);
 

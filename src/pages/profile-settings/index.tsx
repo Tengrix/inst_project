@@ -5,11 +5,12 @@ import React from 'react';
 
 import DevicesTab from '@/components/Devices/DevicesTab';
 import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
-import CheckoutForm from '@/components/payments/stripe/CheckoutForm';
-import GeneralInformation from '@/pages/profile-settings/general-information';
+import GeneralInformation from '@/components/profileSettings/general-information';
+import CheckoutForm from '@/components/profileSettings/payments/stripe/CheckoutForm';
 import CustomTabs from '@/shared/ui/tabs/Tabs';
 
-import Payments from './payments';
+import Payments from '../../components/profileSettings/payments';
+
 import s from './styles.module.scss';
 
 export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
@@ -26,7 +27,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
 }
 type ProfileTabValue = 'profile' | 'devices' | 'account' | 'payments';
 
-const ProfileSettings = (props: any) => {
+const ProfileSettings = () => {
     const t = useTranslations('profileSettings');
 
     const { query, isReady } = useRouter();
