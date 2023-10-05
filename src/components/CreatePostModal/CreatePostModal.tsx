@@ -19,6 +19,7 @@ import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 import { getUniqFileName } from '@/shared/utils/generateFileName/generateFileName';
 
 import s from './CreatePostModal.module.scss';
+import { Indb } from './api/indb';
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
 
 type Props = {
@@ -100,10 +101,21 @@ const CreatePostModal = (props: Props) => {
         setCurrentStep('Cropping');
         dispatch(resetImageState());
     };
+
+    const createIndexedDbDraft = () => {
+        const draft = new Indb('Draft');
+        draft.save('images', images);
+    };
+    const getDraft = () => {
+        const draft = new Indb('Draft');
+        console.log(draft.getAll('images'));
+    };
+
     const saveDraftHandler = () => {
         setConfirmCloseModal(false);
         setEditModal(false);
         setCurrentStep('Cropping');
+        createIndexedDbDraft();
     };
     const onPointerOutsideClickHandler = () => {
         setConfirmCloseModal(true);
@@ -160,6 +172,7 @@ const CreatePostModal = (props: Props) => {
                     customButtonsBlock={
                         <>
                             <Button onClick={discardHandler}> {t('button.discard')} </Button>
+                            <button onClick={getDraft}>GET</button>
                             <Button onClick={saveDraftHandler}> {t('button.saveDraft')} </Button>
                         </>
                     }>
