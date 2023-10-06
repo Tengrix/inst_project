@@ -7,7 +7,6 @@ export class Indb {
     constructor(dbName: string, version = 1) {
         this.name = dbName;
         this.version = version;
-
         //this.init();
     }
     private init(tableName: string) {
@@ -38,22 +37,22 @@ export class Indb {
     public get(tableName: string, limit: number) {}
 
     public getAll(tableName: string) {
-        const open = this.init(tableName);
-        let result: any[] = [];
-        open.onsuccess = function () {
-            const db = open.result;
-            const transaction = db.transaction(tableName, 'readonly');
-            const store = transaction.objectStore(tableName);
+        return new Promise((res, rej) => {
+            const open = this.init(tableName);
+            open.onsuccess = function () {
+                const db = open.result;
+                const transaction = db.transaction(tableName);
+                const store = transaction.objectStore(tableName);
 
-            const query = store.getAll();
-            query.onsuccess = function () {
-                result = query.result;
+                const query = store.getAll();
+                query.onsuccess = function () {
+                    res(query.result);
+                };
+
+                transaction.oncomplete = function () {
+                    this.db.close();
+                };
             };
-            console.log('AFTER TRANSACTI..', result);
-            transaction.oncomplete = function () {
-                this.db.close();
-            };
-        };
-        return result;
+        });
     }
 }

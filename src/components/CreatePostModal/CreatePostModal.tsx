@@ -7,6 +7,7 @@ import { useCreatePostMutation, useGetUserDataQuery } from '@/api/api';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 import { useAppSelector } from '@/redux/store';
 import { addImage, resetImageState } from '@/redux/store/imageSlice/imageSlice';
+import { ImageType } from '@/redux/store/imageSlice/types/store';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
@@ -48,6 +49,17 @@ const CreatePostModal = (props: Props) => {
     const { images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
 
+    useEffect(() => {
+        (async () => {
+            const draft = new Indb('Draft');
+            const imagesFromIndb: any = await draft.getAll('images');
+            if (images.length === 0 && imagesFromIndb.length > 0) {
+                imagesFromIndb.forEach((image: ImageType) => {
+                    dispatch(addImage(image));
+                });
+            }
+        })();
+    });
     const [publishPost] = useCreatePostMutation();
     const { data: userData } = useGetUserDataQuery();
 
@@ -105,10 +117,6 @@ const CreatePostModal = (props: Props) => {
     const createIndexedDbDraft = () => {
         const draft = new Indb('Draft');
         draft.save('images', images);
-    };
-    const getDraft = () => {
-        const draft = new Indb('Draft');
-        console.log(draft.getAll('images'));
     };
 
     const saveDraftHandler = () => {
@@ -172,7 +180,6 @@ const CreatePostModal = (props: Props) => {
                     customButtonsBlock={
                         <>
                             <Button onClick={discardHandler}> {t('button.discard')} </Button>
-                            <button onClick={getDraft}>GET</button>
                             <Button onClick={saveDraftHandler}> {t('button.saveDraft')} </Button>
                         </>
                     }>
