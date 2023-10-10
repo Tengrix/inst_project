@@ -14,16 +14,14 @@ import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
 import { Modal } from '@/shared/ui/modal/Modal';
 import { ImagePlaceholder } from '@/shared/ui/placeholder/placeholder';
 import { Typography } from '@/shared/ui/typography';
-import { blobToBase64 } from '@/shared/utils/canvas/blobToBase64';
 import { canvasCreator } from '@/shared/utils/canvas/canvasCreator';
 import { canvasToBlob } from '@/shared/utils/canvas/canvasToBlob';
 import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 import { getUniqFileName } from '@/shared/utils/generateFileName/generateFileName';
 
-import { base64ToBlobURL } from '../../shared/utils/canvas/base64ToBlobURL';
-
 import s from './CreatePostModal.module.scss';
 import { Indb } from './api/indb';
+import { PostDB } from './api/postDB';
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
 
 type Props = {
@@ -43,6 +41,7 @@ const CreatePostModal = (props: Props) => {
     const router = useRouter();
     const t = useTranslations('');
     const draft = new Indb('Draft');
+    const imgDB = new PostDB();
 
     const tModalTitles = {
         Publication: t('post.publication'),
@@ -52,24 +51,21 @@ const CreatePostModal = (props: Props) => {
 
     const { images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
+    const { data: userData } = useGetUserDataQuery();
 
     useEffect(() => {
-        (async () => {
-            const imagesFromIndb: any = await draft.getAll('images');
-            if (images.length === 0 && imagesFromIndb.length > 0) {
-                for (let i = 0; i < imagesFromIndb.length; i++) {
-                    const {
-                        data: { image, imageBase64 }
-                    } = imagesFromIndb[i];
-                    base64ToBlobURL(imageBase64).then(blob => {
-                        dispatch(addImage({ ...image, originalSRC: blob, src: blob }));
-                    });
+        const save = images.length === 0;
+        if (userData?.id) {
+            (async () => {
+                for (const img of await imgDB.getImages(save, userData.id)) {
+                    const image: ImageType = await img;
+                    dispatch(addImage(image));
                 }
-            }
-        })();
-    }, []);
+            })();
+        }
+    }, [userData]);
+
     const [publishPost] = useCreatePostMutation();
-    const { data: userData } = useGetUserDataQuery();
 
     const nextBtnHandler = async () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters');
@@ -124,13 +120,7 @@ const CreatePostModal = (props: Props) => {
     };
 
     const createIndexedDbDraft = async () => {
-        const imagesBase64 = [];
-        for (let i = 0; i < images.length; i++) {
-            const image = images[i];
-            const imageBase64 = await blobToBase64(image.originalSRC);
-            imagesBase64.push({ image, imageBase64 });
-        }
-        draft.save('images', imagesBase64);
+        imgDB.saveImages(images, userData?.id as string);
     };
 
     const saveDraftHandler = () => {

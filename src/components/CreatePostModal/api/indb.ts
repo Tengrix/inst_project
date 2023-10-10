@@ -7,52 +7,56 @@ export class Indb {
     constructor(dbName: string, version = 1) {
         this.name = dbName;
         this.version = version;
-        //this.init();
     }
+
     private init(tableName: string) {
         const open = indexedDB.open(this.name, this.version);
         open.onupgradeneeded = function () {
             open.result.createObjectStore(tableName, { keyPath: 'id' });
         };
-
         return open;
     }
-    public save(tableName: string, data: Array<{}>) {
-        const open = this.init(tableName);
-        open.onsuccess = function () {
-            const db = open.result;
-            const transaction = db.transaction(tableName, 'readwrite');
-            const store = transaction.objectStore(tableName);
-            data.forEach((el, index) => {
-                store.put({ id: index, data: el });
-            });
-            transaction.oncomplete = function () {
-                this.db.close();
-            };
-        };
-    }
-    public delete() {
-        indexedDB.deleteDatabase(this.name);
-    }
-    public get(tableName: string, limit: number) {}
 
-    public getAll(tableName: string) {
+    private query(callback: (store: IDBObjectStore) => any, tableName: string, mode: IDBTransactionMode = 'readonly') {
         return new Promise((res, rej) => {
             const open = this.init(tableName);
             open.onsuccess = function () {
                 const db = open.result;
-                const transaction = db.transaction(tableName);
+                const transaction = db.transaction(tableName, mode);
                 const store = transaction.objectStore(tableName);
-
-                const query = store.getAll();
-                query.onsuccess = function () {
-                    res(query.result);
-                };
+                const q = callback(store);
+                if (q) {
+                    q.onsuccess = function () {
+                        res(q.result);
+                    };
+                }
 
                 transaction.oncomplete = function () {
                     this.db.close();
                 };
             };
         });
+    }
+
+    public save(tableName: string, data: Array<{}>) {
+        const request = (store: IDBObjectStore) => {
+            data.forEach((el, index) => {
+                store.put({ id: index, data: el });
+            });
+        };
+        return this.query(request, tableName, 'readwrite');
+    }
+
+    public delete() {
+        indexedDB.deleteDatabase(this.name);
+    }
+
+    public get(tableName: string, limit: number) {}
+
+    public getAll(tableName: string) {
+        const request = (store: IDBObjectStore) => {
+            return store.getAll();
+        };
+        return this.query(request, tableName);
     }
 }
