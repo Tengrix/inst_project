@@ -7,6 +7,7 @@ import { useCreatePostMutation, useGetUserDataQuery } from '@/api/api';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 import { useAppSelector } from '@/redux/store';
 import { addImage, resetImageState } from '@/redux/store/imageSlice/imageSlice';
+import { ImageType } from '@/redux/store/imageSlice/types/store';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
@@ -19,6 +20,8 @@ import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 import { getUniqFileName } from '@/shared/utils/generateFileName/generateFileName';
 
 import s from './CreatePostModal.module.scss';
+import { Indb } from './api/indb';
+import { PostDB } from './api/postDB';
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
 
 type Props = {
@@ -37,6 +40,8 @@ const CreatePostModal = (props: Props) => {
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping');
     const router = useRouter();
     const t = useTranslations('');
+    const draft = new Indb('Draft');
+    const imgDB = new PostDB();
 
     const tModalTitles = {
         Publication: t('post.publication'),
@@ -46,9 +51,21 @@ const CreatePostModal = (props: Props) => {
 
     const { images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
+    const { data: userData } = useGetUserDataQuery();
+
+    useEffect(() => {
+        const save = images.length === 0;
+        if (userData?.id) {
+            (async () => {
+                for (const img of await imgDB.getImages(save, userData.id)) {
+                    const image: ImageType = await img;
+                    dispatch(addImage(image));
+                }
+            })();
+        }
+    }, [userData]);
 
     const [publishPost] = useCreatePostMutation();
-    const { data: userData } = useGetUserDataQuery();
 
     const nextBtnHandler = async () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters');
@@ -69,6 +86,7 @@ const CreatePostModal = (props: Props) => {
                     props.modalHandler(false);
                     setCurrentStep('Cropping');
                     dispatch(resetImageState());
+                    draft.delete();
                     router.push('/home');
                 });
         }
@@ -100,10 +118,16 @@ const CreatePostModal = (props: Props) => {
         setCurrentStep('Cropping');
         dispatch(resetImageState());
     };
+
+    const createIndexedDbDraft = async () => {
+        imgDB.saveImages(images, userData?.id as string);
+    };
+
     const saveDraftHandler = () => {
         setConfirmCloseModal(false);
         setEditModal(false);
         setCurrentStep('Cropping');
+        createIndexedDbDraft();
     };
     const onPointerOutsideClickHandler = () => {
         setConfirmCloseModal(true);
