@@ -7,6 +7,7 @@ import { useCreatePostMutation, useGetUserDataQuery } from '@/api/api';
 import { ImageEditor } from '@/components/ImageEditor/ImageEditor';
 import { useAppSelector } from '@/redux/store';
 import { addImage, resetImageState } from '@/redux/store/imageSlice/imageSlice';
+import { ImageType } from '@/redux/store/imageSlice/types/store';
 import { Button } from '@/shared/ui/button';
 import { ImageUploader } from '@/shared/ui/image-uploader/ImageUploader';
 import ConfirmCloseModal from '@/shared/ui/modal/ConfirmCloseModal';
@@ -19,6 +20,7 @@ import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 import { getUniqFileName } from '@/shared/utils/generateFileName/generateFileName';
 
 import s from './CreatePostModal.module.scss';
+import { PostDB } from './api/postDB';
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
 
 type Props = {
@@ -37,6 +39,7 @@ const CreatePostModal = (props: Props) => {
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping');
     const router = useRouter();
     const t = useTranslations('');
+    const postDB = new PostDB();
 
     const tModalTitles = {
         Publication: t('post.publication'),
@@ -46,9 +49,20 @@ const CreatePostModal = (props: Props) => {
 
     const { images, description } = useAppSelector(state => state.images);
     const currentImage = useAppSelector(state => state.images.currentImage);
+    const { data: userData } = useGetUserDataQuery();
+
+    useEffect(() => {
+        if (images.length === 0 && userData?.id) {
+            (async () => {
+                for await (const img of postDB.getImages(userData.id)) {
+                    const image: ImageType = img;
+                    dispatch(addImage(image));
+                }
+            })();
+        }
+    }, [userData]);
 
     const [publishPost] = useCreatePostMutation();
-    const { data: userData } = useGetUserDataQuery();
 
     const nextBtnHandler = async () => {
         if (currentStep === 'Cropping') setCurrentStep('Filters');
@@ -69,6 +83,7 @@ const CreatePostModal = (props: Props) => {
                     props.modalHandler(false);
                     setCurrentStep('Cropping');
                     dispatch(resetImageState());
+                    postDB.delete();
                     router.push('/home');
                 });
         }
@@ -99,11 +114,19 @@ const CreatePostModal = (props: Props) => {
         props.modalHandler(false);
         setCurrentStep('Cropping');
         dispatch(resetImageState());
+        postDB.resetImages(userData?.id as string);
     };
+
+    const createIndexedDbDraft = async () => {
+        //postDB.saveDescription('Lorem Ipsum', userData?.id as string);
+        postDB.saveImages(images, userData?.id as string);
+    };
+
     const saveDraftHandler = () => {
         setConfirmCloseModal(false);
         setEditModal(false);
         setCurrentStep('Cropping');
+        createIndexedDbDraft();
     };
     const onPointerOutsideClickHandler = () => {
         setConfirmCloseModal(true);
