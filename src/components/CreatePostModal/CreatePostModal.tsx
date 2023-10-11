@@ -54,11 +54,10 @@ const CreatePostModal = (props: Props) => {
     const { data: userData } = useGetUserDataQuery();
 
     useEffect(() => {
-        const save = images.length === 0;
-        if (userData?.id) {
+        if (images.length === 0 && userData?.id) {
             (async () => {
-                for (const img of await imgDB.getImages(save, userData.id)) {
-                    const image: ImageType = await img;
+                for await (const img of imgDB.getImages(userData.id)) {
+                    const image: ImageType = img;
                     dispatch(addImage(image));
                 }
             })();

@@ -31,26 +31,17 @@ export class PostDB {
         this.db.save('images', imagesBase64);
     }
 
-    public async getImages(save: boolean, currentUserID: string) {
-        const images: Promise<ImageType>[] = [];
+    public async *getImages(currentUserID: string) {
         const imagesFromIndb: any = await this.db.getAll('images');
-
-        if (save && imagesFromIndb.length > 0) {
-            for (let i = 0; i < imagesFromIndb.length; i++) {
-                const {
-                    data: { image, imageBase64, userID }
-                } = imagesFromIndb[i];
-                const newImage: Promise<ImageType> = new Promise((resolve, reject) => {
-                    base64ToBlobURL(imageBase64).then((blobURL: string) => {
-                        resolve({ ...image, originalSRC: blobURL, src: blobURL });
-                    });
-                });
-                if (currentUserID === userID) {
-                    images.push(newImage);
-                }
+        for (const img of imagesFromIndb) {
+            const {
+                data: { image, imageBase64, userID }
+            } = img;
+            const blobURL: string = await base64ToBlobURL(imageBase64);
+            if (currentUserID === userID) {
+                yield { ...image, originalSRC: blobURL, src: blobURL };
             }
         }
-        return images;
     }
 
     public saveDescription(description: string) {}
