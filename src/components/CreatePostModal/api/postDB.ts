@@ -1,14 +1,13 @@
+import { Indb } from '@/api/indxDB';
 import { ImageType } from '@/redux/store/imageSlice/types/store';
 import { base64ToBlobURL } from '@/shared/utils/canvas/base64ToBlobURL';
 import { blobToBase64 } from '@/shared/utils/canvas/blobToBase64';
-
-import { Indb } from './indb';
 
 export class PostDB {
     db: Indb;
 
     constructor() {
-        this.db = new Indb('Draft');
+        this.db = new Indb('Draft', ['images', 'description']);
     }
 
     public async saveImages(images: ImageType[], currentUserID: string) {
@@ -44,7 +43,31 @@ export class PostDB {
         }
     }
 
-    public saveDescription(description: string) {}
+    public async resetImages(currentUserID: string) {
+        const images = [];
+        const imagesFromIndb: any = await this.db.getAll('images');
+        for (const img of imagesFromIndb) {
+            const {
+                data: { userID, ...args }
+            } = img;
+            if (currentUserID !== userID) {
+                images.push({ userID, ...args });
+            }
+        }
+        this.db.clear('images');
+        this.db.save('images', images);
+    }
 
-    public getDescription(description: string) {}
+    public saveDescription(description: string, currentUserID: string) {
+        this.db.save('description', [{ description, currentUserID }]);
+    }
+
+    public async getDescription(currentUserID: string) {
+        const description = await this.db.getAll('description');
+        return description;
+    }
+
+    public delete() {
+        this.db.delete();
+    }
 }

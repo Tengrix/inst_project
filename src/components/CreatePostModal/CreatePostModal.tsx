@@ -20,7 +20,6 @@ import { parseImageBlob } from '@/shared/utils/canvas/parseImageBlob';
 import { getUniqFileName } from '@/shared/utils/generateFileName/generateFileName';
 
 import s from './CreatePostModal.module.scss';
-import { Indb } from './api/indb';
 import { PostDB } from './api/postDB';
 export type StepType = 'Cropping' | 'Filters' | 'Publication';
 
@@ -40,8 +39,7 @@ const CreatePostModal = (props: Props) => {
     const [currentStep, setCurrentStep] = useState<StepType>('Cropping');
     const router = useRouter();
     const t = useTranslations('');
-    const draft = new Indb('Draft');
-    const imgDB = new PostDB();
+    const postDB = new PostDB();
 
     const tModalTitles = {
         Publication: t('post.publication'),
@@ -56,7 +54,7 @@ const CreatePostModal = (props: Props) => {
     useEffect(() => {
         if (images.length === 0 && userData?.id) {
             (async () => {
-                for await (const img of imgDB.getImages(userData.id)) {
+                for await (const img of postDB.getImages(userData.id)) {
                     const image: ImageType = img;
                     dispatch(addImage(image));
                 }
@@ -85,7 +83,7 @@ const CreatePostModal = (props: Props) => {
                     props.modalHandler(false);
                     setCurrentStep('Cropping');
                     dispatch(resetImageState());
-                    draft.delete();
+                    postDB.delete();
                     router.push('/home');
                 });
         }
@@ -116,10 +114,12 @@ const CreatePostModal = (props: Props) => {
         props.modalHandler(false);
         setCurrentStep('Cropping');
         dispatch(resetImageState());
+        postDB.resetImages(userData?.id as string);
     };
 
     const createIndexedDbDraft = async () => {
-        imgDB.saveImages(images, userData?.id as string);
+        //postDB.saveDescription('Lorem Ipsum', userData?.id as string);
+        postDB.saveImages(images, userData?.id as string);
     };
 
     const saveDraftHandler = () => {
