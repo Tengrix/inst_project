@@ -76,7 +76,7 @@ const Sidebar = () => {
         <div className={s.container}>
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
-                <div className={s.wrapper}>
+                <div className={`${s.wrapper}  ${s.wrapperAdditionalInformationLogOut}`}>
                     <Link className={s.route} href={'/statistics'}>
                         <BarChartIcon height={60} width={24} />
                         <span>{t('statistics')}</span>
