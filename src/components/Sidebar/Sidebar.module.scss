@@ -98,6 +98,13 @@
   }
 }
 
+@media (max-width: 540px) {
+    .scrolled{
+        display: none;
+    }
+  }
+
 .btn {
   color:var(--color-light-100)
 }
+

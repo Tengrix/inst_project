@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut as googleSignOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useLogoutMutation } from '@/api/authApiSlice';
 import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
@@ -29,6 +29,7 @@ const Sidebar = () => {
     const t = useTranslations('sidebar');
     const [createPostModal, setCreatePostModal] = useState(false);
     const currentURL = useRouter();
+    const nav = useRef(null);
     const routes = [
         { title: t('home'), icon: <HomeIcon height={60} width={24} />, path: '/home' },
         {
@@ -41,6 +42,20 @@ const Sidebar = () => {
         { title: t('messenger'), icon: <ChatBubbleIcon height={60} width={24} />, path: '/messenger' },
         { title: t('search'), icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
     ];
+
+    const [scrolled, setScrolled] = useState(false);
+    const [scrollPostion, setScroolPosition] = useState(0);
+
+    useEffect(() => {
+        /* Миллион триллионов перерисовок.  */
+        window.addEventListener('scroll', e => {
+            console.log(scrollY);
+            if (scrollPostion < scrollY) {
+                setScrolled(true);
+                setScroolPosition(scrollY);
+            } else setScrolled(false);
+        });
+    }, [scrollPostion]);
 
     const sidebarItems = routes.map(route => {
         if (route.path) {
@@ -73,10 +88,10 @@ const Sidebar = () => {
     };
 
     return (
-        <div className={s.container}>
+        <div ref={nav} className={`${s.container} ${scrolled ? s.scrolled : ''}`}>
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
-                <div className={`${s.wrapper}  ${s.wrapperAdditionalInformationLogOut}`}>
+                <div className={`${s.wrapper} ${s.wrapperAdditionalInformationLogOut}`}>
                     <Link className={s.route} href={'/statistics'}>
                         <BarChartIcon height={60} width={24} />
                         <span>{t('statistics')}</span>
