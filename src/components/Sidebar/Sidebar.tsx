@@ -18,6 +18,7 @@ import { useLogoutMutation } from '@/api/authApiSlice';
 import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
 import { useAppDispatch } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
+import { useScreenSize } from '@/shared/hooks/useScreenSize';
 import { Button } from '@/shared/ui/button';
 
 import s from './Sidebar.module.scss';
@@ -43,18 +44,19 @@ const Sidebar = () => {
         { title: t('search'), icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
     ];
 
-    const [scrolled, setScrolled] = useState(false);
+    const [isInVisibleMenu, setIsInVisibleMenu] = useState(false);
     const [scrollPostion, setScroolPosition] = useState(0);
 
+    const FFF = () => {
+        console.log(scrollY);
+        if (scrollPostion < scrollY) {
+            setIsInVisibleMenu(true);
+            setScroolPosition(scrollY);
+        } else setIsInVisibleMenu(false);
+    };
     useEffect(() => {
-        /* Миллион триллионов перерисовок.  */
-        window.addEventListener('scroll', e => {
-            console.log(scrollY);
-            if (scrollPostion < scrollY) {
-                setScrolled(true);
-                setScroolPosition(scrollY);
-            } else setScrolled(false);
-        });
+        window.addEventListener('scroll', FFF);
+        return () => window.removeEventListener('scroll', FFF);
     }, [scrollPostion]);
 
     const sidebarItems = routes.map(route => {
@@ -88,7 +90,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div ref={nav} className={`${s.container} ${scrolled ? s.scrolled : ''}`}>
+        <div ref={nav} className={`${s.container} ${isInVisibleMenu ? s.inVisibleMenu : ''}`}>
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
                 <div className={`${s.wrapper} ${s.wrapperAdditionalInformationLogOut}`}>
