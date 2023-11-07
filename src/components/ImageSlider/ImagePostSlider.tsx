@@ -25,24 +25,22 @@ export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
 
     return (
         <div className={s.sliders}>
-            {nextBtn}
-            {prevBtn}
+            {images.length > 1 ? nextBtn : ''}
+            {images.length > 1 ? prevBtn : ''}
             <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
                 navigation={{
-                    enabled: true,
                     nextEl: `.${s.nextBtn}`,
                     prevEl: `.${s.prevBtn}`,
                     disabledClass: `${s.btn_disabled}`
                 }}
                 pagination={{
-                    enabled: true,
                     clickable: true,
                     bulletClass: `${s.btn}`,
                     bulletActiveClass: `${s.btn_active}`,
                     modifierClass: '',
-                    horizontalClass: `${s.bullets}`
+                    horizontalClass: `${images.length > 1 ? s.bullets : s.bullets_hidden}`
                 }}
                 modules={[Navigation, Pagination, Mousewheel, Keyboard]}>
                 {images.map((image, index) => (
