@@ -23,3 +23,19 @@
   font-size: $fs;
   line-height: $lh
 }
+
+$breakpoint-mobile: 324px;
+$breakpoint-tablet: 768px;
+
+// Миксины для media queries
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content
+  }
+}

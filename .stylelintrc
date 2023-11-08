@@ -21,7 +21,7 @@
         "ignore": ["attribute", "class", "id"]
     }],
     "max-nesting-depth": 4,
-    "block-no-empty": false,
+    "block-no-empty": null,
     "selector-max-compound-selectors": 4,
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": false,

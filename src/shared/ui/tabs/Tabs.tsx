@@ -1,7 +1,7 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import React, { ReactNode } from 'react';
 
-import s from './Tabs.module.css';
+import s from 'src/shared/ui/tabs/Tabs.module.scss';
 
 type TabType = {
     value: string;
