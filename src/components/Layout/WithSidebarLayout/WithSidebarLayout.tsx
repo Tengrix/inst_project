@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { BaseLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 import Sidebar from '@/components/Sidebar/Sidebar';
 
-import s from './WithSidebarLayout.module.css';
+import s from './WithSidebarLayout.module.scss';
 
 export const getLayoutWithSidebar = (page: ReactElement) => {
     return (
