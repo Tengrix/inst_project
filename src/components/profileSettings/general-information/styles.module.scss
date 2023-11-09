@@ -1,9 +1,10 @@
+@import '/src/styles/variables/mixins';
 
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 726px;
+  width: 70%;
   margin: 0 auto
 }
 
@@ -29,6 +30,7 @@
 .avatar {
   display: flex;
   align-items: center;
+  align-self: center;
   justify-content: center;
   width: 192px;
   height: 192px;
@@ -69,5 +71,34 @@
 
 .btn {
   align-self: flex-end
+
 }
 
+
+@include mobile {
+  .container {
+    width: 100%;
+    margin: 0
+  }
+
+  .formContent > * {
+    width: 100%;
+    margin-top: 15px
+  }
+
+  .formContent {
+    flex-direction: column
+  }
+
+  .btn {
+    width: 100%
+  }
+
+  .profileInfo {
+    margin-left: 0
+  }
+
+  .profileInfo > *:not(:first-child) {
+    margin-top: 12px
+  }
+}

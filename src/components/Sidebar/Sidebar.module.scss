@@ -1,59 +1,33 @@
 .container {
-  max-width: 220px;
-  padding: 0 40px;
   position: fixed;
+  top: 60px;
   bottom: 0;
   left: 0;
-  top: 60px;
+  max-width: 220px;
+  padding: 0 40px;
   border-right: 1px solid var(--color-dark-100);
 
   .sidebarRoutes {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
     height: 100%;
     padding: 16px 0;
+    overflow-y: auto;
 
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin: auto 0;
-
-      &:last-child {
-        margin: auto 0 0
-      }
-
-      @media (max-width: 991.98px) {
-        & {
-          align-items: center
-        }
-      }
-
-      span {
-        margin-left: 15px;
-
-        @media (max-width: 991.98px) {
-          & {
-            display: none
-          }
-        }
-      }
-    }
 
     .route {
       display: flex;
-      color:inherit;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       padding: 0;
+      color: inherit;
 
       &_active {
-        color: var(--color-primary-500);
+        color: var(--color-primary-500)
+      }
     }
-    }
-    
+
     /*
     .footer {
       position: fixed;
@@ -65,10 +39,8 @@
   }
 
   @media (max-width: 991.98px) {
-    & {
-      padding: 0 16px;
       align-items: center;
-    }
+      padding: 0 16px
   }
 }
 
@@ -79,5 +51,28 @@
 }
 
 .btn {
-  color:var(--color-light-100)
+  color: var(--color-light-100)
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: auto 0;
+
+  &:last-child {
+    margin: auto 0 0
+  }
+
+  @media (max-width: 991.98px) {
+    align-items: center
+  }
+
+  span {
+    margin-left: 15px;
+
+    @media (max-width: 991.98px) {
+      display: none
+    }
+  }
 }
