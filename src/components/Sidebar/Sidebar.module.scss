@@ -1,3 +1,5 @@
+@import '/src/styles/variables/mixins';
+
 .container {
   position: fixed;
   top: 60px;
@@ -32,7 +34,7 @@
         }
         
       }
-      @media (max-width: 540px) {
+      @include mq(mobile) {
         & {
             flex-direction: row;
             justify-content: space-around;
@@ -54,7 +56,7 @@
       
     }
     .wrapperAdditionalInformationLogOut {
-        @media (max-width: 540px) {
+        @include mq(mobile) {
             & {
               display: none
             }
@@ -62,7 +64,7 @@
     }
 
 
-    @media (max-width: 540px) {
+    @include mq(mobile) {
         & {
         padding: 0;
         width: 100%;
@@ -93,19 +95,22 @@
   } 
 }
 
-  @media (max-width: 540px) {
+@include mq(mobile) {
     & {
-      top: auto;
-      border-right: none;
-      padding: 0;
-      right: 0;
-      left: 0;
-      max-width: 100%;
-    }
-  }
+        top: auto;
+        border-right: none;
+        padding: 0;
+        right: 0;
+        left: 0;
+        max-width: 100%;
+      }
+}
+ 
+    
+  
 }
 
-@media (max-width: 540px) {
+@include mq(mobile) {
     .inVisibleMenu{
         display: none;
     }
