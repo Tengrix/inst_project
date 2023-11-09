@@ -48,9 +48,7 @@ export const ImageEditor = (props: ImageEditorPropsType) => {
     const { control, setValue, trigger, watch, formState } = useForm<CreatePostFormType>({
         resolver: zodResolver(createPostSchema)
     });
-    /* TODO : FFFIIIXXX  */
     const { data: userData } = useGetUserDataQuery();
-    /* TODO : FFFIIIXXX  */
     const handleChange = (name: keyof CreatePostFormType, value: string) => {
         setValue(name, value);
         trigger(name);

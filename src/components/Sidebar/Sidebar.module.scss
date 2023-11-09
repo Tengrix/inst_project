@@ -6,6 +6,7 @@
   max-width: 220px;
   padding: 0 40px;
   border-right: 1px solid var(--color-dark-100);
+  z-index: 10000;
 
   .sidebarRoutes {
     display: flex;
@@ -15,7 +16,59 @@
     overflow-y: auto;
 
 
-    .route {
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin: auto 0;
+
+      &:last-child {
+        margin: auto 0 0
+      }
+
+      @media (max-width: 991.98px) {
+        & {
+          align-items: center
+        }
+        
+      }
+      @media (max-width: 540px) {
+        & {
+            flex-direction: row;
+            justify-content: space-around;
+            background-color: var(--color-dark-700);
+            border-top: 1px solid var(--color-dark-100);
+        }
+        
+      }
+
+      span {
+        margin-left: 15px;
+
+        @media (max-width: 991.98px) {
+          & {
+            display: none
+          }
+        }
+      }
+      
+    }
+    .wrapperAdditionalInformationLogOut {
+        @media (max-width: 540px) {
+            & {
+              display: none
+            }
+          }
+    }
+
+
+    @media (max-width: 540px) {
+        & {
+        padding: 0;
+        width: 100%;
+        }
+      }
+      .route {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -24,55 +77,41 @@
       color: inherit;
 
       &_active {
-        color: var(--color-primary-500)
-      }
-    }
 
-    /*
-    .footer {
-      position: fixed;
-      bottom: 0;
-      left: 50px;
-      margin-top: 150px
+        color: var(--color-primary-500);
     }
-    */
+}
+
   }
+  
 
   @media (max-width: 991.98px) {
+
+    & {
+
       align-items: center;
       padding: 0 16px
   }
-}
-
-@media screen and (max-width: 425px) {
-  .container {
-    display: none
+  @media (max-width: 540px) {
+    & {
+      top: auto;
+      border-right: none;
+      padding: 0;
+      right: 0;
+      left: 0;
+      max-width: 100%;
+    }
   }
 }
+
+@media (max-width: 540px) {
+    .inVisibleMenu{
+        display: none;
+    }
+  }
 
 .btn {
   color: var(--color-light-100)
 }
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: auto 0;
 
-  &:last-child {
-    margin: auto 0 0
-  }
-
-  @media (max-width: 991.98px) {
-    align-items: center
-  }
-
-  span {
-    margin-left: 15px;
-
-    @media (max-width: 991.98px) {
-      display: none
-    }
-  }
-}
