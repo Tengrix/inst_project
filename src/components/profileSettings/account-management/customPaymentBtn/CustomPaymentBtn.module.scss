@@ -1,3 +1,5 @@
+@import '/src/styles/variables/mixins';
+
 .paymentButton {
   display: flex;
   align-items: center;
@@ -30,6 +32,12 @@
   align-items: center;
   justify-content: flex-end;
   font: var(--font-regular-14)
+  
+}
+@include mq(mobile){
+    .checkoutFormButtons {
+        justify-content: center;
+      }
 }
 
 

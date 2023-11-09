@@ -9,7 +9,10 @@
 .TabsList {
     display: flex;
     flex-shrink: 0;
-    border-bottom: 1px solid var(--color-dark-100)
+    border-bottom: 1px solid var(--color-dark-100);
+    overflow: auto;
+    white-space: nowrap;
+    padding: 10px 5px;
 }
 
 .TabsTrigger {
