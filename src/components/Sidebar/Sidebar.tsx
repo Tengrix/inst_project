@@ -47,16 +47,15 @@ const Sidebar = () => {
     const [isInVisibleMenu, setIsInVisibleMenu] = useState(false);
     const [scrollPostion, setScroolPosition] = useState(0);
 
-    const FFF = () => {
-        console.log(scrollY);
+    const scrolling = () => {
         if (scrollPostion < scrollY) {
             setIsInVisibleMenu(true);
             setScroolPosition(scrollY);
         } else setIsInVisibleMenu(false);
     };
     useEffect(() => {
-        window.addEventListener('scroll', FFF);
-        return () => window.removeEventListener('scroll', FFF);
+        window.addEventListener('scroll', scrolling);
+        return () => window.removeEventListener('scroll', scrolling);
     }, [scrollPostion]);
 
     const sidebarItems = routes.map(route => {
@@ -102,7 +101,6 @@ const Sidebar = () => {
                         <BookmarkIcon height={60} width={24} />
                         <span>{t('favourites')}</span>
                     </Link>
-                    {/* <div className={s.footer}></div> */}
                     <Button
                         className={s.route}
                         variant={'link'}
