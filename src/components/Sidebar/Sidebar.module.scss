@@ -1,19 +1,20 @@
 .container {
-  max-width: 220px;
-  padding: 0 40px;
   position: fixed;
+  top: 60px;
   bottom: 0;
   left: 0;
-  top: 60px;
+  max-width: 220px;
+  padding: 0 40px;
   border-right: 1px solid var(--color-dark-100);
   z-index: 10000;
 
   .sidebarRoutes {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
     height: 100%;
     padding: 16px 0;
+    overflow-y: auto;
+
 
     .wrapper {
       display: flex;
@@ -60,6 +61,7 @@
           }
     }
 
+
     @media (max-width: 540px) {
         & {
         padding: 0;
@@ -68,23 +70,27 @@
       }
       .route {
       display: flex;
-      color:inherit;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       padding: 0;
+      color: inherit;
 
       &_active {
+
         color: var(--color-primary-500);
     }
 }
+
   }
   
 
   @media (max-width: 991.98px) {
+
     & {
+
       align-items: center;
-    }
+      padding: 0 16px
   }
   @media (max-width: 540px) {
     & {
@@ -105,6 +111,7 @@
   }
 
 .btn {
-  color:var(--color-light-100)
+  color: var(--color-light-100)
 }
+
 

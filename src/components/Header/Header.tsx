@@ -1,15 +1,13 @@
 import { BarChartIcon, BellIcon, BookmarkIcon, DotsHorizontalIcon, ExitIcon, GearIcon } from '@radix-ui/react-icons';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 import LangSwitcher from '@/components/LangSwitcher/LangSwitcher';
 import { SideBarRoutesType } from '@/shared/types/CommonTypes';
 import CustomPopover from '@/shared/ui/popover/Popover';
-
-import Logo from "public/logo.svg";
-
-import styles from './styles.module.css';
+import Logo from 'public/logo.svg';
+import styles from 'src/components/Header/styles.module.scss';
 
 export type HeaderProps = {
     title?: string;

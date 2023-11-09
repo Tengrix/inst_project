@@ -17,7 +17,7 @@ const NewDatePicker = <TFieldValues extends FieldValues>(props: Props<TFieldValu
         control: props.control
     });
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant={'regular14'} color={'form'}>
                 {props.label}
             </Typography>

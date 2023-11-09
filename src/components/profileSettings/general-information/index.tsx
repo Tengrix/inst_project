@@ -34,7 +34,7 @@ export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
     };
 }
 
-const FormPage = () => {
+const GeneralInformation = () => {
     const [isSaved, setIsSaved] = useState(false);
     const [image, setImage] = useState('');
     const [blob, setBlob] = useState<Blob>();
@@ -145,4 +145,4 @@ const FormPage = () => {
     );
 };
 
-export default FormPage;
+export default GeneralInformation;
