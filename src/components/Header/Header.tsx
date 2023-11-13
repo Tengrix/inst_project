@@ -1,11 +1,13 @@
 import { BarChartIcon, BellIcon, BookmarkIcon, DotsHorizontalIcon, ExitIcon, GearIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { ReactNode } from 'react';
+import { useRouter } from 'next/router';
+import React, { ReactNode, useEffect } from 'react';
 
 import LangSwitcher from '@/components/LangSwitcher/LangSwitcher';
 import { SideBarRoutesType } from '@/shared/types/CommonTypes';
 import CustomPopover from '@/shared/ui/popover/Popover';
+import { H3 } from '@/shared/ui/typography/typography.stories';
 import Logo from 'public/logo.svg';
 import styles from 'src/components/Header/styles.module.scss';
 
@@ -32,12 +34,19 @@ const Header = (props: HeaderProps) => {
             </Link>
         </div>
     ));
+    const router = useRouter();
+
     return (
         <div className={styles.header}>
             <div className={styles.text}>
                 <Link href={'/profile'}>
                     <Image src={Logo} width="134" height="36" alt="Inctagram logo" />
                 </Link>
+                {router.pathname.startsWith('/admin') && (
+                    <p>
+                        Super<b>Admin</b>
+                    </p>
+                )}
             </div>
             <div className={styles.languageSelector}>
                 {children}
