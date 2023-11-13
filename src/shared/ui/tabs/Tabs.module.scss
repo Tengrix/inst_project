@@ -35,28 +35,15 @@
 
 .TabsTrigger:hover {
     color: var(--color-primary-500);
-
-    /* background-color: var(--color-primary-900); */
     box-shadow: inset 0 -1px 0 0 currentcolor, 0 1px 0 0 currentcolor
 
 }
 
 .TabsTrigger[data-state='active'] {
     color: var(--color-primary-500);
-
-    /* background-color: rgba(var(--color-primary-100-rgb), .15); */
     box-shadow: inset 0 -1px 0 0 currentcolor, 0 1px 0 0 currentcolor
 }
 
-/* .TabsTrigger:focus { */
-
-/*    position: relative; */
-
-/*    background-color: var(--color-dark-700); */
-
-/*    border: 1px solid var(--color-primary-500) */
-
-/* } */
 
 .TabsTrigger:disabled {
     color: var(--color-primary-900)
