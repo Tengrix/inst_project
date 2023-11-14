@@ -3,9 +3,9 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
     overwrite: true,
     schema: 'https://instagramm-backend.vercel.app/graphql/',
-    documents: ['./src/api/queries/**/*.ts'],
+    documents: ['src/api/queries/**/*.ts'],
     generates: {
-        'src/api/types/types.ts': {
+        'src/api/queries/types.ts': {
             plugins: ['typescript']
         },
         'src/': {
