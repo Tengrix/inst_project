@@ -1,0 +1,67 @@
+@import '/src/styles/variables/mixins';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 133px); 
+  margin: 36px auto; // TODO: set 36px after header add margin or padding bottom
+
+  .signInForm {
+    flex: 1;
+    max-width: 380px;
+    padding: 24px;
+    font: var(--font-regular-14);
+
+    .header {
+      text-align: center;
+
+      &__title {
+        margin-bottom: 13px
+      }
+
+      &__icons {
+        display: inline-flex;
+        gap: 36px;
+        margin-bottom: 24px
+      }
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 18px;
+
+      &__forgot {
+        align-self: flex-end;
+        margin-top: 20px;
+        padding-right: 4px;
+        color: var(--color-light-900)
+      }
+
+      &__btn {
+        font: var(--font-h3)
+      }
+
+      &__error {
+        align-self: center;
+        color: var(--color-danger-300)
+      }
+    }
+
+    @include mq(mobile){
+        .margin: 17px auto;
+        padding: 15px;
+        background: transparent;
+        border: 0;
+  
+        .form {
+          &__forgot {
+            margin-top: -18px;
+            margin-bottom: 40px
+          }
+        }
+    }  
+  }
+}

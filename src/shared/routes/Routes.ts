@@ -1,6 +1,7 @@
 export type PrivateRoutesType = '/home' | '/profile' | '/profile-settings';
 export type PublicRoutesType = '/sign-in' | '/sign-up' | '/forgot-password';
 export const Routes = {
+    ADMIN_SIGN_IN: '/admin/sign-in',
     LOGIN: '/sign-in',
     REGISTER: '/sign-up',
     FORGOT_PASSWORD: '/forgot-password',
@@ -13,6 +14,7 @@ export const Routes = {
 } as const;
 
 export const PublicRoutes = [
+    Routes.ADMIN_SIGN_IN,
     Routes.LOGIN,
     Routes.REGISTER,
     Routes.FORGOT_PASSWORD
