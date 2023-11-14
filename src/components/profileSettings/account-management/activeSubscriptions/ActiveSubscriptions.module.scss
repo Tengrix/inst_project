@@ -2,13 +2,15 @@
   margin-bottom: 18px;
   font-size: var(--font-h3)
 }
-.activeSubscriptions{
+
+.activeSubscriptions {
   width: 100%;
   margin-bottom: 19px;
   padding: 12px 24px;
   background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-300)
 }
+
 .activeSubscriptionsList {
   display: flex;
   gap: 48px
@@ -23,9 +25,9 @@
   font: var(--font-regular-bold)
 }
 
-.activeSubscriptionCheckbox{
+.activeSubscriptionCheckbox {
   display: flex;
-  justify-content: flex-start;
+  gap: 10px;
   align-items: center;
-  gap: 10px
+  justify-content: flex-start
 }

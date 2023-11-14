@@ -51,6 +51,6 @@ $breakpoints: (
 @mixin mq($name) {
     $max: map-get($breakpoints, $name);
     @media (max-width: $max) {
-      @content;
+      @content
     }
 }

@@ -1,17 +1,7 @@
-import * as React from "react"
-import { SVGProps, Ref, forwardRef, memo } from "react"
-const SvgComponent = (
-    props: SVGProps<SVGSVGElement>,
-    ref: Ref<SVGSVGElement>
-) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={18}
-        height={20}
-        fill="none"
-        ref={ref}
-        {...props}
-    >
+import * as React from 'react';
+import { SVGProps, Ref, forwardRef, memo } from 'react';
+const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={18} height={20} fill="none" ref={ref} {...props}>
         <path
             fill="#fff"
             fillRule="evenodd"
@@ -19,8 +9,7 @@ const SvgComponent = (
             clipRule="evenodd"
         />
     </svg>
-)
-const ForwardRef = forwardRef(SvgComponent)
+);
+const ForwardRef = forwardRef(SvgComponent);
 
-export const Mask = memo(ForwardRef)
-
+export const Mask = memo(ForwardRef);

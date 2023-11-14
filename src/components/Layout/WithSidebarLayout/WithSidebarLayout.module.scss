@@ -1,12 +1,12 @@
 @import '/src/styles/variables/mixins';
 
 .container {
-    display: flex;
+    display: flex
 }
 
 .page {
-    margin-left: 220px;
-    width: 100%
+    width: 100%;
+    margin-left: 220px
 }
 
 @media (max-width: 991.98px) {
@@ -14,7 +14,7 @@
         margin-left: 80px
     }
 }
-@include mq(mobile){
+@include mq(mobile) {
     .page {
         margin-left: 0
     }
