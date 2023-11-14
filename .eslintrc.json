@@ -30,7 +30,7 @@
     "no-nested-ternary": "error",
     "import/named": "off",
     "no-debugger": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "arrow-parens": ["error", "as-needed"],
     "no-multiple-empty-lines": ["error", {"max": 2, "maxBOF": 1, "maxEOF": 1}],
     "prettier/prettier": "warn",
