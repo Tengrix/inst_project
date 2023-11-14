@@ -59,14 +59,13 @@
   flex: 0 400px;
   gap:6px;
   padding: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto hidden;
   text-align: center;
   background-color: rgb(var(--color-dark-500) .8);
   border-radius: 2px;
 
   li {
-    position: relative;
+    position: relative
   }
 
   .icon__close {

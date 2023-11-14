@@ -34,9 +34,9 @@
   font: var(--font-regular-14)
   
 }
-@include mq(mobile){
+@include mq(mobile) {
     .checkoutFormButtons {
-        justify-content: center;
+        justify-content: center
       }
 }
 

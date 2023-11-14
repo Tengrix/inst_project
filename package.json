@@ -10,7 +10,8 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
@@ -56,6 +57,11 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
+    "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.1.0",
     "@storybook/addon-essentials": "^7.1.1",
     "@storybook/addon-interactions": "^7.1.1",
     "@storybook/addon-links": "^7.1.1",

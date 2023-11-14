@@ -1,19 +1,21 @@
 .container {
   display: flex;
-  justify-content: center;
+  justify-content: center
 
 }
 
 .feed {
-  height: calc(100vh - 20px);
   width: 100%;
+  height: calc(100vh - 20px)
 }
+
 .row {
-  text-align: center;
-  margin: 5px 0;
   align-items: center;
+  margin: 5px 0;
+  text-align: center
 }
-.virtualList{
+
+.virtualList {
   display: flex;
-  justify-content: center;
+  justify-content: center
 }

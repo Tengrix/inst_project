@@ -1,5 +1,3 @@
-import { store } from '@/redux/store';
-
 import '@/styles/variables/index.scss';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -12,6 +10,7 @@ import { ReactElement, ReactNode } from 'react';
 import { Provider } from 'react-redux';
 
 import { Redirect } from '@/components/Redirect/Redirect';
+import { store } from '@/redux/store';
 
 const inter = Inter({
     display: 'swap',

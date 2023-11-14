@@ -25,7 +25,6 @@ export const ImagePostSlider = ({ images }: ImagePostSliderPropsType) => {
 
     return (
         <div className={s.sliders}>
-
             {images.length > 1 ? nextBtn : ''}
             {images.length > 1 ? prevBtn : ''}
 
