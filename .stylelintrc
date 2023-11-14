@@ -3,7 +3,8 @@
     "stylelint-config-standard-scss",
     "stylelint-config-recommended-scss",
     "stylelint-config-sass-guidelines",
-    "stylelint-config-rational-order"
+    "stylelint-config-rational-order",
+    "stylelint-config-prettier"
   ],
   "plugins": [
     "stylelint-scss",
@@ -12,14 +13,24 @@
   ],
   "overrides": [
     {
-      "files": ["*.scss", "**/*.scss"],
+      "files": [
+        "*.scss",
+        "**/*.scss"
+      ],
       "customSyntax": "postcss-scss"
     }
   ],
   "rules": {
-    "selector-no-qualifying-type": [true, { 
-        "ignore": ["attribute", "class", "id"]
-    }],
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": [
+          "attribute",
+          "class",
+          "id"
+        ]
+      }
+    ],
     "max-nesting-depth": 4,
     "block-no-empty": null,
     "selector-max-compound-selectors": 4,
@@ -34,8 +45,13 @@
     "media-feature-range-notation": "prefix",
     "block-opening-brace-space-before": "always",
     "declaration-block-trailing-semicolon": "never",
-    "font-family-no-missing-generic-family-keyword": [null, {
-        "ignoreFontFamilies": ["icons"]
+    "scss/no-global-function-names": false,
+    "font-family-no-missing-generic-family-keyword": [
+      null,
+      {
+        "ignoreFontFamilies": [
+          "icons"
+        ]
       }
     ],
     "plugin/selector-bem-pattern": {

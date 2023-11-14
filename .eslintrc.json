@@ -10,7 +10,8 @@
     "next/core-web-vitals",
     "plugin:import/recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 2021,
