@@ -21,28 +21,23 @@ import { authAction } from '@/redux/store/Auth/authSlice';
 import { useScreenSize } from '@/shared/hooks/useScreenSize';
 import { Button } from '@/shared/ui/button';
 
+import { SidebarRouteType } from '../UserRouting/UserRouting';
+
 import s from './Sidebar.module.scss';
 
-const Sidebar = () => {
+type SidebarPropsType = {
+    routes: Array<SidebarRouteType>;
+};
+
+const Sidebar = (props: SidebarPropsType) => {
+    const { routes } = props;
     const [logout, { isLoading, isSuccess }] = useLogoutMutation();
     const dispatch = useAppDispatch();
     const router = useRouter();
     const t = useTranslations('sidebar');
-    const [createPostModal, setCreatePostModal] = useState(false);
+
     const currentURL = useRouter();
     const nav = useRef(null);
-    const routes = [
-        { title: t('home'), icon: <HomeIcon height={60} width={24} />, path: '/home' },
-        {
-            title: t('publish'),
-            icon: <PlusCircledIcon height={60} width={24} />,
-            path: '/create',
-            onClick: () => setCreatePostModal(true)
-        },
-        { title: t('myProfile'), icon: <PersonIcon height={60} width={24} />, path: '/profile' },
-        { title: t('messenger'), icon: <ChatBubbleIcon height={60} width={24} />, path: '/messenger' },
-        { title: t('search'), icon: <MagnifyingGlassIcon height={60} width={24} />, path: '/search' }
-    ];
 
     const [isInVisibleMenu, setIsInVisibleMenu] = useState(false);
     const [scrollPostion, setScroolPosition] = useState(0);
@@ -72,7 +67,7 @@ const Sidebar = () => {
                         }
                     }}>
                     {route.icon}
-                    <span>{route.title}</span>
+                    <span>{t(route.title)}</span>
                 </Link>
             );
         }
@@ -112,7 +107,6 @@ const Sidebar = () => {
                     </Button>
                 </div>
             </div>
-            <CreatePostModal open={createPostModal} modalHandler={setCreatePostModal} />
         </div>
     );
 };
