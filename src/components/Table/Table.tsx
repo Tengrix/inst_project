@@ -11,12 +11,16 @@ type TableProps = {
 const Table = ({ data, header }: TableProps) => {
     const t = useTranslations();
     const getRow = (key: string, value: string) => {
-        return (
-            <td className={`${s.table__cell} ${s.cell}`}>
-                <div className={s.cell__th}>{t(header[key])}</div>
-                <div className={s.cell__td}>{value}</div>
-            </td>
-        );
+        if (key in header) {
+            return (
+                <td className={`${s.table__cell} ${s.cell}`}>
+                    <div className={s.cell__th}>{t(header[key])}</div>
+                    <div className={s.cell__td}>{value}</div>
+                </td>
+            );
+        } else {
+            return null;
+        }
     };
 
     return (
