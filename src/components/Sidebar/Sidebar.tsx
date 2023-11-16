@@ -1,28 +1,11 @@
-import {
-    BarChartIcon,
-    BookmarkIcon,
-    ChatBubbleIcon,
-    ExitIcon,
-    HomeIcon,
-    MagnifyingGlassIcon,
-    PersonIcon,
-    PlusCircledIcon
-} from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut as googleSignOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useLogoutMutation } from '@/api/authApiSlice';
-import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
-import { useAppDispatch } from '@/redux/store';
-import { authAction } from '@/redux/store/Auth/authSlice';
-import { useScreenSize } from '@/shared/hooks/useScreenSize';
-import { Button } from '@/shared/ui/button';
-
 import { SidebarRouteType } from '../UserRouting/UserRouting';
 
+import { SidebarAdditionalInfo } from './AdditionalInfo/SidebarAdditionaInfo';
 import s from './Sidebar.module.scss';
 
 type SidebarPropsType = {
@@ -31,9 +14,7 @@ type SidebarPropsType = {
 
 const Sidebar = (props: SidebarPropsType) => {
     const { routes } = props;
-    const [logout, { isLoading, isSuccess }] = useLogoutMutation();
-    const dispatch = useAppDispatch();
-    const router = useRouter();
+
     const t = useTranslations('sidebar');
 
     const currentURL = useRouter();
@@ -72,39 +53,13 @@ const Sidebar = (props: SidebarPropsType) => {
             );
         }
     });
-    const logoutHandler = async () => {
-        try {
-            await logout().unwrap();
-            googleSignOut();
-            dispatch(authAction.logOut());
-            // router.push(Routes.LOGIN);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     return (
         <div ref={nav} className={`${s.container} ${isInVisibleMenu ? s.inVisibleMenu : ''}`}>
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
                 <div className={`${s.wrapper} ${s.wrapperAdditionalInformationLogOut}`}>
-                    <Link className={s.route} href={'/statistics'}>
-                        <BarChartIcon height={60} width={24} />
-                        <span>{t('statistics')}</span>
-                    </Link>
-                    <Link className={s.route} href={'/favorites'}>
-                        <BookmarkIcon height={60} width={24} />
-                        <span>{t('favourites')}</span>
-                    </Link>
-                    <Button
-                        className={s.route}
-                        variant={'link'}
-                        isLoading={isLoading}
-                        disabled={isLoading}
-                        onClick={logoutHandler}>
-                        <ExitIcon height={60} width={24} />
-                        <span>{t('logOut')}</span>
-                    </Button>
+                    <SidebarAdditionalInfo />
                 </div>
             </div>
         </div>
