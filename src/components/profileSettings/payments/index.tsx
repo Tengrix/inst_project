@@ -58,6 +58,6 @@ const Payments = () => {
         fetchSubscriptions();
     }, [isSuccess, data]);
 
-    return <>{isShowLoader ? <Spinner /> : <Table data={subscriptions} header={header} />}</>;
+    return <>{isShowLoader ? <Spinner /> : <Table data={subscriptions} headers={header} />}</>;
 };
 export default Payments;
