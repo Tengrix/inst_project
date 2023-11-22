@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { useLoginWithProviderMutation, useLoginMutation } from '@/api/authApiSlice';
+import { getLayoutAdmin } from '@/components/Layout/AdminLayout/AdminLayout';
 import classes from '@/pages/admin/sign-in/SignInAdmin.module.scss';
 import { useAppSelector } from '@/redux/store';
 import { authAction } from '@/redux/store/Auth/authSlice';
@@ -119,5 +120,5 @@ const SignInAdmin = ({ messages }: { messages: {} }) => {
     );
 };
 
-SignInAdmin.getLayout = getLayout;
+SignInAdmin.getLayout = getLayoutAdmin;
 export default SignInAdmin;

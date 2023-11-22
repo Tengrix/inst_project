@@ -1,49 +1,31 @@
-import {
-    BarChartIcon,
-    BookmarkIcon,
-    ChatBubbleIcon,
-    ExitIcon,
-    HomeIcon,
-    MagnifyingGlassIcon,
-    PersonIcon,
-    PlusCircledIcon
-} from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut as googleSignOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useLogoutMutation } from '@/api/authApiSlice';
-import CreatePostModal from '@/components/CreatePostModal/CreatePostModal';
-import { useAppDispatch } from '@/redux/store';
-import { authAction } from '@/redux/store/Auth/authSlice';
-import { useScreenSize } from '@/shared/hooks/useScreenSize';
-import { Button } from '@/shared/ui/button';
-
 import { SidebarRouteType } from '../UserRouting/UserRouting';
 
+import { SidebarAdditionalInfo } from './AdditionalInfo/SidebarAdditionaInfo';
 import s from './Sidebar.module.scss';
 
 type SidebarPropsType = {
     routes: Array<SidebarRouteType>;
+    isUser?: Boolean;
 };
 
 const Sidebar = (props: SidebarPropsType) => {
-    const { routes } = props;
-    const [logout, { isLoading, isSuccess }] = useLogoutMutation();
-    const dispatch = useAppDispatch();
-    const router = useRouter();
+    const { routes, isUser } = props;
+
     const t = useTranslations('sidebar');
 
     const currentURL = useRouter();
     const nav = useRef(null);
 
     const [isInVisibleMenu, setIsInVisibleMenu] = useState(false);
-    const [scrollPostion, setScroolPosition] = useState(0);
+    const [scrollPosition, setScroolPosition] = useState(0);
 
     const scrolling = () => {
-        if (scrollPostion < scrollY) {
+        if (scrollPosition < scrollY) {
             setIsInVisibleMenu(true);
             setScroolPosition(scrollY);
         } else setIsInVisibleMenu(false);
@@ -51,7 +33,7 @@ const Sidebar = (props: SidebarPropsType) => {
     useEffect(() => {
         window.addEventListener('scroll', scrolling);
         return () => window.removeEventListener('scroll', scrolling);
-    }, [scrollPostion]);
+    }, [scrollPosition]);
 
     const sidebarItems = routes.map(route => {
         if (route.path) {
@@ -72,39 +54,13 @@ const Sidebar = (props: SidebarPropsType) => {
             );
         }
     });
-    const logoutHandler = async () => {
-        try {
-            await logout().unwrap();
-            googleSignOut();
-            dispatch(authAction.logOut());
-            // router.push(Routes.LOGIN);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     return (
         <div ref={nav} className={`${s.container} ${isInVisibleMenu ? s.inVisibleMenu : ''}`}>
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
                 <div className={`${s.wrapper} ${s.wrapperAdditionalInformationLogOut}`}>
-                    <Link className={s.route} href={'/statistics'}>
-                        <BarChartIcon height={60} width={24} />
-                        <span>{t('statistics')}</span>
-                    </Link>
-                    <Link className={s.route} href={'/favorites'}>
-                        <BookmarkIcon height={60} width={24} />
-                        <span>{t('favourites')}</span>
-                    </Link>
-                    <Button
-                        className={s.route}
-                        variant={'link'}
-                        isLoading={isLoading}
-                        disabled={isLoading}
-                        onClick={logoutHandler}>
-                        <ExitIcon height={60} width={24} />
-                        <span>{t('logOut')}</span>
-                    </Button>
+                    {isUser && <SidebarAdditionalInfo />}
                 </div>
             </div>
         </div>
