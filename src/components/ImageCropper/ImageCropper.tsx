@@ -2,9 +2,9 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { centerCrop, Crop, makeAspectCrop, ReactCrop } from 'react-image-crop';
 import 'react-image-crop/src/ReactCrop.scss';
 
-import useDebounce from '@/hooks/useDebounce';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setCrop } from '@/redux/store/imageSlice/imageSlice';
+import useDebounce from '@/shared/hooks/useDebounce';
 
 type PropsType = {
     children?: ReactNode;
