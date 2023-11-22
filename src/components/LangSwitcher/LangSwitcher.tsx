@@ -28,7 +28,7 @@ const LangSwitcher = () => {
     };
 
     const items = Object.entries(languages).map(([locale, values]) => ({ value: locale, ...values }));
-    const curItem = languages[locale ?? 'en'];
+    const curItem = items.filter(item => item.value === locale)[0];
 
     return <Select defaultValue={curItem} items={items} onValueChange={changeLangHandler} />;
 };
