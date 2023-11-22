@@ -14,7 +14,6 @@ type PaginationConditionals =
     | {
           perPage: number;
           perPageOptions: number[];
-          // eslint-disable-next-line no-unused-vars
           onPerPageChange?: (itemPerPage: number) => void;
       };
 

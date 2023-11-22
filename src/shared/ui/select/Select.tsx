@@ -7,9 +7,9 @@ import ChevronDownIcon from '@/assets/icons/ChevronDownIcon';
 import ChevronUpIcon from '@/assets/icons/ChevronUpIcon';
 import s from 'src/shared/ui/select/Select.module.scss';
 
-type ItemType = {
+export type ItemType = {
     label: string;
-    value?: string;
+    value: string;
     icon?: ReactNode;
 };
 type SelectPropsType = {

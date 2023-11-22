@@ -12,7 +12,6 @@ type UsePaginationParamType = {
     totalCount: number;
     siblings?: number;
     page: number;
-    // eslint-disable-next-line no-unused-vars
     onChange?: (pageNumber: number) => void;
 };
 
