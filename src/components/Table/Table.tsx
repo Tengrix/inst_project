@@ -19,15 +19,15 @@ type TableProps = {
 };
 
 const Table = ({ data, headers }: TableProps) => {
-    const [sortState, setSortState] = useState<SortState>({ email: 'asc', createdAt: 'asc' });
+    const [sortState, setSortState] = useState<SortState>({});
     const t = useTranslations();
-
-    const handleSort = (key: string) => {
-        const newDirection = sortState[key] === 'asc' ? 'desc' : 'asc';
-        headers[key].onSort!(newDirection);
-        setSortState({ ...sortState, [key]: newDirection });
+    const handleSort = (headerItem: TableHeader, key: string) => {
+        if (headerItem.sortable) {
+            const newDirection = sortState[key] === undefined ? 'asc' : sortState[key] === 'asc' ? 'desc' : 'asc';
+            headers[key].onSort!(newDirection);
+            setSortState({ [key]: newDirection });
+        }
     };
-
     const getRow = (key: string, value: string) => (
         <td className={`${s.table__cell} ${s.cell}`}>
             <div className={s.cell__th}>{t(headers[key].label)}</div>
@@ -39,8 +39,8 @@ const Table = ({ data, headers }: TableProps) => {
         <th key={key} className={s.table__th}>
             {t(headerItem.label)}
             {headerItem.sortable && (
-                <span onClick={() => headerItem.sortable && handleSort(key)}>
-                    {sortState[key] === 'desc' ? '↑' : '↓'}
+                <span onClick={() => handleSort(headerItem, key)}>
+                    {!sortState[key] ? '↓↑' : sortState[key] === 'desc' ? '↑' : '↓'}
                 </span>
             )}
         </th>

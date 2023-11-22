@@ -32,8 +32,8 @@ export const GetAllUsersDocument = gql`
         $page: Int! = 1
         $itemsPerPage: Int! = 32
         $search: String! = ""
-        $sortByCreateDate: String = ""
-        $sortByUserName: String = ""
+        $sortByCreateDate: String
+        $sortByUserName: String
     ) {
         getAllUsers(
             page: $page

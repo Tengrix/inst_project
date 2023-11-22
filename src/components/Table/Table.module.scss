@@ -1,65 +1,67 @@
 .table {
-    &__head {
-        background-color: var(--color-dark-500)
-    }
+  margin-top: 24px;
 
-    &__th {
-        text-align: left
-    }
+  &__head {
+    background-color: var(--color-dark-500)
+  }
 
-    th,
-    td,
-    &__tr {
-        padding: 12px
-    }
+  &__th {
+    text-align: left
+  }
+
+  th,
+  td,
+  &__tr {
+    padding: 12px
+  }
 
 }
 
 .cell {
-    &__th {
-        display: none
-    }
+  &__th {
+    display: none
+  }
 }
 
 @media (max-width: 767.98px) {
-    .table {
-        display: block;
+  .table {
+    display: block;
 
-        &__head {
-            display: none
-        }
-
-        &__body {
-            display: flex;
-            flex-direction: column;
-            gap: 12px
-        }
-
-        &__tr {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background-color: var(--color-dark-500);
-            border:1px solid var(--color-dark-300);
-            border-radius:2px
-        }
-
-        td {
-            padding: 0
-        }
+    &__head {
+      display: none
     }
 
-    .cell {
-        display: inline-flex;
-        gap: 12px;
-        justify-content: space-between;
-
-        &__th {
-            display: block
-        }
-
-        &__td {
-            font: var(--font-bold-14)
-        }
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
     }
+
+    &__tr {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background-color: var(--color-dark-500);
+      border: 1px solid var(--color-dark-300);
+      border-radius: 2px
+    }
+
+    td {
+      padding: 0
+    }
+  }
+
+  .cell {
+    display: inline-flex;
+    gap: 12px;
+    justify-content: space-between;
+
+    &__th {
+      display: block
+    }
+
+    &__td {
+      font: var(--font-bold-14)
+    }
+  }
 }
