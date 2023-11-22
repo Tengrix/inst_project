@@ -1,6 +1,8 @@
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
+import Spinner from '@/shared/ui/spinner/Spinner';
+
 import s from './Table.module.scss';
 
 export type TableHeader = {
@@ -46,7 +48,7 @@ const Table = ({ data, headers }: TableProps) => {
         </th>
     ));
 
-    const tableBody = data.map((row, i) => (
+    const tableBody = data?.map((row, i) => (
         <tr key={i} className={s.table__tr}>
             {Object.entries(row).map(([key, value]) => !key.startsWith('_') && getRow(key, value))}
         </tr>
@@ -55,7 +57,7 @@ const Table = ({ data, headers }: TableProps) => {
     return (
         <div className={s.table}>
             <thead className={s.table__head}>{tableHeaders}</thead>
-            <tbody className={s.table__body}>{tableBody}</tbody>
+            <tbody className={s.table__body}>{tableBody ? tableBody : <Spinner />}</tbody>
         </div>
     );
 };

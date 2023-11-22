@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import useDebounce from '@/shared/hooks/useDebounce';
 import { TextField } from '@/shared/ui/text-field';
-import { PngToIcon } from '@/shared/utils/pngToIcon/PngToIcon';
 
 import s from './Search.module.scss';
 
@@ -19,15 +18,13 @@ const Search = (props: Props) => {
     }, [debouncedSearch]);
 
     return (
-        <div>
-            <TextField
-                className={s.search}
-                type={'search'}
-                placeholder={'Search'}
-                value={rawSearch}
-                onChange={e => setRawSearch(e.currentTarget.value)}
-            />
-        </div>
+        <TextField
+            className={s.search}
+            type={'search'}
+            placeholder={'Search'}
+            value={rawSearch}
+            onChange={e => setRawSearch(e.currentTarget.value)}
+        />
     );
 };
 

@@ -1,29 +1,33 @@
+import { format } from 'date-fns';
 import { useState } from 'react';
 
+import { useGetAllUsersQuery } from '@/api/queries/users.generated';
 import { getLayoutAdmin } from '@/components/Layout/AdminLayout/AdminLayout';
 import Search from '@/components/Search/Search';
-import { TableHeader } from '@/components/Table/Table';
+import Table, { TableHeader } from '@/components/Table/Table';
+import { Pagination } from '@/shared/ui/pagination';
 import Select from '@/shared/ui/select/Select';
 
 import s from './Users.module.scss';
 
 const UsersList = () => {
-    const [sort, setSort] = useState<{ sortByUserName?: string; sortByCreateDate?: string }>({});
+    const [sortParams, setSortParams] = useState<{ sortByUserName?: string; sortByCreateDate?: string }>({});
+    const [pageParams, setPageParams] = useState<{ page: number; itemsPerPage: number }>({ page: 1, itemsPerPage: 12 });
     const [searchByEmail, setSearchByEmail] = useState('');
-    // const { loading, error, data } = useGetAllUsersQuery({
-    //     variables: {
-    //         page: 1,
-    //         itemsPerPage: 32,
-    //         search: searchByEmail,
-    //         ...sort
-    //     }
-    // });
-    // const usersWithFormattedDate =
-    //     data &&
-    //     data.getAllUsers.data!.map(user => ({
-    //         ...user,
-    //         createdAt: format(new Date(+user.createdAt), 'dd.MM.yyyy')
-    //     }));
+    const { loading, error, data } = useGetAllUsersQuery({
+        variables: {
+            ...pageParams,
+            search: searchByEmail,
+            ...sortParams
+        }
+    });
+    const totalPages = data?.getAllUsers && Math.floor(data.getAllUsers.total! / pageParams.itemsPerPage);
+    const usersWithFormattedDate =
+        data &&
+        data.getAllUsers.data!.map(user => ({
+            ...user,
+            createdAt: format(new Date(+user.createdAt), 'dd.MM.yyyy')
+        }));
 
     const header: { [key: string]: TableHeader } = {
         id: { label: 'User ID' },
@@ -31,26 +35,40 @@ const UsersList = () => {
         email: {
             label: 'Email',
             sortable: true,
-            onSort: sort => setSort({ sortByUserName: sort })
+            onSort: sort => setSortParams({ sortByUserName: sort })
         },
         createdAt: {
             label: 'Registration date',
             sortable: true,
-            onSort: sort => setSort({ sortByCreateDate: sort })
+            onSort: sort => setSortParams({ sortByCreateDate: sort })
         }
     };
     // if (loading) return <Spinner />;
-    // if (error) return `Error! ${error.message}`;
+    if (error) return `Error! ${error.message}`;
 
     return (
         <div className={s.container}>
-            <Search setSearch={setSearchByEmail} />
-            <Select
-                items={[{ label: 'Blocked' }, { label: 'Not blocked' }]}
-                onValueChange={() => {}}
-                defaultValue={{ label: 'Not selected' }}
+            <div className={s.searchBar}>
+                <Search setSearch={setSearchByEmail} />
+                <Select
+                    items={[
+                        { label: 'Blocked', value: 'Blocked' },
+                        { label: 'Not blocked', value: 'Not blocked' },
+                        { label: 'Not selected', value: 'Not selected' }
+                    ]}
+                    onValueChange={() => {}}
+                    defaultValue={{ label: 'Not selected', value: 'Not selected' }}
+                />
+            </div>
+            <Table data={usersWithFormattedDate!} headers={header} />
+            <Pagination
+                page={pageParams.page}
+                totalCount={totalPages}
+                perPage={pageParams.itemsPerPage}
+                perPageOptions={[6, 12, 18]}
+                onPerPageChange={itemsPerPage => setPageParams(prev => ({ ...prev, itemsPerPage: itemsPerPage }))}
+                onChange={page => setPageParams(prev => ({ ...prev, page }))}
             />
-            {/*<Table data={usersWithFormattedDate!} headers={header} />*/}
         </div>
     );
 };
