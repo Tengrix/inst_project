@@ -43,7 +43,6 @@ const UsersList = () => {
             onSort: sort => setSortParams({ sortByCreateDate: sort })
         }
     };
-    // if (loading) return <Spinner />;
     if (error) return `Error! ${error.message}`;
 
     return (
