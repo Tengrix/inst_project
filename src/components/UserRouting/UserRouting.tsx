@@ -30,7 +30,7 @@ export const UserRouting = () => {
 
     return (
         <>
-            <Sidebar routes={routes} />
+            <Sidebar routes={routes} isUser />
             <CreatePostModal open={isShowPopUp} modalHandler={setIsShowPopUp} />
         </>
     );

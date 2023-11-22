@@ -10,10 +10,11 @@ import s from './Sidebar.module.scss';
 
 type SidebarPropsType = {
     routes: Array<SidebarRouteType>;
+    isUser?: Boolean;
 };
 
 const Sidebar = (props: SidebarPropsType) => {
-    const { routes } = props;
+    const { routes, isUser } = props;
 
     const t = useTranslations('sidebar');
 
@@ -21,10 +22,10 @@ const Sidebar = (props: SidebarPropsType) => {
     const nav = useRef(null);
 
     const [isInVisibleMenu, setIsInVisibleMenu] = useState(false);
-    const [scrollPostion, setScroolPosition] = useState(0);
+    const [scrollPosition, setScroolPosition] = useState(0);
 
     const scrolling = () => {
-        if (scrollPostion < scrollY) {
+        if (scrollPosition < scrollY) {
             setIsInVisibleMenu(true);
             setScroolPosition(scrollY);
         } else setIsInVisibleMenu(false);
@@ -32,7 +33,7 @@ const Sidebar = (props: SidebarPropsType) => {
     useEffect(() => {
         window.addEventListener('scroll', scrolling);
         return () => window.removeEventListener('scroll', scrolling);
-    }, [scrollPostion]);
+    }, [scrollPosition]);
 
     const sidebarItems = routes.map(route => {
         if (route.path) {
@@ -59,7 +60,7 @@ const Sidebar = (props: SidebarPropsType) => {
             <div className={s.sidebarRoutes}>
                 <div className={s.wrapper}>{sidebarItems}</div>
                 <div className={`${s.wrapper} ${s.wrapperAdditionalInformationLogOut}`}>
-                    <SidebarAdditionalInfo />
+                    {isUser && <SidebarAdditionalInfo />}
                 </div>
             </div>
         </div>
