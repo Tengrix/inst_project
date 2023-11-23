@@ -5,29 +5,50 @@ import * as Types from 'src/api/queries/types';
 
 const defaultOptions = {} as const;
 export type GetAllUsersQueryVariables = Types.Exact<{
-    userId?: Types.Scalars['String']['input'];
-    page?: Types.Scalars['Float']['input'];
-    itemsPerPage?: Types.Scalars['Float']['input'];
+    page?: Types.Scalars['Int']['input'];
+    itemsPerPage?: Types.Scalars['Int']['input'];
     search?: Types.Scalars['String']['input'];
+    sortByCreateDate?: Types.InputMaybe<Types.Scalars['String']['input']>;
+    sortByUserName?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 export type GetAllUsersQuery = {
     __typename?: 'Query';
-    getAllUsers: Array<{ __typename?: 'User2'; id: string; login?: string | null; role: string; email: string }>;
+    getAllUsers: {
+        __typename?: 'Users';
+        total: number;
+        data?: Array<{
+            __typename?: 'User2';
+            id: string;
+            login?: string | null;
+            email: string;
+            createdAt: string;
+        }> | null;
+    };
 };
 
 export const GetAllUsersDocument = gql`
     query getAllUsers(
-        $userId: String! = "ae393edd-a455-4015-baf6-a11dc389172b"
-        $page: Float! = 1
-        $itemsPerPage: Float! = 32
+        $page: Int! = 1
+        $itemsPerPage: Int! = 32
         $search: String! = ""
+        $sortByCreateDate: String
+        $sortByUserName: String
     ) {
-        getAllUsers(userId: $userId, page: $page, itemsPerPage: $itemsPerPage, search: $search) {
-            id
-            login
-            role
-            email
+        getAllUsers(
+            page: $page
+            itemsPerPage: $itemsPerPage
+            search: $search
+            sortByCreateDate: $sortByCreateDate
+            sortByUserName: $sortByUserName
+        ) {
+            data {
+                id
+                login
+                email
+                createdAt
+            }
+            total
         }
     }
 `;
@@ -44,10 +65,11 @@ export const GetAllUsersDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllUsersQuery({
  *   variables: {
- *      userId: // value for 'userId'
  *      page: // value for 'page'
  *      itemsPerPage: // value for 'itemsPerPage'
  *      search: // value for 'search'
+ *      sortByCreateDate: // value for 'sortByCreateDate'
+ *      sortByUserName: // value for 'sortByUserName'
  *   },
  * });
  */

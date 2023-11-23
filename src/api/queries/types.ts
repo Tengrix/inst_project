@@ -16,7 +16,12 @@ export type Scalars = {
 
 export type Mutation = {
     __typename?: 'Mutation';
+    deleteUser: User2;
     getAdminRole: User2;
+};
+
+export type MutationDeleteUserArgs = {
+    id: Scalars['String']['input'];
 };
 
 export type MutationGetAdminRoleArgs = {
@@ -25,20 +30,16 @@ export type MutationGetAdminRoleArgs = {
 
 export type Query = {
     __typename?: 'Query';
-    deleteUser: User2;
-    getAllUsers: Array<User2>;
+    getAllUsers: Users;
     getUserById: User2;
 };
 
-export type QueryDeleteUserArgs = {
-    id: Scalars['String']['input'];
-};
-
 export type QueryGetAllUsersArgs = {
-    itemsPerPage: Scalars['Float']['input'];
-    page: Scalars['Float']['input'];
-    search: Scalars['String']['input'];
-    userId: Scalars['String']['input'];
+    itemsPerPage?: InputMaybe<Scalars['Int']['input']>;
+    page?: InputMaybe<Scalars['Int']['input']>;
+    search?: InputMaybe<Scalars['String']['input']>;
+    sortByCreateDate?: InputMaybe<Scalars['String']['input']>;
+    sortByUserName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryGetUserByIdArgs = {
@@ -55,6 +56,7 @@ export type User2 = {
     email: Scalars['String']['output'];
     firstName?: Maybe<Scalars['String']['output']>;
     id: Scalars['String']['output'];
+    isUserBlocked: Scalars['Boolean']['output'];
     lastName?: Maybe<Scalars['String']['output']>;
     login?: Maybe<Scalars['String']['output']>;
     photo?: Maybe<Scalars['String']['output']>;
@@ -62,4 +64,10 @@ export type User2 = {
     refreshToken?: Maybe<Scalars['String']['output']>;
     role: Scalars['String']['output'];
     updatedAt: Scalars['String']['output'];
+};
+
+export type Users = {
+    __typename?: 'Users';
+    data?: Maybe<Array<User2>>;
+    total: Scalars['Int']['output'];
 };

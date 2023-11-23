@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import { useGetUserDataQuery } from '@/api/api';
-import Table from '@/components/Table/Table';
+import Table, { TableHeader } from '@/components/Table/Table';
 import Spinner from '@/shared/ui/spinner/Spinner';
 import { fetchGetJSON } from '@/shared/utils/stripe/api-helpers';
 
-const header = {
-    billingDate: 'profileSettings.tab.myPayments.dateOfPayment',
-    subscriptionEnd: 'profileSettings.tab.myPayments.endDateOfSubscription',
-    price: 'profileSettings.tab.myPayments.price',
-    subscriptionType: 'profileSettings.tab.myPayments.subscriptionType',
-    paymentType: 'profileSettings.tab.myPayments.paymentType'
+const headers: { [key: string]: TableHeader } = {
+    billingDate: { label: 'profileSettings.tab.myPayments.dateOfPayment' },
+    subscriptionEnd: { label: 'profileSettings.tab.myPayments.endDateOfSubscription' },
+    price: { label: 'profileSettings.tab.myPayments.price' },
+    subscriptionType: { label: 'profileSettings.tab.myPayments.subscriptionType' },
+    paymentType: { label: 'profileSettings.tab.myPayments.paymentType' }
 };
 
 const Payments = () => {
@@ -58,6 +58,6 @@ const Payments = () => {
         fetchSubscriptions();
     }, [isSuccess, data]);
 
-    return <>{isShowLoader ? <Spinner /> : <Table data={subscriptions} header={header} />}</>;
+    return <>{isShowLoader ? <Spinner /> : <Table data={subscriptions} headers={headers} />}</>;
 };
 export default Payments;

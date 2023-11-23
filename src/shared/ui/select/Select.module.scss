@@ -1,5 +1,4 @@
 .container {
-  display: flex;
   flex-direction: column
 }
 
@@ -14,8 +13,6 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  width: 150px;
-  height: 36px;
   padding: 0 15px;
   color: var(--color-light-100);
   font: var(--font-regular-16);

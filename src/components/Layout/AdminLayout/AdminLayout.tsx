@@ -1,13 +1,16 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
 import { ReactElement } from 'react';
 
 import { AdminRouting } from '@/components/AdminRouting/AdminRouting';
 import { BaseLayout } from '@/components/Layout/BaseLayout/BaseLayout';
 
-const baseGraphQLURL = process.env.NEXT_PUBLIC_INCTAGRAM_GRAPHQL_URL;
+const baseGraphQLURL = new HttpLink({
+    uri: process.env.NEXT_PUBLIC_INCTAGRAM_GRAPHQL_URL,
+    credentials: 'include'
+});
 
 const client = new ApolloClient({
-    uri: baseGraphQLURL,
+    link: baseGraphQLURL,
     cache: new InMemoryCache()
 });
 

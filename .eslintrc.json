@@ -27,7 +27,7 @@
   "rules": {
     "import/namespace": "off",
     "no-console": "warn",
-    "no-nested-ternary": "error",
+    "no-nested-ternary": "warn",
     "import/named": "off",
     "no-debugger": "warn",
     "no-unused-vars": "off",

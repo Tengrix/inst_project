@@ -1,3 +1,5 @@
+import Select, { ItemType } from '@/shared/ui/select/Select';
+
 import s from './per-page-select.module.scss';
 /* eslint-disable */
 export type PerPageSelectPropsType = {
@@ -7,11 +9,18 @@ export type PerPageSelectPropsType = {
 };
 
 export const PerPageSelect = ({ perPage, perPageOptions, onPerPageChange }: PerPageSelectPropsType) => {
+    const items = perPageOptions.reduce((acc: ItemType[], cur) => {
+        acc.push({ value: cur.toString(), label: cur.toString() });
+        return acc;
+    }, []);
     return (
         <div className={s.selectBox}>
-            {/*//Todo need to fix select*/}
             Show{'   '}
-            {/*<Select value={perPage} options={perPageOptions} onValueChange={onPerPageChange} />*/}
+            <Select
+                items={items}
+                defaultValue={items.filter(item => +item.value == perPage)[0]}
+                onValueChange={(value)=>onPerPageChange(+value)}
+            />
             on page
         </div>
     );
