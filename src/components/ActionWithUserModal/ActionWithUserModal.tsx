@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal/Modal';
@@ -10,13 +8,13 @@ import s from './ActionWithUserModal.module.scss';
 type Props = {
     open: boolean;
     // eslint-disable-next-line no-unused-vars
-    modalHandler: (isOpen: boolean) => void;
+    id: string;
+    modalHandler: (open: boolean) => void;
     modalTitle?: string;
     children: ReactNode;
-    // children: ReactNode
 };
 
-const ActionWithUserModal = ({ modalHandler, modalTitle, children, ...props }: Props) => {
+const ActionWithUserModal = ({ id, modalHandler, modalTitle, children, ...props }: Props) => {
     return (
         <Modal
             className={s.container}
@@ -24,22 +22,43 @@ const ActionWithUserModal = ({ modalHandler, modalTitle, children, ...props }: P
             open={props.open}
             customButtonsBlock={
                 <>
-                    <Button
-                        onClick={() => {
-                            alert('NO');
-                        }}>
-                        No
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            alert('YES');
-                        }}>
-                        Yes
-                    </Button>
+                    {id === 'REMOVE_USER' ? (
+                        <>
+                            <Button
+                                onClick={() => {
+                                    alert('DELETE CANCEL');
+                                }}>
+                                No
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    alert(' DELETE USER FUNCTION');
+                                }}>
+                                Yes
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <>
+                                <Button
+                                    onClick={() => {
+                                        alert(' BAN CANCEL');
+                                    }}>
+                                    No
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        alert(' BAN USER FUNCTION');
+                                    }}>
+                                    Yes
+                                </Button>
+                            </>
+                        </>
+                    )}
                 </>
             }
             modalHandler={modalHandler}>
-            {modalTitle}
+            {children}
         </Modal>
     );
 };
