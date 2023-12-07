@@ -15,13 +15,7 @@ export const AdminActions = () => {
                     <HorizontalDotsIcon />
                 </div>
             }
-            contentChildren={
-                <UserActions
-                    id={'5' /* add user id */}
-                    editPostModeHandler={/* editPostModeHandler */ () => {}}
-                    editModeHandler={editModeHandler}
-                />
-            }
+            contentChildren={<UserActions />}
         />
     );
 };

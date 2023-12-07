@@ -6,11 +6,7 @@ import { SelectBan } from '@/shared/ui/selectBan/SelectBan';
 
 import s from './styles.module.scss';
 
-type UserActionsPropsType = {
-    id?: string;
-    editModeHandler?: () => void;
-    editPostModeHandler?: () => void;
-};
+type UserActionsPropsType = {};
 
 type AdminActionsType = {
     id: string;

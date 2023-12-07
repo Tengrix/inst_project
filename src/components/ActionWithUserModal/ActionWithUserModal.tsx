@@ -1,4 +1,5 @@
-import React, { ReactNode, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import React, { ReactNode } from 'react';
 
 import { Button } from '@/shared/ui/button';
 import { Modal } from '@/shared/ui/modal/Modal';
@@ -15,6 +16,8 @@ type Props = {
 };
 
 const ActionWithUserModal = ({ id, modalHandler, modalTitle, children, ...props }: Props) => {
+    const t = useTranslations('button');
+
     return (
         <Modal
             className={s.container}
@@ -28,13 +31,13 @@ const ActionWithUserModal = ({ id, modalHandler, modalTitle, children, ...props 
                                 onClick={() => {
                                     alert('DELETE CANCEL');
                                 }}>
-                                No
+                                {t('no')}
                             </Button>
                             <Button
                                 onClick={() => {
                                     alert(' DELETE USER FUNCTION');
                                 }}>
-                                Yes
+                                {t('yes')}
                             </Button>
                         </>
                     ) : (
@@ -44,13 +47,13 @@ const ActionWithUserModal = ({ id, modalHandler, modalTitle, children, ...props 
                                     onClick={() => {
                                         alert(' BAN CANCEL');
                                     }}>
-                                    No
+                                    {t('no')}
                                 </Button>
                                 <Button
                                     onClick={() => {
                                         alert(' BAN USER FUNCTION');
                                     }}>
-                                    Yes
+                                    {t('yes')}
                                 </Button>
                             </>
                         </>
