@@ -22,6 +22,11 @@ module.exports = {
                 source: '/',
                 destination: '/sign-in',
                 permanent: true
+            },
+            {
+                source: '/admin',
+                destination: '/admin/users',
+                permanent: true
             }
         ];
     },

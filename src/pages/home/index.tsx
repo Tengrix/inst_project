@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 
 import { useGetAllPostsQuery } from '@/api/api';
-import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
+import { getUserLayout } from '@/components/Layout/UserLayout/UserLayout';
 import Post from '@/components/Post/Post';
 import { PostType } from '@/components/Post/types';
 
@@ -90,5 +90,5 @@ const Home = () => {
     );
 };
 
-Home.getLayout = getLayoutWithSidebar;
+Home.getLayout = getUserLayout;
 export default Home;

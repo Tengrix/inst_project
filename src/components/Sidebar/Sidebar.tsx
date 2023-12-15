@@ -22,12 +22,12 @@ const Sidebar = (props: SidebarPropsType) => {
     const nav = useRef(null);
 
     const [isInVisibleMenu, setIsInVisibleMenu] = useState(false);
-    const [scrollPosition, setScroolPosition] = useState(0);
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     const scrolling = () => {
         if (scrollPosition < scrollY) {
             setIsInVisibleMenu(true);
-            setScroolPosition(scrollY);
+            setScrollPosition(scrollY);
         } else setIsInVisibleMenu(false);
     };
     useEffect(() => {

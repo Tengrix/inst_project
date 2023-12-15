@@ -4,7 +4,7 @@ import { createTranslator, useTranslations } from 'next-intl';
 import React from 'react';
 
 import DevicesTab from '@/components/Devices/DevicesTab';
-import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
+import { getUserLayout } from '@/components/Layout/UserLayout/UserLayout';
 import GeneralInformation from '@/components/profileSettings/general-information';
 import CheckoutForm from '@/components/profileSettings/payments/stripe/CheckoutForm';
 import CustomTabs from '@/shared/ui/tabs/Tabs';
@@ -79,5 +79,5 @@ const ProfileSettings = () => {
         </div>
     );
 };
-ProfileSettings.getLayout = getLayoutWithSidebar;
+ProfileSettings.getLayout = getUserLayout;
 export default ProfileSettings;

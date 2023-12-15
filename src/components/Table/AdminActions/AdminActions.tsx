@@ -5,7 +5,11 @@ import { HorizontalDotsIcon } from 'public/assets/icons/HorizontalDotsIcon';
 
 import UserActions from '../UserActions/UserActions';
 
-export const AdminActions = () => {
+type Props = {
+    userId: string;
+};
+
+export const AdminActions = (props: Props) => {
     const [editPost, setEditPost] = useState<boolean>(false);
     const editModeHandler = () => setEditPost(true);
     return (
@@ -15,7 +19,7 @@ export const AdminActions = () => {
                     <HorizontalDotsIcon />
                 </div>
             }
-            contentChildren={<UserActions />}
+            contentChildren={<UserActions userId={props.userId} />}
         />
     );
 };

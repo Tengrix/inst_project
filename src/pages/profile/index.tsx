@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next/types';
 import { createTranslator, useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useGetUserDataQuery, useGetAllPostsQuery, useLazyGetPostByIdQuery } from '@/api/api';
-import { getLayoutWithSidebar } from '@/components/Layout/WithSidebarLayout/WithSidebarLayout';
+import { useGetAllPostsQuery, useGetUserDataQuery, useLazyGetPostByIdQuery } from '@/api/api';
+import { getUserLayout } from '@/components/Layout/UserLayout/UserLayout';
 import EditPost from '@/components/Post/EditPost/EditPost';
 import { PostType } from '@/components/Post/types';
 import { Button } from '@/shared/ui/button';
@@ -135,6 +134,6 @@ const Profile = () => {
     );
 };
 
-Profile.getLayout = getLayoutWithSidebar;
+Profile.getLayout = getUserLayout;
 
 export default Profile;

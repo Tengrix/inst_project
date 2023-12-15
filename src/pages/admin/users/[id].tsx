@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import Avatar from '/public/assets/noAvatar.png';
 
-import { useFormatter } from 'next-intl';
+import { createTranslator, useFormatter } from 'next-intl';
 
 import { getLayoutAdmin } from '@/components/Layout/AdminLayout/AdminLayout';
 import Spinner from '@/shared/ui/spinner/Spinner';
@@ -26,6 +26,19 @@ const USER = gql`
         }
     }
 `;
+
+export async function getServerSideProps({ locale = 'en' }) {
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
+
+    const t = createTranslator({ locale: locale as string, messages });
+
+    return {
+        props: {
+            messages: messages
+            // title: t('myProfile.pageTitle')
+        }
+    };
+}
 
 const User = () => {
     const router = useRouter();
