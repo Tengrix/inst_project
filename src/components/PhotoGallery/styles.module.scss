@@ -1,0 +1,19 @@
+.photoGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 12px;
+  margin-top: 53px;
+
+  img {
+    height: 350px;
+    object-fit: cover
+  }
+
+  @media (max-width: 479.98px) {
+    grid-template-columns: 1fr;
+
+    img {
+      height: auto
+    }
+  }
+}

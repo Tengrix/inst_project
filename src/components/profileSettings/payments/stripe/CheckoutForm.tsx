@@ -4,9 +4,9 @@ import { useGetUserDataQuery } from '@/api/api';
 import AccountManagement from '@/components/profileSettings/account-management/AccountManagement';
 import { ActiveSubscriptions } from '@/components/profileSettings/account-management/activeSubscriptions/ActiveSubscriptions';
 import { CustomPaymentBtn } from '@/components/profileSettings/account-management/customPaymentBtn/CustomPaymentBtn';
+import { CheckoutFormModal } from '@/components/profileSettings/payments/stripe/checkoutFormModal/CheckoutFormModal';
 import Spinner from '@/shared/ui/spinner/Spinner';
 import { fetchCheckoutSession, fetchSubscriptions } from '@/shared/utils/stripe/api/queries';
-import { CheckoutFormModal } from 'src/components/profileSettings/payments/stripe/checkoutFormModal/CheckoutFormModal';
 
 type CheckoutFormPropsType = {
     success: boolean | undefined;

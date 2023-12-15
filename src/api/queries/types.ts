@@ -46,6 +46,11 @@ export type QueryGetUserByIdArgs = {
     id: Scalars['String']['input'];
 };
 
+export enum Role {
+    Admin = 'ADMIN',
+    User = 'USER'
+}
+
 export type User2 = {
     __typename?: 'User2';
     aboutMe?: Maybe<Scalars['String']['output']>;
@@ -62,8 +67,9 @@ export type User2 = {
     photo?: Maybe<Scalars['String']['output']>;
     /** User's description to the movie */
     refreshToken?: Maybe<Scalars['String']['output']>;
-    role: Scalars['String']['output'];
+    role: Role;
     updatedAt: Scalars['String']['output'];
+    usersPhoto: Array<Scalars['String']['output']>;
 };
 
 export type Users = {

@@ -3,7 +3,8 @@ import { useTranslations } from 'next-intl';
 
 import PaypalLogo from 'public/assets/icons/paypal-logo.svg';
 import StripeLogo from 'public/assets/icons/stripe-logo.svg';
-import s from 'src/components/profileSettings/account-management/customPaymentBtn/CustomPaymentBtn.module.scss';
+
+import s from './CustomPaymentBtn.module.scss';
 
 type CustomPaymentBtnPropsType = {
     loading: boolean;

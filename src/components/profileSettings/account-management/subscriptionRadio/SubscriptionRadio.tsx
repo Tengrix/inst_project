@@ -2,7 +2,8 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { SubscriptionsType, SubscriptionType } from '@/components/profileSettings/payments/stripe/CheckoutForm';
-import s from 'src/components/profileSettings/account-management/subscriptionRadio/SubscriptionRadio.module.scss';
+
+import s from './SubscriptionRadio.module.scss';
 
 export type SubscriptionRadioType = {
     subscriptions: SubscriptionsType;
