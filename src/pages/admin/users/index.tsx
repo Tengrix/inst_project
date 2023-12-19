@@ -1,4 +1,6 @@
 import { format } from 'date-fns';
+import { GetStaticPropsContext } from 'next/types';
+import { createTranslator } from 'next-intl';
 import { useState } from 'react';
 
 import { useGetAllUsersQuery } from '@/api/queries/users.generated';
@@ -10,26 +12,43 @@ import Select from '@/shared/ui/select/Select';
 
 import s from './Users.module.scss';
 
+export async function getStaticProps({ locale = 'en' }: GetStaticPropsContext) {
+    const messages = (await import(`messages/${locale}/auth.json`)).default;
+
+    const t = createTranslator({ locale: locale as string, messages });
+
+    return {
+        props: {
+            messages: messages
+            // title: t('myProfile.pageTitle')
+        }
+    };
+}
+
 const UsersList = () => {
     const [sortParams, setSortParams] = useState<{ sortByUserName?: string; sortByCreateDate?: string }>({});
     const [pageParams, setPageParams] = useState<{ page: number; itemsPerPage: number }>({ page: 1, itemsPerPage: 12 });
     const [searchByEmail, setSearchByEmail] = useState('');
-    const { loading, error, data } = useGetAllUsersQuery({
+    const {
+        loading,
+        error,
+        data: users
+    } = useGetAllUsersQuery({
         variables: {
             ...pageParams,
             search: searchByEmail,
             ...sortParams
         }
     });
-    const totalPages = data?.getAllUsers && Math.floor(data.getAllUsers.total! / pageParams.itemsPerPage);
+    const totalPages = users?.getAllUsers && Math.floor(users.getAllUsers.total! / pageParams.itemsPerPage);
     const usersWithFormattedDate =
-        data &&
-        data.getAllUsers.data!.map(user => ({
+        users &&
+        users.getAllUsers.data!.map(user => ({
             ...user,
             createdAt: format(new Date(+user.createdAt), 'dd.MM.yyyy')
         }));
 
-    const header: { [key: string]: TableHeader } = {
+    const headers: { [key: string]: TableHeader } = {
         id: { label: 'User ID' },
         login: { label: 'Username' },
         email: {
@@ -41,7 +60,8 @@ const UsersList = () => {
             label: 'Registration date',
             sortable: true,
             onSort: sort => setSortParams({ sortByCreateDate: sort })
-        }
+        },
+        actions: { label: 'Actions' }
     };
     if (error) return `Error! ${error.message}`;
 
@@ -59,7 +79,7 @@ const UsersList = () => {
                     defaultValue={{ label: 'Not selected', value: 'Not selected' }}
                 />
             </div>
-            <Table data={usersWithFormattedDate!} headers={header} />
+            <Table data={usersWithFormattedDate!} headers={headers} />
             <Pagination
                 page={pageParams.page}
                 totalCount={totalPages}

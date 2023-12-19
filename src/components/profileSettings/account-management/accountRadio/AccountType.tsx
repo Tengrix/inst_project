@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { ChangeEvent, useState } from 'react';
 
-import s from 'src/components/profileSettings/account-management/accountRadio/AccountTypeRadio.module.scss';
+import s from './AccountTypeRadio.module.scss';
 
 type AccountRadioType = {
     isSubscriptions: boolean;

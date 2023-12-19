@@ -24,4 +24,17 @@ export const USERS = gql`
             total
         }
     }
+    query getUserById($id: String!) {
+        getUserById(id: $id) {
+            id
+            createdAt
+            updatedAt
+            photo
+            login
+            email
+            firstName
+            lastName
+            usersPhoto
+        }
+    }
 `;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
+import { AccountRadio } from '@/components/profileSettings/account-management/accountRadio/AccountType';
+import { SubscriptionRadio } from '@/components/profileSettings/account-management/subscriptionRadio/SubscriptionRadio';
 import { SubscriptionsType, SubscriptionType } from '@/components/profileSettings/payments/stripe/CheckoutForm';
-import { AccountRadio } from 'src/components/profileSettings/account-management/accountRadio/AccountType';
-import { SubscriptionRadio } from 'src/components/profileSettings/account-management/subscriptionRadio/SubscriptionRadio';
 
 type AccountManagementPropsType = {
     subscriptions: SubscriptionsType;

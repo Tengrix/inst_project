@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
+import { AdminActions } from '@/components/Table/AdminActions/AdminActions';
 import Spinner from '@/shared/ui/spinner/Spinner';
 
 import s from './Table.module.scss';
@@ -16,10 +17,16 @@ type SortState = {
 };
 
 type TableProps = {
-    data: Array<object>;
+    data: Array<UserData>;
     headers: { [key: string]: TableHeader };
 };
-
+export type UserData = {
+    __typename?: 'User2';
+    id: string;
+    login?: string | null;
+    email: string;
+    createdAt: string;
+};
 const Table = ({ data, headers }: TableProps) => {
     const [sortState, setSortState] = useState<SortState>({});
     const t = useTranslations();
@@ -50,15 +57,21 @@ const Table = ({ data, headers }: TableProps) => {
 
     const tableBody = data?.map((row, i) => (
         <tr key={i} className={s.table__tr}>
-            {Object.entries(row).map(([key, value]) => !key.startsWith('_') && getRow(key, value))}
+            {Object.entries(row).map(([key, value]) => !key.startsWith('_') && getRow(key, value as string))}
+            <td className={`${s.table__cell} ${s.cell}`}>
+                <div className={s.cell__th}>Actions</div>
+                <div className={s.cell__td}>
+                    <AdminActions userId={row.id} />
+                </div>
+            </td>
         </tr>
     ));
 
     return (
-        <div className={s.table}>
+        <table className={s.table}>
             <thead className={s.table__head}>{tableHeaders}</thead>
             <tbody className={s.table__body}>{tableBody ? tableBody : <Spinner />}</tbody>
-        </div>
+        </table>
     );
 };
 

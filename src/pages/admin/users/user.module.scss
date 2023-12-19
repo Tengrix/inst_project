@@ -1,15 +1,15 @@
 .user {
-    &__container{
+    &__container {
         padding: 0 16px
     }
 
-    &__info{
-        padding: 24px 0;
+    &__info {
         display: flex;
-        gap: 24px
+        gap: 24px;
+        padding: 24px 0
     }
 
-    &__photo{
-        border-radius: 50%;
+    &__photo {
+        border-radius: 50%
     }
 } 
